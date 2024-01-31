@@ -1,11 +1,11 @@
-import PageHeader from "@/subComponents/pageHeader"
+import PageHeader from "../../../../components/pageHeader";
 
 const Catalogue = () => {
   return (
     <>
-    <PageHeader title='Catalogue' />
+      <PageHeader title="Catalogue" />
     </>
-  )
-}
+  );
+};
 
-export default Catalogue
+export default Catalogue;

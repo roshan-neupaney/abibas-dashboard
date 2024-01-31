@@ -5,6 +5,7 @@ import "./ui/globals.css";
 const redHatDisplay = Red_Hat_Display({
   subsets: ["latin"],
   variable: "--font-redHatDisplay",
+  weight: ['300', "400", "500", "600", '700'],
 });
 const roboto = Roboto({
   subsets: ["latin"],

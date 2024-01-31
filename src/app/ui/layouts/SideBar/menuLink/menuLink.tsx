@@ -65,7 +65,7 @@ const MenuLink = () => {
       <div>
         {mainMenu.map((items, index) => {
           return (
-            <>
+            <React.Fragment key={`parent-${index}`}>
               {items?.category ? (
                 <>
                   <div
@@ -73,7 +73,7 @@ const MenuLink = () => {
                       openProduct && styles.openContainer
                     }`}
                     onClick={() => toggleProduct(!openProduct)}
-                    key={index}
+                    key={`${index}-${items.title}`}
                   >
                     <div className={styles.subContainer}>
                       <Image src={items.icon} width={20} height={20} alt="" />
@@ -90,18 +90,17 @@ const MenuLink = () => {
                     />
                   </div>
                   {openProduct &&
-                    items.category.map((cat) => {
+                    items.category.map((cat, i) => {
                       return (
-                        <Link href={cat.link}>
+                        <Link href={cat.link} key={`child-${i}-${cat.title}`}>
                           <div
                             className={`${styles.linkContainer} ${
                               openProduct && styles.openContainer
                             } ${
                               pathname.includes(cat.link) ? styles.active : ""
                             }`}
-                            key={index}
                           >
-                            <div className={styles.subContainer} key={index}>
+                            <div className={styles.subContainer}>
                               <Image
                                 src={cat.icon}
                                 width={20}
@@ -116,7 +115,7 @@ const MenuLink = () => {
                     })}
                 </>
               ) : (
-                <Link href={items.link} key={index}>
+                <Link href={items.link} key={`child-${index}-${items.title}`}>
                   <div
                     className={`${styles.linkContainer} ${
                       pathname.includes(items.link) ? styles.active : ""
@@ -129,7 +128,7 @@ const MenuLink = () => {
                   </div>
                 </Link>
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </div>

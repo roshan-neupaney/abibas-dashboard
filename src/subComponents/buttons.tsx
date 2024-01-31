@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import AddIcon from '../public/icons/icon-left-white.svg'
+import AddIcon from '../../public/icons/icon-left-white.svg'
 
 export const Button = () => {
   return (

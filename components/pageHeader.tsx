@@ -1,4 +1,4 @@
-import {Button, CancleButton, SubmitButton} from "../../components/buttons";
+import {Button} from "../src/subComponents/buttons";
 
 interface PageHeaderProps {
   title: string;
