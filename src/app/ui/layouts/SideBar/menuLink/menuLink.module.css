@@ -32,15 +32,16 @@
   background-color: #2e3132;
 }
 
-.showSubContainer {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
+.hideDropdown {
+  max-height: 0rem;
+  overflow: hidden;
+  transition: all 0.5s;
+  opacity: 0;
 }
-.hideSubContainer {
-  display: flex;
-  flex: 0;
-  flex-direction: column;
+.showDropdown {
+  max-height: 14rem;
+  opacity: 1;
+  transition: all 0.5s;
 }
 
 .title {
@@ -53,7 +54,7 @@
 }
 
 .arrowUp {
-  transform: rotate(180deg);
+  transform: rotate(-180deg);
   transition: transform 0.3s ease;
 }
 

@@ -1,3 +1,5 @@
+import {PageLoader} from "../../loader/loader";
+
 interface tableContainerProps {
   children: any;
   topRender?: any;
@@ -11,12 +13,14 @@ const TableContainer = ({
 }: tableContainerProps) => {
   return (
     <>
+    {/* <PageLoader> */}
       <div className="table-container">
         {topRender && <div className="top-render">{topRender}</div>}
         <table className="table" {...getTableProps()} >
           {children}
         </table>
       </div>
+      {/* </PageLoader> */}
     </>
   );
 };

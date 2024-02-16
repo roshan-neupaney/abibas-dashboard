@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import ArrowIcon from "../public/icons/icon-right.svg";
+import ArrowIcon from "../public/icons/arrow-right.svg";
+import Image from "next/image";
 
 interface CustomSelectProps {
   title: string;
   value: any;
   data: any;
-  Changes?: any;
+  onChange?: any;
   placeholder?: string;
   style?: any;
 }
@@ -16,7 +17,7 @@ const CustomSelect = ({
   title,
   value,
   data,
-  Changes,
+  onChange,
   placeholder = "",
   style = {},
 }: CustomSelectProps) => {
@@ -47,9 +48,9 @@ const CustomSelect = ({
         <span className="body-medium">{selectedValue}</span>
         <span
           className="select-arrow"
-          style={{ transform: openBox ? "rotate(270deg)" : "rotate(90deg)" }}
+          style={{ transform: openBox ? "rotate(-90deg)" : "rotate(90deg)", transition: '0.3s' }}
         >
-          {">"}
+          <Image src={ArrowIcon} alt="" width={20} height={20} />
         </span>
       </div>
       <div
@@ -64,7 +65,7 @@ const CustomSelect = ({
               onClick={() => {
                 setSelectedValue(`${elements.label}`);
                 toggleBox(!openBox);
-                Changes(elements._id);
+                onChange(elements._id);
               }}
               className="select-options body-medium"
             >

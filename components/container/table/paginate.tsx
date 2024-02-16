@@ -98,7 +98,7 @@ const TablePagination = ({
 
             {pageIndex >= 3 && pageIndex < pageCount - 3 && (
               <>
-                <div className="paginate-buttons">
+                <div className="paginate-buttons paginate-dots">
                   <span className="paginate-label">...</span>
                 </div>
                 <div className="paginate-buttons-active">
@@ -110,7 +110,7 @@ const TablePagination = ({
               !(pageCount <= 3) &&
               pageCount > 5 && (
                 <>
-                  <div className="paginate-buttons">
+                  <div className="paginate-buttons paginate-dots">
                     <span className="paginate-label">...</span>
                   </div>
                   <div
@@ -136,7 +136,7 @@ const TablePagination = ({
                 </>
               )}
             {pageIndex < pageCount - 3 && pageCount > 5 && (
-              <div className="paginate-buttons">
+              <div className="paginate-buttons paginate-dots">
                 <span className="paginate-label">...</span>
               </div>
             )}

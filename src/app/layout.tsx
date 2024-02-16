@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Red_Hat_Display, Roboto } from "next/font/google";
+import { Red_Hat_Display, Roboto, Poppins } from "next/font/google";
 import "./ui/globals.css";
 
 const redHatDisplay = Red_Hat_Display({
@@ -10,7 +10,12 @@ const redHatDisplay = Red_Hat_Display({
 const roboto = Roboto({
   subsets: ["latin"],
   variable: "--font-roboto",
-  weight: ['300', "400", "500", '700'],
+  weight: ['300', '400', '500', '700'],
+});
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: ['300', "400", "500", '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -25,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${redHatDisplay.variable} ${roboto.variable}`}>
+      <body className={`${redHatDisplay.variable} ${roboto.variable} ${poppins.variable}`}>
         {children}
       </body>
     </html>

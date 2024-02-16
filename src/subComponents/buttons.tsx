@@ -1,26 +1,36 @@
-import Image from 'next/image'
-import AddIcon from '../../public/icons/icon-left-white.svg'
+"use client";
+import Image from "next/image";
+import AddIcon from "../../public/icons/icon-left-white.svg";
+import { useRouter } from "next/navigation";
 
-export const Button = () => {
-  return (
-    <div className='add-button'>
-      <Image src={AddIcon} alt='' width={20} height={20} />
-      <span className='label-add'>Add New</span>
-    </div>
-  )
+interface ButtonProps {
+  addRoute?: string;
+  title: string;
+  style?: any;
+  addIcon?: boolean;
 }
 
-export const SubmitButton = () => {
+export const Button = ({ addRoute = "", title, addIcon = false }: ButtonProps) => {
+  const router = useRouter();
   return (
-    <div className='submit-button'>
-      <span className='label-submit'>Add Category</span>
-    </div>
-  )
-}
-export const CancleButton = () => {
+    <button className="add-button" onClick={() => router.push(addRoute)}>
+      {addIcon && <Image src={AddIcon} alt="" width={20} height={20} />}
+      <span className="label-add">{title}</span>
+    </button>
+  );
+};
+
+export const SubmitButton = ({ title, style = {} }: ButtonProps) => {
   return (
-    <div className='cancel-button'>
-      <span className='label-cancel'>Cancel</span>
+    <div className="submit-button" style={style}>
+      <span className="label-submit">{title}</span>
     </div>
-  )
-}
+  );
+};
+export const CancelButton = ({ title }: ButtonProps) => {
+  return (
+    <div className="cancel-button">
+      <span className="label-cancel">{title}</span>
+    </div>
+  );
+};

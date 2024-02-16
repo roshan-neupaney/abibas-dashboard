@@ -32,7 +32,15 @@ const mainMenu = [
     ],
     icon: Car,
   },
-  { title: "Leads", link: "/admin/leads", icon: Target },
+  {
+    title: "Leads",
+    category: [
+      { title: "Bookings", link: "/admin/bookings", icon: Circle },
+      { title: "Test Drives", link: "/admin/test-drives", icon: Circle },
+      { title: "Offers", link: "/admin/offers", icon: Circle },
+    ],
+    icon: Target,
+  },
   {
     title: "Quote Review",
     link: "/admin/quote-review",
@@ -58,7 +66,16 @@ const mainMenu = [
 ];
 
 const MenuLink = () => {
-  const [openProduct, toggleProduct] = useState<boolean>(false);
+  const [openCategory, toggleCategory] = useState("");
+
+  const handleToggle = (val: string) => {
+    if (val !== openCategory) {
+      toggleCategory(val);
+    } else {
+      toggleCategory("");
+    }
+  };
+
   const pathname = usePathname();
   return (
     <div className={styles.container}>
@@ -70,9 +87,9 @@ const MenuLink = () => {
                 <>
                   <div
                     className={`${styles.linkContainer} ${
-                      openProduct && styles.openContainer
+                      openCategory === items.title && styles.openContainer
                     }`}
-                    onClick={() => toggleProduct(!openProduct)}
+                    onClick={() => handleToggle(items.title)}
                     key={`${index}-${items.title}`}
                   >
                     <div className={styles.subContainer}>
@@ -81,7 +98,9 @@ const MenuLink = () => {
                     </div>
                     <Image
                       className={`${
-                        openProduct ? styles.arrowUp : styles.arrowDown
+                        openCategory === items.title
+                          ? styles.arrowUp
+                          : styles.arrowDown
                       }`}
                       src={Arrow}
                       width={20}
@@ -89,13 +108,20 @@ const MenuLink = () => {
                       alt=""
                     />
                   </div>
-                  {openProduct &&
-                    items.category.map((cat, i) => {
+                  <div
+                    className={`${
+                      openCategory === items.title
+                        ? styles.showDropdown
+                        : styles.hideDropdown
+                    }`}
+                  >
+                    {items.category.map((cat, i) => {
                       return (
                         <Link href={cat.link} key={`child-${i}-${cat.title}`}>
                           <div
                             className={`${styles.linkContainer} ${
-                              openProduct && styles.openContainer
+                              openCategory === items.title &&
+                              styles.openContainer
                             } ${
                               pathname.includes(cat.link) ? styles.active : ""
                             }`}
@@ -113,6 +139,7 @@ const MenuLink = () => {
                         </Link>
                       );
                     })}
+                  </div>
                 </>
               ) : (
                 <Link href={items.link} key={`child-${index}-${items.title}`}>
