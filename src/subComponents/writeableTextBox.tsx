@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-interface CustomInputProps {
+interface EditableTextBoxProps {
   title: string;
   value: any;
   onChange?: any;
@@ -14,7 +14,7 @@ interface CustomInputProps {
   rightIcon?: any;
   iconClick?: any;
 }
-const CustomInput = ({
+const EditableTextBox = ({
   title,
   value,
   onChange,
@@ -23,12 +23,19 @@ const CustomInput = ({
   disabled = false,
   rightIcon = null,
   iconClick = null,
-}: CustomInputProps) => {
+}: EditableTextBoxProps) => {
   return (
     <div className="form-box">
       {title && <span className="label">{title}</span>}
       <input
         className="form-input body-medium"
+        style={{
+          borderBottom: disabled ? "none" : "1px solid #92959a",
+          border: "none",
+          borderRadius: 0,
+          padding: 0,
+          background: "transparent",
+        }}
         value={value}
         type={type}
         onChange={(e) => {
@@ -52,4 +59,4 @@ const CustomInput = ({
   );
 };
 
-export default CustomInput;
+export default EditableTextBox;

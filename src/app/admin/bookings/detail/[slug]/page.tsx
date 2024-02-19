@@ -22,7 +22,10 @@ const AddBookings = () => {
           <Documents />
           <FinalPayment />
           <div className="flex pb-6 gap-2 items-center">
-            <SubmitButton title="Complete Order" style={{backgroundColor: '#E60012'}}/>
+            <SubmitButton
+              title="Complete Order"
+              style={{ backgroundColor: "#E60012" }}
+            />
           </div>
         </div>
         <DetailSideBar />

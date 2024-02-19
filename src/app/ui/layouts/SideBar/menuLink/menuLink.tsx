@@ -120,9 +120,6 @@ const MenuLink = () => {
                         <Link href={cat.link} key={`child-${i}-${cat.title}`}>
                           <div
                             className={`${styles.linkContainer} ${
-                              openCategory === items.title &&
-                              styles.openContainer
-                            } ${
                               pathname.includes(cat.link) ? styles.active : ""
                             }`}
                           >

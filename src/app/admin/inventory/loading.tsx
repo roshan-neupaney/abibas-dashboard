@@ -1,9 +1,13 @@
 import React from 'react'
 import { CircularLoader } from '../../../../components/loader/loader'
+import PageHeader from '../../../../components/pageHeader'
 
 const Loading = () => {
   return (
-    <div><CircularLoader/></div>
+    <div className="flex col gap-5">
+      <PageHeader title="Inventory"/>
+      <CircularLoader />
+    </div>
   )
 }
 

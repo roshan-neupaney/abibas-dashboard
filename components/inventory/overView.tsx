@@ -104,7 +104,7 @@ const SideBar = () => {
             <span className="pt-1.5">
               <Image src={Dot} width={8} height={8} alt="" />
             </span>
-            <div className="flex col">
+            <div className="flex col gap-3">
               <span className="title-small-NH">24 Mar, 2023</span>
               <div className="flex col">
                 <span className="body-small-NH">02:09 PM</span>

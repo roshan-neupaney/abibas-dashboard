@@ -28,17 +28,15 @@
   background-color: #5c5f5f !important;
 }
 
-.openContainer {
-  background-color: #2e3132;
-}
-
 .hideDropdown {
+  background-color: #2e3132;
   max-height: 0rem;
   overflow: hidden;
   transition: all 0.5s;
   opacity: 0;
 }
 .showDropdown {
+  background-color: #2e3132;
   max-height: 14rem;
   opacity: 1;
   transition: all 0.5s;
