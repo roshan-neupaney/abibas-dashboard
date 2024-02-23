@@ -19,9 +19,9 @@ const Catalogue = async () => {
     <>
       <PageHeader title="Catalogue" />
       {data?.length > 0 ? (
-        <Suspense fallback={<CircularLoader />}>
+        // <Suspense fallback={<CircularLoader />}>
           <DummyData data={data} />
-        </Suspense>
+        // </Suspense>
       ) : (
         <NoDataFound />
       )}

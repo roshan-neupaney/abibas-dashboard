@@ -933,3 +933,14 @@ input[type="number"]::-webkit-outer-spin-button {
   border: 1px solid #d8dadb;
   background: #fcfcfc;
 }
+
+.viewMore {
+  color: #e60012;
+  font-family: var(--font-roboto);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
+}

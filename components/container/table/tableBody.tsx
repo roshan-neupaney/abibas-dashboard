@@ -1,13 +1,11 @@
 import Image from "next/image";
 import threeDots from "../../../public/icons/three-dots.svg";
 import LazyImage from "../../lazyImage";
-import adf from "../../../public/images/car2.png";
 import Link from "next/link";
+import { flexRender } from "@tanstack/react-table";
 
 interface CustomTableBodyProps {
-  getTableBodyProps: any;
-  page: any;
-  prepareRow: any;
+  table: any;
   titleImage?: string;
   firstSubTitle?: string;
   secondSubTitle?: string;
@@ -16,9 +14,7 @@ interface CustomTableBodyProps {
 }
 
 const CustomTableBody = ({
-  getTableBodyProps,
-  page,
-  prepareRow,
+  table,
   titleImage = "",
   firstSubTitle = "",
   secondSubTitle = "",
@@ -26,27 +22,21 @@ const CustomTableBody = ({
   internalTitleRoute = "",
 }: CustomTableBodyProps) => {
   return (
-    <tbody {...getTableBodyProps()}>
-      {page?.map((row: any, i: number) => {
-        prepareRow(row);
+    <tbody>
+      {table?.getRowModel().rows.map((row: any, i: number) => {
         return (
           <tr
-            {...row.getRowProps()}
             className="table-body-row"
             key={i}
             style={{ backgroundColor: i % 2 !== 0 ? "#F0F0F4" : "#FCFCFC" }}
           >
-            {row.cells.map((cell: any, _index: any) => {
+            {row?._getAllVisibleCells().map((cell: any, _index: any) => {
               return (
-                <td
-                  className="body-medium-NH table-cell"
-                  {...cell.getCellProps()}
-                  key={_index}
-                >
+                <td className="body-medium-NH table-cell" key={_index}>
                   {cell.column.id.includes("image") ? (
                     <div className="table-image relative">
                       <LazyImage
-                        src={cell?.value}
+                        src={cell?.row.original['image']}
                         alt="table-image"
                         fill
                         loading="lazy"
@@ -71,7 +61,7 @@ const CustomTableBody = ({
                       <div className="flex col gap-2">
                         <div className="flex justify-start align-center body-medium">
                           {internalTitleRoute && (
-                            <Link href={internalTitleRoute}>{cell.value}</Link>
+                            <Link href={internalTitleRoute}>{cell.row.original['title']}</Link>
                           )}
                         </div>
                         <div className="flex gap-4">
@@ -94,27 +84,32 @@ const CustomTableBody = ({
                       </div>
                     </div>
                   ) : cell.column.id == "_id" ? (
-                    <div className="label-large-NH">{cell.value}</div>
+                    <div className="label-large-NH">{cell.row.original['_id']}</div>
                   ) : cell.column.id == "status" ? (
                     <div
                       className={`label-medium-NH status-chip ${
-                        cell.value == "active"
+                        cell.row.original['status'] == "active"
                           ? "active-chip"
-                          : cell.value == "booked"
+                          : cell.row.original['status'] == "booked"
                           ? "booked-chip"
-                          : cell.value == "sold"
+                          : cell.row.original['status'] == "sold"
                           ? "sold-chip"
                           : "upcoming-chip"
                       }`}
                     >
-                      {cell.value}
+                      {cell.row.original['status']}
                     </div>
                   ) : cell.column.id == "action" ? (
                     <div className="pointer" onClick={() => {}}>
                       <Image src={threeDots} alt="" width={20} height={20} />
                     </div>
                   ) : (
-                    <span>{cell.render("Cell")}</span>
+                  <span>
+                    {flexRender(
+                      cell.column.columnDef.cell,
+                      cell.getContext()
+                    )}
+                  </span>
                   )}
                 </td>
               );

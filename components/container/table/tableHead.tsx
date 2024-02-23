@@ -1,13 +1,18 @@
-const CustomTableHead = ({ headerGroups }: any) => {
+import { flexRender } from "@tanstack/react-table";
+
+const CustomTableHead = ({ table }: any) => {
   return (
     <thead>
-      {headerGroups.map((headerGroup: any, i: number) => {
+      {table.getHeaderGroups().map((headerGroup: any, i: number) => {
         return (
-          <tr {...headerGroup.getHeaderGroupProps()} key={i}>
-            {headerGroup.headers.map((column: any, index: number) => {
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map((header: any, index: number) => {
               return (
-                <th className="label-large text-left table-head" {...column.getHeaderProps()} key={index}>
-                  {column.render("Header")}
+                <th className="label-large text-left table-head" key={index}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
                 </th>
               );
             })}

@@ -2,8 +2,21 @@ import car1 from "./public/images/creta.png";
 import thar from "./public/images/thar.png";
 import car2 from "./public/images/car2.png";
 
+export interface dataType {
+  _id: String;
+  title: String;
+  media?: any;
+  fuel: String;
+  driven: String;
+  mode: String;
+  price: String;
+  offers: String;
+  test_drive: String;
+  favorite: String;
+  status: String;
+}
 
-export const itemslist = [
+export const itemslist: dataType[] = [
   {
     _id: "#12345",
     title: "All New Volkswagen",

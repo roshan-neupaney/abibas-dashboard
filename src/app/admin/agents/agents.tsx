@@ -1,7 +1,9 @@
 "use client";
+
 import CustomTableBody from "../../../../components/container/table/tableBody";
 import TableContainer from "../../../../components/container/table/tableContainer";
 import CustomTableHead from "../../../../components/container/table/tableHead";
+import React, { useMemo } from "react";
 import TablePagination from "../../../../components/container/table/paginate";
 import { dataType, itemslist } from "../../../../data";
 import NoDataFound from "../../../../components/noDataFound";
@@ -12,42 +14,46 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-const Bookings = () => {
+const Agents = () => {
   const data = itemslist;
-  const columns: ColumnDef<dataType>[] = [
-    {
-      header: "ID",
-      accessorKey: "_id",
-    },
-    {
-      header: "Vehicle",
-      accessorKey: "title",
-    },
-    {
-      header: "Price",
-      accessorKey: "price",
-    },
-    {
-      header: "Offers",
-      accessorKey: "offers",
-    },
-    {
-      header: "Test Drives",
-      accessorKey: "test_drive",
-    },
-    {
-      header: "Favorites",
-      accessorKey: "favorite",
-    },
-    {
-      header: "Status",
-      accessorKey: "status",
-    },
-    {
-      header: "Action",
-      accessorKey: "action",
-    },
-  ];
+
+  const columns: ColumnDef<dataType>[] = useMemo(
+    () => [
+      {
+        header: "ID",
+        accessorKey: "_id",
+      },
+      {
+        header: "Vehicle",
+        accessorKey: "title",
+      },
+      {
+        header: "Price",
+        accessorKey: "price",
+      },
+      {
+        header: "Offers",
+        accessorKey: "offers",
+      },
+      {
+        header: "Test Drives",
+        accessorKey: "test_drive",
+      },
+      {
+        header: "Favorites",
+        accessorKey: "favorite",
+      },
+      {
+        header: "Status",
+        accessor: "status",
+      },
+      {
+        header: "Action",
+        accessorKey: "action",
+      },
+    ],
+    []
+  );
 
   const table = useReactTable({
     columns,
@@ -63,7 +69,7 @@ const Bookings = () => {
           <TableContainer>
             <CustomTableHead {...{ table }} />
             <CustomTableBody
-              internalTitleRoute="/admin/bookings/detail/id"
+              internalTitleRoute="/admin/agents/detail/id"
               titleImage="media"
               firstSubTitle="fuel"
               secondSubTitle="driven"
@@ -80,4 +86,4 @@ const Bookings = () => {
   );
 };
 
-export default Bookings;
+export default Agents;

@@ -3,137 +3,84 @@
 import CustomTableBody from "../../../../components/container/table/tableBody";
 import TableContainer from "../../../../components/container/table/tableContainer";
 import CustomTableHead from "../../../../components/container/table/tableHead";
-import React, { Suspense, useMemo, useState } from "react";
-import {
-  useFilters,
-  useGlobalFilter,
-  usePagination,
-  useSortBy,
-  useTable,
-} from "react-table";
+import React, { useMemo } from "react";
 import TablePagination from "../../../../components/container/table/paginate";
-import { itemslist } from "../../../../data";
+import { dataType, itemslist } from "../../../../data";
 import NoDataFound from "../../../../components/noDataFound";
 import { CircularLoader } from "../../../../components/loader/loader";
+import {
+  ColumnDef,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 
 const Customers = () => {
   const data = itemslist;
 
   // const [data, setData] = useState(list);
-  const columns = useMemo(
+  const columns: ColumnDef<dataType>[] = useMemo(
     () => [
       {
-        Header: "ID",
-        accessor: "_id",
+        header: "ID",
+        accessorKey: "_id",
       },
       {
-        Header: "Vehicle",
-        accessor: "title",
+        header: "Vehicle",
+        accessorKey: "title",
       },
       {
-        Header: "Price",
-        accessor: "price",
+        header: "Price",
+        accessorKey: "price",
       },
       {
-        Header: "Offers",
-        accessor: "offers",
-      },
-      // {
-      //   Header: "Fuel",
-      //   accessor: "fuel",
-      // },
-      // {
-      //   Header: "Driven",
-      //   accessor: "driven",
-      // },
-      // {
-      //   Header: "Mode",
-      //   accessor: "mode",
-      // },
-      {
-        Header: "Test Drives",
-        accessor: "test_drive",
+        header: "Offers",
+        accessorKey: "offers",
       },
       {
-        Header: "Favorites",
-        accessor: "favorite",
+        header: "Test Drives",
+        accessorKey: "test_drive",
       },
       {
-        Header: "Status",
-        accessor: "status",
+        header: "Favorites",
+        accessorKey: "favorite",
       },
       {
-        Header: "Action",
-        accessor: "action",
+        header: "Status",
+        accessorKey: "status",
+      },
+      {
+        header: "Action",
+        accessorKey: "action",
       },
     ],
     []
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    // @ts-ignore
-    page,
-    canPreviousPage,
-    canNextPage,
-    gotoPage,
-    nextPage,
-    previousPage,
-    pageOptions,
-    setPageSize,
-    pageCount,
-    // getToggleHideAllColumnsProps,
-    // allColumns,
-    state: { pageIndex, pageSize },
-  }: // exportData,
-  any = useTable(
-    {
-      // @ts-ignore
-      columns,
-      data: data || [],
-      initialState:
-        // @ts-ignore
-        { pageIndex: 0 },
-      // @ts-ignore
-    },
-    useFilters,
-    useGlobalFilter,
-    useSortBy,
-    usePagination
-  );
+  const table = useReactTable({
+    columns,
+    data,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
 
   return (
     <>
       {data.length > 0 ? (
-          <div style={{ border: "1px solid #d8dadb" }}>
-            <TableContainer {...{ getTableProps }}>
-              <CustomTableHead {...{ headerGroups }} />
-              <CustomTableBody
-                internalTitleRoute="/admin/customers/detail/id"
-                titleImage="media"
-                firstSubTitle="fuel"
-                secondSubTitle="driven"
-                thirdSubTitle="mode"
-                {...{ getTableBodyProps, prepareRow, page }}
-              />
-            </TableContainer>
-            <TablePagination
-              {...{
-                nextPage,
-                previousPage,
-                canPreviousPage,
-                canNextPage,
-                pageIndex,
-                gotoPage,
-                pageCount,
-                setPageSize,
-                pageSize,
-              }}
+        <div style={{ border: "1px solid #d8dadb" }}>
+          <TableContainer>
+            <CustomTableHead {...{ table }} />
+            <CustomTableBody
+              internalTitleRoute="/admin/customers/detail/id"
+              titleImage="media"
+              firstSubTitle="fuel"
+              secondSubTitle="driven"
+              thirdSubTitle="mode"
+              {...{ table }}
             />
-          </div>
+          </TableContainer>
+          <TablePagination {...{ table }} />
+        </div>
       ) : (
         <NoDataFound />
       )}

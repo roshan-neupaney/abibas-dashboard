@@ -6,32 +6,15 @@ import doubleArrowRight from "../../../public/icons/double-right-arrow.svg";
 import { tablePaginationSizes } from "../../../config/constants";
 
 interface TablePaginationProps {
-  pageCount?: number;
-  handleOnClick?: any;
-  gotoPage?: any;
-  currentPage?: number;
-  itemsPerPage?: number;
-  data?: any;
-  nextPage: any;
-  previousPage: any;
-  canPreviousPage: boolean;
-  canNextPage: boolean;
-  pageIndex: number;
-  pageSize: number;
-  setPageSize: any;
+  table: any;
 }
 
 const TablePagination = ({
-  pageCount = 1,
-  gotoPage,
-  nextPage,
-  previousPage,
-  canNextPage,
-  canPreviousPage,
-  pageIndex,
-  pageSize,
-  setPageSize,
+  table,
 }: TablePaginationProps) => {
+  let page_index = table.getState().pagination.pageIndex;
+  let pageCount = table.getPageCount();
+  let pageSize = table.getState().pagination.pageSize
   return (
     <>
       <div className="paginate-container ">
@@ -39,46 +22,46 @@ const TablePagination = ({
           <div className="flex row">
             <button
               className="paginate-buttons"
-              onClick={() => gotoPage(0)}
-              disabled={!canPreviousPage}
+              onClick={() => table.setPageIndex(0)}
+              disabled={!table.getCanPreviousPage()}
             >
               <Image src={doubleArrowLeft} alt="" width={20} height={20} />
             </button>
             <button
               className="paginate-buttons"
-              onClick={() => previousPage()}
-              disabled={!canPreviousPage}
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
             >
               <Image src={arrowLeft} alt="" width={20} height={20} />
             </button>
             <div
               className={`${
-                pageIndex == 0 ? "paginate-buttons-active" : "paginate-buttons"
+                page_index == 0 ? "paginate-buttons-active" : "paginate-buttons"
               }`}
-              onClick={() => gotoPage(0)}
+              onClick={() => table.setPageIndex(0)}
             >
               <span className="paginate-label">1</span>
             </div>
-            {(pageIndex <= 2 || pageCount <= 5) && !(pageCount <= 2) && (
+            {(page_index <= 2 || pageCount <= 5) && !(pageCount <= 2) && (
               <div
                 className={`${
-                  pageIndex == 1
+                  page_index == 1
                     ? "paginate-buttons-active"
                     : "paginate-buttons"
                 }`}
-                onClick={() => gotoPage(1)}
+                onClick={() => table.setPageIndex(1)}
               >
                 <span className="paginate-label">2</span>
               </div>
             )}
-            {(pageIndex < 3 || pageCount <= 5) && !(pageCount <= 3) && (
+            {(page_index < 3 || pageCount <= 5) && !(pageCount <= 3) && (
               <div
                 className={`${
-                  pageIndex == 2
+                  page_index == 2
                     ? "paginate-buttons-active"
                     : "paginate-buttons"
                 }`}
-                onClick={() => gotoPage(2)}
+                onClick={() => table.setPageIndex(2)}
               >
                 <span className="paginate-label">3</span>
               </div>
@@ -86,27 +69,27 @@ const TablePagination = ({
             {pageCount === 5 && (
               <div
                 className={`${
-                  pageIndex == 3
+                  page_index == 3
                     ? "paginate-buttons-active"
                     : "paginate-buttons"
                 }`}
-                onClick={() => gotoPage(3)}
+                onClick={() => table.setPageIndex(3)}
               >
                 <span className="paginate-label">4</span>
               </div>
             )}
 
-            {pageIndex >= 3 && pageIndex < pageCount - 3 && (
+            {page_index >= 3 && page_index < pageCount - 3 && (
               <>
                 <div className="paginate-buttons paginate-dots">
                   <span className="paginate-label">...</span>
                 </div>
                 <div className="paginate-buttons-active">
-                  <span className="paginate-label">{pageIndex + 1}</span>
+                  <span className="paginate-label">{page_index + 1}</span>
                 </div>{" "}
               </>
             )}
-            {pageIndex >= pageCount - 3 &&
+            {page_index >= pageCount - 3 &&
               !(pageCount <= 3) &&
               pageCount > 5 && (
                 <>
@@ -115,27 +98,27 @@ const TablePagination = ({
                   </div>
                   <div
                     className={`${
-                      pageIndex == pageCount - 3
+                      page_index == pageCount - 3
                         ? "paginate-buttons-active"
                         : "paginate-buttons"
                     }`}
-                    onClick={() => gotoPage(pageCount - 3)}
+                    onClick={() => table.setPageIndex(pageCount - 3)}
                   >
                     <span className="paginate-label">{pageCount - 2}</span>
                   </div>
                   <div
                     className={`${
-                      pageIndex == pageCount - 2
+                      page_index == pageCount - 2
                         ? "paginate-buttons-active"
                         : "paginate-buttons"
                     }`}
-                    onClick={() => gotoPage(pageCount - 2)}
+                    onClick={() => table.setPageIndex(pageCount - 2)}
                   >
                     <span className="paginate-label">{pageCount - 1}</span>
                   </div>
                 </>
               )}
-            {pageIndex < pageCount - 3 && pageCount > 5 && (
+            {page_index < pageCount - 3 && pageCount > 5 && (
               <div className="paginate-buttons paginate-dots">
                 <span className="paginate-label">...</span>
               </div>
@@ -143,26 +126,26 @@ const TablePagination = ({
             {pageCount != 1 && (
               <div
                 className={`${
-                  pageIndex == pageCount - 1
+                  page_index == pageCount - 1
                     ? "paginate-buttons-active"
                     : "paginate-buttons"
                 }`}
-                onClick={() => gotoPage(pageCount - 1)}
+                onClick={() => table.setPageIndex(pageCount - 1)}
               >
                 <span className="paginate-label">{pageCount}</span>
               </div>
             )}
             <button
               className="paginate-buttons"
-              onClick={() => nextPage()}
-              disabled={!canNextPage}
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
             >
               <Image src={arrowRight} alt="" width={20} height={20} />
             </button>
             <button
               className="paginate-buttons"
-              onClick={() => gotoPage(pageCount - 1)}
-              disabled={!canNextPage}
+              onClick={() => table.setPageIndex(table.getPageCount()-1)}
+              disabled={!table.getCanNextPage()}
             >
               <Image src={doubleArrowRight} alt="" width={20} height={20} />
             </button>
@@ -200,7 +183,7 @@ const TablePagination = ({
             id="page-size"
             className="w-[70px] outline-none p-2"
             value={pageSize}
-            onChange={(e) => setPageSize(Number(e.target.value))}
+            onChange={(e) => table.setPageSize(Number(e.target.value))}
           >
             {tablePaginationSizes.map((items: any, index: any) => {
               return (

@@ -3,20 +3,20 @@ import {PageLoader} from "../../loader/loader";
 interface tableContainerProps {
   children: any;
   topRender?: any;
-  getTableProps: any;
+  style?:any
 }
 
 const TableContainer = ({
   children,
   topRender,
-  getTableProps,
+  style,
 }: tableContainerProps) => {
   return (
     <>
     {/* <PageLoader> */}
-      <div className="table-container">
+      <div className="table-container" style={style}>
         {topRender && <div className="top-render">{topRender}</div>}
-        <table className="table" {...getTableProps()} >
+        <table className="table" >
           {children}
         </table>
       </div>

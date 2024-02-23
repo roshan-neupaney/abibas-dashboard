@@ -29,7 +29,7 @@ const DetailBox = () => {
 const SideBar = () => {
   return (
     <>
-      <div className="flex w-[25rem] border-2 border-solid overview-sidebar">
+      <div className="flex w-[25rem] border-2 border-solid overview-sidebar max-h-[47rem]">
         <div
           className="flex py-4 px-5 col w-full"
           style={{ borderBottom: "1px solid #D8DADB" }}

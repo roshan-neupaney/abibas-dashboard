@@ -51,6 +51,11 @@ const mainMenu = [
     link: "/admin/customers",
     icon: UserGroup,
   },
+  {
+    title: "Agents",
+    link: "/admin/agents",
+    icon: UserGroup,
+  },
   { title: "Blogs", link: "/admin/blogs", icon: Blog },
   {
     title: "Report & Analysis",
