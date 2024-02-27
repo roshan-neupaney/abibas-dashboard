@@ -5,7 +5,7 @@ import noImage from "../public/icons/noImage.svg";
 
 const LazyImage = (props: any) => {
   const { src, ...rest } = props;
-  const [imgSrc, setImgSrc] = useState(noImage);
+  const [imgSrc, setImgSrc] = useState(src);
 
   useEffect(() => {
     setImgSrc(src);

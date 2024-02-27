@@ -59,7 +59,7 @@ const Inventory = () => {
       },
       {
         header: "Status",
-        accessor: "status",
+        accessorKey: "status",
       },
       {
         header: "Action",

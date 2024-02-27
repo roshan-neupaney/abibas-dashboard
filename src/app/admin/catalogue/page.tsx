@@ -5,23 +5,22 @@ import { CircularLoader } from "../../../../components/loader/loader";
 import axios from "axios";
 import DummyData from "../../../../components/dummyData";
 
-async function getData() {
+async function getData(val: string) {
   try {
-    const res = await axios.get("https://fakestoreapi.com/products");
+    const res = await axios.get(`https://fakestoreapi.com/products?limit=${val}`);
     return res?.data;
   } catch (error) {}
 }
 
-const Catalogue = async () => {
-  const data = await getData();
+const Catalogue = async (props: any) => {
+  const {searchParams} = props;
+  const data = await getData(searchParams.query);
 
   return (
     <>
       <PageHeader title="Catalogue" />
       {data?.length > 0 ? (
-        // <Suspense fallback={<CircularLoader />}>
           <DummyData data={data} />
-        // </Suspense>
       ) : (
         <NoDataFound />
       )}

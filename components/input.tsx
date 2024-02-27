@@ -1,9 +1,9 @@
-"use client";
+// "use client";
 
 import Image from "next/image";
 
 interface CustomInputProps {
-  title: string;
+  title?: string;
   value: any;
   onChange?: any;
   placeholder?: string;

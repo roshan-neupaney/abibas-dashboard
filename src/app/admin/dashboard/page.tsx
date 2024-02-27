@@ -1,21 +1,10 @@
-"use client";
-import CustomInput from "../../../../components/input";
+// "use client";
 import PageHeader from "../../../../components/pageHeader";
-import { useState } from "react";
-import { updateState } from "../../../../utilities/helper";
-import CustomSelect from "../../../../components/select";
-import { CustomToggleSwitch } from "../../../../components/checkbox";
-import { CustomRadio } from "../../../../components/radio";
-import CustomDropzone from "../../../../components/dropzone";
-import LazyImage from "../../../../components/lazyImage";
-import {CircularLoader} from "../../../../components/loader/loader";
-import NoDataFound from "../../../../components/noDataFound";
+import { cookies } from "next/headers";
+
 
 const Dashboard = () => {
-  const [formData, setFormData] = useState({
-    checked: true,
-    radio: "",
-  });
+// console.log('cookies', cookies().get('roshan')?.value)
 
   return (
     <>

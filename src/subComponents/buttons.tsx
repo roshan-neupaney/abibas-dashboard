@@ -7,6 +7,7 @@ interface ButtonProps {
   addRoute?: string;
   title: string;
   style?: any;
+  onClick?: any;
   addIcon?: boolean;
 }
 
@@ -20,9 +21,10 @@ export const Button = ({ addRoute = "", title, addIcon = false }: ButtonProps) =
   );
 };
 
-export const SubmitButton = ({ title, style = {} }: ButtonProps) => {
+export const SubmitButton = ({ title, style = {}, onClick='' }: ButtonProps) => {
+  const router = useRouter();
   return (
-    <div className="submit-button" style={style}>
+    <div className="submit-button" style={style} onClick={onClick}>
       <span className="label-submit">{title}</span>
     </div>
   );

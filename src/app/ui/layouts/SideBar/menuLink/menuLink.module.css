@@ -32,7 +32,7 @@
   background-color: #2e3132;
   max-height: 0rem;
   overflow: hidden;
-  transition: all 0.5s;
+  transition: all 0.3s;
   opacity: 0;
 }
 .showDropdown {
