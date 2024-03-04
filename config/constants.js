@@ -1,4 +1,6 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+export const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
+
 
 export const tablePaginationSizes = [
   { value: 10 },
@@ -7,3 +9,8 @@ export const tablePaginationSizes = [
   { value: 50 },
   { value: 100 },
 ];
+
+export const defaultStateModal = {
+  state: false,
+  id: '',
+}

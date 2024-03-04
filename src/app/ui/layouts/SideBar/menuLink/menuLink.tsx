@@ -15,6 +15,7 @@ import AppManagement from "../../../../../../public/icons/app-management.svg";
 import Setting from "../../../../../../public/icons/setting.svg";
 import Arrow from "../../../../../../public/icons/icon-right.svg";
 import Feedback from "../../../../../../public/icons/feedback.svg";
+import Form from "../../../../../../public/icons/form.svg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -68,6 +69,82 @@ const mainMenu = [
     icon: AppManagement,
   },
   { title: "Settings", link: "/admin/settings", icon: Setting },
+  {
+    title: "Forms",
+    category: [
+      {
+        title: "Category",
+        link: "/admin/form/category",
+        icon: Circle,
+      },
+      {
+        title: "Body Type",
+        link: "/admin/form/body-type",
+        icon: Circle,
+      },
+      {
+        title: "Brand",
+        link: "/admin/form/brand",
+        icon: Circle,
+      },
+      {
+        title: "Model",
+        link: "/admin/form/model",
+        icon: Circle,
+      },
+      {
+        title: "Color For Choice",
+        link: "/admin/form/color",
+        icon: Circle,
+      },
+      {
+        title: "Variant",
+        link: "/admin/form/variant",
+        icon: Circle,
+      },
+      {
+        title: "Unit",
+        link: "/admin/form/unit",
+        icon: Circle,
+      },
+      {
+        title: "Specification Category",
+        link: "/admin/form/specification-category",
+        icon: Circle,
+      },
+      {
+        title: "Assets Part Category",
+        link: "/admin/form/assets-part-category",
+        icon: Circle,
+      },
+      {
+        title: "Inspection Category",
+        link: "/admin/form/inspection-category",
+        icon: Circle,
+      },
+      {
+        title: "Feature Category",
+        link: "/admin/form/feature-category",
+        icon: Circle,
+      },
+      {
+        title: "Specifications",
+        link: "/admin/form/specifications",
+        icon: Circle,
+      },
+      {
+        title: "Features",
+        link: "/admin/form/features",
+        icon: Circle,
+      },
+      {
+        title: "Slider",
+        link: "/admin/form/slider",
+        icon: Circle,
+      },
+    ],
+    icon: Form,
+  },
 ];
 
 const MenuLink = () => {
@@ -87,7 +164,7 @@ const MenuLink = () => {
       <div>
         {mainMenu.map((items, index) => {
           return (
-            <React.Fragment key={`parent-${index}`}>
+            <div key={`parent-${index}`}>
               {items?.category ? (
                 <>
                   <div
@@ -157,9 +234,32 @@ const MenuLink = () => {
                   </div>
                 </Link>
               )}
-            </React.Fragment>
+            </div>
           );
         })}
+        {/* <div style={{borderBottom: '1px solid #2e3132'}}></div>
+        <div className={`${
+                      openCategory === items.title
+                        ? styles.showDropdown
+                        : styles.hideDropdown
+                    }`}>
+        {FormMenu.map((form, index) => {
+          return (
+            <Link href={form.link} key={`child-${index}-${form.title}`}>
+              <div
+                className={`${styles.linkContainer} ${
+                  pathname.includes(form.link) ? styles.active : ""
+                }`}
+              >
+                <div className={styles.subContainer}>
+                  <Image src={form.icon} width={20} height={20} alt="" />
+                  <span className={styles.title}>{form.title}</span>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
+        </div> */}
       </div>
       <Link href="/admin/dashboard">
         <div className={styles.feedbackContainer}>

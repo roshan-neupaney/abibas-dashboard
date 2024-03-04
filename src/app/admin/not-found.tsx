@@ -17,7 +17,7 @@ export default function NotFound  ({
 
   return (
     <div className='bg-[#fcfcfc]'>
-      <h1 >Something went wrong!</h1>
+      <h1 >not-found</h1>
       
       <button
         onClick={

@@ -3,22 +3,25 @@
 import CustomTableBody from "../../../../components/container/table/tableBody";
 import TableContainer from "../../../../components/container/table/tableContainer";
 import CustomTableHead from "../../../../components/container/table/tableHead";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import TablePagination from "../../../../components/container/table/paginate";
 import { itemslist, dataType } from "../../../../data";
 import NoDataFound from "../../../../components/noDataFound";
-import { CircularLoader } from "../../../../components/loader/loader";
 import {
   ColumnDef,
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import CustomInput from "../../../../components/input";
+import { useRouter } from "next/navigation";
 
 const Inventory = () => {
-  const data = itemslist;
+  // const data = itemslist;
+  const [search, setSearch] = useState("");
+  const router = useRouter();
+  const [data, setData] = useState(itemslist);
 
-  // const [data, setData] = useState(list);
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
       {
@@ -76,26 +79,58 @@ const Inventory = () => {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
+  const handleSearch = (val: string) => {
+    try {
+      setSearch(val);
+      const filteredData = itemslist.filter((items: any) => {
+        if (items.title.toLowerCase().includes(val.toLowerCase())) {
+          return items;
+        }
+      });
+      setData(filteredData);
+    } catch (e) {
+      console.log(e);
+      setData([]);
+    }
+  };
+
   return (
     <>
-      {data.length > 0 ? (
-        <div style={{ border: "1px solid #d8dadb" }}>
-          <TableContainer>
-            <CustomTableHead {...{ table }} />
-            <CustomTableBody
-              internalTitleRoute="/admin/inventory/detail/id"
-              titleImage="media"
-              firstSubTitle="fuel"
-              secondSubTitle="driven"
-              thirdSubTitle="mode"
-              {...{ table }}
-            />
-          </TableContainer>
-          <TablePagination {...{ table }} />
-        </div>
-      ) : (
-        <NoDataFound />
-      )}
+      <div style={{ border: "1px solid #d8dadb" }}>
+        <TableContainer
+          topRender={
+            <div className="flex  flex-1 gap-2 justify-end">
+              <div className="">
+                <CustomInput
+                  value={search}
+                  onChange={(val: string) => handleSearch(val)}
+                  placeholder="Search..."
+                />
+              </div>
+              {/* <Link href={`?query=${search}`}> */}
+
+              {/* </Link> */}
+            </div>
+          }
+        >
+          {data.length > 0 ? (
+            <>
+              <CustomTableHead {...{ table }} />
+              <CustomTableBody
+                internalTitleRoute="/admin/inventory/detail/id"
+                titleImage="media"
+                firstSubTitle="fuel"
+                secondSubTitle="driven"
+                thirdSubTitle="mode"
+                {...{ table }}
+              />
+            </>
+          ) : (
+            <NoDataFound />
+          )}
+        </TableContainer>
+        <TablePagination {...{ table }} />
+      </div>
     </>
   );
 };

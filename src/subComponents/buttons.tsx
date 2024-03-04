@@ -29,9 +29,9 @@ export const SubmitButton = ({ title, style = {}, onClick='' }: ButtonProps) => 
     </div>
   );
 };
-export const CancelButton = ({ title }: ButtonProps) => {
+export const CancelButton = ({ title, onClick }: ButtonProps) => {
   return (
-    <div className="cancel-button">
+    <div className="cancel-button" onClick={onClick}>
       <span className="label-cancel">{title}</span>
     </div>
   );

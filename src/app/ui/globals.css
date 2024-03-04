@@ -208,7 +208,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .cancel-button {
   display: flex;
-  padding: 12px 44px;
+  padding: 0.625rem 1.5rem;
   width: fit-content;
   justify-content: center;
   align-items: center;
@@ -302,10 +302,10 @@ input[type="number"]::-webkit-outer-spin-button {
 .body-medium {
   color: #201a1b;
   font-family: var(--font-roboto);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 1.25rem;
 }
 .body-medium-NH {
   color: #1a1c1e;
@@ -380,10 +380,8 @@ input[type="number"]::-webkit-outer-spin-button {
   flex: 1;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.5rem;
-  position: relative;
+  gap: 0.125rem;
   align-self: stretch;
-  position: relative;
 }
 
 .form-input {
@@ -398,6 +396,15 @@ input[type="number"]::-webkit-outer-spin-button {
 .form-input:focus {
   border-color: #202529;
   outline: none;
+}
+
+.error-label {
+  color: red;
+  font-family: var(--font-redHatDisplay);
+  font-size: 0.7rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.05rem;
 }
 
 .login-box {
@@ -424,6 +431,8 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer;
   display: flex;
   padding: 8px 12px;
+  max-height: 15rem;
+  overflow: auto;
   flex-direction: column;
   position: absolute;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px;
@@ -561,8 +570,8 @@ input[type="number"]::-webkit-outer-spin-button {
 .switch {
   display: flex;
   position: relative;
-  width: 60px;
-  height: 34px;
+  width: 40px;
+  height: 23px;
 }
 
 .slider {
@@ -579,10 +588,10 @@ input[type="number"]::-webkit-outer-spin-button {
 .slider::before {
   content: "";
   position: absolute;
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
+  height: 17px;
+  width: 17px;
+  left: 3px;
+  bottom: 3px;
   background-color: #fcfcfc;
   transition: 0.3s;
   border-radius: 50%;
@@ -593,7 +602,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .switch input:checked + .slider::before {
-  transform: translateX(26px);
+  transform: translateX(17px);
 }
 
 .radio-circle {
@@ -943,4 +952,28 @@ input[type="number"]::-webkit-outer-spin-button {
   line-height: 1.5rem;
   letter-spacing: 0.08rem;
   text-transform: uppercase;
+}
+
+.modal-container {
+  display: flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(199, 199, 199, 0.64);
+  /* backdrop-filter: blur(3px); */
+}
+
+.modal {
+  display: flex;
+  width: 30rem;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.5rem;
+  background: #f9f7f7;
+  box-shadow: 4px 4px 32px 0px rgba(0, 0, 0, 0.24);
 }

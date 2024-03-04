@@ -21,7 +21,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const DummyData = ({ data }: any) => {
-  // console.log("data", data);
   const [search, setSearch] = useState<String>("");
   const router = useRouter();
 

@@ -1,5 +1,5 @@
 import styles from "./header.module.css";
-import Plus from "../../../../../public/icons/icon-left.svg";
+import Plus from "../../../../../public/icons/add.svg";
 import Arrow from "../../../../../public/icons/icon-right.svg";
 import Notification from "../../../../../public/icons/nav-icon.svg";
 import Image from "next/image";

@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 import Login from "./login";
-import { redirect } from "next/navigation";
 import { Login_Post } from "../../../utilities/apiCall";
 import { LOGIN } from "../../../config/endPoints";
+import axios from "axios";
 
 interface loginTypes {
   email: string;
@@ -11,23 +11,14 @@ interface loginTypes {
 }
 
 const LoginPage = async () => {
-  const handleSubmit = async (form: loginTypes) => {
+  const setCookies = async (data: any) => {
     "use server";
-    // const response = await Login_Post(LOGIN, form)
-    //   .then((res) => {
-    //     return res;
-    //   })
-    //   .catch((e) => console.error(e));
-    // const { status, data }: any = response;
-    // if (status) {
-    //   cookies().set({
-    //     name: "access_token",
-    //     value: "Bearer " + data.access_token,
-    //     maxAge: 60 * 60 * 24,
-    //     httpOnly: true,
-    //   });
-    // }
-      redirect("/admin/dashboard");
+      cookies().set({
+        name: "access_token",
+        value: "Bearer " + data.access_token,
+        maxAge: 60 * 60 * 24,
+        httpOnly: true,
+      });
   };
 
   return (
@@ -36,7 +27,7 @@ const LoginPage = async () => {
         <div className="flex justify-center self-stretch">
           <span className="section-title">Sign In</span>
         </div>
-        <Login handleSubmit={handleSubmit} />
+        <Login setCookies={setCookies} />
       </div>
     </div>
   );

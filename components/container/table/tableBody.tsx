@@ -1,8 +1,12 @@
 import Image from "next/image";
 import threeDots from "../../../public/icons/three-dots.svg";
+import EditIcon from "../../../public/icons/editIcon.svg";
+import DeleteIcon from "../../../public/icons/deleteIcon.svg";
 import LazyImage from "../../lazyImage";
 import Link from "next/link";
 import { flexRender } from "@tanstack/react-table";
+import { BASE_URL, IMAGE_URL } from "../../../config/constants";
+import { useRouter } from "next/navigation";
 
 interface CustomTableBodyProps {
   table: any;
@@ -11,6 +15,10 @@ interface CustomTableBodyProps {
   secondSubTitle?: string;
   thirdSubTitle?: string;
   internalTitleRoute?: string;
+  toggleModal?: any;
+  hideDelete?: boolean;
+  hideEdit?: boolean;
+  entireRoute?: string;
 }
 
 const CustomTableBody = ({
@@ -20,7 +28,12 @@ const CustomTableBody = ({
   secondSubTitle = "",
   thirdSubTitle = "",
   internalTitleRoute = "",
+  toggleModal,
+  hideDelete = false,
+  hideEdit = false,
+  entireRoute = "",
 }: CustomTableBodyProps) => {
+  const router = useRouter();
   return (
     <tbody>
       {table?.getRowModel().rows.map((row: any, i: number) => {
@@ -31,12 +44,13 @@ const CustomTableBody = ({
             style={{ backgroundColor: i % 2 !== 0 ? "#F0F0F4" : "#FCFCFC" }}
           >
             {row?._getAllVisibleCells().map((cell: any, _index: any) => {
+              const id = cell.row.original["id"];
               return (
                 <td className="body-medium-NH table-cell" key={_index}>
                   {cell.column.id.includes("image") ? (
                     <div className="table-image relative">
                       <LazyImage
-                        src={cell?.row.original['image']}
+                        src={IMAGE_URL + "small-" + cell?.row.original["image"]}
                         alt="table-image"
                         fill
                         loading="lazy"
@@ -60,8 +74,12 @@ const CustomTableBody = ({
                       )}
                       <div className="flex col gap-2">
                         <div className="flex justify-start align-center body-medium">
-                          {internalTitleRoute && (
-                            <Link href={internalTitleRoute}>{cell.row.original['title']}</Link>
+                          {internalTitleRoute ? (
+                            <Link href={internalTitleRoute}>
+                              {cell.row.original["title"]}
+                            </Link>
+                          ) : (
+                            <span>{cell.row.original["title"]}</span>
                           )}
                         </div>
                         <div className="flex gap-4">
@@ -83,33 +101,93 @@ const CustomTableBody = ({
                         </div>
                       </div>
                     </div>
-                  ) : cell.column.id == "_id" ? (
-                    <div className="label-large-NH">{cell.row.original['_id']}</div>
+                  ) : cell.column.id == "id" ? (
+                    <div className="label-large-NH">
+                      {cell.row.original["id"]}
+                    </div>
+                  ) : cell.column.id == "colors" ? (
+                    <div className="flex gap-1">
+                      {cell?.row?.original["colors"]?.map((items:any, i:number) => {
+                        return (
+                          <div
+                            className="flex "
+                            style={{
+                              width: 20,
+                              height: 20,
+                              background: items,
+                            }}
+                            key={i}
+                          ></div>
+                        );
+                      })}
+                    </div>
                   ) : cell.column.id == "status" ? (
                     <div
                       className={`label-medium-NH status-chip ${
-                        cell.row.original['status'] == "active"
+                        cell.row.original["status"] == "active"
                           ? "active-chip"
-                          : cell.row.original['status'] == "booked"
+                          : cell.row.original["status"] == "booked"
                           ? "booked-chip"
-                          : cell.row.original['status'] == "sold"
+                          : cell.row.original["status"] == "sold"
                           ? "sold-chip"
                           : "upcoming-chip"
                       }`}
                     >
-                      {cell.row.original['status']}
+                      {cell.row.original["status"]}
                     </div>
                   ) : cell.column.id == "action" ? (
-                    <div className="pointer" onClick={() => {}}>
-                      <Image src={threeDots} alt="" width={20} height={20} />
+                    <div className="flex gap-4">
+                      {!hideEdit && (
+                        <Link href={entireRoute + "/" + id}>
+                          <div className="pointer">
+                            <Image
+                              src={EditIcon}
+                              width={20}
+                              height={20}
+                              alt=""
+                            />
+                          </div>
+                        </Link>
+                      )}
+                      {!hideDelete && (
+                        <div
+                          className="pointer"
+                          onClick={() => toggleModal({ state: true, id: id })}
+                        >
+                          <Image
+                            src={DeleteIcon}
+                            width={20}
+                            height={20}
+                            alt=""
+                          />
+                        </div>
+                      )}
+                      {hideDelete && hideEdit && (
+                        <div
+                          className="pointer"
+                          onClick={() =>
+                            toggleModal({
+                              state: true,
+                              id: cell.row.original["id"],
+                            })
+                          }
+                        >
+                          <Image
+                            src={threeDots}
+                            alt=""
+                            width={20}
+                            height={20}
+                          />
+                        </div>
+                      )}
                     </div>
                   ) : (
-                  <span>
-                    {flexRender(
-                      cell.column.columnDef.cell,
-                      cell.getContext()
-                    )}
-                  </span>
+                    <span className="body-medium">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </span>
                   )}
                 </td>
               );

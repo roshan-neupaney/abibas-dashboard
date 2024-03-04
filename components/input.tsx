@@ -12,7 +12,11 @@ interface CustomInputProps {
   disabled?: boolean;
   search?: boolean;
   rightIcon?: any;
+  multiline?: boolean;
   iconClick?: any;
+  rows?: number;
+  error?: string;
+  required?: boolean;
 }
 const CustomInput = ({
   title,
@@ -23,31 +27,67 @@ const CustomInput = ({
   disabled = false,
   rightIcon = null,
   iconClick = null,
+  multiline = false,
+  rows,
+  style = {},
+  error = "",
+  required = false,
 }: CustomInputProps) => {
   return (
     <div className="form-box">
-      {title && <span className="label">{title}</span>}
-      <input
-        className="form-input body-medium"
-        value={value}
-        type={type}
-        onChange={(e) => {
-          if (type === "number") {
-            if (/[0-9]/.test(e.target.value) || e.target.value == "") {
+      <div className="flex flex-col self-stretch relative gap-2">
+        {title && (
+          <span className="label" style={{ color: error ? "red" : "#1a1c1e" }}>
+            {title}
+            {required ? "*" : ""}
+          </span>
+        )}
+        {!multiline ? (
+          <input
+            className="form-input body-medium"
+            value={value}
+            type={type}
+            onChange={(e) => {
+              if (type === "number") {
+                if (/[0-9]/.test(e.target.value) || e.target.value == "") {
+                  onChange(e.target.value);
+                }
+              } else {
+                onChange(e.target.value);
+              }
+            }}
+            placeholder={placeholder}
+            disabled={disabled}
+            style={{
+              ...style,
+              border: error ? "1px solid red" : "1px solid #92959a",
+            }}
+            required={required}
+          />
+        ) : (
+          <textarea
+            className="form-input body-medium"
+            value={value}
+            rows={rows}
+            onChange={(e) => {
               onChange(e.target.value);
-            }
-          } else {
-            onChange(e.target.value);
-          }
-        }}
-        placeholder={placeholder}
-        disabled={disabled}
-      />
-      {rightIcon && (
-        <span className="password-visibility" onClick={iconClick}>
-          <Image src={rightIcon} width={20} height={20} alt="" />
-        </span>
-      )}
+            }}
+            placeholder={placeholder}
+            disabled={disabled}
+            required={required}
+            style={{
+              ...style,
+              border: error ? "1px solid red" : "1px solid #92959a",
+            }}
+          />
+        )}
+        {rightIcon && (
+          <span className="password-visibility" onClick={iconClick}>
+            <Image src={rightIcon} width={20} height={20} alt="" />
+          </span>
+        )}
+      </div>
+      <div className="error-label h-1">{error}</div>
     </div>
   );
 };

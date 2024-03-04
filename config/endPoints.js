@@ -1,1 +1,17 @@
 export const LOGIN = "/auth/local/signin";
+export const CRUD_CATEGORY = "/category";
+export const CRUD_BODY_TYPE = "/bodytype";
+export const CRUD_BRAND = "/brand";
+export const CRUD_MODEL = "/model";
+export const CRUD_COLOR_CHOICE = "/color-for-choice";
+export const CRUD_VARIANT = "/variant";
+export const CRUD_UNIT = "/unit";
+export const CRUD_SPECIFICATION_CATEGORY = "/specification-category";
+export const CRUD_ASSETS_PART_CATEGORY = "/assets-part-category";
+export const CRUD_INSPECTION_CATEGORY = "/inspection-category";
+export const CRUD_FEATURE_CATEGORY = "/feature-category";
+export const CRUD_SPECIFICATION = "/specification";
+export const CRUD_FEATURE = "/feature";
+export const CRUD_ASSETS_PART = "/assets-part";
+export const CRUD_INSPECTION = "/inspection";
+export const CRUD_SLIDER = "/slider";

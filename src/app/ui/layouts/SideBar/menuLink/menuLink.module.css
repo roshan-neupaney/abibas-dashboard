@@ -37,7 +37,7 @@
 }
 .showDropdown {
   background-color: #2e3132;
-  max-height: 14rem;
+  max-height: 50rem;
   opacity: 1;
   transition: all 0.5s;
 }
