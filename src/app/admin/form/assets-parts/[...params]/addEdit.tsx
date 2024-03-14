@@ -3,55 +3,91 @@ import React, { useEffect, useState } from "react";
 import CustomInput from "../../../../../../components/input";
 import { updateState } from "../../../../../../utilities/helper";
 import { CustomToggleSwitch } from "../../../../../../components/checkbox";
-import CustomDropzone from "../../../../../../components/dropzone";
 import { SubmitButton } from "@/subComponents/buttons";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { CRUD_INSPECTION_CATEGORY } from "../../../../../../config/endPoints";
+import { CRUD_ASSETS_PARTS } from "../../../../../../config/endPoints";
 import {
   PostFormAdd,
   PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
-import { categoryValidation } from "../../../../../../utilities/validation";
+import {
+  assetsPartValidation,
+} from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
+import CustomSelect from "../../../../../../components/select";
+import CustomDropzone from "../../../../../../components/dropzone";
+
+interface AssetsPartsProps {
+  token: string | undefined;
+  data: any;
+  isEdit: boolean;
+  id: string;
+  assets_part_category: any;
+}
+
+interface formType {
+  title: string;
+  description: string;
+  file: any,
+  assets_part_category_id: string,
+  status: boolean,
+}
 
 const defaultForm = {
   title: "",
   description: "",
-  status: false,
   file: "",
+  assets_part_category_id: "",
+  status: false,
 };
 
 const defaultError = {
   title: "",
   description: "",
   file: "",
+  assets_part_category_id: "",
+  status: false,
 };
 
-const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
+const AddEditAssetsPart = ({
+  token,
+  data,
+  isEdit,
+  id,
+  assets_part_category,
+}: AssetsPartsProps) => {
   const editForm = isEdit
     ? {
         title: data?.title || "",
         description: data?.description || "",
-        file: data?.image || "",
         status: data?.status == "ACTIVE",
+        assets_part_category_id: data?.assets_part_category_id,
+        file: data?.image,
       }
     : defaultForm;
-
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
 
+  const beautifiedAssetsPartCategory = assets_part_category?.data?.map(
+    (items: any) => {
+      return { id: items.id, label: items.title };
+    }
+  );
+
   const router = useRouter();
 
-  const beautifyPayload = (_data: any) => {
+  const beautifyPayload = (_data: formType) => {
     if (data?.image === _data?.file) {
       const payload = {
         title: "",
         description: "",
         status: "",
+        assets_part_category_id: "",
       };
       payload.title = _data.title;
       payload.description = _data.description;
+      payload.assets_part_category_id = _data.assets_part_category_id;
       payload.status = _data.status ? "ACTIVE" : "PENDING";
       return payload;
     } else {
@@ -60,9 +96,11 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
         description: "",
         file: "",
         status: "",
+        assets_part_category_id: "",
       };
       payload.title = _data.title;
       payload.description = _data.description;
+      payload.assets_part_category_id = _data.assets_part_category_id;
       payload.file = _data.file;
       payload.status = _data.status ? "ACTIVE" : "PENDING";
       return payload;
@@ -72,22 +110,21 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
   const handleAdd = async () => {
     try {
       const beautifiedPayload = beautifyPayload(formData);
-      const { isValid, error }: any = categoryValidation(beautifiedPayload);
+      const { isValid, error } : any = assetsPartValidation(beautifiedPayload);
       if (isValid) {
         const response = await PostFormAdd(
-          CRUD_INSPECTION_CATEGORY,
+          CRUD_ASSETS_PARTS,
           beautifiedPayload,
           token
         );
-        const { status }: any = response;
+        const { status } : any = response;
         if (status) {
-          toast.success("Successfully Added Inspection Category");
+          toast.success("Successfully Added Assets Part");
           setFormError(defaultError);
-          clearCachesByServerAction("/admin/form/inspection-category");
-          // router.refresh();
-          router.push("/admin/form/inspection-category");
+          clearCachesByServerAction("/admin/form/assets-parts");
+          router.push("/admin/form/assets-parts");
         } else {
-          toast.error("Error While Adding Inspection Category");
+          toast.error("Error While Adding Assets Part");
         }
       } else {
         toast.error("Validation Error");
@@ -95,29 +132,28 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
       }
     } catch (e) {
       toast.error("Error While Adding");
-      console.log(e);
     }
   };
   const handleUpdate = async () => {
     try {
       const beautifiedPayload = beautifyPayload(formData);
-      console.log("beautifiedPayload", beautifiedPayload);
-      const { isValid, error }: any = categoryValidation(beautifiedPayload);
+      const { isValid, error }: any =
+      assetsPartValidation(beautifiedPayload);
       if (isValid) {
         const response = await PostFormUpdate(
-          CRUD_INSPECTION_CATEGORY,
+          CRUD_ASSETS_PARTS,
           id,
           beautifiedPayload,
           token
         );
         const { status }: any = response;
         if (status) {
-          toast.success("Successfully Updated Inspection Category");
+          toast.success("Successfully Updated Assets Part");
           setFormError(defaultError);
-          clearCachesByServerAction("/admin/form/inspection-category");
-          router.push("/admin/form/inspection-category");
+          clearCachesByServerAction("/admin/form/assets-parts");
+          router.push("/admin/form/assets-parts");
         } else {
-          toast.error("Error While Updating Inspection Category");
+          toast.error("Error While Updating Assets Part");
         }
       } else {
         toast.error("Validation Error");
@@ -130,6 +166,17 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
 
   return (
     <div className="flex flex-1 w-[30rem] p-4 flex-col gap-5">
+      <CustomSelect
+        title="Assets Part Category"
+        value={formData.assets_part_category_id}
+        data={beautifiedAssetsPartCategory}
+        onChange={(val: string) =>
+          updateState("assets_part_category_id", val, setFormData, setFormError)
+        }
+        placeholder="Select Assets Part Category"
+        error={formError.assets_part_category_id}
+        required
+      />
       <CustomInput
         title="Title"
         value={formData.title}
@@ -152,12 +199,6 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
         error={formError.description}
         required
       />
-
-      <CustomToggleSwitch
-        title="Is Active"
-        value={formData.status}
-        onChange={(val: boolean) => updateState("status", val, setFormData)}
-      />
       <CustomDropzone
         title="Image"
         value={formData.file}
@@ -167,6 +208,11 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
         error={formError.file}
         required
       />
+      <CustomToggleSwitch
+        title="Is Active"
+        value={formData.status}
+        onChange={(val: boolean) => updateState("status", val, setFormData)}
+      />
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
@@ -175,4 +221,4 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
   );
 };
 
-export default AddEditInspectionCategory;
+export default AddEditAssetsPart;

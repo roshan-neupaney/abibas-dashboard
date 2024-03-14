@@ -222,3 +222,91 @@ export const specificationCategoryValidation = (payload) => {
     console.log(e);
   }
 };
+
+export const assetsPartValidation = (payload) => {
+  try {
+    const { title, description, image, assets_part_category_id } = payload;
+    let count = 0;
+    const errorMessage = {
+      title: "",
+      description: "",
+      file: "",
+      assets_part_category_id: "",
+    };
+    if (!title.length > 0) {
+      errorMessage.title = "Title is required.";
+      count++;
+    }
+    if (!description.length > 0) {
+      errorMessage.description = "Description is required.";
+      count++;
+    }
+    if (!assets_part_category_id.length > 0) {
+      errorMessage.assets_part_category_id =
+        "Assets Part Category is required.";
+      count++;
+    }
+    if (image?.length == 0) {
+      errorMessage.file = "Image is required.";
+      count++;
+    }
+    return { error: errorMessage, isValid: count === 0 };
+  } catch (e) {
+    console.log(e);
+  }
+};
+export const inspectionValidation = (payload) => {
+  try {
+    const {
+      title,
+      description,
+      inspection_category_id,
+      start_text,
+      end_text,
+      bodypart,
+      text_for_everything_fine,
+    } = payload;
+    let count = 0;
+    const errorMessage = {
+      title: "",
+      description: "",
+      inspection_category_id: "",
+      start_text: "",
+      bodypart: "",
+      end_text: "",
+      text_for_everything_fine: "",
+    };
+    if (!title.length > 0) {
+      errorMessage.title = "Title is required.";
+      count++;
+    }
+    if (!description.length > 0) {
+      errorMessage.description = "Description is required.";
+      count++;
+    }
+    if (!inspection_category_id.length > 0) {
+      errorMessage.inspection_category_id = "Inspection Category is required.";
+      count++;
+    }
+    if (!start_text?.length > 0) {
+      errorMessage.start_text = "Start Text is required.";
+      count++;
+    }
+    if (!bodypart?.length > 0) {
+      errorMessage.bodypart = "Body Part is required.";
+      count++;
+    }
+    if (!end_text?.length > 0) {
+      errorMessage.end_text = "End Text is required.";
+      count++;
+    }
+    if (!text_for_everything_fine?.length > 0) {
+      errorMessage.text_for_everything_fine =
+        "Text for if everything is fine is required.";
+      count++;
+    }
+    return { error: errorMessage, isValid: count === 0 };
+  } catch (e) {
+    console.log(e);
+  }
+};

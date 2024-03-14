@@ -118,8 +118,18 @@ const mainMenu = [
         icon: Circle,
       },
       {
+        title: "Assets Parts",
+        link: "/admin/form/assets-parts",
+        icon: Circle,
+      },
+      {
         title: "Inspection Category",
         link: "/admin/form/inspection-category",
+        icon: Circle,
+      },
+      {
+        title: "Inspections",
+        link: "/admin/form/inspections",
         icon: Circle,
       },
       {
@@ -161,7 +171,7 @@ const MenuLink = () => {
   const pathname = usePathname();
   return (
     <div className={styles.container}>
-      <div>
+      <div className={styles.menuContainer}>
         {mainMenu.map((items, index) => {
           return (
             <div key={`parent-${index}`}>

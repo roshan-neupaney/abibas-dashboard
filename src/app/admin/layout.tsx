@@ -10,9 +10,9 @@ const DashboardLayout = ({ children }: any) => {
       </div>
       <div className={styles.header}>
         <Header />
-      <div className={styles.childrenContainer} >
-        <div className={styles.children}>{children}</div>
-      </div>
+        <div className={styles.childrenContainer}>
+          <div className={styles.children}>{children}</div>
+        </div>
       </div>
     </div>
   );

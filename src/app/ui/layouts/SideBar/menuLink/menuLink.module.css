@@ -28,6 +28,11 @@
   background-color: #5c5f5f !important;
 }
 
+.menuContainer {
+  display: flex;
+  flex-direction: column;
+}
+
 .hideDropdown {
   background-color: #2e3132;
   max-height: 0rem;
@@ -43,7 +48,7 @@
 }
 
 .title {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
@@ -62,7 +67,7 @@
 }
 
 .feedbackContainer {
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   position: relative;
   bottom: 0;
@@ -71,4 +76,30 @@
   align-items: center;
   padding: 14px 4px 14px 20px;
   gap: 12px;
+}
+
+@media screen and (max-width: 834px) {
+  .container {
+    display: flex;
+    flex-direction: row;
+    height: 80px;
+    /* justify-content: space-between; */
+  }
+
+  .menuContainer {
+    flex-direction: row;
+  }
+  .linkContainer {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  .subContainer {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 18px 16px;
+    gap: 4px;
+  }
 }

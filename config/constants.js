@@ -13,4 +13,14 @@ export const tablePaginationSizes = [
 export const defaultStateModal = {
   state: false,
   id: '',
-}
+};
+
+export const commaValueIfDropdown = [
+  { id: "REQUIRED", label: "Required" },
+  { id: "OPTIONAL", label: "Optional" },
+];
+
+export const specificationOptionType = [
+  { id: "TEXT", label: "Text" },
+  { id: "DROPDOWN", label: "Dropdown" },
+];

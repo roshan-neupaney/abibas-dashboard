@@ -89,7 +89,7 @@ export const beautifyColor = (data) => {
 export const beautifyVariant = (data) => {
   try {
     const filteredData = data?.map((body) => {
-      const temp = body?.colors ==""? '[]': body?.colors;
+      const temp = body?.colors == "" ? "[]" : body?.colors;
       const color = JSON.parse(temp);
       const temp_color = color?.map((items) => {
         return items.color_code;
@@ -108,7 +108,7 @@ export const beautifyVariant = (data) => {
       details.image = body?.image || "";
       details.title = body?.title || "";
       details.description = body?.description || "";
-      details.colors = temp_color   || [];
+      details.colors = temp_color || [];
       details.fuel_type = body?.fuel_type || "";
       details.model = body?.model || "";
       details.status = body?.status || "";
@@ -116,7 +116,7 @@ export const beautifyVariant = (data) => {
     });
     return filteredData;
   } catch (error) {
-    console.log('error', error)
+    console.log("error", error);
   }
 };
 
@@ -160,17 +160,16 @@ export const beautifySpecificationCategory = (data) => {
 
 export const beautifyFeature = (data) => {
   try {
-    console.log('data', data)
     const filteredData = data.map((cat) => {
       const details = {
         id: "",
         image: "",
         title: "",
         description: "",
-        comma_value_dropdown: '',
-        feature_option_type: '',
-        feature_category: '',
-        unit: '',
+        comma_value_dropdown: "",
+        feature_option_type: "",
+        feature_category: "",
+        unit: "",
         status: "",
       };
       details.id = cat?.id;
@@ -189,16 +188,16 @@ export const beautifyFeature = (data) => {
 };
 export const beautifySpecification = (data) => {
   try {
-    console.log('data', data)
+    console.log("data", data);
     const filteredData = data.map((cat) => {
       const details = {
         id: "",
         image: "",
         title: "",
         description: "",
-        comma_value_dropdown: '',
-        specification_option_type: '',
-        specification_category: '',
+        comma_value_dropdown: "",
+        specification_option_type: "",
+        specification_category: "",
         status: "",
       };
       details.id = cat?.id;
@@ -208,6 +207,60 @@ export const beautifySpecification = (data) => {
       details.comma_value_dropdown = cat?.comma_value_if_dropdown;
       details.specification_option_type = cat?.specification_option_type;
       details.specification_category = cat?.specification_category;
+      details.status = cat?.status;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {}
+};
+export const beautifyAssetsPart = (data) => {
+  try {
+    const filteredData = data.map((cat) => {
+      const details = {
+        id: "",
+        image: "",
+        title: "",
+        description: "",
+        assets_part_category: "",
+        status: "",
+      };
+      details.id = cat?.id;
+      details.image = cat?.image;
+      details.title = cat?.title;
+      details.description = cat?.description;
+      details.assets_part_category = cat?.assetsPartCategory;
+      details.status = cat?.status;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {}
+};
+export const beautifyInspection = (data) => {
+  try {
+    console.log("data", data);
+    const filteredData = data.map((cat) => {
+      const details = {
+        id: "",
+        title: "",
+        description: "",
+        inspection_category: "",
+        status: "",
+        start_text: "",
+        end_text: "",
+        inception_option_type: "",
+        comma_value_if_dropdown: "",
+        text_for_everything_fine: "",
+      };
+      details.id = cat?.id;
+      details.image = cat?.image;
+      details.title = cat?.title;
+      details.description = cat?.description;
+      details.start_text = cat?.start_text;
+      details.end_text = cat?.end_text;
+      details.inspection_category = cat?.inspectionCategory;
+      details.inception_option_type = cat?.inception_option_type;
+      details.comma_value_if_dropdown = cat?.comma_value_if_dropdown;
+      details.text_for_everything_fine = cat?.text_for_everything_fine;
       details.status = cat?.status;
       return details;
     });

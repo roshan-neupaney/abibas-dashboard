@@ -22,7 +22,7 @@ const DeleteModal = ({
         <div className="modal-container">
           <div className="modal">
             <div className="flex py-3 px-5 gap-4 items-center self-stretch border-b-[1px] border-solid border-[#D8DADB]">
-              <div className="flex flex-1 headline-small-NH">Add Quote</div>
+              <div className="flex flex-1 headline-small-NH">Delete {type}</div>
               <span
                 className="flex p-[0.625rem] justify-center items-center "
                 onClick={handleClose}

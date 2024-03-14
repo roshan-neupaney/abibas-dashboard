@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CustomInput from "../../../../../../components/input";
 import { updateState } from "../../../../../../utilities/helper";
 import { CustomToggleSwitch } from "../../../../../../components/checkbox";
@@ -15,6 +15,7 @@ import {
 import CustomSelect from "../../../../../../components/select";
 import { CustomRadio } from "../../../../../../components/radio";
 import { specificationValidation } from "../../../../../../utilities/validation";
+import { commaValueIfDropdown, specificationOptionType } from "../../../../../../config/constants";
 
 const defaultForm = {
   title: "",
@@ -52,14 +53,14 @@ const AddEditSpecification = ({
     return { id: items.id, label: items.title };
   });
 
-  const commaValueIfDropdown = [
-    { id: "REQUIRED", label: "Required" },
-    { id: "OPTIONAL", label: "Optional" },
-  ];
-  const specificationOptionType = [
-    { id: "TEXT", label: "Text" },
-    { id: "DROPDOWN", label: "Dropdown" },
-  ];
+  // const commaValueIfDropdown = [
+  //   { id: "REQUIRED", label: "Required" },
+  //   { id: "OPTIONAL", label: "Optional" },
+  // ];
+  // const specificationOptionType = [
+  //   { id: "TEXT", label: "Text" },
+  //   { id: "DROPDOWN", label: "Dropdown" },
+  // ];
 
   const editForm = isEdit
     ? {
