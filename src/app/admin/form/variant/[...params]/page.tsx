@@ -48,7 +48,7 @@ const AddModel = async ({ params }: any) => {
     token,
     id
   );
-  console.log('variant', variant)
+  
   return (
     <>
       <PageHeader title={isEdit ? "Update Variant" : "Add Variant"} showBack />

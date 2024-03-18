@@ -12,6 +12,7 @@ import {
   PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
 import { specificationCategoryValidation } from "../../../../../../utilities/validation";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   title: "",
@@ -65,7 +66,7 @@ const AddEditAssetsPartCategory = ({ token, data, isEdit, id }: any) => {
         if (status) {
           toast.success("Successfully Added Assets Part Category");
           setFormError(defaultError);
-          router.refresh();
+          clearCachesByServerAction("/admin/form/assets-part-category");
           router.push("/admin/form/assets-part-category");
         } else {
           toast.error("Error While Adding Assets Part Category");

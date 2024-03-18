@@ -13,7 +13,7 @@ async function getData(token: any, id: string) {
   } catch (error) {}
 }
 
-const AddCategory = async ({params}: any) => {
+const AddBodyType = async ({params}: any) => {
   const token = cookies().get("access_token")?.value;
   const id = params.params[1];
   const isEdit = params.params[0] === 'edit'
@@ -28,4 +28,4 @@ const AddCategory = async ({params}: any) => {
   );
 };
 
-export default AddCategory;
+export default AddBodyType;

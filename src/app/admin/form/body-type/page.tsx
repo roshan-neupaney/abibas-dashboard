@@ -2,14 +2,15 @@ import { cookies } from "next/headers";
 import PageHeader from "../../../../../components/pageHeader";
 import { ServerSideGet } from "../../../../../utilities/apiCall";
 import { CRUD_BODY_TYPE } from "../../../../../config/endPoints";
-import { beautifyBodyType, beautifyCategory } from "../../../../../utilities/beautify";
 import { authorization } from "../../../../../hoc/auth";
 import BodyType from "./childPage";
+import { revalidatePath } from "next/cache";
 
 async function getData(token: any) {
   authorization(token);
   try{
     const res = await ServerSideGet(token, CRUD_BODY_TYPE);
+    revalidatePath('/admin/form/body-type');
     return res?.data;
   } catch(e) {
   }

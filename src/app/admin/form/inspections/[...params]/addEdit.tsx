@@ -8,18 +8,13 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import {
   CRUD_INSPECTIONS,
-  CRUD_INSPECTION_CATEGORY,
 } from "../../../../../../config/endPoints";
 import {
   FormPatchJson,
   FormPostJson,
-  PostFormAdd,
-  PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
 import {
-  categoryValidation,
   inspectionValidation,
-  unitValidation,
 } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 import CustomSelect, {
@@ -90,6 +85,7 @@ const AddEditInspection = ({
 
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -120,6 +116,7 @@ const AddEditInspection = ({
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = inspectionValidation(beautifiedPayload);
@@ -137,17 +134,21 @@ const AddEditInspection = ({
           router.push("/admin/form/inspections");
         } else {
           toast.error("Error While Adding Inspection");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Adding");
       console.log(e);
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = inspectionValidation(beautifiedPayload);
@@ -157,23 +158,26 @@ const AddEditInspection = ({
           id,
           beautifiedPayload,
           token
-        );
-        const { status }: any = response;
-        if (status) {
-          toast.success("Successfully Updated Inspection");
-          setFormError(defaultError);
-          clearCachesByServerAction("/admin/form/inspections");
-          router.push("/admin/form/inspections");
+          );
+          const { status }: any = response;
+          if (status) {
+            toast.success("Successfully Updated Inspection");
+            setFormError(defaultError);
+            clearCachesByServerAction("/admin/form/inspections");
+            router.push("/admin/form/inspections");
+          } else {
+            toast.error("Error While Updating Inspection");
+            setLoading(false);
+          }
         } else {
-          toast.error("Error While Updating Inspection");
+          toast.error("Validation Error");
+          setFormError(error);
+          setLoading(false);
         }
-      } else {
-        toast.error("Validation Error");
-        setFormError(error);
+      } catch (e) {
+        toast.error("Error While Updating");
+        setLoading(false);
       }
-    } catch (e) {
-      toast.error("Error While Updating");
-    }
   };
 
   return (
@@ -281,6 +285,7 @@ const AddEditInspection = ({
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

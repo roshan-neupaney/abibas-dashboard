@@ -3,7 +3,7 @@
 import CustomTableBody from "../../../../../components/container/table/tableBody";
 import TableContainer from "../../../../../components/container/table/tableContainer";
 import CustomTableHead from "../../../../../components/container/table/tableHead";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TablePagination from "../../../../../components/container/table/paginate";
 import NoDataFound from "../../../../../components/noDataFound";
 import {
@@ -14,7 +14,7 @@ import {
 } from "@tanstack/react-table";
 import CustomInput from "../../../../../components/input";
 import { defaultStateModal } from "../../../../../config/constants";
-import { ClientSideGet, DeleteWithId } from "../../../../../utilities/apiCall";
+import { DeleteWithId } from "../../../../../utilities/apiCall";
 import { CRUD_FEATURE_CATEGORY} from "../../../../../config/endPoints";
 import toast from "react-hot-toast";
 import { beautifyCategory } from "../../../../../utilities/beautify";
@@ -33,7 +33,14 @@ const FeatureCategory = ({ _data, token }: any) => {
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
+  
+  useEffect(() => {
+    const beautifiedCategory = beautifyCategory(_data);
+    setData(beautifiedCategory);
+  }, [_data]);
+
 const router = useRouter();
+
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
       {
@@ -85,7 +92,6 @@ const router = useRouter();
       const { status }: any = res;
       if (status) {
         toast.success("Feature Category successfully deleted");
-        // fetchData();
         router.refresh();
         toggleModal(defaultStateModal);
       } else {
@@ -94,14 +100,6 @@ const router = useRouter();
     } catch (e) {
       toast.error("Error While Deleting Feature Category");
     }
-  };
-
-  const fetchData = async () => {
-    try {
-      const res = await ClientSideGet(CRUD_FEATURE_CATEGORY, token);
-      const beautifiedCategory = beautifyCategory(res?.data);
-      setData(beautifiedCategory);
-    } catch (e) {}
   };
 
   return (

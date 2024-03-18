@@ -14,6 +14,7 @@ import {
 } from "../../../../../../utilities/apiCall";
 import CustomSelect from "../../../../../../components/select";
 import { modelValidation } from "../../../../../../utilities/validation";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   title: "",
@@ -67,6 +68,7 @@ const AddEditModel = ({
 
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -109,6 +111,7 @@ const AddEditModel = ({
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = modelValidation(beautifiedPayload);
@@ -121,20 +124,25 @@ const AddEditModel = ({
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Added Model");
+          clearCachesByServerAction("/admin/form/model");
           router.push("/admin/form/model");
           setFormError(defaultError);
         } else {
           toast.error("Error While Adding Model");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Adding");
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = modelValidation(beautifiedPayload);
@@ -144,21 +152,25 @@ const AddEditModel = ({
           id,
           beautifiedPayload,
           token
-        );
-        const { status }: any = response;
-        if (status) {
-          toast.success("Successfully Updated Model");
-          router.push("/admin/form/model");
-          setFormError(defaultError);
-        } else {
-          toast.error("Error While Updating Model");
+          );
+          const { status }: any = response;
+          if (status) {
+            toast.success("Successfully Updated Model");
+            clearCachesByServerAction("/admin/form/model");
+            router.push("/admin/form/model");
+            setFormError(defaultError);
+          } else {
+            toast.error("Error While Updating Model");
+            setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -226,6 +238,7 @@ const AddEditModel = ({
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

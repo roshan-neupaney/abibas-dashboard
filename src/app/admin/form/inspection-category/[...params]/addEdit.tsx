@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CustomInput from "../../../../../../components/input";
 import { updateState } from "../../../../../../utilities/helper";
 import { CustomToggleSwitch } from "../../../../../../components/checkbox";
@@ -40,6 +40,7 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
 
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -70,6 +71,7 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
@@ -84,24 +86,25 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
           toast.success("Successfully Added Inspection Category");
           setFormError(defaultError);
           clearCachesByServerAction("/admin/form/inspection-category");
-          // router.refresh();
           router.push("/admin/form/inspection-category");
         } else {
           toast.error("Error While Adding Inspection Category");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Adding");
-      console.log(e);
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
-      console.log("beautifiedPayload", beautifiedPayload);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
       if (isValid) {
         const response = await PostFormUpdate(
@@ -118,13 +121,16 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
           router.push("/admin/form/inspection-category");
         } else {
           toast.error("Error While Updating Inspection Category");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -170,6 +176,7 @@ const AddEditInspectionCategory = ({ token, data, isEdit, id }: any) => {
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

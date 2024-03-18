@@ -17,7 +17,7 @@ import { defaultStateModal } from "../../../../../config/constants";
 import { DeleteWithId } from "../../../../../utilities/apiCall";
 import { CRUD_INSPECTIONS } from "../../../../../config/endPoints";
 import toast from "react-hot-toast";
-import { beautifyCategory, beautifyInspection } from "../../../../../utilities/beautify";
+import { beautifyInspection } from "../../../../../utilities/beautify";
 import DeleteModal from "../../../../../components/modals/deleteModal";
 import { useRouter } from "next/navigation";
 

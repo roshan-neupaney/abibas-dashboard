@@ -13,6 +13,7 @@ import {
   PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
 import { categoryValidation } from "../../../../../../utilities/validation";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   title: "",
@@ -39,6 +40,7 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
 
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -69,6 +71,7 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
@@ -81,20 +84,25 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Added Category");
+          clearCachesByServerAction("/admin/form/category");
           router.push("/admin/form/category");
           setFormError(defaultError);
         } else {
           toast.error("Error While Adding Category");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Adding");
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
@@ -108,17 +116,22 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Updated Category");
+          clearCachesByServerAction("/admin/form/category");
           router.push("/admin/form/category");
           setFormError(defaultError);
+          
         } else {
           toast.error("Error While Updating Category");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -164,6 +177,7 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

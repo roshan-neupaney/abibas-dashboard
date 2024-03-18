@@ -14,8 +14,8 @@ import {
 } from "@tanstack/react-table";
 import CustomInput from "../../../../../components/input";
 import { defaultStateModal } from "../../../../../config/constants";
-import { ClientSideGet, DeleteWithId } from "../../../../../utilities/apiCall";
-import { CRUD_CATEGORY, CRUD_INSPECTION_CATEGORY } from "../../../../../config/endPoints";
+import { DeleteWithId } from "../../../../../utilities/apiCall";
+import { CRUD_INSPECTION_CATEGORY } from "../../../../../config/endPoints";
 import toast from "react-hot-toast";
 import { beautifyCategory } from "../../../../../utilities/beautify";
 import DeleteModal from "../../../../../components/modals/deleteModal";
@@ -33,12 +33,13 @@ const InspectionCategory = ({ _data, token }: any) => {
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
-  const router = useRouter();
 
-  useEffect(()=>{
+  useEffect(() => {
     const beautifiedCategory = beautifyCategory(_data);
-    setData(beautifiedCategory)
-  },[_data])
+    setData(beautifiedCategory);
+  }, [_data]);
+
+  const router = useRouter();
 
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
@@ -91,7 +92,6 @@ const InspectionCategory = ({ _data, token }: any) => {
       const { status }: any = res;
       if (status) {
         toast.success("Category successfully deleted");
-        // fetchData();
         router.refresh()
         toggleModal(defaultStateModal);
       } else {
@@ -101,14 +101,6 @@ const InspectionCategory = ({ _data, token }: any) => {
       toast.error("Error while deleting category");
     }
   };
-
-  // const fetchData = async () => {
-  //   try {
-  //     const res = await ClientSideGet(CRUD_INSPECTION_CATEGORY, token);
-  //     const beautifiedCategory = beautifyCategory(res?.data);
-  //     setData(beautifiedCategory);
-  //   } catch (e) {}
-  // };
 
   return (
     <>

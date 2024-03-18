@@ -208,6 +208,8 @@ const MenuLink = () => {
                     }`}
                   >
                     {items.category.map((cat, i) => {
+                      
+                      // toggleCategory(pathname.includes(cat.link) ? cat?.title: '')
                       return (
                         <Link href={cat.link} key={`child-${i}-${cat.title}`}>
                           <div

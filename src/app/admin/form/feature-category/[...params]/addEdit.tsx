@@ -13,6 +13,7 @@ import {
   PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
 import { categoryValidation } from "../../../../../../utilities/validation";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   title: "",
@@ -40,6 +41,7 @@ const AddEditFeatureCategory = ({ token, data, isEdit, id }: any) => {
 
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -70,6 +72,7 @@ const AddEditFeatureCategory = ({ token, data, isEdit, id }: any) => {
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
@@ -78,25 +81,29 @@ const AddEditFeatureCategory = ({ token, data, isEdit, id }: any) => {
           CRUD_FEATURE_CATEGORY,
           beautifiedPayload,
           token
-        );
-        const { status }: any = response;
-        if (status) {
-          toast.success("Successfully Added Feature Category");
-          setFormError(defaultError);
-          router.push("/admin/form/feature-category");
-          router.refresh();
-        } else {
-          toast.error("Error While Adding Feature Category");
+          );
+          const { status }: any = response;
+          if (status) {
+            toast.success("Successfully Added Feature Category");
+            setFormError(defaultError);
+            clearCachesByServerAction("/admin/form/feature-category");
+            router.push("/admin/form/feature-category");
+          } else {
+            toast.error("Error While Adding Feature Category");
+            setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Adding");
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
@@ -111,17 +118,20 @@ const AddEditFeatureCategory = ({ token, data, isEdit, id }: any) => {
         if (status) {
           toast.success("Successfully Updated Feature Category");
           setFormError(defaultError);
-          router.refresh();
+          clearCachesByServerAction("/admin/form/feature-category");
           router.push("/admin/form/feature-category");
         } else {
           toast.error("Error While Updating Feature Category");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -167,6 +177,7 @@ const AddEditFeatureCategory = ({ token, data, isEdit, id }: any) => {
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

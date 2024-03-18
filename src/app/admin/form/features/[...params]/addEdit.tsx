@@ -15,6 +15,7 @@ import {
 import CustomSelect from "../../../../../../components/select";
 import { CustomRadio } from "../../../../../../components/radio";
 import { featureValidation } from "../../../../../../utilities/validation";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   title: "",
@@ -75,6 +76,7 @@ const AddEditFeature = ({
     : defaultForm;
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -133,6 +135,7 @@ const AddEditFeature = ({
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Added Feature");
+          clearCachesByServerAction("/admin/form/features");
           router.push("/admin/form/features");
           setFormError(defaultError);
         } else {
@@ -147,6 +150,7 @@ const AddEditFeature = ({
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = featureValidation(beautifiedPayload);
@@ -160,17 +164,21 @@ const AddEditFeature = ({
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Updated Feature");
+          clearCachesByServerAction("/admin/form/features");
           router.push("/admin/form/features");
           setFormError(defaultError);
         } else {
           toast.error("Error While Updating Feature");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -257,6 +265,7 @@ const AddEditFeature = ({
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

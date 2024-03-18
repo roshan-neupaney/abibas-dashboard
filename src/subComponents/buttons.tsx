@@ -9,9 +9,14 @@ interface ButtonProps {
   style?: any;
   onClick?: any;
   addIcon?: boolean;
+  disabled?: boolean;
 }
 
-export const Button = ({ addRoute = "", title, addIcon = false }: ButtonProps) => {
+export const Button = ({
+  addRoute = "",
+  title,
+  addIcon = false,
+}: ButtonProps) => {
   const router = useRouter();
   return (
     <button className="add-button" onClick={() => router.push(addRoute)}>
@@ -21,12 +26,22 @@ export const Button = ({ addRoute = "", title, addIcon = false }: ButtonProps) =
   );
 };
 
-export const SubmitButton = ({ title, style = {}, onClick='' }: ButtonProps) => {
+export const SubmitButton = ({
+  title,
+  style = {},
+  onClick = "",
+  disabled = false,
+}: ButtonProps) => {
   const router = useRouter();
   return (
-    <div className="submit-button" style={style} onClick={onClick}>
+    <button
+      className="submit-button"
+      style={style}
+      onClick={onClick}
+      disabled={disabled}
+    >
       <span className="label-submit">{title}</span>
-    </div>
+    </button>
   );
 };
 export const CancelButton = ({ title, onClick }: ButtonProps) => {

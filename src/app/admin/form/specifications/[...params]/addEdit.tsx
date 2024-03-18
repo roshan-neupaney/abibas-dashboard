@@ -15,7 +15,11 @@ import {
 import CustomSelect from "../../../../../../components/select";
 import { CustomRadio } from "../../../../../../components/radio";
 import { specificationValidation } from "../../../../../../utilities/validation";
-import { commaValueIfDropdown, specificationOptionType } from "../../../../../../config/constants";
+import {
+  commaValueIfDropdown,
+  specificationOptionType,
+} from "../../../../../../config/constants";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   title: "",
@@ -53,15 +57,6 @@ const AddEditSpecification = ({
     return { id: items.id, label: items.title };
   });
 
-  // const commaValueIfDropdown = [
-  //   { id: "REQUIRED", label: "Required" },
-  //   { id: "OPTIONAL", label: "Optional" },
-  // ];
-  // const specificationOptionType = [
-  //   { id: "TEXT", label: "Text" },
-  //   { id: "DROPDOWN", label: "Dropdown" },
-  // ];
-
   const editForm = isEdit
     ? {
         title: data?.title || "",
@@ -76,6 +71,7 @@ const AddEditSpecification = ({
     : defaultForm;
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -122,6 +118,7 @@ const AddEditSpecification = ({
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any =
@@ -135,20 +132,25 @@ const AddEditSpecification = ({
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Added Specification");
+          clearCachesByServerAction("/admin/form/specifications");
           router.push("/admin/form/specifications");
           setFormError(defaultError);
         } else {
           toast.error("Error While Adding Specification");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Adding");
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any =
@@ -163,17 +165,21 @@ const AddEditSpecification = ({
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Updated Specification");
+          clearCachesByServerAction("/admin/form/specifications");
           router.push("/admin/form/specifications");
           setFormError(defaultError);
         } else {
           toast.error("Error While Updating Specification");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -260,6 +266,7 @@ const AddEditSpecification = ({
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

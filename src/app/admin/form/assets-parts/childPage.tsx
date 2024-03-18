@@ -17,7 +17,7 @@ import { defaultStateModal } from "../../../../../config/constants";
 import { DeleteWithId } from "../../../../../utilities/apiCall";
 import { CRUD_ASSETS_PARTS } from "../../../../../config/endPoints";
 import toast from "react-hot-toast";
-import { beautifyAssetsPart, beautifySpecificationCategory } from "../../../../../utilities/beautify";
+import { beautifyAssetsPart } from "../../../../../utilities/beautify";
 import DeleteModal from "../../../../../components/modals/deleteModal";
 import { useRouter } from "next/navigation";
 
@@ -104,14 +104,6 @@ const AssetsPart = ({ _data, token }: any) => {
       toast.error("Error while deleting Assets Part");
     }
   };
-
-  // const fetchData = async () => {
-  //   try {
-  //     const res = await ClientSideGet(CRUD_ASSETS_PART_CATEGORY, token);
-  //     const beautifiedCategory = beautifySpecificationCategory(res?.data);
-  //     setData(beautifiedCategory);
-  //   } catch (e) {}
-  // };
 
   return (
     <>

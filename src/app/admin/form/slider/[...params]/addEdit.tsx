@@ -21,7 +21,6 @@ interface formDataType {
   file: any;
 }
 
-
 const defaultForm = {
   title: "",
   description: "",
@@ -37,18 +36,18 @@ const defaultError = {
 };
 
 const AddEditSlider = ({ token, data, isEdit, id }: any) => {
-  
   const editForm = isEdit
-  ? {
-    title: data?.title || "",
-    description: data?.description || "",
-    file: data?.image || "",
-    status: data?.status == "ACTIVE",
-  }
-  : defaultForm;
-  
+    ? {
+        title: data?.title || "",
+        description: data?.description || "",
+        file: data?.image || "",
+        status: data?.status == "ACTIVE",
+      }
+    : defaultForm;
+
   const [formData, setFormData] = useState<formDataType>(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -79,6 +78,7 @@ const AddEditSlider = ({ token, data, isEdit, id }: any) => {
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
@@ -95,40 +95,47 @@ const AddEditSlider = ({ token, data, isEdit, id }: any) => {
           setFormError(defaultError);
         } else {
           toast.error("Error While Adding Slider");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Adding");
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
       if (isValid) {
-      const response = await PostFormUpdate(
-        CRUD_SLIDER,
-        id,
-        beautifiedPayload,
-        token
-      );
-      const { status }: any = response;
-      if (status) {
-        toast.success("Successfully Updated Slider");
-        router.push("/admin/form/slider");
-        setFormError(defaultError);
+        const response = await PostFormUpdate(
+          CRUD_SLIDER,
+          id,
+          beautifiedPayload,
+          token
+        );
+        const { status }: any = response;
+        if (status) {
+          toast.success("Successfully Updated Slider");
+          router.push("/admin/form/slider");
+          setFormError(defaultError);
+        } else {
+          toast.error("Error While Updating Slider");
+          setLoading(false);
+        }
       } else {
-        toast.error("Error While Updating Slider");
+        toast.error("Validation Error");
+        setFormError(error);
+        setLoading(false);
       }
-    } else {
-      toast.error("Validation Error");
-      setFormError(error);
-    }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -137,7 +144,9 @@ const AddEditSlider = ({ token, data, isEdit, id }: any) => {
       <CustomInput
         title="Title"
         value={formData.title}
-        onChange={(val: string) => updateState("title", val, setFormData, setFormError)}
+        onChange={(val: string) =>
+          updateState("title", val, setFormData, setFormError)
+        }
         placeholder="Enter title"
         error={formError.title}
         required
@@ -145,7 +154,9 @@ const AddEditSlider = ({ token, data, isEdit, id }: any) => {
       <CustomInput
         title="Description"
         value={formData.description}
-        onChange={(val: string) => updateState("description", val, setFormData, setFormError)}
+        onChange={(val: string) =>
+          updateState("description", val, setFormData, setFormError)
+        }
         placeholder="Write here..."
         multiline
         rows={8}
@@ -160,12 +171,15 @@ const AddEditSlider = ({ token, data, isEdit, id }: any) => {
       <CustomDropzone
         title="Image"
         value={formData.file}
-        onChange={(val: any) => updateState("file", val, setFormData, setFormError)}
+        onChange={(val: any) =>
+          updateState("file", val, setFormData, setFormError)
+        }
         error={formError.file}
       />
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

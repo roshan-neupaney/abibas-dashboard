@@ -14,11 +14,12 @@ import {
 } from "@tanstack/react-table";
 import CustomInput from "../../../../../components/input";
 import { defaultStateModal } from "../../../../../config/constants";
-import { ClientSideGet, DeleteWithId } from "../../../../../utilities/apiCall";
+import { DeleteWithId } from "../../../../../utilities/apiCall";
 import { CRUD_CATEGORY } from "../../../../../config/endPoints";
 import toast from "react-hot-toast";
 import { beautifyCategory } from "../../../../../utilities/beautify";
 import DeleteModal from "../../../../../components/modals/deleteModal";
+import { useRouter } from "next/navigation";
 
 interface dataType {
   image: string;
@@ -32,6 +33,8 @@ const Category = ({ _data, token }: any) => {
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
+
+  const router = useRouter();
 
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
@@ -84,7 +87,7 @@ const Category = ({ _data, token }: any) => {
       const { status }: any = res;
       if (status) {
         toast.success("Category successfully deleted");
-        fetchData();
+        router.refresh();
         toggleModal(defaultStateModal);
       } else {
         toast.error("Error while deleting category");
@@ -92,14 +95,6 @@ const Category = ({ _data, token }: any) => {
     } catch (e) {
       toast.error("Error while deleting category");
     }
-  };
-
-  const fetchData = async () => {
-    try {
-      const res = await ClientSideGet(CRUD_CATEGORY, token);
-      const beautifiedCategory = beautifyCategory(res?.data);
-      setData(beautifiedCategory);
-    } catch (e) {}
   };
 
   return (

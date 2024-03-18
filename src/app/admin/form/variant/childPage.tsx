@@ -15,12 +15,13 @@ import {
 import CustomInput from "../../../../../components/input";
 import { defaultStateModal } from "../../../../../config/constants";
 import { CRUD_VARIANT } from "../../../../../config/endPoints";
-import { ClientSideGet, DeleteWithId } from "../../../../../utilities/apiCall";
+import { DeleteWithId } from "../../../../../utilities/apiCall";
 import toast from "react-hot-toast";
 import {
   beautifyVariant,
 } from "../../../../../utilities/beautify";
 import DeleteModal from "../../../../../components/modals/deleteModal";
+import { useRouter } from "next/navigation";
 
 interface dataType {
   image: string;
@@ -31,10 +32,16 @@ interface dataType {
 
 const Variant = ({ _data, token }: any) => {
   const beautifiedData = beautifyVariant(_data);
-  console.log('beautifiedData', beautifiedData)
   const [data, setData] = useState(beautifiedData);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
+
+  useEffect(() => {
+    const beautifiedCategory = beautifyVariant(_data);
+    setData(beautifiedCategory);
+  }, [_data]);
+
+  const router = useRouter();
   
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
@@ -99,7 +106,7 @@ const Variant = ({ _data, token }: any) => {
       const { status }: any = res;
       if (status) {
         toast.success("Variant Successfully Deleted");
-        fetchData();
+        router.refresh();
         toggleModal(defaultStateModal);
       } else {
         toast.error("Error While Deleting Variant");
@@ -109,15 +116,6 @@ const Variant = ({ _data, token }: any) => {
     }
   };
 
-  const fetchData = async () => {
-    try {
-      const res = await ClientSideGet(CRUD_VARIANT, token);
-      const beautifiedCategory = beautifyVariant(res?.data);
-      setData(beautifiedCategory);
-    } catch (e) {
-      toast.error("Error while fetching");
-    }
-  };
   return (
     <>
       <div style={{ border: "1px solid #d8dadb" }}>

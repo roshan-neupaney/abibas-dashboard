@@ -31,7 +31,8 @@ interface dataType {
 }
 
 const Brand = ({ _data, token }: any) => {
-  const [data, setData] = useState(_data);
+  const beautifiedCategory = beautifyBodyType(_data);
+  const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
 
@@ -76,7 +77,7 @@ const Brand = ({ _data, token }: any) => {
   const handleSearch = (val: string) => {
     try {
       setSearch(val);
-      const filteredData = _data.filter((items: any) => {
+      const filteredData = beautifiedCategory.filter((items: any) => {
         if (items.title.toLowerCase().includes(val.toLowerCase())) {
           return items;
         }

@@ -13,6 +13,7 @@ import {
   PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
 import { categoryValidation } from "../../../../../../utilities/validation";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   title: "",
@@ -40,6 +41,7 @@ const AddEditBrand = ({ token, data, isEdit, id }: any) => {
 
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -70,6 +72,7 @@ const AddEditBrand = ({ token, data, isEdit, id }: any) => {
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
@@ -82,20 +85,25 @@ const AddEditBrand = ({ token, data, isEdit, id }: any) => {
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Added Brand");
+          clearCachesByServerAction("/admin/form/brand");
           router.push("/admin/form/brand");
           setFormError(defaultError);
         } else {
           toast.error("Error While Adding Brand");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Adding");
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
@@ -109,17 +117,21 @@ const AddEditBrand = ({ token, data, isEdit, id }: any) => {
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Updated Brand");
+          clearCachesByServerAction("/admin/form/brand");
           router.push("/admin/form/brand");
           setFormError(defaultError);
         } else {
           toast.error("Error While Updating Brand");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -165,6 +177,7 @@ const AddEditBrand = ({ token, data, isEdit, id }: any) => {
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

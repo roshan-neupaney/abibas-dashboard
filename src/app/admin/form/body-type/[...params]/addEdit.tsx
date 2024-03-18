@@ -13,6 +13,7 @@ import {
   PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
 import { categoryValidation } from "../../../../../../utilities/validation";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   title: "",
@@ -40,6 +41,7 @@ const AddEditBodyType = ({ token, data, isEdit, id }: any) => {
 
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -70,6 +72,7 @@ const AddEditBodyType = ({ token, data, isEdit, id }: any) => {
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
@@ -83,19 +86,24 @@ const AddEditBodyType = ({ token, data, isEdit, id }: any) => {
         if (status) {
           toast.success("Successfully Added Body Type");
           setFormError(defaultError);
+          clearCachesByServerAction("/admin/form/body-type");
           router.push("/admin/form/body-type");
         } else {
+          setLoading(false);
           toast.error("Error While Adding Body Type");
         }
       } else {
-        toast.error("Validation Error");
+          setLoading(false);
+          toast.error("Validation Error");
         setFormError(error);
       }
     } catch (e) {
-      toast.error("Error While Adding");
+          setLoading(false);
+          toast.error("Error While Adding");
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
@@ -113,13 +121,16 @@ const AddEditBodyType = ({ token, data, isEdit, id }: any) => {
           router.push("/admin/form/body-type");
         } else {
           toast.error("Error While Updating Body Type");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -164,6 +175,7 @@ const AddEditBodyType = ({ token, data, isEdit, id }: any) => {
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

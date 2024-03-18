@@ -3,7 +3,7 @@
 import CustomTableBody from "../../../../../components/container/table/tableBody";
 import TableContainer from "../../../../../components/container/table/tableContainer";
 import CustomTableHead from "../../../../../components/container/table/tableHead";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TablePagination from "../../../../../components/container/table/paginate";
 import NoDataFound from "../../../../../components/noDataFound";
 import {
@@ -14,11 +14,12 @@ import {
 } from "@tanstack/react-table";
 import CustomInput from "../../../../../components/input";
 import { defaultStateModal } from "../../../../../config/constants";
-import { ClientSideGet, DeleteWithId } from "../../../../../utilities/apiCall";
+import { DeleteWithId } from "../../../../../utilities/apiCall";
 import { CRUD_COLOR_CHOICE } from "../../../../../config/endPoints";
 import toast from "react-hot-toast";
 import { beautifyColor } from "../../../../../utilities/beautify";
 import DeleteModal from "../../../../../components/modals/deleteModal";
+import { useRouter } from "next/navigation";
 
 interface dataType {
   image: string;
@@ -32,6 +33,13 @@ const Color = ({ _data, token }: any) => {
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
+  
+  useEffect(() => {
+    const beautifiedCategory = beautifyColor(_data);
+    setData(beautifiedCategory);
+  }, [_data]);
+
+  const router = useRouter();
 
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
@@ -80,7 +88,7 @@ const Color = ({ _data, token }: any) => {
       const { status }: any = res;
       if (status) {
         toast.success("Color Successfully Deleted");
-        fetchData();
+        router.refresh();
         toggleModal(defaultStateModal);
       } else {
         toast.error("Error While Deleting Color");
@@ -88,14 +96,6 @@ const Color = ({ _data, token }: any) => {
     } catch (e) {
       toast.error("Error While Deleting Color");
     }
-  };
-
-  const fetchData = async () => {
-    try {
-      const res = await ClientSideGet(CRUD_COLOR_CHOICE, token);
-      const beautifiedCategory = beautifyColor(res?.data);
-      setData(beautifiedCategory);
-    } catch (e) {}
   };
 
   return (

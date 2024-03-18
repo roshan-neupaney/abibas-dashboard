@@ -35,7 +35,7 @@ const AddEditSpecificationCategory = ({ token, data, isEdit, id }: any) => {
 
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
-const [btnLoader, toggleBtnLoader] = useState(false)
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const beautifyPayload = (_data: any) => {
@@ -51,8 +51,8 @@ const [btnLoader, toggleBtnLoader] = useState(false)
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
-      toggleBtnLoader(true)
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any =
         specificationCategoryValidation(beautifiedPayload);
@@ -66,50 +66,55 @@ const [btnLoader, toggleBtnLoader] = useState(false)
         if (status) {
           toast.success("Successfully Added Specification Category");
           setFormError(defaultError);
-          toggleBtnLoader(false)
-          // router.refresh();
           router.push("/admin/form/specification-category");
         } else {
           toast.error("Error While Adding Specification Category");
-          toggleBtnLoader(false)
+          setLoading(false);
+          
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
-        toggleBtnLoader(false)
+        setLoading(false);
+        
       }
     } catch (e) {
       toast.error("Error While Adding");
-      toggleBtnLoader(false)
+      setLoading(false);
+      
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any =
-        specificationCategoryValidation(beautifiedPayload);
+      specificationCategoryValidation(beautifiedPayload);
       if (isValid) {
         const response = await PostFormUpdate(
           CRUD_SPECIFICATION_CATEGORY,
           id,
           beautifiedPayload,
           token
-        );
-        const { status }: any = response;
-        if (status) {
-          toast.success("Successfully Updated Specification Category");
-          setFormError(defaultError);
-          router.refresh();
-          router.push("/admin/form/specification-category");
+          );
+          const { status }: any = response;
+          if (status) {
+            toast.success("Successfully Updated Specification Category");
+            setFormError(defaultError);
+            router.refresh();
+            router.push("/admin/form/specification-category");
+          } else {
+            toast.error("Error While Updating Specification Category");
+            setLoading(false);
+          }
         } else {
-          toast.error("Error While Updating Specification Category");
+          toast.error("Validation Error");
+          setFormError(error);
+          setLoading(false);
         }
-      } else {
-        toast.error("Validation Error");
-        setFormError(error);
-      }
-    } catch (e) {
-      toast.error("Error While Updating");
+      } catch (e) {
+        toast.error("Error While Updating");
+        setLoading(false);
     }
   };
 
@@ -146,7 +151,7 @@ const [btnLoader, toggleBtnLoader] = useState(false)
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
-      
+        disabled={loading}
       />
     </div>
   );

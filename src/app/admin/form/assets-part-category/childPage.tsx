@@ -3,7 +3,7 @@
 import CustomTableBody from "../../../../../components/container/table/tableBody";
 import TableContainer from "../../../../../components/container/table/tableContainer";
 import CustomTableHead from "../../../../../components/container/table/tableHead";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TablePagination from "../../../../../components/container/table/paginate";
 import NoDataFound from "../../../../../components/noDataFound";
 import {
@@ -14,7 +14,7 @@ import {
 } from "@tanstack/react-table";
 import CustomInput from "../../../../../components/input";
 import { defaultStateModal } from "../../../../../config/constants";
-import { ClientSideGet, DeleteWithId } from "../../../../../utilities/apiCall";
+import { DeleteWithId } from "../../../../../utilities/apiCall";
 import { CRUD_ASSETS_PART_CATEGORY } from "../../../../../config/endPoints";
 import toast from "react-hot-toast";
 import { beautifySpecificationCategory } from "../../../../../utilities/beautify";
@@ -32,6 +32,11 @@ const AssetsPartCategory = ({ _data, token }: any) => {
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
+
+  useEffect(()=> {
+    const beautifiedCategory = beautifySpecificationCategory(_data);
+    setData(beautifiedCategory);
+  }, [_data])
 
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
@@ -80,7 +85,6 @@ const AssetsPartCategory = ({ _data, token }: any) => {
       const { status }: any = res;
       if (status) {
         toast.success("Assets Part Category successfully deleted");
-        fetchData();
         toggleModal(defaultStateModal);
       } else {
         toast.error("Error while deleting Assets Part Category");
@@ -88,14 +92,6 @@ const AssetsPartCategory = ({ _data, token }: any) => {
     } catch (e) {
       toast.error("Error while deleting Assets Part Category");
     }
-  };
-
-  const fetchData = async () => {
-    try {
-      const res = await ClientSideGet(CRUD_ASSETS_PART_CATEGORY, token);
-      const beautifiedCategory = beautifySpecificationCategory(res?.data);
-      setData(beautifiedCategory);
-    } catch (e) {}
   };
 
   return (

@@ -48,7 +48,6 @@ const Specification = ({
     });
     updateState("specifications", finalForm, setFormData);
   };
-console.log('formspec', form);
   const removeForm = (id: string) => {
     const result = form.filter((items: any) => {
       if (items.id !== id) {

@@ -188,7 +188,6 @@ export const beautifyFeature = (data) => {
 };
 export const beautifySpecification = (data) => {
   try {
-    console.log("data", data);
     const filteredData = data.map((cat) => {
       const details = {
         id: "",
@@ -237,7 +236,6 @@ export const beautifyAssetsPart = (data) => {
 };
 export const beautifyInspection = (data) => {
   try {
-    console.log("data", data);
     const filteredData = data.map((cat) => {
       const details = {
         id: "",

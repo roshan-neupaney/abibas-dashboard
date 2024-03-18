@@ -13,7 +13,6 @@ async function postData(form: any) {
 }
 
 export async function POST(request: Request) {
-  console.log("request", request)
   const form = await request.json()
   const data = await postData(form);
   return Response.json(data);

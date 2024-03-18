@@ -15,13 +15,13 @@ import {
 import CustomInput from "../../../../../components/input";
 import { defaultStateModal } from "../../../../../config/constants";
 import { CRUD_BODY_TYPE } from "../../../../../config/endPoints";
-import { ClientSideGet, DeleteWithId } from "../../../../../utilities/apiCall";
+import { DeleteWithId } from "../../../../../utilities/apiCall";
 import toast from "react-hot-toast";
 import {
   beautifyBodyType,
-  beautifyCategory,
 } from "../../../../../utilities/beautify";
 import DeleteModal from "../../../../../components/modals/deleteModal";
+import { useRouter } from "next/navigation";
 
 interface dataType {
   image: string;
@@ -31,15 +31,18 @@ interface dataType {
 }
 
 const BodyType = ({ _data, token }: any) => {
-  const [data, setData] = useState(_data);
+  const beautifiedCategory = beautifyBodyType(_data);
+  const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
-
+ 
   useEffect(() => {
     const beautifiedCategory = beautifyBodyType(_data);
     setData(beautifiedCategory);
   }, [_data]);
 
+  const router = useRouter();
+  
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
       {
@@ -64,54 +67,45 @@ const BodyType = ({ _data, token }: any) => {
       },
     ],
     []
-  );
-
-  const table = useReactTable({
-    columns,
-    data,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-  });
-
-  const handleSearch = (val: string) => {
-    try {
-      setSearch(val);
-      const filteredData = _data.filter((items: any) => {
-        if (items.title.toLowerCase().includes(val.toLowerCase())) {
-          return items;
+    );
+    
+    const table = useReactTable({
+      columns,
+      data,
+      getCoreRowModel: getCoreRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
+    });
+    
+    const handleSearch = (val: string) => {
+      try {
+        setSearch(val);
+        const filteredData = beautifiedCategory.filter((items: any) => {
+          if (items.title.toLowerCase().includes(val.toLowerCase())) {
+            return items;
+          }
+        });
+        setData(filteredData);
+      } catch (e) {}
+    };
+    
+    const handleDelete = async () => {
+      try {
+        const res = await DeleteWithId(CRUD_BODY_TYPE, openModal.id, token);
+        const { status }: any = res;
+        if (status) {
+          toast.success("Body type successfully deleted");
+          router.refresh();
+          toggleModal(defaultStateModal);
+        } else {
+          toast.error("Error while deleting body type");
         }
-      });
-      setData(filteredData);
-    } catch (e) {}
-  };
-
-  const handleDelete = async () => {
-    try {
-      const res = await DeleteWithId(CRUD_BODY_TYPE, openModal.id, token);
-      const { status }: any = res;
-      if (status) {
-        toast.success("Body type successfully deleted");
-        fetchData();
-        toggleModal(defaultStateModal);
-      } else {
+      } catch (e) {
         toast.error("Error while deleting body type");
       }
-    } catch (e) {
-      toast.error("Error while deleting body type");
-    }
-  };
-
-  const fetchData = async () => {
-    try {
-      const res = await ClientSideGet(CRUD_BODY_TYPE, token);
-      const beautifiedCategory = beautifyCategory(res?.data);
-      setData(beautifiedCategory);
-    } catch (e) {
-      toast.error("Error while fetching");
-    }
-  };
-  return (
-    <>
+    };
+    
+    return (
+      <>
       <div style={{ border: "1px solid #d8dadb" }}>
         <TableContainer
           topRender={

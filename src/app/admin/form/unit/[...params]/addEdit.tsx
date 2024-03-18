@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CustomInput from "../../../../../../components/input";
 import { updateState } from "../../../../../../utilities/helper";
 import { CustomToggleSwitch } from "../../../../../../components/checkbox";
@@ -12,6 +12,7 @@ import {
   PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
 import { unitValidation } from "../../../../../../utilities/validation";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   title: "",
@@ -32,6 +33,7 @@ const AddEditUnit = ({ token, data, isEdit, id }: any) => {
 
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -46,6 +48,7 @@ const AddEditUnit = ({ token, data, isEdit, id }: any) => {
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = unitValidation(beautifiedPayload);
@@ -55,19 +58,24 @@ const AddEditUnit = ({ token, data, isEdit, id }: any) => {
         if (status) {
           toast.success("Successfully Added Unit");
           setFormError(defaultError);
+          clearCachesByServerAction("/admin/form/unit");
           router.push("/admin/form/unit");
         } else {
           toast.error("Error While Adding Unit");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Adding");
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = unitValidation(beautifiedPayload);
@@ -82,16 +90,20 @@ const AddEditUnit = ({ token, data, isEdit, id }: any) => {
         if (status) {
           toast.success("Successfully Updated Unit");
           setFormError(defaultError);
+          clearCachesByServerAction("/admin/form/unit");
           router.push("/admin/form/unit");
         } else {
           toast.error("Error While Updating Unit");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -115,6 +127,7 @@ const AddEditUnit = ({ token, data, isEdit, id }: any) => {
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

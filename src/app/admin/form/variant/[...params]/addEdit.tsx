@@ -17,6 +17,7 @@ import { CustomRadio } from "../../../../../../components/radio";
 import Specification from "../../../../../../components/variant/specification";
 import Feature from "../../../../../../components/variant/feature";
 import Color from "../../../../../../components/variant/colorSelect";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   title: "",
@@ -85,6 +86,7 @@ const AddEditVariant = ({
   const [errorForm, setErrorForm] = useState(defaultError);
   const [deleteSpecifications, setDeleteSpecifications] = useState<any>([]);
   const [deleteFeatures, setDeleteFeatures] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -135,8 +137,9 @@ const AddEditVariant = ({
   };
 
   const handleAdd = async () => {
-    const beautifiedPayload = beautifyPayload(formData);
+    setLoading(true);
     try {
+      const beautifiedPayload = beautifyPayload(formData);
       const response = await PostFormAdd(
         CRUD_VARIANT,
         beautifiedPayload,
@@ -145,19 +148,22 @@ const AddEditVariant = ({
       const { status }: any = response;
       if (status) {
         toast.success("Successfully Added Variant");
+        clearCachesByServerAction("/admin/form/variant");
         router.push("/admin/form/variant");
       } else {
         toast.error("Error While Adding Variant");
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Adding");
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       // const {is_valid, error } =
-      console.log("beautifiedPayload", beautifiedPayload);
       const response = await PostFormUpdate(
         CRUD_VARIANT,
         id,
@@ -167,20 +173,21 @@ const AddEditVariant = ({
           delete_features: deleteFeatures,
         },
         token
-      );
-      const { status }: any = response;
-      if (status) {
-        toast.success("Successfully Updated Variant");
-        router.push("/admin/form/variant");
-      } else {
-        toast.error("Error While Updating Variant");
-      }
-    } catch (e) {
-      toast.error("Error While Updating");
+        );
+        const { status }: any = response;
+        if (status) {
+          toast.success("Successfully Updated Variant");
+          clearCachesByServerAction("/admin/form/variant");
+          router.push("/admin/form/variant");
+        } else {
+          toast.error("Error While Updating Variant");
+          setLoading(false);
+        }
+      } catch (e) {
+        toast.error("Error While Updating");
+        setLoading(false);
     }
   };
-
-  console.log("formData", formData);
 
   return (
     <div className="flex flex-1 p-4 flex-col gap-5">

@@ -74,13 +74,11 @@ export const PATCH_FORM = async (url, payload, token) => {
 };
 
 export const SERVER_SIDE_GET = async (token, url) => {
-  const { signal } = new AbortController();
   try {
     return await axios
       .get(
         BASE_URL + url,
-        { headers: { Authorization: token, cache: "no-store" } },
-        { signal }
+        { headers: { Authorization: token } },
       )
       .then((res) => {
         return res;
