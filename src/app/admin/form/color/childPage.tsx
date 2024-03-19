@@ -74,10 +74,11 @@ const Color = ({ _data, token }: any) => {
     try {
       setSearch(val);
       const filteredData = beautifiedCategory.filter((items: any) => {
-        if (items.title.toLowerCase().includes(val.toLowerCase())) {
+        if (items.color.toLowerCase().includes(val.toLowerCase())) {
           return items;
         }
       });
+      console.log('filteredData', filteredData)
       setData(filteredData);
     } catch (e) {}
   };
@@ -97,7 +98,7 @@ const Color = ({ _data, token }: any) => {
       toast.error("Error While Deleting Color");
     }
   };
-
+console.log('data', data)
   return (
     <>
       <div style={{ border: "1px solid #d8dadb" }}>
@@ -114,7 +115,7 @@ const Color = ({ _data, token }: any) => {
             </div>
           }
         >
-          {data?.length > 0 ? (
+          {(data?.length > 0 && data) ? (
             <>
               <CustomTableHead {...{ table }} />
               <CustomTableBody entireRoute="/admin/form/color/edit"
