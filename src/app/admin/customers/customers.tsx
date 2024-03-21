@@ -7,7 +7,6 @@ import React, { useMemo } from "react";
 import TablePagination from "../../../../components/container/table/paginate";
 import { dataType, itemslist } from "../../../../data";
 import NoDataFound from "../../../../components/noDataFound";
-import { CircularLoader } from "../../../../components/loader/loader";
 import {
   ColumnDef,
   getCoreRowModel,

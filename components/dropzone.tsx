@@ -1,7 +1,7 @@
 import Image from "next/image";
 import addImage from "../public/icons/photo-add.svg";
 import { useEffect, useState } from "react";
-import { BASE_URL, IMAGE_URL } from "../config/constants";
+import { IMAGE_URL } from "../config/constants";
 
 interface CustomDropzoneProps {
   title: string;

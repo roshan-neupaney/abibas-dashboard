@@ -6,7 +6,6 @@ import CustomTableBody from "./container/table/tableBody";
 import TablePagination from "./container/table/paginate";
 import NoDataFound from "./noDataFound";
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import {
   ColumnDef,
   getCoreRowModel,
@@ -15,9 +14,7 @@ import {
 } from "@tanstack/react-table";
 import { dataType } from "../data";
 import CustomInput from "./input";
-import { updateState } from "../utilities/helper";
 import { SubmitButton } from "@/subComponents/buttons";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const DummyData = ({ data }: any) => {

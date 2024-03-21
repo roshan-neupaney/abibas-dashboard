@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import NoDataFound from "../../../../components/noDataFound";
 import PageHeader from "../../../../components/pageHeader";
 import axios from "axios";

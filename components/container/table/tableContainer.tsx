@@ -1,4 +1,3 @@
-import {PageLoader} from "../../loader/loader";
 
 interface tableContainerProps {
   children: any;

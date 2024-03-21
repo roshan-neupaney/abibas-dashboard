@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import car from "../../public/images/creta.png";
 import LazyImage from "../lazyImage";

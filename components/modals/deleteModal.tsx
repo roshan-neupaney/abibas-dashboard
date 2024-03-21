@@ -1,6 +1,6 @@
 import Image from "next/image";
 import crossIcon from "../../public/icons/cross.svg";
-import { Button, CancelButton, SubmitButton } from "@/subComponents/buttons";
+import { CancelButton, SubmitButton } from "@/subComponents/buttons";
 
 interface DeleteModalProps {
   open: boolean;

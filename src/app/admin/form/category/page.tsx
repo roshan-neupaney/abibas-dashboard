@@ -1,12 +1,12 @@
 import { cookies } from "next/headers";
 import PageHeader from "../../../../../components/pageHeader";
-import { ServerSideGet, ServerSideGetWithParams } from "../../../../../utilities/apiCall";
+import { ServerSideGet } from "../../../../../utilities/apiCall";
 import { CRUD_CATEGORY } from "../../../../../config/endPoints";
 import Category from "./childPage";
 import { authorization } from "../../../../../hoc/auth";
 
 async function getData(token: any) {
-  authorization(token);
+  authorization(token, '/admin/form/category');
   try{
     const res = await ServerSideGet(token, CRUD_CATEGORY);
     return res?.data;

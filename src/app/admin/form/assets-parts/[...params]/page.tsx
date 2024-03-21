@@ -9,7 +9,6 @@ import {
 import {
   CRUD_ASSETS_PARTS,
   CRUD_ASSETS_PART_CATEGORY,
-  CRUD_INSPECTION_CATEGORY,
 } from "../../../../../../config/endPoints";
 import AddEditAssetsPart from "./addEdit";
 

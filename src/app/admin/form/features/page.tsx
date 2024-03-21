@@ -1,9 +1,8 @@
 import { cookies } from "next/headers";
 import PageHeader from "../../../../../components/pageHeader";
 import { ServerSideGet } from "../../../../../utilities/apiCall";
-import { CRUD_FEATURE, CRUD_FEATURE_CATEGORY } from "../../../../../config/endPoints";
+import { CRUD_FEATURE } from "../../../../../config/endPoints";
 import { authorization } from "../../../../../hoc/auth";
-import FeatureCategory from "./childPage";
 import Feature from "./childPage";
 
 async function getData(token: any) {

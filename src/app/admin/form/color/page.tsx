@@ -6,7 +6,7 @@ import Category from "./childPage";
 import { authorization } from "../../../../../hoc/auth";
 
 async function getData(token: any) {
-  authorization(token);
+  authorization(token, '/admin/form/color');
   try{
     const res = await ServerSideGet(token, CRUD_COLOR_CHOICE);
     return res?.data;

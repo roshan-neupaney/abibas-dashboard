@@ -2,7 +2,7 @@ import PageHeader from "../../../../../../components/pageHeader";
 import FormContainer from "../../../../../../components/container/form/formContainer";
 import { cookies } from "next/headers";
 import { ServerSideGetWithId } from "../../../../../../utilities/apiCall";
-import { CRUD_COLOR_CHOICE, CRUD_UNIT } from "../../../../../../config/endPoints";
+import { CRUD_UNIT } from "../../../../../../config/endPoints";
 import AddEditColor from "./addEdit";
 
 async function getData(token: any, id: string) {

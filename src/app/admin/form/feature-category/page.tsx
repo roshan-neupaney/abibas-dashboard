@@ -6,7 +6,7 @@ import { authorization } from "../../../../../hoc/auth";
 import FeatureCategory from "./childPage";
 
 async function getData(token: any) {
-  authorization(token);
+  authorization(token, '/admin/form/feature-category');
   try{
     const res = await ServerSideGet(token, CRUD_FEATURE_CATEGORY);
     return res?.data;

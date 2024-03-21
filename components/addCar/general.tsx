@@ -1,8 +1,7 @@
 import React from "react";
-import CustomInput from "../input";
 import CustomSelect from "../select";
 import CustomDropzone from "../dropzone";
-import { Button, CancelButton, SubmitButton } from "@/subComponents/buttons";
+import { CancelButton, SubmitButton } from "@/subComponents/buttons";
 import Overview from "./overview";
 
 const General = () => {

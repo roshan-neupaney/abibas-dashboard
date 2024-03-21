@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 import { DecodeJWT } from "../utilities/helper";
-import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 
-export const authorization = (value) => {
-  // const {value} = cookies().get('access_token');
+export const authorization = (value, path = "/") => {
+  revalidatePath(path);
   if (!value) {
     redirect("/login");
   } else {

@@ -1,8 +1,7 @@
 import { cookies } from "next/headers";
 import PageHeader from "../../../../../components/pageHeader";
-import { ServerSideGet, ServerSideGetWithParams } from "../../../../../utilities/apiCall";
-import { CRUD_CATEGORY, CRUD_SPECIFICATION_CATEGORY } from "../../../../../config/endPoints";
-import Category from "./childPage";
+import { ServerSideGet } from "../../../../../utilities/apiCall";
+import { CRUD_SPECIFICATION_CATEGORY } from "../../../../../config/endPoints";
 import { authorization } from "../../../../../hoc/auth";
 import SpecificationCategory from "./childPage";
 

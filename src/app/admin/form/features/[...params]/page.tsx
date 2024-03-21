@@ -11,7 +11,6 @@ import {
   CRUD_FEATURE_CATEGORY,
   CRUD_UNIT,
 } from "../../../../../../config/endPoints";
-import AddEditFeatureCategory from "./addEdit";
 import AddEditFeature from "./addEdit";
 
 async function getData(token: any, id: string) {

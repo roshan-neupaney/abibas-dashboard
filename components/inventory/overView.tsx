@@ -29,7 +29,7 @@ const DetailBox = () => {
 const SideBar = () => {
   return (
     <>
-      <div className="flex w-[25rem] border-2 border-solid overview-sidebar max-h-[47rem]">
+      <div className="flex border-2 border-solid overview-sidebar max-h-[47rem]">
         <div
           className="flex py-4 px-5 col w-full"
           style={{ borderBottom: "1px solid #D8DADB" }}
@@ -66,7 +66,7 @@ const SideBar = () => {
           </div>
         </div>
         <div
-          className="flex py-4 px-5 col"
+          className="flex self-stretch py-4 px-5 col"
           style={{ borderBottom: "1px solid #D8DADB" }}
         >
           <div className="title-medium-NH pb-3">Sales Representative</div>
@@ -78,7 +78,7 @@ const SideBar = () => {
           </div>
         </div>
         <div
-          className="flex py-4 px-5 col"
+          className="flex self-stretch py-4 px-5 col"
           style={{ borderBottom: "1px solid #D8DADB" }}
         >
           <div className="title-medium-NH pb-3">Added By</div>
@@ -86,7 +86,7 @@ const SideBar = () => {
             <span className="label-large-NH">Bivek Rana on 29 Sept, 2022</span>
           </div>
         </div>
-        <div className="flex py-4 px-5 col">
+        <div className="flex self-stretch py-4 px-5 col">
           <div className="title-medium-NH pb-3">Activity Log</div>
           <div className="flex gap-2 py-2">
             <span className="pt-1.5">

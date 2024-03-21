@@ -4,7 +4,6 @@ import FormContainer from "../../../../../../components/container/form/formConta
 import { cookies } from "next/headers";
 import { ServerSideGetWithId } from "../../../../../../utilities/apiCall";
 import { CRUD_ASSETS_PART_CATEGORY } from "../../../../../../config/endPoints";
-import AddEditSpecificationCategory from "./addEdit";
 import AddEditAssetsPartCategory from "./addEdit";
 
 async function getData(token: any, id: string) {

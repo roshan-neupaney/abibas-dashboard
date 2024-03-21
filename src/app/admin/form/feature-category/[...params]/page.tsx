@@ -3,7 +3,7 @@ import PageHeader from "../../../../../../components/pageHeader";
 import FormContainer from "../../../../../../components/container/form/formContainer";
 import { cookies } from "next/headers";
 import { ServerSideGetWithId } from "../../../../../../utilities/apiCall";
-import { CRUD_FEATURE_CATEGORY, CRUD_INSPECTION_CATEGORY } from "../../../../../../config/endPoints";
+import { CRUD_FEATURE_CATEGORY } from "../../../../../../config/endPoints";
 import AddEditFeatureCategory from "./addEdit";
 
 async function getData(token: any, id: string) {
