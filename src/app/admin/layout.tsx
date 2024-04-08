@@ -1,6 +1,6 @@
-import Header from "@/app/ui/layouts/Header/header";
 import Sidebar from "../ui/layouts/SideBar/sidebar";
 import styles from "../ui/layouts/layout.module.css";
+import TopHeader from "@/app/ui/layouts/Header/header";
 
 const DashboardLayout = ({ children }: any) => {
   return (
@@ -9,7 +9,7 @@ const DashboardLayout = ({ children }: any) => {
         <Sidebar />
       </div>
       <div className={styles.header}>
-        <Header />
+        <TopHeader />
         <div className={styles.childrenContainer}>
           <div className={styles.children}>{children}</div>
         </div>

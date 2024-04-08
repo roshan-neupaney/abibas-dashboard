@@ -13,7 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { dataType } from "../data";
-import CustomInput from "./input";
+import CustomInput from "../src/subComponents/input";
 import { SubmitButton } from "@/subComponents/buttons";
 import { useRouter } from "next/navigation";
 

@@ -8,11 +8,13 @@ import TablePagination from "../../../../../components/container/table/paginate"
 import NoDataFound from "../../../../../components/noDataFound";
 import {
   ColumnDef,
+  SortingState,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import CustomInput from "../../../../../components/input";
+import CustomInput from "../../../../subComponents/input";
 import { defaultStateModal } from "../../../../../config/constants";
 import { CRUD_VARIANT } from "../../../../../config/endPoints";
 import { DeleteWithId } from "../../../../../utilities/apiCall";
@@ -35,6 +37,7 @@ const Variant = ({ _data, token }: any) => {
   const [data, setData] = useState(beautifiedData);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   useEffect(() => {
     const beautifiedCategory = beautifyVariant(_data);
@@ -84,6 +87,11 @@ const Variant = ({ _data, token }: any) => {
   const table = useReactTable({
     columns,
     data,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
@@ -91,7 +99,7 @@ const Variant = ({ _data, token }: any) => {
   const handleSearch = (val: string) => {
     try {
       setSearch(val);
-      const filteredData = _data?.filter((items: any) => {
+      const filteredData = beautifiedData?.filter((items: any) => {
         if (items.title.toLowerCase().includes(val.toLowerCase())) {
           return items;
         }

@@ -1,5 +1,5 @@
 "use client";
-import CustomInput from "../../../components/input";
+import CustomInput from "../../subComponents/input";
 import visibleIcon from "../../../public/icons/visible.svg";
 import noVisibleIcon from "../../../public/icons/noVisible.svg";
 import { updateState } from "../../../utilities/helper";

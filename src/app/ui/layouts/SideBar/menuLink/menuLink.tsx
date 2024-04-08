@@ -16,6 +16,7 @@ import Setting from "../../../../../../public/icons/setting.svg";
 import Arrow from "../../../../../../public/icons/icon-right.svg";
 import Feedback from "../../../../../../public/icons/feedback.svg";
 import Form from "../../../../../../public/icons/form.svg";
+import News from '../../../../../../public/icons/news.svg'
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -69,6 +70,22 @@ const mainMenu = [
     icon: AppManagement,
   },
   { title: "Settings", link: "/admin/settings", icon: Setting },
+  {
+    title: "News",
+    category: [
+      {
+        title: "News List",
+        link: "/admin/news/news-list",
+        icon: Circle,
+      },
+      {
+        title: "News Category",
+        link: "/admin/news/news-category",
+        icon: Circle,
+      }
+    ],
+    icon: News
+  },
   {
     title: "Forms",
     category: [
@@ -208,7 +225,6 @@ const MenuLink = () => {
                     }`}
                   >
                     {items.category.map((cat, i) => {
-                      
                       // toggleCategory(pathname.includes(cat.link) ? cat?.title: '')
                       return (
                         <Link href={cat.link} key={`child-${i}-${cat.title}`}>

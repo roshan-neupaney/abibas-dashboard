@@ -4,6 +4,7 @@ import { ServerSideGet } from "../../../../../utilities/apiCall";
 import { CRUD_ASSETS_PART_CATEGORY } from "../../../../../config/endPoints";
 import Category from "./childPage";
 import { authorization } from "../../../../../hoc/auth";
+import { Metadata } from "next";
 
 async function getData(token: any) {
   authorization(token);
@@ -12,6 +13,10 @@ async function getData(token: any) {
     return res?.data;
   } catch(e) {
   }
+}
+
+export const metadata: Metadata = {
+  title: 'Assets Part Category'
 }
 
 const AssetsPartCategoryPage = async() => {

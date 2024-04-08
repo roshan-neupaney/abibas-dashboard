@@ -12,7 +12,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import CustomInput from "../../../../../components/input";
+import CustomInput from "../../../../subComponents/input";
 import { defaultStateModal } from "../../../../../config/constants";
 import { DeleteWithId } from "../../../../../utilities/apiCall";
 import { CRUD_ASSETS_PART_CATEGORY } from "../../../../../config/endPoints";

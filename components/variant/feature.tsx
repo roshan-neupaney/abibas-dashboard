@@ -1,10 +1,10 @@
 import { useState } from "react";
-import CustomSelect from "../select";
+import CustomSelect from "../../src/subComponents/select";
 import addIcon from "../../public/icons/add.svg";
 import deleteIcon from "../../public/icons/deleteIcon.svg";
 import Image from "next/image";
 import { UUidGenerator, updateState } from "../../utilities/helper";
-import CustomInput from "../input";
+import CustomInput from "../../src/subComponents/input";
 
 const Feature = ({
   beautifiedFeature,
@@ -17,7 +17,7 @@ const Feature = ({
     { id: "PENDING", label: "Pending" },
   ];
 
-  const [form, setForm] = useState<any>(featureData);
+  const [form, setForm] = useState<any>(featureData || []);
 
   const uuid = UUidGenerator();
 

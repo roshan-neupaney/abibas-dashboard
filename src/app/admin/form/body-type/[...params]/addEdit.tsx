@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import CustomInput from "../../../../../../components/input";
+import CustomInput from "../../../../../subComponents/input";
 import { updateState } from "../../../../../../utilities/helper";
-import { CustomToggleSwitch } from "../../../../../../components/checkbox";
-import CustomDropzone from "../../../../../../components/dropzone";
+import { CustomToggleSwitch } from "../../../../../subComponents/checkbox";
+import CustomDropzone from "../../../../../subComponents/dropzone";
 import { SubmitButton } from "@/subComponents/buttons";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -118,6 +118,7 @@ const AddEditBodyType = ({ token, data, isEdit, id }: any) => {
         if (status) {
           toast.success("Successfully Updated Body Type");
           setFormError(defaultError);
+          clearCachesByServerAction("/admin/form/body-type");
           router.push("/admin/form/body-type");
         } else {
           toast.error("Error While Updating Body Type");

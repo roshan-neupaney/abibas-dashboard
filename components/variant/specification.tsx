@@ -1,15 +1,15 @@
 import { useState } from "react";
-import CustomSelect from "../select";
+import CustomSelect from "../../src/subComponents/select";
 import addIcon from "../../public/icons/add.svg";
 import deleteIcon from "../../public/icons/deleteIcon.svg";
 import Image from "next/image";
 import { UUidGenerator, updateState } from "../../utilities/helper";
-import CustomInput from "../input";
+import CustomInput from "../../src/subComponents/input";
 
 const Specification = ({
   beautifiedSpecification,
   setFormData,
-  specificationData,
+  specificationData ,
   setDeleteSpecifications,
 }: any) => {
     
@@ -18,7 +18,7 @@ const Specification = ({
       { id: "PENDING", label: "Pending" },
     ];
     
-    const [form, setForm] = useState<any>(specificationData);
+    const [form, setForm] = useState<any>(specificationData || []);
     
     let uuid = UUidGenerator();
     const addForm = () => {

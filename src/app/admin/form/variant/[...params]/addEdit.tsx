@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import CustomInput from "../../../../../../components/input";
+import CustomInput from "../../../../../subComponents/input";
 import { updateState } from "../../../../../../utilities/helper";
-import { CustomToggleSwitch } from "../../../../../../components/checkbox";
-import CustomDropzone from "../../../../../../components/dropzone";
+import { CustomToggleSwitch } from "../../../../../subComponents/checkbox";
+import CustomDropzone from "../../../../../subComponents/dropzone";
 import { SubmitButton } from "@/subComponents/buttons";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -12,8 +12,8 @@ import {
   PostFormAdd,
   PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
-import CustomSelect from "../../../../../../components/select";
-import { CustomRadio } from "../../../../../../components/radio";
+import CustomSelect from "../../../../../subComponents/select";
+import { CustomRadio } from "../../../../../subComponents/radio";
 import Specification from "../../../../../../components/variant/specification";
 import Feature from "../../../../../../components/variant/feature";
 import Color from "../../../../../../components/variant/colorSelect";

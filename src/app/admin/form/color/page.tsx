@@ -4,6 +4,7 @@ import { ServerSideGet } from "../../../../../utilities/apiCall";
 import { CRUD_COLOR_CHOICE } from "../../../../../config/endPoints";
 import Category from "./childPage";
 import { authorization } from "../../../../../hoc/auth";
+import { Metadata } from "next";
 
 async function getData(token: any) {
   authorization(token, '/admin/form/color');
@@ -12,6 +13,10 @@ async function getData(token: any) {
     return res?.data;
   } catch(e) {
   }
+}
+
+export const metadata: Metadata = {
+  title: 'Color For Choice'
 }
 
 const CategoryPage = async() => {

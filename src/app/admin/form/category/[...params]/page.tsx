@@ -5,12 +5,17 @@ import AddEditCategory from "./addEdit";
 import { cookies } from "next/headers";
 import { ServerSideGetWithId } from "../../../../../../utilities/apiCall";
 import { CRUD_CATEGORY } from "../../../../../../config/endPoints";
+import { Metadata } from "next";
 
 async function getData(token: any, id: string) {
   try {
     const res = await ServerSideGetWithId(token, CRUD_CATEGORY, id);
     return res?.data;
   } catch (error) {}
+}
+
+export const metadata: Metadata = {
+  title: 'Category'
 }
 
 const AddCategory = async ({params}: any) => {

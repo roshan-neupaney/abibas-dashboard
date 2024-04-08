@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import ArrowIcon from "../public/icons/arrow-right.svg";
+import ArrowIcon from "../../public/icons/arrow-right.svg";
 import Image from "next/image";
 
 interface CustomSelectProps {

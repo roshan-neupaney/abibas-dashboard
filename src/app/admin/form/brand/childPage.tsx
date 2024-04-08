@@ -8,11 +8,13 @@ import TablePagination from "../../../../../components/container/table/paginate"
 import NoDataFound from "../../../../../components/noDataFound";
 import {
   ColumnDef,
+  SortingState,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import CustomInput from "../../../../../components/input";
+import CustomInput from "../../../../subComponents/input";
 import { defaultStateModal } from "../../../../../config/constants";
 import { CRUD_BRAND } from "../../../../../config/endPoints";
 import { ClientSideGet, DeleteWithId } from "../../../../../utilities/apiCall";
@@ -22,6 +24,7 @@ import {
   beautifyCategory,
 } from "../../../../../utilities/beautify";
 import DeleteModal from "../../../../../components/modals/deleteModal";
+import { useRouter } from "next/navigation";
 
 interface dataType {
   image: string;
@@ -35,6 +38,9 @@ const Brand = ({ _data, token }: any) => {
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
+  const [sorting, setSorting] = useState<SortingState>([])
+
+  const router = useRouter();
 
   useEffect(() => {
     const beautifiedCategory = beautifyBodyType(_data);
@@ -70,6 +76,11 @@ const Brand = ({ _data, token }: any) => {
   const table = useReactTable({
     columns,
     data,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
@@ -92,7 +103,7 @@ const Brand = ({ _data, token }: any) => {
       const { status }: any = res;
       if (status) {
         toast.success("Brand successfully deleted");
-        fetchData();
+        router.refresh();
         toggleModal(defaultStateModal);
       } else {
         toast.error("Error while deleting brand");
@@ -102,15 +113,6 @@ const Brand = ({ _data, token }: any) => {
     }
   };
 
-  const fetchData = async () => {
-    try {
-      const res = await ClientSideGet(CRUD_BRAND, token);
-      const beautifiedCategory = beautifyCategory(res?.data);
-      setData(beautifiedCategory);
-    } catch (e) {
-      toast.error("Error while fetching");
-    }
-  };
   return (
     <>
       <div style={{ border: "1px solid #d8dadb" }}>

@@ -1,6 +1,6 @@
 import React from "react";
-import CustomSelect from "../select";
-import CustomDropzone from "../dropzone";
+import CustomSelect from "../../src/subComponents/select";
+import CustomDropzone from "../../src/subComponents/dropzone";
 import { CancelButton, SubmitButton } from "@/subComponents/buttons";
 import Overview from "./overview";
 

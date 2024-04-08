@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CustomSelect from "../select";
+import CustomSelect from "../../src/subComponents/select";
 import deleteIcon from "../../public/icons/deleteIcon.svg";
 import Image from "next/image";
 import { updateState } from "../../utilities/helper";

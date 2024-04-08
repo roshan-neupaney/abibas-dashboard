@@ -5,6 +5,7 @@ import { CRUD_BODY_TYPE } from "../../../../../config/endPoints";
 import { authorization } from "../../../../../hoc/auth";
 import BodyType from "./childPage";
 import { revalidatePath } from "next/cache";
+import { Metadata } from "next";
 
 async function getData(token: any) {
   authorization(token);
@@ -14,6 +15,10 @@ async function getData(token: any) {
     return res?.data;
   } catch(e) {
   }
+}
+
+export const metadata: Metadata = {
+  title: 'Body Type'
 }
 
 const CategoryPage = async() => {

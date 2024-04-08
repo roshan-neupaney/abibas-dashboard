@@ -8,11 +8,13 @@ import TablePagination from "../../../../../components/container/table/paginate"
 import NoDataFound from "../../../../../components/noDataFound";
 import {
   ColumnDef,
+  SortingState,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import CustomInput from "../../../../../components/input";
+import CustomInput from "../../../../subComponents/input";
 import { defaultStateModal } from "../../../../../config/constants";
 import { DeleteWithId } from "../../../../../utilities/apiCall";
 import { CRUD_COLOR_CHOICE } from "../../../../../config/endPoints";
@@ -33,6 +35,7 @@ const Color = ({ _data, token }: any) => {
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
+  const [sorting, setSorting] = useState<SortingState>([])
   
   useEffect(() => {
     const beautifiedCategory = beautifyColor(_data);
@@ -66,6 +69,11 @@ const Color = ({ _data, token }: any) => {
   const table = useReactTable({
     columns,
     data,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
@@ -78,7 +86,6 @@ const Color = ({ _data, token }: any) => {
           return items;
         }
       });
-      console.log('filteredData', filteredData)
       setData(filteredData);
     } catch (e) {}
   };
@@ -98,7 +105,6 @@ const Color = ({ _data, token }: any) => {
       toast.error("Error While Deleting Color");
     }
   };
-console.log('data', data)
   return (
     <>
       <div style={{ border: "1px solid #d8dadb" }}>

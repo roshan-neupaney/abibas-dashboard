@@ -13,7 +13,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import CustomInput from "../../../../components/input";
+import CustomInput from "../../../subComponents/input";
 import { useRouter } from "next/navigation";
 
 const Inventory = () => {

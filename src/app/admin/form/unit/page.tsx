@@ -5,6 +5,7 @@ import { CRUD_COLOR_CHOICE, CRUD_UNIT } from "../../../../../config/endPoints";
 import Category from "./childPage";
 import { authorization } from "../../../../../hoc/auth";
 import Unit from "./childPage";
+import { Metadata } from "next";
 
 async function getData(token: any) {
   authorization(token);
@@ -13,6 +14,10 @@ async function getData(token: any) {
     return res?.data;
   } catch(e) {
   }
+}
+
+export const metadata: Metadata = {
+  title: 'Unit'
 }
 
 const CategoryPage = async() => {

@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import CustomInput from "../../../../../../components/input";
+import CustomInput from "../../../../../subComponents/input";
 import { updateState } from "../../../../../../utilities/helper";
-import { CustomToggleSwitch } from "../../../../../../components/checkbox";
+import { CustomToggleSwitch } from "../../../../../subComponents/checkbox";
 import { SubmitButton } from "@/subComponents/buttons";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -19,8 +19,8 @@ import {
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 import CustomSelect, {
   CustomMultiSelect,
-} from "../../../../../../components/select";
-import { CustomRadio } from "../../../../../../components/radio";
+} from "../../../../../subComponents/select";
+import { CustomRadio } from "../../../../../subComponents/radio";
 import {
   commaValueIfDropdown,
   specificationOptionType,

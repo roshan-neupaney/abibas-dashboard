@@ -1,7 +1,7 @@
 import Image from "next/image";
-import addImage from "../public/icons/photo-add.svg";
+import addImage from "../../public/icons/photo-add.svg";
 import { useEffect, useState } from "react";
-import { IMAGE_URL } from "../config/constants";
+import { IMAGE_URL } from "../../config/constants";
 
 interface CustomDropzoneProps {
   title: string;
@@ -61,11 +61,9 @@ const CustomDropzone = ({
             className="dropzone-image"
             src={tempImage}
             alt="image"
-            width={0}
+            width={80}
             height={0}
             onError={handleError}
-            quality={100}
-            priority
           />
         </div>
         <p className="flex text-center text-sm text-[#201A1B]">

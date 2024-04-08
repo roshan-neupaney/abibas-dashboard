@@ -4,6 +4,7 @@ import { ServerSideGet } from "../../../../../utilities/apiCall";
 import { CRUD_FEATURE } from "../../../../../config/endPoints";
 import { authorization } from "../../../../../hoc/auth";
 import Feature from "./childPage";
+import { Metadata } from "next";
 
 async function getData(token: any) {
   authorization(token);
@@ -12,6 +13,10 @@ async function getData(token: any) {
     return res?.data;
   } catch(e) {
   }
+}
+
+export const metadata: Metadata = {
+  title: 'Features'
 }
 
 const FeatureCategoryPage = async() => {

@@ -4,7 +4,7 @@ import Arrow from "../../../../../public/icons/icon-right.svg";
 import Notification from "../../../../../public/icons/nav-icon.svg";
 import Image from "next/image";
 
-const Header = () => {
+const TopHeader = () => {
   return (
     <div className={styles.container}>
       <div className={styles.addContainer}>
@@ -28,4 +28,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default TopHeader;
