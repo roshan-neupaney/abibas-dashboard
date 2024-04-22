@@ -7,7 +7,6 @@ import { SubmitButton } from "@/subComponents/buttons";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { loginValidation } from "../../../utilities/validation";
 import { Login_Post } from "../../../utilities/apiCall";
 import { LOGIN } from "../../../config/endPoints";
@@ -46,6 +45,7 @@ const Login = ({ setCookies }: any) => {
           setCookies(data);
           toast.success("Login Successful");
           router.push("/admin/dashboard");
+          router.refresh();
         } else {
           toast.error(data.message);
         }

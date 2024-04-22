@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Red_Hat_Display, Roboto, Poppins } from "next/font/google";
 import "./ui/globals.css";
 import { Toaster } from "react-hot-toast";
+import NextTopLoader from "nextjs-toploader";
 
 const redHatDisplay = Red_Hat_Display({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body
         className={`${redHatDisplay.variable} ${roboto.variable} ${poppins.variable}`}
       >
+        <NextTopLoader />
         <Toaster />
         {children}
       </body>

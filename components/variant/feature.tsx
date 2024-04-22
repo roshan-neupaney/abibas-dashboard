@@ -37,6 +37,7 @@ const Feature = ({
     setForm(result);
     const finalForm = result.map((element: any) => {
       return {
+        id: element?.createdAt ? element.id : undefined,
         featureId: element.featureId,
         value: element.value,
         status: element.status,

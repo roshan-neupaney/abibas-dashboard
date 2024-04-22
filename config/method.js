@@ -1,6 +1,15 @@
 import axios from "axios";
 import { BASE_URL } from "./constants";
 
+const instance = axios.create({
+  baseURL: BASE_URL,
+  timeout: 5000,
+  headers: {
+    'Authorization': 'Bearer TOKEN',
+    'Content-Type': 'application/json'
+  }
+});
+
 export const LOGIN_POST = async (url, payload) => {
   try {
     return await axios.post(BASE_URL + url, payload).then((res) => {

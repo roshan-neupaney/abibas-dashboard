@@ -91,27 +91,6 @@ const AddEditVariant = ({
   const router = useRouter();
 
   const beautifyPayload = (_data: any) => {
-    if (data?.image === _data.file) {
-      const payload = {
-        title: "",
-        model_id: "",
-        fuel_type: "",
-        colors: [],
-        specifications: [],
-        features: [],
-        description: "",
-        status: "",
-      };
-      payload.title = _data.title;
-      payload.model_id = _data.model_id;
-      payload.fuel_type = _data.fuel_type;
-      payload.colors = _data.colors;
-      payload.description = _data.description;
-      payload.features = _data.features;
-      payload.specifications = _data.specifications;
-      payload.status = _data.status ? "ACTIVE" : "PENDING";
-      return payload;
-    } else {
       const payload = {
         title: "",
         model_id: "",
@@ -131,9 +110,8 @@ const AddEditVariant = ({
       payload.features = _data.features;
       payload.specifications = _data.specifications;
       payload.status = _data.status ? "ACTIVE" : "PENDING";
-      payload.file = _data.file;
+      payload.file = data?.image === _data.file ? undefined : _data.file;
       return payload;
-    }
   };
 
   const handleAdd = async () => {
@@ -163,6 +141,7 @@ const AddEditVariant = ({
     setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
+      console.log('beautifyPayload', beautifiedPayload);
       // const {is_valid, error } =
       const response = await PostFormUpdate(
         CRUD_VARIANT,
@@ -250,6 +229,7 @@ const AddEditVariant = ({
       />
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
+        disabled={loading}
         onClick={isEdit ? handleUpdate : handleAdd}
       />
     </div>

@@ -13,12 +13,12 @@ interface loginTypes {
 const LoginPage = async () => {
   const setCookies = async (data: any) => {
     "use server";
-      cookies().set({
-        name: "access_token",
-        value: "Bearer " + data.access_token,
-        maxAge: 60 * 60 * 24,
-        httpOnly: true,
-      });
+    cookies().set({
+      name: "access_token",
+      value: "Bearer " + data.access_token,
+      maxAge: 60 * 60 * 24,
+      httpOnly: true,
+    });
   };
 
   return (

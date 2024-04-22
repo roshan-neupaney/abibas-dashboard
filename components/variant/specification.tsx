@@ -29,7 +29,7 @@ const Specification = ({
         ];
       });
     };
-    
+    console.log('form', form)
   const updateForm = (key: string, val: string, id: string) => {
     const result = form.filter((items: any) => {
       if (items.id === id) {
@@ -41,6 +41,7 @@ const Specification = ({
     setForm(result);
     const finalForm = result.map((element: any) => {
       return {
+        id: element?.createdAt ? element.id : undefined,
         specificationId: element.specificationId,
         value: element.value,
         status: element.status,

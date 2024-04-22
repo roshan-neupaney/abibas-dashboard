@@ -9,8 +9,10 @@ import { Metadata } from "next";
 
 async function getData(token: any, id: string) {
   try {
-    const res = await ServerSideGetWithId(token, CRUD_CATEGORY, id);
-    return res?.data;
+    if(id){
+      const res = await ServerSideGetWithId(token, CRUD_CATEGORY, id);
+      return res?.data;
+    }
   } catch (error) {}
 }
 

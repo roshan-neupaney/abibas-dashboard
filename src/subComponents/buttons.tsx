@@ -32,7 +32,6 @@ export const SubmitButton = ({
   onClick = "",
   disabled = false,
 }: ButtonProps) => {
-  const router = useRouter();
   return (
     <button
       className="submit-button"
@@ -44,6 +43,8 @@ export const SubmitButton = ({
     </button>
   );
 };
+
+
 export const CancelButton = ({ title, onClick }: ButtonProps) => {
   return (
     <div className="cancel-button" onClick={onClick}>
