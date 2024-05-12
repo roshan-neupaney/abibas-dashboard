@@ -89,7 +89,7 @@ const DetailBox = ({setActive}:any) => {
               View More
             </div>
           </div>
-          {data.length > 0 ? (
+          {data?.length > 0 ? (
             <div style={{ border: "1px solid #d8dadb" }}>
               <TableContainer style={{maxHeight: '20rem'}}>
                 <CustomTableHead {...{ table }} />

@@ -15,3 +15,7 @@ export const CRUD_FEATURE = "/feature";
 export const CRUD_ASSETS_PARTS = "/assets-part";
 export const CRUD_INSPECTIONS = "/inspection";
 export const CRUD_SLIDER = "/slider";
+export const CRUD_BLOG_CATEGORY = "/blog-category";
+export const CRUD_BLOG = "/blog";
+export const CRUD_ENUM = "/enum";
+

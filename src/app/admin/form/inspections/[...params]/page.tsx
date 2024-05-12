@@ -12,6 +12,7 @@ import {
   CRUD_INSPECTION_CATEGORY,
 } from "../../../../../../config/endPoints";
 import AddEditInspection from "./addEdit";
+import { Metadata } from "next";
 
 async function getData(token: any, id: string) {
   try {
@@ -31,6 +32,10 @@ async function getData(token: any, id: string) {
 
     }
   } catch (error) {}
+}
+
+export const metadata: Metadata = {
+  title: 'Inspections'
 }
 
 const AddInspection = async ({ params }: any) => {

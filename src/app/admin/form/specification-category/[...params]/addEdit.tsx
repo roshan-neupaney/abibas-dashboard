@@ -12,6 +12,7 @@ import {
   PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
 import { specificationCategoryValidation } from "../../../../../../utilities/validation";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   title: "",
@@ -66,6 +67,7 @@ const AddEditSpecificationCategory = ({ token, data, isEdit, id }: any) => {
         if (status) {
           toast.success("Successfully Added Specification Category");
           setFormError(defaultError);
+          clearCachesByServerAction("/admin/form/specification-category");
           router.push("/admin/form/specification-category");
         } else {
           toast.error("Error While Adding Specification Category");
@@ -101,7 +103,7 @@ const AddEditSpecificationCategory = ({ token, data, isEdit, id }: any) => {
           if (status) {
             toast.success("Successfully Updated Specification Category");
             setFormError(defaultError);
-            router.refresh();
+            clearCachesByServerAction("/admin/form/specification-category");
             router.push("/admin/form/specification-category");
           } else {
             toast.error("Error While Updating Specification Category");

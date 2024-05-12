@@ -68,6 +68,7 @@ const AddEditAssetsPart = ({
     : defaultForm;
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const beautifiedAssetsPartCategory = assets_part_category?.data?.map(
     (items: any) => {
@@ -108,6 +109,7 @@ const AddEditAssetsPart = ({
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error } : any = assetsPartValidation(beautifiedPayload);
@@ -125,16 +127,20 @@ const AddEditAssetsPart = ({
           router.push("/admin/form/assets-parts");
         } else {
           toast.error("Error While Adding Assets Part");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
+        setLoading(false);
         setFormError(error);
       }
     } catch (e) {
       toast.error("Error While Adding");
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any =
@@ -154,13 +160,16 @@ const AddEditAssetsPart = ({
           router.push("/admin/form/assets-parts");
         } else {
           toast.error("Error While Updating Assets Part");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -216,6 +225,7 @@ const AddEditAssetsPart = ({
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );

@@ -13,7 +13,7 @@ const Color = ({ beautifiedColor, setFormData, formData }: any) => {
 
   const addForm = (val: string) => {
     const filteredValue = beautifiedColor.filter((items: any) => {
-      if (items.id.includes(val)) {
+      if (items.id === val) {
         return items;
       }
     });
@@ -29,7 +29,7 @@ const Color = ({ beautifiedColor, setFormData, formData }: any) => {
           ...prev,
           {
             id: val,
-            color_code: filteredValue[0]?.label,
+            color_code: filteredValue[0]?.color_code,
             color: filteredValue[0]?.label.toUpperCase(),
           },
         ];
@@ -61,7 +61,7 @@ const Color = ({ beautifiedColor, setFormData, formData }: any) => {
           form.map((item: any, i: number) => {
             return (
               <div
-                className="flex w-10 h-10 relative"
+                className="flex w-10 h-10 relative border"
                 key={i}
                 style={{ background: item.color_code }}
               >

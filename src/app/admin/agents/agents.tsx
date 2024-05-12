@@ -64,7 +64,7 @@ const Agents = () => {
 
   return (
     <>
-      {data.length > 0 ? (
+      {data?.length > 0 ? (
         <div style={{ border: "1px solid #d8dadb" }}>
           <TableContainer>
             <CustomTableHead {...{ table }} />

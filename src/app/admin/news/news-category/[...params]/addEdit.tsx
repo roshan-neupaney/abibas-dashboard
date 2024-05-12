@@ -21,7 +21,7 @@ const defaultForm = {
   description: "",
   status: false,
   file: "",
-  tag: [],
+  order: "",
 };
 
 const defaultError = {
@@ -38,41 +38,30 @@ const AddEditNewsCategory = ({ token, data, isEdit, id }: any) => {
         description: data?.description || "",
         file: data?.image || "",
         status: data?.status == "ACTIVE",
-        tag: [],
+        order: "",
       }
     : defaultForm;
 
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
   const [loading, setLoading] = useState(false);
-  console.log(formData.tag)
 
   const router = useRouter();
 
   const beautifyPayload = (_data: any) => {
-    if (data?.image === _data.file) {
-      const payload = {
-        title: "",
-        description: "",
-        status: "",
-      };
-      payload.title = _data.title;
-      payload.description = _data.description;
-      payload.status = _data.status ? "ACTIVE" : "PENDING";
-      return payload;
-    } else {
-      const payload = {
-        title: "",
-        description: "",
-        file: "",
-        status: "",
-      };
-      payload.title = _data.title;
-      payload.description = _data.description;
-      payload.file = _data.file;
-      payload.status = _data.status ? "ACTIVE" : "PENDING";
-      return payload;
-    }
+    const payload = {
+      title: "",
+      description: "",
+      file: "",
+      status: "",
+      order: "",
+    };
+    payload.title = _data.title;
+    payload.description = _data.description;
+    payload.file = data?.image === _data.file ? undefined : _data.file;
+    payload.status = _data.status ? "ACTIVE" : "PENDING";
+    payload.order = _data.order;
+    return payload;
   };
 
   const handleAdd = async () => {
@@ -151,16 +140,6 @@ const AddEditNewsCategory = ({ token, data, isEdit, id }: any) => {
         error={formError.title}
         required
       />
-      <CustomChips
-        title="Tag"
-        value={formData.tag}
-        onChange={(val: string) =>
-          updateState("tag", val, setFormData, setFormError)
-        }
-        placeholder="Press Enter to add tag"
-        error={formError.title}
-        required
-      />
       <CustomInput
         title="Description"
         value={formData.description}
@@ -186,6 +165,17 @@ const AddEditNewsCategory = ({ token, data, isEdit, id }: any) => {
           updateState("file", val, setFormData, setFormError)
         }
         error={formError.file}
+        required
+      />
+      <CustomInput
+        title="Order"
+        value={formData.order}
+        onChange={(val: string) =>
+          updateState("order", val, setFormData, setFormError)
+        }
+        placeholder="Ex. 1"
+        error={formError.title}
+        type="number"
         required
       />
       <SubmitButton

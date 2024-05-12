@@ -18,7 +18,7 @@ interface CustomSelectProps {
 const CustomSelect = ({
   title,
   value,
-  data,
+  data = [],
   onChange,
   placeholder = "",
   style = {},
@@ -30,16 +30,48 @@ const CustomSelect = ({
 
   useEffect(() => {
     if (value) {
-      const filteredValue = data.filter((items: any) => {
-        if (items.id.includes(value)) {
-          return items;
+      data?.forEach((element: any) => {
+        if (element?.id.includes(value)) {
+          setSelectedValue(element?.label);
         }
       });
-      setSelectedValue(filteredValue[0]?.label);
     } else {
       setSelectedValue(placeholder);
     }
   }, [data, value, placeholder]);
+
+  //   useEffect(() => {
+  // adjustDropdown();
+  //   }, [openBox])
+
+  //   const adjustDropdown = () => {
+  //     // console.log('openBox', openBox)
+  //     const container = document.querySelector('.form-container')
+  //     const select = document.querySelectorAll('.select-box');
+  //     const dropdown = document.querySelectorAll('.show-option-box');
+  //     const container_bottom = container?.getBoundingClientRect()?.bottom || 0;
+  //     console.log(dropdown);
+  //     console.log(dropdown[0]?.className)
+  //     select.forEach((element, index) => {
+  //       if(dropdown[0]?.className.includes('show-option-box')){
+  //         dropdown[0].style.maxHeight = '240px';
+  //         //@ts-ignore
+  //         dropdown[0].style.border = '2px solid red';
+  //         console.log('dropdown', dropdown[0].getBoundingClientRect())
+  //         // console.log('dropdown_bottom', dropdown[0]?.getBoundingClientRect().height);
+  //         const select_bottom = element?.getBoundingClientRect()?.bottom || 0;
+
+  //         const dropdown_bottom = dropdown[0]?.getBoundingClientRect();
+  //         const bottomSpace = container_bottom - select_bottom;
+  //         // console.log('is_overflow', bottomSpace < dropdown_bottom.height)
+  //         if(bottomSpace < dropdown_bottom.height) {
+  //           dropdown[0].style.border = `2px solid blue`;
+  //         }
+  //         // console.log(bottomSpace);
+  //       }
+  //       });
+
+  //   }
 
   const selectRef = useRef<HTMLDivElement | null>(null);
 
@@ -66,7 +98,9 @@ const CustomSelect = ({
             ...style,
             border: error ? "1px solid red" : "1px solid #92959a",
           }}
-          onClick={() => toggleBox(!openBox)}
+          onClick={() => {
+            toggleBox(!openBox);
+          }}
         >
           <span className="body-medium">{selectedValue || placeholder}</span>
           <span
@@ -82,7 +116,7 @@ const CustomSelect = ({
         <div
           className={`${
             openBox ? "show-option-box" : "hide-option-box"
-          } option-box gap-2`}
+          } option-box`}
         >
           {data?.map((elements: any, index: number) => {
             return (
@@ -93,7 +127,7 @@ const CustomSelect = ({
                   toggleBox(!openBox);
                   onChange(elements.id);
                 }}
-                className="select-options body-medium"
+                className="p-2 flex body-medium hover:bg-[#dcdce6]"
               >
                 {elements.label}
               </div>
@@ -120,13 +154,15 @@ export const CustomMultiSelect = ({
 }: CustomSelectProps) => {
   const [openBox, toggleBox] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value);
+  const [selectedOption, setSelectOption] = useState<string[]>([]);
   const selectRef = useRef<HTMLDivElement | null>(null);
-
+  console.log("selectedOption", selectedOption);
   useEffect(() => {
     if (value) {
       const tempValue = data.filter((items: any) => {
         for (let i = 0; i < value?.length; i++) {
           if (items.id.includes(value[i])) {
+            selectedOption.push(value[i]);
             return items;
           }
         }
@@ -138,8 +174,7 @@ export const CustomMultiSelect = ({
     } else {
       setSelectedValue(placeholder);
     }
-  }, [data, value, placeholder]);
-
+  }, [data, value, placeholder, selectedOption]);
 
   const handleValue = (val: string) => {
     let temp: String[] = value;
@@ -201,6 +236,7 @@ export const CustomMultiSelect = ({
           } option-box gap-2`}
         >
           {data?.map((elements: any, index: number) => {
+            // console.log('elements',elements.id)
             return (
               <div
                 key={index}
@@ -208,7 +244,9 @@ export const CustomMultiSelect = ({
                   setSelectedValue(`${elements.label}`);
                   handleValue(elements.id);
                 }}
-                className="select-options body-medium"
+                className={`select-options body-medium ${
+                  selectedOption?.includes(elements.id) && "bg-slate-400"
+                }`}
               >
                 {elements.label}
               </div>

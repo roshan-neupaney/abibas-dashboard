@@ -15,7 +15,7 @@ const LazyImage = (props: any) => {
     setImgSrc(noImage);
   };
   return (
-    <Image src={imgSrc} {...rest} loading="lazy" onError={handleError} alt="" />
+    <Image src={imgSrc} {...rest} loading="lazy" onError={handleError} alt="" className="rounded" />
   );
 };
 

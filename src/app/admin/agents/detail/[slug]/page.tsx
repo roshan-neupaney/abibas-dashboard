@@ -7,9 +7,9 @@ const AgentDetailPage = () => {
   return (
     <>
     <PageHeader title="All New Hyundai Creta - 2021" showBack />
-      <DetailContainer>
+      <div className='bg-[#fcfcfc]'>
         <AgentDetail />
-      </DetailContainer>
+      </div>
     </>
   )
 }

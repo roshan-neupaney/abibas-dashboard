@@ -7,7 +7,7 @@ import FeatureCategory from "./childPage";
 import { Metadata } from "next";
 
 async function getData(token: any) {
-  authorization(token, '/admin/form/feature-category');
+  authorization(token);
   try{
     const res = await ServerSideGet(token, CRUD_FEATURE_CATEGORY);
     return res?.data;

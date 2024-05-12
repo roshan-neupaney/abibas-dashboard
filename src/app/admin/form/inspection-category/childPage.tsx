@@ -136,7 +136,7 @@ const InspectionCategory = ({ _data, token }: any) => {
             <NoDataFound />
           )}
         </TableContainer>
-        {data.length > 0 && <TablePagination {...{ table }} />}
+        {data?.length > 0 && <TablePagination {...{ table }} />}
       </div>
 
       <DeleteModal

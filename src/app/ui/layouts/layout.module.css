@@ -1,75 +1,65 @@
-.container{
-    display: flex;
-    width: 100vw;
-    min-height: 100vh;
+.container {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
 }
 
-.header{
-    display: flex;
-    flex-direction: column;
-    width: calc(100% - 220px);
-    /* width: 87%; */
-    flex: 1;
-}
-
-.menu {
-    min-width: 220px;
-    /* min-width: 12%; */
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    left: 0;
-    overflow: auto;
+.header {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 220px);
+  /* width: 87%; */
+  flex: 1;
 }
 
 .menu {
-    --sb-track-color: #232E33;
-    --sb-thumb-color: #6BAF8D;
-    --sb-size: 0px;
-  
-    scrollbar-color: var(--sb-thumb-color) 
-                     var(--sb-track-color);
-  }
-  
-  .menu::-webkit-scrollbar {
-    width: var(--sb-size) 
-  }
-
-  .childrenContainer {
-    background-color: #f9f7f7;
-    height: 100%;
-    width: 100%;
-
+  min-width: 220px;
+  /* min-width: 12%; */
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  overflow: auto;
 }
 
-.children{
-    display: flex;
-    flex-direction: column;
-    /* height: 100%; */
-    margin: 0 40px;
-    padding: 16px 0 12px 0;
-    gap: 20px;
+.menu::-webkit-scrollbar {
+  width: 0px;
+}
+
+.childrenContainer {
+  background-color: #f9f7f7;
+  height: 100%;
+  width: 100%;
+}
+
+.children {
+  display: flex;
+  flex-direction: column;
+  /* height: 100%; */
+  margin: 0 40px;
+  padding: 16px 0 12px 0;
+  gap: 20px;
 }
 
 @media screen and (max-width: 834px) {
-    .container{
-        flex-direction: column-reverse;
-    }
-    .header{
-        width: 100%;
-    }
-    .childrenContainer{
-        flex: 1;
-    }
-    .children{
-        margin: 0 20px;
-    }
-    .menu{
-        position: sticky;
-        z-index: 1;
-        bottom: 0;
-        height: 80px;
-        width: 100%;
-        background-color: #202529;
-    }
+  .container {
+    flex-direction: column-reverse;
+  }
+  .header {
+    width: 100%;
+  }
+  .childrenContainer {
+    flex: 1;
+  }
+  .children {
+    margin: 0 20px;
+  }
+  .menu {
+    position: sticky;
+    z-index: 1;
+    bottom: 0;
+    height: 80px;
+    width: 100%;
+    background-color: #202529;
+  }
 }

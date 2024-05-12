@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import ActivityList from "../activityList";
+
 
 const Activity = () => {
   return (
-    <div>Activity</div>
-  )
-}
+    <div className="py-5 px-4">
+      <ActivityList />
+    </div>
+  );
+};
 
-export default Activity
+export default Activity;

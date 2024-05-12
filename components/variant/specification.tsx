@@ -29,7 +29,6 @@ const Specification = ({
         ];
       });
     };
-    console.log('form', form)
   const updateForm = (key: string, val: string, id: string) => {
     const result = form.filter((items: any) => {
       if (items.id === id) {

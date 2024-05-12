@@ -110,7 +110,7 @@ const CustomTableBody = ({
                       {cell?.row?.original["colors"]?.map((items:any, i:number) => {
                         return (
                           <div
-                            className="flex "
+                            className="flex rounded-md"
                             style={{
                               width: 20,
                               height: 20,

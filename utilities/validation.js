@@ -49,13 +49,14 @@ export const categoryValidation = (payload) => {
 
 export const featureValidation = (payload) => {
   try {
-    const { title, description, file, feature_category_id, unit_id } = payload;
+    const { title, description, feature_category_id, unit_id } = payload;
     let count = 0;
     const errorMessage = {
       title: "",
       description: "",
       feature_category_id: "",
       unit_id: "",
+      // file: '',
     };
     if (!title.length > 0) {
       errorMessage.title = "Title is required.";
@@ -73,10 +74,10 @@ export const featureValidation = (payload) => {
       errorMessage.unit_id = "Unit is required.";
       count++;
     }
-    if (file.length == 0) {
-      errorMessage.file = "Image is required.";
-      count++;
-    }
+    // if (file.length == 0) {
+    //   errorMessage.file = "Image is required.";
+    //   count++;
+    // }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
     console.log(e);
@@ -127,36 +128,37 @@ export const modelValidation = (payload) => {
 
 export const specificationValidation = (payload) => {
   try {
-    const { title, description, file, specification_category_id, unit_id } =
+    const { title, description, file, specification_category_id } =
       payload;
     let count = 0;
     const errorMessage = {
       title: "",
       description: "",
       specification_category_id: "",
-      unit_id: "",
+      // unit_id: "",
+      // file: '',
     };
-    if (!title.length > 0) {
+    if (!title?.length > 0) {
       errorMessage.title = "Title is required.";
       count++;
     }
-    if (!description.length > 0) {
+    if (!description?.length > 0) {
       errorMessage.description = "Description is required.";
       count++;
     }
-    if (!specification_category_id.length > 0) {
+    if (!specification_category_id?.length > 0) {
       errorMessage.specification_category_id =
         "Specification Category is required.";
       count++;
     }
-    if (!unit_id.length > 0) {
-      errorMessage.unit_id = "Unit is required.";
-      count++;
-    }
-    if (file.length == 0) {
-      errorMessage.file = "Image is required.";
-      count++;
-    }
+    // if (!unit_id?.length > 0) {
+    //   errorMessage.unit_id = "Unit is required.";
+    //   count++;
+    // }
+    // if (file?.length == 0) {
+    //   errorMessage.file = "Image is required.";
+    //   count++;
+    // }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
     console.log(e);
@@ -303,6 +305,38 @@ export const inspectionValidation = (payload) => {
     if (!text_for_everything_fine?.length > 0) {
       errorMessage.text_for_everything_fine =
         "Text for if everything is fine is required.";
+      count++;
+    }
+    return { error: errorMessage, isValid: count === 0 };
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const enumValidation = (payload) => {
+  try {
+    const { title, file, order, slug } = payload;
+    let count = 0;
+    const errorMessage = {
+      title: "",
+      order: "",
+      slug: "",
+      file: "",
+    };
+    if (!title?.length > 0) {
+      errorMessage.title = "Title is required.";
+      count++;
+    }
+    if (!order) {
+      errorMessage.order = "Order is required.";
+      count++;
+    }
+    if (!slug?.length > 0) {
+      errorMessage.slug = "Slug is required.";
+      count++;
+    }
+    if (file?.length == 0) {
+      errorMessage.file = "Image is required.";
       count++;
     }
     return { error: errorMessage, isValid: count === 0 };

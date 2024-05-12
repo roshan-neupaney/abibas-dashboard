@@ -42,7 +42,7 @@
 }
 .showDropdown {
   background-color: #2e3132;
-  max-height: 50rem;
+  max-height: 60rem;
   opacity: 1;
   transition: all 0.5s;
 }
@@ -76,6 +76,7 @@
   align-items: center;
   padding: 14px 4px 14px 20px;
   gap: 12px;
+  background-color: var(--bg);
 }
 
 @media screen and (max-width: 834px) {

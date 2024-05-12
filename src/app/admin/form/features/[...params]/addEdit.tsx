@@ -33,7 +33,6 @@ const defaultError = {
   description: "",
   feature_category_id: "",
   unit_id: "",
-  file: "",
 };
 
 const AddEditFeature = ({
@@ -112,7 +111,7 @@ const AddEditFeature = ({
       };
       payload.title = _data.title;
       payload.description = _data.description;
-      payload.file = _data.file;
+      payload.file = _data.file || undefined;
       payload.status = _data.status ? "ACTIVE" : "PENDING";
       payload.comma_value_if_dropdown = _data.comma_value_if_dropdown;
       payload.feature_option_type = _data.feature_option_type;
@@ -219,8 +218,8 @@ const AddEditFeature = ({
         onChange={(val: any) =>
           updateState("file", val, setFormData, setFormError)
         }
-        error={formError.file}
-        required
+        // error={formError.file}
+        // required
       />
 
       <CustomSelect
@@ -233,16 +232,6 @@ const AddEditFeature = ({
         placeholder="Select feature category"
         error={formError.feature_category_id}
         required
-      />
-      <CustomSelect
-        title="Unit"
-        data={beautifiedUnit}
-        value={formData.unit_id}
-        onChange={(val: string) =>
-          updateState("unit_id", val, setFormData, setFormError)
-        }
-        error={formError.unit_id}
-        placeholder="Select feature category"
       />
 
       <CustomRadio
@@ -261,6 +250,16 @@ const AddEditFeature = ({
           updateState("feature_option_type", val, setFormData)
         }
       />
+        <CustomSelect
+          title="Unit"
+          data={beautifiedUnit}
+          value={formData.unit_id}
+          onChange={(val: string) =>
+            updateState("unit_id", val, setFormData, setFormError)
+          }
+          error={formError.unit_id}
+          placeholder="Select feature category"
+        />
 
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}

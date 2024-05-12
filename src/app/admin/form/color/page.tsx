@@ -7,7 +7,7 @@ import { authorization } from "../../../../../hoc/auth";
 import { Metadata } from "next";
 
 async function getData(token: any) {
-  authorization(token, '/admin/form/color');
+  authorization(token);
   try{
     const res = await ServerSideGet(token, CRUD_COLOR_CHOICE);
     return res?.data;

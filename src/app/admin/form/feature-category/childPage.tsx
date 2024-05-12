@@ -136,7 +136,7 @@ const router = useRouter();
             <NoDataFound />
           )}
         </TableContainer>
-        {data.length > 0 && <TablePagination {...{ table }} />}
+        {data?.length > 0 && <TablePagination {...{ table }} />}
       </div>
 
       <DeleteModal

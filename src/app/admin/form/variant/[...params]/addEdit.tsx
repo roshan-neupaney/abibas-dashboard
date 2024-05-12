@@ -58,7 +58,7 @@ const AddEditVariant = ({
     return { id: items?.id, label: items?.title };
   });
   const beautifiedColor = color?.data?.map((items: any) => {
-    return { id: items?.id, label: items?.color_code };
+    return { id: items?.id, label: items?.color, color_code: items?.color_code };
   });
 
   const fuel = [
@@ -141,7 +141,6 @@ const AddEditVariant = ({
     setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
-      console.log('beautifyPayload', beautifiedPayload);
       // const {is_valid, error } =
       const response = await PostFormUpdate(
         CRUD_VARIANT,
@@ -169,7 +168,7 @@ const AddEditVariant = ({
   };
 
   return (
-    <div className="flex flex-1 p-4 flex-col gap-5">
+    <div className=" flex flex-1 p-4 flex-col gap-5">
       <div className="flex w-[30rem] flex-col gap-5">
         <CustomInput
           title="Title"

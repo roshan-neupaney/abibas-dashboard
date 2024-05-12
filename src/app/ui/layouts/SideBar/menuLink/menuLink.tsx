@@ -125,11 +125,6 @@ const mainMenu = [
         icon: Circle,
       },
       {
-        title: "Specification Category",
-        link: "/admin/form/specification-category",
-        icon: Circle,
-      },
-      {
         title: "Assets Part Category",
         link: "/admin/form/assets-part-category",
         icon: Circle,
@@ -150,13 +145,18 @@ const mainMenu = [
         icon: Circle,
       },
       {
-        title: "Feature Category",
-        link: "/admin/form/feature-category",
+        title: "Specification Category",
+        link: "/admin/form/specification-category",
         icon: Circle,
       },
       {
         title: "Specifications",
         link: "/admin/form/specifications",
+        icon: Circle,
+      },
+      {
+        title: "Feature Category",
+        link: "/admin/form/feature-category",
         icon: Circle,
       },
       {
@@ -167,6 +167,21 @@ const mainMenu = [
       {
         title: "Slider",
         link: "/admin/form/slider",
+        icon: Circle,
+      },
+      {
+        title: "Blog Category",
+        link: "/admin/form/blog-category",
+        icon: Circle,
+      },
+      {
+        title: "Blog",
+        link: "/admin/form/blogs",
+        icon: Circle,
+      },
+      {
+        title: "Enums",
+        link: "/admin/form/enums",
         icon: Circle,
       },
     ],
@@ -225,7 +240,7 @@ const MenuLink = () => {
                     }`}
                   >
                     {items.category.map((cat, i) => {
-                      // toggleCategory(pathname.includes(cat.link) ? cat?.title: '')
+                      // toggleCategory(pathname.includes(cat.link) ? items?.title: '')
                       return (
                         <Link href={cat.link} key={`child-${i}-${cat.title}`}>
                           <div

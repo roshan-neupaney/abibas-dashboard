@@ -113,7 +113,7 @@ const Inventory = () => {
             </div>
           }
         >
-          {data.length > 0 ? (
+          {data?.length > 0 ? (
             <>
               <CustomTableHead {...{ table }} />
               <CustomTableBody

@@ -58,14 +58,14 @@ const Inspection = ({ _data, token }: any) => {
         header: "Inspection Category",
         accessorKey: "inspection_category",
       },
-      {
-        header: "Start Text",
-        accessorKey: "start_text",
-      },
-      {
-        header: "End Text",
-        accessorKey: "end_text",
-      },
+      // {
+      //   header: "Start Text",
+      //   accessorKey: "start_text",
+      // },
+      // {
+      //   header: "End Text",
+      //   accessorKey: "end_text",
+      // },
       {
         header: "Inspection Option type",
         accessorKey: "inception_option_type",
@@ -74,10 +74,10 @@ const Inspection = ({ _data, token }: any) => {
         header: "Comma Value If Dropdown",
         accessorKey: "comma_value_if_dropdown",
       },
-      {
-        header: "Text For Everything Fine",
-        accessorKey: "text_for_everything_fine",
-      },
+      // {
+      //   header: "Text For Everything Fine",
+      //   accessorKey: "text_for_everything_fine",
+      // },
       {
         header: "Status",
         accessorKey: "status",
@@ -156,7 +156,7 @@ const Inspection = ({ _data, token }: any) => {
             <NoDataFound />
           )}
         </TableContainer>
-        {data.length > 0 && <TablePagination {...{ table }} />}
+        {data?.length > 0 && <TablePagination {...{ table }} />}
       </div>
 
       <DeleteModal

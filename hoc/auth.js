@@ -1,10 +1,7 @@
 import { redirect } from "next/navigation";
 import { DecodeJWT } from "../utilities/helper";
-import { revalidatePath } from "next/cache";
-import clearCachesByServerAction from "../hooks/revalidate";
 
-export const authorization = (value, path = "/") => {
-  clearCachesByServerAction(path);
+export const authorization = (value) => {
   if (!value) {
     redirect("/login");
   } else {

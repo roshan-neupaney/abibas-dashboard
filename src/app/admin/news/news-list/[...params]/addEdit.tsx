@@ -14,6 +14,8 @@ import {
 } from "../../../../../../utilities/apiCall";
 import { categoryValidation } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
+import CustomSelect from "@/subComponents/select";
+import CustomChips from "@/subComponents/inputChips";
 
 const defaultForm = {
   title: "",
@@ -48,6 +50,15 @@ const AddEditNews = ({ token, data, isEdit, id }: any) => {
         description: data?.description || "",
         file: data?.image || "",
         status: data?.status == "ACTIVE",
+        category: '',
+        short_title: '',
+        pdf_file: '',
+        image_caption: '',
+        tags: [],
+  meta_tags: [],
+  meta_keywords: [],
+  author: '',
+  publish_date: '',
       }
     : defaultForm;
 
@@ -159,21 +170,22 @@ const AddEditNews = ({ token, data, isEdit, id }: any) => {
         error={formError.title}
         required
       />
-      <CustomInput
-        title="Title"
-        value={formData.title}
+      <CustomSelect
+        title="Category"
+        data={[]}
+        value={formData.category}
         onChange={(val: string) =>
-          updateState("title", val, setFormData, setFormError)
+          updateState("category", val, setFormData, setFormError)
         }
-        placeholder="Enter title"
+        placeholder="Select category"
         error={formError.title}
         required
       />
       <CustomInput
-        title="Description"
-        value={formData.description}
+        title="Short title"
+        value={formData.short_title}
         onChange={(val: string) =>
-          updateState("description", val, setFormData, setFormError)
+          updateState("short_title", val, setFormData, setFormError)
         }
         placeholder="Write here..."
         multiline
@@ -181,7 +193,6 @@ const AddEditNews = ({ token, data, isEdit, id }: any) => {
         error={formError.description}
         required
       />
-
       <CustomToggleSwitch
         title="Is Active"
         value={formData.status}
@@ -194,6 +205,66 @@ const AddEditNews = ({ token, data, isEdit, id }: any) => {
           updateState("file", val, setFormData, setFormError)
         }
         error={formError.file}
+        required
+      />
+        <CustomInput
+          title="Image Caption"
+          value={formData.image_caption}
+          onChange={(val: string) =>
+            updateState("image_caption", val, setFormData, setFormError)
+          }
+          placeholder="Enter title"
+          error={formError.title}
+          required
+        />
+      <CustomDropzone
+        title="Pdf File"
+        value={formData.pdf_file}
+        onChange={(val: any) =>
+          updateState("pdf_file", val, setFormData, setFormError)
+        }
+        error={formError.file}
+        required
+      />
+      <CustomChips
+        title="Tags"
+        value={formData.tags}
+        onChange={(val: []) =>
+          updateState("tags", val, setFormData, setFormError)
+        }
+        placeholder="Press Enter to add a tag"
+        error={formError.title}
+        required
+      />
+      <CustomChips
+        title="Meta Tags"
+        value={formData.meta_tags}
+        onChange={(val: []) =>
+          updateState("meta_tags", val, setFormData, setFormError)
+        }
+        placeholder="Press Enter to add a meta tag"
+        error={formError.title}
+        required
+      />
+      <CustomChips
+        title="Meta Keyword"
+        value={formData.meta_keywords}
+        onChange={(val: []) =>
+          updateState("meta_keywords", val, setFormData, setFormError)
+        }
+        placeholder="Press Enter to add a tag keyword"
+        error={formError.title}
+        required
+      />
+      <CustomSelect
+        title="Author"
+        data={[]}
+        value={formData.author}
+        onChange={(val: string) =>
+          updateState("author", val, setFormData, setFormError)
+        }
+        placeholder="Select Author"
+        error={formError.title}
         required
       />
       <SubmitButton

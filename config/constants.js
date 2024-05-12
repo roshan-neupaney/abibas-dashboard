@@ -24,3 +24,11 @@ export const specificationOptionType = [
   { id: "TEXT", label: "Text" },
   { id: "DROPDOWN", label: "Dropdown" },
 ];
+
+export const enumSlug = [
+  { id: "enum_owner", label: "Owner" },
+  { id: "enum_made_year", label: "Manufacture Year" },
+  { id: "enum_drive", label: "Drive" },
+  { id: "enum_prefer_sell", label: "Prefer Sell" },
+  { id: "enum_city", label: "City" },
+];

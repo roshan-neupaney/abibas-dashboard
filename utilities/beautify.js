@@ -265,3 +265,46 @@ export const beautifyInspection = (data) => {
     return filteredData;
   } catch (error) {}
 };
+
+export const beautifyBlog = (data) => {
+  try {
+    const filteredData = data.map((cat) => {
+      const details = {
+        id: "",
+        image: '',
+        title: "",
+        description: "",
+        author: "",
+        status: "",
+      };
+      details.id = cat?.id;
+      details.title = cat?.title;
+      details.image = cat?.image;
+      details.description = cat?.description.replace(/<[^>]*>/g, '');
+      details.author = cat?.author;
+      details.status = cat?.status;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {}
+};
+export const beautifyEnums = (data) => {
+  try {
+    const filteredData = data.map((cat) => {
+      const details = {
+        id: "",
+        title: "",
+        order: "",
+        status: "",
+        // image: '',
+      };
+      details.id = cat?.id;
+      details.title = cat?.title;
+      details.order = cat?.order;
+      details.status = cat?.status;
+      details.image = cat?.image;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {}
+};

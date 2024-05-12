@@ -3,6 +3,7 @@ import { Button } from "../src/subComponents/buttons";
 import arrowIcon from "../public/icons/icon-arrow-left.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface PageHeaderProps {
   title: string;
@@ -30,7 +31,11 @@ const PageHeader = ({
           <div className="headline-medium">{title}</div>
           <div className="headline-small-NH">{length && 87}</div>
         </div>
-        {addRoute && <Button addRoute={addRoute} title="Add New" addIcon />}
+        {addRoute && 
+        <Link href={addRoute}>
+        <Button title="Add New" addIcon />
+        </Link>
+        }
       </div>
     </>
   );

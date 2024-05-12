@@ -36,8 +36,6 @@ const defaultError = {
   title: "",
   description: "",
   specification_category_id: "",
-  unit_id: "",
-  file: "",
 };
 
 const AddEditSpecification = ({
@@ -105,14 +103,14 @@ const AddEditSpecification = ({
         specification_category_id: "",
         unit_id: "",
       };
-      payload.title = _data.title;
-      payload.description = _data.description;
-      payload.file = _data.file;
-      payload.status = _data.status ? "ACTIVE" : "PENDING";
-      payload.comma_value_if_dropdown = _data.comma_value_if_dropdown;
-      payload.specification_option_type = _data.specification_option_type;
-      payload.specification_category_id = _data.specification_category_id;
-      payload.unit_id = _data.unit_id;
+      payload.title = _data?.title;
+      payload.description = _data?.description;
+      payload.file = _data?.file || undefined;
+      payload.status = _data?.status ? "ACTIVE" : "PENDING";
+      payload.comma_value_if_dropdown = _data?.comma_value_if_dropdown;
+      payload.specification_option_type = _data?.specification_option_type;
+      payload.specification_category_id = _data?.specification_category_id;
+      payload.unit_id = _data?.unit_id ;
       return payload;
     }
   };
@@ -228,7 +226,7 @@ const AddEditSpecification = ({
         data={beautifiedSpecificationCategory}
         value={formData.specification_category_id}
         onChange={(val: string) =>
-          updateState("specification_category", val, setFormData, setFormError)
+          updateState("specification_category_id", val, setFormData, setFormError)
         }
         placeholder="Select specification category"
         error={formError.specification_category_id}
@@ -239,11 +237,9 @@ const AddEditSpecification = ({
         data={beautifiedUnit}
         value={formData.unit_id}
         onChange={(val: string) =>
-          updateState("unit", val, setFormData, setFormError)
+          updateState("unit_id", val, setFormData, setFormError)
         }
         placeholder="Select Unit"
-        error={formError.unit_id}
-        required
       />
 
       <CustomRadio

@@ -13,6 +13,7 @@ import {
   PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
 import { categoryValidation } from "../../../../../../utilities/validation";
+import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 interface formDataType {
   title: string;
@@ -91,6 +92,7 @@ const AddEditSlider = ({ token, data, isEdit, id }: any) => {
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Added Slider");
+          clearCachesByServerAction('/admin/form/slider');
           router.push("/admin/form/slider");
           setFormError(defaultError);
         } else {

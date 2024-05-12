@@ -49,7 +49,7 @@ const CustomInput = ({
             type={type}
             onChange={(e) => {
               if (type === "number") {
-                if (/[0-9]/.test(e.target.value) || e.target.value == "") {
+                if (/[0-9]/.test(e.target.value) || e.target.value === "") {
                   onChange(e.target.value);
                 }
               } else {

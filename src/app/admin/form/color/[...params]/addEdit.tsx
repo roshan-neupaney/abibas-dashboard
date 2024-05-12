@@ -16,7 +16,7 @@ import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
   color: "",
-  color_code: "",
+  color_code: "#000000",
   status: false,
 };
 

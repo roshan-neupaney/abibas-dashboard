@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_ASSETS_PART_CATEGORY } from "../../../../../../config/endPoints";
 import {
+  FormPatchJson,
+  FormPostJson,
   PostFormAdd,
   PostFormUpdate,
 } from "../../../../../../utilities/apiCall";
@@ -36,6 +38,7 @@ const AddEditAssetsPartCategory = ({ token, data, isEdit, id }: any) => {
     : defaultForm;
   const [formData, setFormData] = useState(editForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -52,12 +55,13 @@ const AddEditAssetsPartCategory = ({ token, data, isEdit, id }: any) => {
   };
 
   const handleAdd = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any =
         specificationCategoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormAdd(
+        const response = await FormPostJson(
           CRUD_ASSETS_PART_CATEGORY,
           beautifiedPayload,
           token
@@ -70,22 +74,26 @@ const AddEditAssetsPartCategory = ({ token, data, isEdit, id }: any) => {
           router.push("/admin/form/assets-part-category");
         } else {
           toast.error("Error While Adding Assets Part Category");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
+        setLoading(false);
         setFormError(error);
       }
     } catch (e) {
       toast.error("Error While Adding");
+      setLoading(false);
     }
   };
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any =
         specificationCategoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormUpdate(
+        const response = await FormPatchJson(
           CRUD_ASSETS_PART_CATEGORY,
           id,
           beautifiedPayload,
@@ -95,17 +103,20 @@ const AddEditAssetsPartCategory = ({ token, data, isEdit, id }: any) => {
         if (status) {
           toast.success("Successfully Updated Assets Part Category");
           setFormError(defaultError);
-          router.refresh();
+          clearCachesByServerAction('/admin/form/assets-part-category');
           router.push("/admin/form/assets-part-category");
         } else {
           toast.error("Error While Updating Assets Part Category");
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Error While Updating");
+      setLoading(false);
     }
   };
 
@@ -138,6 +149,7 @@ const AddEditAssetsPartCategory = ({ token, data, isEdit, id }: any) => {
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}
         onClick={isEdit ? handleUpdate : handleAdd}
+        disabled={loading}
       />
     </div>
   );
