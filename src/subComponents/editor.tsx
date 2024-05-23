@@ -22,11 +22,11 @@ const CustomEditor = ({
   const editorRef = useRef<any>();
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, Editor } = editorRef.current || {};
-  // const defaultConfig = {
-  //   toolbar: {
-  //     shouldNotGroupWhenFull: true,
-  //   },
-  // };
+  const defaultConfig = {
+    toolbar: {
+      shouldNotGroupWhenFull: true,
+    },
+  };
   useEffect(() => {
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor,
@@ -47,7 +47,7 @@ const CustomEditor = ({
           name={name}
           editor={Editor}
           data={data}
-          // config={defaultConfig}
+          config={defaultConfig}
           onChange={(_event: any, editor: any) => {
             const data = editor.getData();
             onChange(data);
