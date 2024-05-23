@@ -8,8 +8,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_ASSETS_PARTS } from "../../../../../../config/endPoints";
 import {
-  PostFormAdd,
-  PostFormUpdate,
+  FormdataPost,
+  FormdataPatch,
 } from "../../../../../../utilities/apiCall";
 import {
   assetsPartValidation,
@@ -114,7 +114,7 @@ const AddEditAssetsPart = ({
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error } : any = assetsPartValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormAdd(
+        const response = await FormdataPost(
           CRUD_ASSETS_PARTS,
           beautifiedPayload,
           token
@@ -146,7 +146,7 @@ const AddEditAssetsPart = ({
       const { isValid, error }: any =
       assetsPartValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormUpdate(
+        const response = await FormdataPatch(
           CRUD_ASSETS_PARTS,
           id,
           beautifiedPayload,

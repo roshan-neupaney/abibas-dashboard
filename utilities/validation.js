@@ -128,8 +128,7 @@ export const modelValidation = (payload) => {
 
 export const specificationValidation = (payload) => {
   try {
-    const { title, description, file, specification_category_id } =
-      payload;
+    const { title, description, file, specification_category_id } = payload;
     let count = 0;
     const errorMessage = {
       title: "",
@@ -321,7 +320,7 @@ export const enumValidation = (payload) => {
       title: "",
       order: "",
       slug: "",
-      file: "",
+      // file: "",
     };
     if (!title?.length > 0) {
       errorMessage.title = "Title is required.";
@@ -335,8 +334,92 @@ export const enumValidation = (payload) => {
       errorMessage.slug = "Slug is required.";
       count++;
     }
-    if (file?.length == 0) {
-      errorMessage.file = "Image is required.";
+    // if (file?.length == 0) {
+    //   errorMessage.file = "Image is required.";
+    //   count++;
+    // }
+    return { error: errorMessage, isValid: count === 0 };
+  } catch (e) {
+    console.log(e);
+  }
+};
+export const vehicleValidation = (payload) => {
+  try {
+    const {
+      title,
+      brand_id,
+      model_id,
+      varient_id,
+      made_year,
+      owner,
+      km_drive,
+      prefer_selling,
+      contact_email,
+      contact_number,
+      address,
+      city,
+    } = payload;
+    let count = 0;
+    const errorMessage = {
+      title: "",
+      brand_id: "",
+      model_id: "",
+      variant_id: "",
+      made_year: "",
+      owner: "",
+      km_driven: "",
+      prefer_selling: "",
+      contact_email: "",
+      contact_number: "",
+      address: "",
+      city: "",
+    };
+    if (!title?.length > 0) {
+      errorMessage.title = "Title is required.";
+      count++;
+    }
+    if (!brand_id?.length > 0) {
+      errorMessage.brand_id = "Brand is required.";
+      count++;
+    }
+    if (!model_id?.length > 0) {
+      errorMessage.model_id = "Model is required.";
+      count++;
+    }
+    if (!varient_id?.length > 0) {
+      errorMessage.variant_id = "Variant is required.";
+      count++;
+    }
+    if (!made_year?.length > 0) {
+      errorMessage.made_year = "Manufacture Year is required.";
+      count++;
+    }
+    if (!owner?.length > 0) {
+      errorMessage.owner = "Owner is required.";
+      count++;
+    }
+    if (!km_drive?.length > 0) {
+      errorMessage.km_driven = "Driven is required.";
+      count++;
+    }
+    if (!prefer_selling?.length > 0) {
+      errorMessage.prefer_selling = "Prefer Selling is required.";
+      count++;
+    }
+    if (!contact_email?.length > 0) {
+      errorMessage.contact_email = "Email is required.";
+      count++;
+    }
+    if (!contact_number?.length > 0) {
+      errorMessage.contact_number = "Phone number is required.";
+      count++;
+    }
+    if (!address?.length > 0) {
+      errorMessage.address = "Address is required.";
+      count++;
+    }
+    if (!city?.length > 0) {
+      errorMessage.city = "City is required.";
       count++;
     }
     return { error: errorMessage, isValid: count === 0 };

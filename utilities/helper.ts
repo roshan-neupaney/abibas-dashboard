@@ -22,12 +22,6 @@ export const updateState = (
   }
 };
 
-export const updateArrayState = ( key: string, value: any, setForm: any) => {
-  setForm((prev: any) => {
-    return 
-  })
-}
-
 export const UUidGenerator = () => {
   let uuid =
     new Date().getTime().toString(36) +
@@ -35,3 +29,14 @@ export const UUidGenerator = () => {
     (Date.now() + Math.random().toString()).split(".").join("_");
   return uuid;
 };
+
+export function groupBy<T>(array: T[], key: (item: T) => string): Record<string, T[]> {
+  return array.reduce((result, item) => {
+    const keyValue = key(item);
+    if (!result[keyValue]) {
+      result[keyValue] = [];
+    }
+    result[keyValue].push(item);
+    return result;
+  }, {} as Record<string, T[]>);
+}

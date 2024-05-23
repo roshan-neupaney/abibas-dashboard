@@ -27,6 +27,10 @@ const CustomSelect = ({
 }: CustomSelectProps) => {
   const [openBox, toggleBox] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value || placeholder);
+  const [dropdownPosition, setDropdownPosition] = useState("bottom");
+  const selectRef = useRef<HTMLDivElement | null>(null);
+  const dropdownOptionRef = useRef<HTMLDivElement | null>(null);
+  const inputBoxRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (value) {
@@ -40,40 +44,36 @@ const CustomSelect = ({
     }
   }, [data, value, placeholder]);
 
-  //   useEffect(() => {
-  // adjustDropdown();
-  //   }, [openBox])
+  useEffect(() => {
+    const handleResize = () => {
+      if (inputBoxRef.current && dropdownOptionRef.current) {
+        const inputBox = inputBoxRef.current.getBoundingClientRect();
+        const dropDownHeight =
+          dropdownOptionRef.current.scrollHeight > 240
+            ? 240
+            : dropdownOptionRef.current.scrollHeight;
 
-  //   const adjustDropdown = () => {
-  //     // console.log('openBox', openBox)
-  //     const container = document.querySelector('.form-container')
-  //     const select = document.querySelectorAll('.select-box');
-  //     const dropdown = document.querySelectorAll('.show-option-box');
-  //     const container_bottom = container?.getBoundingClientRect()?.bottom || 0;
-  //     console.log(dropdown);
-  //     console.log(dropdown[0]?.className)
-  //     select.forEach((element, index) => {
-  //       if(dropdown[0]?.className.includes('show-option-box')){
-  //         dropdown[0].style.maxHeight = '240px';
-  //         //@ts-ignore
-  //         dropdown[0].style.border = '2px solid red';
-  //         console.log('dropdown', dropdown[0].getBoundingClientRect())
-  //         // console.log('dropdown_bottom', dropdown[0]?.getBoundingClientRect().height);
-  //         const select_bottom = element?.getBoundingClientRect()?.bottom || 0;
+        const viewportHeight = window.innerHeight;
+        const spaceBelow = viewportHeight - inputBox.bottom;
 
-  //         const dropdown_bottom = dropdown[0]?.getBoundingClientRect();
-  //         const bottomSpace = container_bottom - select_bottom;
-  //         // console.log('is_overflow', bottomSpace < dropdown_bottom.height)
-  //         if(bottomSpace < dropdown_bottom.height) {
-  //           dropdown[0].style.border = `2px solid blue`;
-  //         }
-  //         // console.log(bottomSpace);
-  //       }
-  //       });
+        if (spaceBelow < dropDownHeight) {
+          setDropdownPosition("top");
+        } else {
+          setDropdownPosition("bottom");
+        }
+      }
+    };
 
-  //   }
-
-  const selectRef = useRef<HTMLDivElement | null>(null);
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleResize);
+    if (openBox) {
+      handleResize();
+    }
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleResize);
+    };
+  }, [openBox]);
 
   const handleClickOutside = (event: any) => {
     if (selectRef.current && !selectRef.current.contains(event.target)) {
@@ -85,14 +85,14 @@ const CustomSelect = ({
   }, []);
 
   return (
-    <div className="form-box">
+    <div className="form-box" ref={inputBoxRef}>
       <div className="flex flex-col self-stretch relative gap-2">
         <div className="label" style={{ color: error ? "red" : "#1a1c1e" }}>
           {title}
           {required ? "*" : ""}{" "}
         </div>
         <div
-          className="form-input select-box pointer justify-between"
+          className="form-input select-box cursor-pointer justify-between"
           ref={selectRef}
           style={{
             ...style,
@@ -115,8 +115,11 @@ const CustomSelect = ({
         </div>
         <div
           className={`${
-            openBox ? "show-option-box" : "hide-option-box"
+            openBox ? "max-h-60 border border-[#92959a]" : "max-h-[0]"
+          } ${
+            dropdownPosition === "top" ? "bottom-[38px]" : "top-[65px]"
           } option-box`}
+          ref={dropdownOptionRef}
         >
           {data?.map((elements: any, index: number) => {
             return (
@@ -155,8 +158,11 @@ export const CustomMultiSelect = ({
   const [openBox, toggleBox] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value);
   const [selectedOption, setSelectOption] = useState<string[]>([]);
+  const [dropdownPosition, setDropdownPosition] = useState("bottom");
   const selectRef = useRef<HTMLDivElement | null>(null);
-  console.log("selectedOption", selectedOption);
+  const dropdownOptionRef = useRef<HTMLDivElement | null>(null);
+  const inputBoxRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (value) {
       const tempValue = data.filter((items: any) => {
@@ -176,6 +182,8 @@ export const CustomMultiSelect = ({
     }
   }, [data, value, placeholder, selectedOption]);
 
+  console.log('data', data)
+
   const handleValue = (val: string) => {
     let temp: String[] = value;
     if (!value.includes(val)) {
@@ -191,6 +199,37 @@ export const CustomMultiSelect = ({
     onChange(temp);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (inputBoxRef.current && dropdownOptionRef.current) {
+        const inputBox = inputBoxRef.current.getBoundingClientRect();
+        const dropDownHeight =
+          dropdownOptionRef.current.scrollHeight > 240
+            ? 240
+            : dropdownOptionRef.current.scrollHeight;
+
+        const viewportHeight = window.innerHeight;
+        const spaceBelow = viewportHeight - inputBox.bottom;
+
+        if (spaceBelow < dropDownHeight) {
+          setDropdownPosition("top");
+        } else {
+          setDropdownPosition("bottom");
+        }
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleResize);
+    if (openBox) {
+      handleResize();
+    }
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleResize);
+    };
+  }, [openBox]);
+
   const handleClickOutside = (event: any) => {
     if (selectRef.current && !selectRef.current.contains(event.target)) {
       toggleBox(false);
@@ -202,14 +241,14 @@ export const CustomMultiSelect = ({
   }, []);
 
   return (
-    <div className="form-box">
+    <div className="form-box" ref={inputBoxRef}>
       <div className="flex flex-col self-stretch relative gap-2">
         <div className="label" style={{ color: error ? "red" : "#1a1c1e" }}>
           {title}
           {required ? "*" : ""}{" "}
         </div>
         <div
-          className="form-input select-box pointer justify-between"
+          className="form-input select-box cursor-pointer justify-between"
           ref={selectRef}
           style={{
             ...style,
@@ -232,8 +271,11 @@ export const CustomMultiSelect = ({
         </div>
         <div
           className={`${
-            openBox ? "show-option-box" : "hide-option-box"
-          } option-box gap-2`}
+            openBox ? "max-h-60 border border-[#92959a]" : "max-h-[0]"
+          } ${
+            dropdownPosition === "top" ? "bottom-[38px]" : "top-[65px]"
+          } option-box`}
+          ref={dropdownOptionRef}
         >
           {data?.map((elements: any, index: number) => {
             // console.log('elements',elements.id)

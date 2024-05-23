@@ -1,34 +1,28 @@
 import { useState } from "react";
-import CustomSelect from "../../src/subComponents/select";
 import addIcon from "../../public/icons/add.svg";
 import deleteIcon from "../../public/icons/deleteIcon.svg";
 import Image from "next/image";
 import { UUidGenerator, updateState } from "../../utilities/helper";
-import CustomInput from "../../src/subComponents/input";
+import SpecificationItems from "./specificationItems";
 
 const Specification = ({
   beautifiedSpecification,
   setFormData,
-  specificationData ,
+  specificationData = [],
   setDeleteSpecifications,
+  specification,
 }: any) => {
-    
-    const statusData = [
-      { id: "ACTIVE", label: "Active" },
-      { id: "PENDING", label: "Pending" },
-    ];
-    
-    const [form, setForm] = useState<any>(specificationData || []);
-    
-    let uuid = UUidGenerator();
-    const addForm = () => {
-      setForm((prev: any) => {
-        return [
-          ...prev,
-          { id: uuid, specificationId: "", value: "", status: "" },
-        ];
-      });
-    };
+  const [form, setForm] = useState<any>(specificationData || []);
+
+  let uuid = UUidGenerator();
+  const addForm = () => {
+    setForm((prev: any) => {
+      return [
+        ...prev,
+        { id: uuid, specificationId: "", value: "", status: "" },
+      ];
+    });
+  };
   const updateForm = (key: string, val: string, id: string) => {
     const result = form.filter((items: any) => {
       if (items.id === id) {
@@ -48,6 +42,7 @@ const Specification = ({
     });
     updateState("specifications", finalForm, setFormData);
   };
+
   const removeForm = (id: string) => {
     const result = form.filter((items: any) => {
       if (items.id !== id) {
@@ -55,9 +50,9 @@ const Specification = ({
       }
     });
     setForm(result);
-    setDeleteSpecifications((prev: any)=> {
-      return [...prev, {id: id}]
-    })
+    setDeleteSpecifications((prev: any) => {
+      return [...prev, { id: id }];
+    });
     updateState("specifications", result, setFormData);
   };
 
@@ -68,37 +63,27 @@ const Specification = ({
     >
       <div className="flex">
         <div className="title-medium flex flex-1">Specification</div>
-        <span onClick={addForm}>
+        <span onClick={addForm} className="cursor-pointer">
           <Image src={addIcon} width={20} height={20} alt="" />
         </span>
       </div>
       {form?.length > 0 &&
         form.map((item: any, i: number) => {
           return (
-            <div className="flex gap-4 items-center my-2" key={i}>
-              <CustomSelect
-                title="Specification"
-                value={item.specificationId}
-                data={beautifiedSpecification}
-                onChange={(val: string) =>
-                  updateForm("specificationId", val, item.id)
-                }
-                placeholder="Select Specification"
+            <div className="flex gap-4" key={i}>
+              <SpecificationItems
+                {...{
+                  beautifiedSpecification,
+                  item,
+                  updateForm,
+                  specification,
+                }}
+                varSpecification={specificationData[i]}
               />
-              <CustomInput
-                title="Value"
-                value={item.value}
-                onChange={(val: string) => updateForm("value", val, item.id)}
-                placeholder="Enter value"
-              />
-              <CustomSelect
-                title="Status"
-                value={item.status}
-                data={statusData}
-                onChange={(val: string) => updateForm("status", val, item.id)}
-                placeholder="Select Status"
-              />
-              <span className="flex pt-5" onClick={() => removeForm(item.id)}>
+              <span
+                className="flex pt-5 cursor-pointer"
+                onClick={() => removeForm(item.id)}
+              >
                 <Image src={deleteIcon} width={20} height={20} alt="" />
               </span>
             </div>

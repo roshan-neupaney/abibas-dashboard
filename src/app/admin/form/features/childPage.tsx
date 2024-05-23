@@ -58,15 +58,6 @@ const Feature = ({ _data, token }: any) => {
         header: "Description",
         accessorKey: "description",
       },
-
-      {
-        header: "Comma Value If Dropdown",
-        accessorKey: "comma_value_dropdown",
-      },
-      {
-        header: "Feature Option Type",
-        accessorKey: "feature_option_type",
-      },
       {
         header: "Feature Category",
         accessorKey: "feature_category",

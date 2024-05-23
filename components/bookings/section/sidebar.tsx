@@ -7,16 +7,16 @@ const DetailSideBar = () => {
     <>
       <div className="flex w-[25rem] border-2 border-solid overview-sidebar h-fit">
         <div
-          className="flex py-4 px-5 col w-full"
+          className="flex py-4 px-5 flex-col w-full"
           style={{ borderBottom: "1px solid #D8DADB" }}
         >
           <div className="title-medium-NH pb-3">Customer Details</div>
-          <div className="flex col gap-4">
+          <div className="flex flex-col gap-4">
             <div className="flex gap-3 items-center">
               <span className="flex gap-2">
                 <Image src={Avatar} width={56} height={56} alt="" />
               </span>
-              <div className="flex col">
+              <div className="flex flex-col">
                 <span className="label-large">Asim Singh</span>
                 <span className="body-small-NH">User</span>
               </div>
@@ -42,7 +42,7 @@ const DetailSideBar = () => {
           </div>
         </div>
         <div
-          className="flex py-4 px-5 col"
+          className="flex py-4 px-5 flex-col"
           style={{ borderBottom: "1px solid #D8DADB" }}
         >
           <div className="title-medium-NH pb-3">Sales Representative</div>
@@ -54,7 +54,7 @@ const DetailSideBar = () => {
           </div>
         </div>
         <div
-          className="flex py-4 px-5 col"
+          className="flex py-4 px-5 flex-col"
           style={{ borderBottom: "1px solid #D8DADB" }}
         >
           <div className="title-medium-NH pb-3">Added By</div>
@@ -62,15 +62,15 @@ const DetailSideBar = () => {
             <span className="label-large-NH">Bivek Rana on 29 Sept, 2022</span>
           </div>
         </div>
-        <div className="flex py-4 px-5 col">
+        <div className="flex py-4 px-5 flex-col">
           <div className="title-medium-NH pb-3">Activity Log</div>
           <div className="flex gap-2 py-2">
             <span className="pt-1.5">
               <Image src={Dot} width={8} height={8} alt="" />
             </span>
-            <div className="flex col gap-3">
+            <div className="flex flex-col gap-3">
               <span className="title-small-NH">29 Mar, 2023</span>
-              <div className="flex col">
+              <div className="flex flex-col">
                 <span className="body-small-NH">02:09 PM</span>
                 <span className="label-large-NH">Bivek Rana Was assigned</span>
               </div>
@@ -80,9 +80,9 @@ const DetailSideBar = () => {
             <span className="pt-1.5">
               <Image src={Dot} width={8} height={8} alt="" />
             </span>
-            <div className="flex col">
+            <div className="flex flex-col">
               <span className="title-small-NH">24 Mar, 2023</span>
-              <div className="flex col">
+              <div className="flex flex-col">
                 <span className="body-small-NH">02:09 PM</span>
                 <span className="label-large-NH">
                   Asim Singh booked this car.
@@ -94,9 +94,9 @@ const DetailSideBar = () => {
             <span className="pt-1.5">
               <Image src={Dot} width={8} height={8} alt="" />
             </span>
-            <div className="flex col gap-3">
+            <div className="flex flex-col gap-3">
               <span className="title-small-NH">24 Mar, 2023</span>
-              <div className="flex col">
+              <div className="flex flex-col">
                 <span className="body-small-NH">02:09 PM</span>
                 <span className="label-large-NH">
                   Somebody updated Something.

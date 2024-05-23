@@ -30,7 +30,7 @@ const DeleteModal = ({
                 <Image src={crossIcon} height={20} width={20} alt="" />
               </span>
             </div>
-            <div className="flex col py-4 px-5 gap-4">
+            <div className="flex flex-col py-4 px-5 gap-4">
               <div
                 className="flex justify-center headline-small-NH"
                 style={{ color: "#201A1B" }}

@@ -9,8 +9,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_MODEL } from "../../../../../../config/endPoints";
 import {
-  PostFormAdd,
-  PostFormUpdate,
+  FormdataPost,
+  FormdataPatch,
 } from "../../../../../../utilities/apiCall";
 import CustomSelect from "../../../../../subComponents/select";
 import { modelValidation } from "../../../../../../utilities/validation";
@@ -116,7 +116,7 @@ const AddEditModel = ({
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = modelValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormAdd(
+        const response = await FormdataPost(
           CRUD_MODEL,
           beautifiedPayload,
           token
@@ -147,7 +147,7 @@ const AddEditModel = ({
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = modelValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormUpdate(
+        const response = await FormdataPatch(
           CRUD_MODEL,
           id,
           beautifiedPayload,

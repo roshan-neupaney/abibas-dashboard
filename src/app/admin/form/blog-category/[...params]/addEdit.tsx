@@ -8,8 +8,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_BLOG_CATEGORY } from "../../../../../../config/endPoints";
 import {
-  FormPatchJson,
-  FormPostJson,
+  JsonPatch,
+  JsonPost,
 } from "../../../../../../utilities/apiCall";
 import { specificationCategoryValidation } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
@@ -58,7 +58,7 @@ const AddEditBlogCategory = ({ token, data, isEdit, id }: any) => {
       const { isValid, error }: any =
         specificationCategoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await FormPostJson(
+        const response = await JsonPost(
           CRUD_BLOG_CATEGORY,
           beautifiedPayload,
           token
@@ -93,7 +93,7 @@ const AddEditBlogCategory = ({ token, data, isEdit, id }: any) => {
       const { isValid, error }: any =
       specificationCategoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await FormPatchJson(
+        const response = await JsonPatch(
           CRUD_BLOG_CATEGORY,
           id,
           beautifiedPayload,

@@ -59,15 +59,6 @@ const Specifications = ({ _data, token }: any) => {
         header: "Description",
         accessorKey: "description",
       },
-
-      {
-        header: "Comma Value If Dropdown",
-        accessorKey: "comma_value_dropdown",
-      },
-      {
-        header: "Specification Option Type",
-        accessorKey: "specification_option_type",
-      },
       {
         header: "Specification Category",
         accessorKey: "specification_category",

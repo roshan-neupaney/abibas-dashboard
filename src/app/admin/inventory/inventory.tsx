@@ -15,50 +15,52 @@ import {
 } from "@tanstack/react-table";
 import CustomInput from "../../../subComponents/input";
 import { useRouter } from "next/navigation";
+import { beautifyVehicleList } from "../../../../utilities/beautify";
 
-const Inventory = () => {
-  // const data = itemslist;
+interface InventoryProps {
+  vehicleList: any;
+  vehicle_enums: any;
+}
+
+const Inventory = ({vehicleList ,vehicle_enums}: InventoryProps) => {
+const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
   const [search, setSearch] = useState("");
   const router = useRouter();
-  const [data, setData] = useState(itemslist);
+  const [data, setData] = useState(beautifiedVehicleList);
 
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
       {
-        header: "ID",
-        accessorKey: "_id",
-      },
-      {
-        header: "Vehicle",
+        header: "Title",
         accessorKey: "title",
       },
       {
-        header: "Price",
-        accessorKey: "price",
+        header: "Brand",
+        accessorKey: "brand",
       },
       {
-        header: "Offers",
-        accessorKey: "offers",
-      },
-      // {
-      //   header: "Fuel",
-      //   accessorKey: "fuel",
-      // },
-      // {
-      //   header: "Driven",
-      //   accessorKey: "driven",
-      // },
-      // {
-      //   header: "Mode",
-      //   accessorKey: "mode",
-      // },
-      {
-        header: "Test Drives",
-        accessorKey: "test_drive",
+        header: "Model",
+        accessorKey: "model",
       },
       {
-        header: "Favorites",
-        accessorKey: "favorite",
+        header: "Variant",
+        accessorKey: "variant",
+      },
+      {
+        header: "KM driven",
+        accessorKey: "drive",
+      },
+      {
+        header: "Manufacture",
+        accessorKey: "manufacture",
+      },
+      {
+        header: "Owner",
+        accessorKey: "owner",
+      },
+      {
+        header: "City",
+        accessorKey: "city",
       },
       {
         header: "Status",
@@ -107,9 +109,6 @@ const Inventory = () => {
                   placeholder="Search..."
                 />
               </div>
-              {/* <Link href={`?query=${search}`}> */}
-
-              {/* </Link> */}
             </div>
           }
         >
@@ -118,10 +117,7 @@ const Inventory = () => {
               <CustomTableHead {...{ table }} />
               <CustomTableBody
                 internalTitleRoute="/admin/inventory/detail/id"
-                titleImage="media"
-                firstSubTitle="fuel"
-                secondSubTitle="driven"
-                thirdSubTitle="mode"
+                entireRoute="/admin/inventory/edit/"
                 {...{ table }}
               />
             </>

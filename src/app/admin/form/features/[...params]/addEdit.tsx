@@ -9,8 +9,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_FEATURE } from "../../../../../../config/endPoints";
 import {
-  PostFormAdd,
-  PostFormUpdate,
+  FormdataPost,
+  FormdataPatch,
 } from "../../../../../../utilities/apiCall";
 import CustomSelect from "../../../../../subComponents/select";
 import { CustomRadio } from "../../../../../subComponents/radio";
@@ -24,6 +24,7 @@ const defaultForm = {
   feature_option_type: "",
   feature_category_id: "",
   unit_id: "",
+  default_type: "",
   status: false,
   file: "",
 };
@@ -70,6 +71,7 @@ const AddEditFeature = ({
         feature_category_id: data?.feature_category_id || "",
         unit_id: data?.unit_id || "",
         file: data?.image || "",
+        default_type: data?.default_type,
         status: data?.status == "ACTIVE",
       }
     : defaultForm;
@@ -80,25 +82,6 @@ const AddEditFeature = ({
   const router = useRouter();
 
   const beautifyPayload = (_data: any) => {
-    if (data?.image === _data?.file) {
-      const payload = {
-        title: "",
-        description: "",
-        status: "",
-        comma_value_if_dropdown: "",
-        feature_option_type: "",
-        feature_category_id: "",
-        unit_id: "",
-      };
-      payload.title = _data.title;
-      payload.description = _data.description;
-      payload.status = _data.status ? "ACTIVE" : "PENDING";
-      payload.comma_value_if_dropdown = _data.comma_value_if_dropdown;
-      payload.feature_option_type = _data.feature_option_type;
-      payload.feature_category_id = _data.feature_category_id;
-      payload.unit_id = _data.unit_id;
-      return payload;
-    } else {
       const payload = {
         title: "",
         description: "",
@@ -107,18 +90,20 @@ const AddEditFeature = ({
         comma_value_if_dropdown: "",
         feature_option_type: "",
         feature_category_id: "",
+        default_type: "",
         unit_id: "",
       };
       payload.title = _data.title;
       payload.description = _data.description;
-      payload.file = _data.file || undefined;
+      payload.file = data?.image === _data?.file ? undefined : _data.file || undefined;
       payload.status = _data.status ? "ACTIVE" : "PENDING";
-      payload.comma_value_if_dropdown = _data.comma_value_if_dropdown;
+      payload.comma_value_if_dropdown = _data.comma_value_if_dropdown.replace(', ', ',');
       payload.feature_option_type = _data.feature_option_type;
+      payload.default_type = _data?.default_type;
       payload.feature_category_id = _data.feature_category_id;
       payload.unit_id = _data.unit_id;
       return payload;
-    }
+    
   };
 
   const handleAdd = async () => {
@@ -126,7 +111,7 @@ const AddEditFeature = ({
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = featureValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormAdd(
+        const response = await FormdataPost(
           CRUD_FEATURE,
           beautifiedPayload,
           token
@@ -154,7 +139,7 @@ const AddEditFeature = ({
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = featureValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormUpdate(
+        const response = await FormdataPatch(
           CRUD_FEATURE,
           id,
           beautifiedPayload,
@@ -210,7 +195,6 @@ const AddEditFeature = ({
         title="Is Active"
         value={formData.status}
         onChange={(val: boolean) => updateState("status", val, setFormData)}
-        
       />
       <CustomDropzone
         title="Image"
@@ -233,14 +217,15 @@ const AddEditFeature = ({
         error={formError.feature_category_id}
         required
       />
-
-      <CustomRadio
-        name="Comma Value If Dropdown"
-        data={commaValueIfDropdown}
-        value={formData.comma_value_if_dropdown}
+      <CustomSelect
+        title="Unit"
+        data={beautifiedUnit}
+        value={formData.unit_id}
         onChange={(val: string) =>
-          updateState("comma_value_if_dropdown", val, setFormData)
+          updateState("unit_id", val, setFormData, setFormError)
         }
+        error={formError.unit_id}
+        placeholder="Select feature category"
       />
       <CustomRadio
         name="Feature Option Type"
@@ -250,16 +235,25 @@ const AddEditFeature = ({
           updateState("feature_option_type", val, setFormData)
         }
       />
-        <CustomSelect
-          title="Unit"
-          data={beautifiedUnit}
-          value={formData.unit_id}
-          onChange={(val: string) =>
-            updateState("unit_id", val, setFormData, setFormError)
-          }
-          error={formError.unit_id}
-          placeholder="Select feature category"
-        />
+      <CustomRadio
+        name="Default Type"
+        data={commaValueIfDropdown}
+        value={formData.default_type}
+        onChange={(val: string) =>
+          updateState("default_type", val, setFormData)
+        }
+      />
+
+      <CustomInput
+        title="Comma Value If Dropdown"
+        value={formData.comma_value_if_dropdown}
+        onChange={(val: string) =>
+          updateState("comma_value_if_dropdown", val, setFormData, setFormError)
+        }
+        placeholder="Eg: Value1,Value2,Value3"
+        error={formError.title}
+        required
+      />
 
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}

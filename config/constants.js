@@ -1,6 +1,6 @@
+// import { Metadata } from "next";
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
-
 
 export const tablePaginationSizes = [
   { value: 10 },
@@ -12,7 +12,7 @@ export const tablePaginationSizes = [
 
 export const defaultStateModal = {
   state: false,
-  id: '',
+  id: "",
 };
 
 export const commaValueIfDropdown = [
@@ -31,4 +31,10 @@ export const enumSlug = [
   { id: "enum_drive", label: "Drive" },
   { id: "enum_prefer_sell", label: "Prefer Sell" },
   { id: "enum_city", label: "City" },
+  { id: "price_range", label: "Price Range" },
+  { id: "transmission", label: "Transmission" },
 ];
+
+export const metadata = {
+  title: "",
+};

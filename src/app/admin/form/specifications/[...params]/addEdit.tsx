@@ -9,8 +9,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_SPECIFICATION } from "../../../../../../config/endPoints";
 import {
-  PostFormAdd,
-  PostFormUpdate,
+  FormdataPost,
+  FormdataPatch,
 } from "../../../../../../utilities/apiCall";
 import CustomSelect from "../../../../../subComponents/select";
 import { CustomRadio } from "../../../../../subComponents/radio";
@@ -25,6 +25,7 @@ const defaultForm = {
   title: "",
   description: "",
   comma_value_if_dropdown: "",
+  default_type: "",
   specification_option_type: "",
   specification_category_id: "",
   unit_id: "",
@@ -62,6 +63,7 @@ const AddEditSpecification = ({
         comma_value_if_dropdown: data?.comma_value_if_dropdown || "",
         specification_option_type: data?.specification_option_type || "",
         specification_category_id: data?.specification_category_id || "",
+        default_type: data?.default_type || "",
         unit_id: data?.unit_id || "",
         file: data?.image || "",
         status: data?.status == "ACTIVE",
@@ -74,45 +76,28 @@ const AddEditSpecification = ({
   const router = useRouter();
 
   const beautifyPayload = (_data: any) => {
-    if (data?.image === _data?.file) {
-      const payload = {
-        title: "",
-        description: "",
-        status: "",
-        comma_value_if_dropdown: "",
-        specification_option_type: "",
-        specification_category_id: "",
-        unit_id: "",
-      };
-      payload.title = _data.title;
-      payload.description = _data.description;
-      payload.status = _data.status ? "ACTIVE" : "PENDING";
-      payload.comma_value_if_dropdown = _data.comma_value_if_dropdown;
-      payload.specification_option_type = _data.specification_option_type;
-      payload.specification_category_id = _data.specification_category_id;
-      payload.unit_id = _data.unit_id;
-      return payload;
-    } else {
-      const payload = {
-        title: "",
-        description: "",
-        file: "",
-        status: "",
-        comma_value_if_dropdown: "",
-        specification_option_type: "",
-        specification_category_id: "",
-        unit_id: "",
-      };
-      payload.title = _data?.title;
-      payload.description = _data?.description;
-      payload.file = _data?.file || undefined;
-      payload.status = _data?.status ? "ACTIVE" : "PENDING";
-      payload.comma_value_if_dropdown = _data?.comma_value_if_dropdown;
-      payload.specification_option_type = _data?.specification_option_type;
-      payload.specification_category_id = _data?.specification_category_id;
-      payload.unit_id = _data?.unit_id ;
-      return payload;
-    }
+    const payload = {
+      title: "",
+      description: "",
+      file: "",
+      status: "",
+      comma_value_if_dropdown: "",
+      specification_option_type: "",
+      specification_category_id: "",
+      default_type: "",
+      unit_id: "",
+    };
+    payload.title = _data?.title;
+    payload.description = _data?.description;
+    payload.file =
+      data?.image === _data?.file ? undefined : _data.file || undefined;
+    payload.status = _data?.status ? "ACTIVE" : "PENDING";
+    payload.default_type = _data?.default_type;
+    payload.comma_value_if_dropdown = _data?.comma_value_if_dropdown.replace(", ",",");
+    payload.specification_option_type = _data?.specification_option_type;
+    payload.specification_category_id = _data?.specification_category_id;
+    payload.unit_id = _data?.unit_id;
+    return payload;
   };
 
   const handleAdd = async () => {
@@ -122,7 +107,7 @@ const AddEditSpecification = ({
       const { isValid, error }: any =
         specificationValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormAdd(
+        const response = await FormdataPost(
           CRUD_SPECIFICATION,
           beautifiedPayload,
           token
@@ -154,7 +139,7 @@ const AddEditSpecification = ({
       const { isValid, error }: any =
         specificationValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormUpdate(
+        const response = await FormdataPatch(
           CRUD_SPECIFICATION,
           id,
           beautifiedPayload,
@@ -217,7 +202,7 @@ const AddEditSpecification = ({
         onChange={(val: any) =>
           updateState("file", val, setFormData, setFormError)
         }
-        error={formError.file}
+        // error={formError.file}
         required
       />
 
@@ -226,7 +211,12 @@ const AddEditSpecification = ({
         data={beautifiedSpecificationCategory}
         value={formData.specification_category_id}
         onChange={(val: string) =>
-          updateState("specification_category_id", val, setFormData, setFormError)
+          updateState(
+            "specification_category_id",
+            val,
+            setFormData,
+            setFormError
+          )
         }
         placeholder="Select specification category"
         error={formError.specification_category_id}
@@ -241,15 +231,6 @@ const AddEditSpecification = ({
         }
         placeholder="Select Unit"
       />
-
-      <CustomRadio
-        name="Comma Value If Dropdown"
-        data={commaValueIfDropdown}
-        value={formData.comma_value_if_dropdown}
-        onChange={(val: string) =>
-          updateState("comma_value_if_dropdown", val, setFormData)
-        }
-      />
       <CustomRadio
         name="Specification Option Type"
         data={specificationOptionType}
@@ -258,6 +239,32 @@ const AddEditSpecification = ({
           updateState("specification_option_type", val, setFormData)
         }
       />
+
+      <CustomRadio
+        name="Default Type"
+        data={commaValueIfDropdown}
+        value={formData.default_type}
+        onChange={(val: string) =>
+          updateState("default_type", val, setFormData)
+        }
+      />
+      {formData.specification_option_type === "DROPDOWN" && (
+        <CustomInput
+          title="Comma Value If Dropdown"
+          value={formData.comma_value_if_dropdown}
+          onChange={(val: string) =>
+            updateState(
+              "comma_value_if_dropdown",
+              val,
+              setFormData,
+              setFormError
+            )
+          }
+          placeholder="Eg: Value1,Value2,Value3"
+          error={formError.title}
+          required
+        />
+      )}
 
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}

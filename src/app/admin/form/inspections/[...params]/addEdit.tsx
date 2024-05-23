@@ -10,8 +10,8 @@ import {
   CRUD_INSPECTIONS,
 } from "../../../../../../config/endPoints";
 import {
-  FormPatchJson,
-  FormPostJson,
+  JsonPatch,
+  JsonPost,
 } from "../../../../../../utilities/apiCall";
 import {
   inspectionValidation,
@@ -121,7 +121,7 @@ const AddEditInspection = ({
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = inspectionValidation(beautifiedPayload);
       if (isValid) {
-        const response = await FormPostJson(
+        const response = await JsonPost(
           CRUD_INSPECTIONS,
           beautifiedPayload,
           token
@@ -153,7 +153,7 @@ const AddEditInspection = ({
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = inspectionValidation(beautifiedPayload);
       if (isValid) {
-        const response = await FormPatchJson(
+        const response = await JsonPatch(
           CRUD_INSPECTIONS,
           id,
           beautifiedPayload,

@@ -9,8 +9,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_BODY_TYPE } from "../../../../../../config/endPoints";
 import {
-  PostFormAdd,
-  PostFormUpdate,
+  FormdataPost,
+  FormdataPatch,
 } from "../../../../../../utilities/apiCall";
 import { categoryValidation } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
@@ -77,7 +77,7 @@ const AddEditBodyType = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormAdd(
+        const response = await FormdataPost(
           CRUD_BODY_TYPE,
           beautifiedPayload,
           token
@@ -108,7 +108,7 @@ const AddEditBodyType = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormUpdate(
+        const response = await FormdataPatch(
           CRUD_BODY_TYPE,
           id,
           beautifiedPayload,

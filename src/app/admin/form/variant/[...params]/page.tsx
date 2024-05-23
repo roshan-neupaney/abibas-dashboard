@@ -8,12 +8,14 @@ import {
 } from "../../../../../../utilities/apiCall";
 import {
   CRUD_COLOR_CHOICE,
+  CRUD_ENUM,
   CRUD_FEATURE,
   CRUD_MODEL,
   CRUD_SPECIFICATION,
   CRUD_VARIANT,
 } from "../../../../../../config/endPoints";
 import AddEditVariant from "./addEdit";
+import { Metadata } from "next";
 
 async function getData(token: any, id: string) {
   try {
@@ -24,32 +26,39 @@ async function getData(token: any, id: string) {
         await ServerSideGet(token, CRUD_SPECIFICATION + "/active"),
         await ServerSideGet(token, CRUD_FEATURE + "/active"),
         await ServerSideGet(token, CRUD_COLOR_CHOICE + "/active"),
+        await ServerSideGet(token, CRUD_ENUM + "/active"),
       ];
-      const [variant, model, specification, feature, color] = res;
-      return { variant, model, specification, feature, color };
+      const [variant, model, specification, feature, color, enums] = res;
+      return { variant, model, specification, feature, color, enums };
     } else {
       const res = [
         await ServerSideGet(token, CRUD_MODEL + "/active"),
         await ServerSideGet(token, CRUD_SPECIFICATION + "/active"),
         await ServerSideGet(token, CRUD_FEATURE + "/active"),
         await ServerSideGet(token, CRUD_COLOR_CHOICE + "/active"),
+        await ServerSideGet(token, CRUD_ENUM + "/active"),
       ];
-      const [model, specification, feature, color] = res;
-      return { model, specification, feature, color };
+      const [model, specification, feature, color, enums] = res;
+      return { model, specification, feature, color, enums};
     }
   } catch (error) {}
 }
+
+export const metadata: Metadata = {
+  title: 'Variant'
+ }
 
 const AddModel = async ({ params }: any) => {
   const token = cookies().get("access_token")?.value;
   const id = params.params[1];
   const isEdit = params.params[0] === "edit";
-  const { variant, model, specification, feature, color }: any = await getData(
+  const { variant, model, specification, feature, color, enums }: any = await getData(
     token,
     id
   );
-  
+  metadata.title = isEdit ? 'Edit Variant' : 'Add Variant';
   return (
+    
     <>
       <PageHeader title={isEdit ? "Update Variant" : "Add Variant"} showBack />
       <FormContainer>
@@ -58,7 +67,7 @@ const AddModel = async ({ params }: any) => {
           data={variant?.data}
           isEdit={isEdit}
           id={id}
-          {...{ model, specification, feature, color }}
+          {...{ model, specification, feature, color, enums }}
         />
       </FormContainer>
     </>

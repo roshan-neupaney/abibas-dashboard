@@ -8,8 +8,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_UNIT } from "../../../../../../config/endPoints";
 import {
-  PostFormAdd,
-  PostFormUpdate,
+  FormdataPost,
+  FormdataPatch,
 } from "../../../../../../utilities/apiCall";
 import { unitValidation } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
@@ -53,7 +53,7 @@ const AddEditUnit = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = unitValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormAdd(CRUD_UNIT, beautifiedPayload, token);
+        const response = await FormdataPost(CRUD_UNIT, beautifiedPayload, token);
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Added Unit");
@@ -80,7 +80,7 @@ const AddEditUnit = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = unitValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormUpdate(
+        const response = await FormdataPatch(
           CRUD_UNIT,
           id,
           beautifiedPayload,

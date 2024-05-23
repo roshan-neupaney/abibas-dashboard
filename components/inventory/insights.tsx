@@ -4,7 +4,7 @@ import ChartContainer from './section/chartContainer'
 
 const Insights = () => {
   return (
-    <div className='flex flex-1 col p-4 gap-4'>
+    <div className='flex flex-1 flex-col p-4 gap-4'>
       <DashboardCounts />
       <ChartContainer />
       <ChartContainer />

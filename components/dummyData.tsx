@@ -99,14 +99,6 @@ const DummyData = ({ data }: any) => {
       ) : (
         <NoDataFound />
       )}
-      {/* {data?.map((items: any, index: number) => {
-        return (
-          <div key={index} className="flex row gap-5 w-[500px]">
-            <Image src={items.image} alt="images" width={40} height={40} />
-            {items.image}
-          </div>
-        );
-      })} */}
     </div>
   );
 };

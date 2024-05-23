@@ -13,7 +13,7 @@ export const PageLoader = ({children}: CircularLoaderProps) => {
 
 export const CircularLoader = ({}) => {
   return (
-    <div className="flex w-full mt-20 justify-center align-center">
+    <div className="flex w-full mt-20 justify-center items-center">
       <div className="circular-loader"></div>
     </div>
 

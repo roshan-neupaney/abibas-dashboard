@@ -1,22 +1,17 @@
 import { useState } from "react";
-import CustomSelect from "../../src/subComponents/select";
 import addIcon from "../../public/icons/add.svg";
 import deleteIcon from "../../public/icons/deleteIcon.svg";
 import Image from "next/image";
 import { UUidGenerator, updateState } from "../../utilities/helper";
-import CustomInput from "../../src/subComponents/input";
+import FeatureItems from "./featureItems";
 
 const Feature = ({
   beautifiedFeature,
   setFormData,
-  featureData,
+  featureData = [],
   setDeleteFeatures,
+  feature,
 }: any) => {
-  const statusData = [
-    { id: "ACTIVE", label: "Active" },
-    { id: "PENDING", label: "Pending" },
-  ];
-
   const [form, setForm] = useState<any>(featureData || []);
 
   const uuid = UUidGenerator();
@@ -53,9 +48,9 @@ const Feature = ({
       }
     });
     setForm(result);
-    setDeleteFeatures((prev: any)=> {
-      return [...prev, {id: id}]
-    })
+    setDeleteFeatures((prev: any) => {
+      return [...prev, { id: id }];
+    });
     updateState("features", result, setFormData);
   };
 
@@ -73,28 +68,10 @@ const Feature = ({
       {form?.length > 0 &&
         form.map((item: any, i: number) => {
           return (
-            <div className="flex gap-4 items-center my-2" key={i}>
-              <CustomSelect
-                title="Feature"
-                value={item.featureId}
-                data={beautifiedFeature}
-                onChange={(val: string) =>
-                  updateForm("featureId", val, item.id)
-                }
-                placeholder="Select Feature"
-              />
-              <CustomInput
-                title="Value"
-                value={item.value}
-                onChange={(val: string) => updateForm("value", val, item.id)}
-                placeholder="Enter value"
-              />
-              <CustomSelect
-                title="Status"
-                value={item.status}
-                data={statusData}
-                onChange={(val: string) => updateForm("status", val, item.id)}
-                placeholder="Select Status"
+            <div key={i} className="flex gap-4">
+              <FeatureItems
+                {...{ beautifiedFeature, item, updateForm, feature }}
+                varFeature= {featureData[i]}
               />
               <span className="flex pt-5" onClick={() => removeForm(item.id)}>
                 <Image src={deleteIcon} width={20} height={20} alt="" />

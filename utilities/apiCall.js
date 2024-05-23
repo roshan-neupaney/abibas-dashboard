@@ -104,7 +104,7 @@ export const ClientSideGet = async (url, token) => {
   }
 };
 
-export const FormPostJson = async (url, payload, token) => {
+export const JsonPost = async (url, payload, token) => {
   try {
     const response = {
       data: "",
@@ -124,7 +124,7 @@ export const FormPostJson = async (url, payload, token) => {
     console.error(e);
   }
 };
-export const FormPatchJson = async (url,id, payload, token) => {
+export const JsonPatch = async (url,id, payload, token) => {
   try {
     const response = {
       data: "",
@@ -145,7 +145,7 @@ export const FormPatchJson = async (url,id, payload, token) => {
     console.error(e);
   }
 };
-export const PostFormAdd = async (url, payload, token) => {
+export const FormdataPost = async (url, payload, token) => {
   try {
     const response = {
       data: "",
@@ -166,7 +166,7 @@ export const PostFormAdd = async (url, payload, token) => {
   }
 };
 
-export const PostFormUpdate = async (url, id, payload, token) => {
+export const FormdataPatch = async (url, id, payload, token) => {
   try {
     const response = {
       data: "",

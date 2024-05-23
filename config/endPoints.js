@@ -18,4 +18,11 @@ export const CRUD_SLIDER = "/slider";
 export const CRUD_BLOG_CATEGORY = "/blog-category";
 export const CRUD_BLOG = "/blog";
 export const CRUD_ENUM = "/enum";
+export const CRUD_VEHICLE = "/vehicle";
+export const CRUD_VEHICLE_ENUM = "/vehicle/enum";
+export const GET_VARIANT_SPECIFICATION = "/vehicle/specification/b0b2e95f-9b35-446b-8b20-eee9b7aa1471";
+export const GET_VARIANT_FEATURE = "/vehicle/features/b0b2e95f-9b35-446b-8b20-eee9b7aa1471";
+export const CRUD_VEHICLE_SPECIFICATION = "/vehicle/specifications";
+export const CRUD_VEHICLE_FEATURE = "/vehicle/features";
+
 

@@ -8,10 +8,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_ENUM } from "../../../../../../config/endPoints";
 import {
-  FormPatchJson,
-  FormPostJson,
-  PostFormAdd,
-  PostFormUpdate,
+  FormdataPost,
+  FormdataPatch,
 } from "../../../../../../utilities/apiCall";
 import { enumValidation } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
@@ -30,7 +28,7 @@ const defaultForm = {
 const defaultError = {
   title: "",
   order: "",
-  file: "",
+  // file: "",
   slug: "",
 };
 
@@ -61,7 +59,7 @@ const AddEditEnum = ({ token, data, isEdit, id }: any) => {
     payload.title = _data.title;
     payload.order = _data.order;
     payload.slug = _data.slug;
-    payload.file = data?.image === _data.file ? undefined : _data.file;
+    payload.file = data?.image === _data.file ? undefined : _data.file || undefined;
     payload.status = _data.status ? "ACTIVE" : "PENDING";
     return payload;
   };
@@ -72,9 +70,9 @@ const AddEditEnum = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = enumValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormAdd(CRUD_ENUM, beautifiedPayload, token);
+        const response = await FormdataPost(CRUD_ENUM, beautifiedPayload, token);
         const { status }: any = response;
-        if (isValid) {
+        if (status) {
           toast.success("Successfully Added Enum");
           setFormError(defaultError);
           clearCachesByServerAction("/admin/form/enums");
@@ -99,7 +97,7 @@ const AddEditEnum = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = enumValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormUpdate(
+        const response = await FormdataPatch(
           CRUD_ENUM,
           id,
           beautifiedPayload,
@@ -166,7 +164,7 @@ const AddEditEnum = ({ token, data, isEdit, id }: any) => {
         onChange={(val: any) =>
           updateState("file", val, setFormData, setFormError)
         }
-        error={formError.file}
+        // error={formError.file}
         required
       />
       <CustomToggleSwitch

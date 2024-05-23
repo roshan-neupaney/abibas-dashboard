@@ -16,13 +16,14 @@ async function getData(token: any) {
 }
 
 export const metadata: Metadata = {
-  title: 'Variant'
+ title: 'Variant'
 }
+
 
 const VariantPage = async() => {
   const token = cookies().get('access_token')?.value;
   const data = await getData(token);
-
+  
   return (
     <>
       <PageHeader title="Variant" addRoute="/admin/form/variant/add" />

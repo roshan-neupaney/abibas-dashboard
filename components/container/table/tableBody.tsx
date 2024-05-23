@@ -36,7 +36,7 @@ const CustomTableBody = ({
   const router = useRouter();
   return (
     <tbody>
-      {table?.getRowModel().rows.map((row: any, i: number) => {
+      {table?.getRowModel()?.rows?.map((row: any, i: number) => {
         return (
           <tr
             className="table-body-row"
@@ -72,8 +72,8 @@ const CustomTableBody = ({
                           />
                         </div>
                       )}
-                      <div className="flex col gap-2">
-                        <div className="flex justify-start align-center body-medium">
+                      <div className="flex flex-col gap-2">
+                        <div className="flex justify-start items-center body-medium">
                           {internalTitleRoute ? (
                             <Link href={internalTitleRoute}>
                               {cell.row.original["title"]}
@@ -139,7 +139,7 @@ const CustomTableBody = ({
                     <div className="flex gap-4">
                       {!hideEdit && (
                         <Link href={entireRoute + "/" + id}>
-                          <div className="pointer">
+                          <div className="cursor-pointer">
                             <Image
                               src={EditIcon}
                               width={20}
@@ -151,7 +151,7 @@ const CustomTableBody = ({
                       )}
                       {!hideDelete && (
                         <div
-                          className="pointer"
+                          className="cursor-pointer"
                           onClick={() => toggleModal({ state: true, id: id })}
                         >
                           <Image
@@ -164,7 +164,7 @@ const CustomTableBody = ({
                       )}
                       {hideDelete && hideEdit && (
                         <div
-                          className="pointer"
+                          className="cursor-pointer"
                           onClick={() =>
                             toggleModal({
                               state: true,

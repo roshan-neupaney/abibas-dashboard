@@ -18,8 +18,8 @@ const TablePagination = ({
   return (
     <>
       <div className="paginate-container ">
-        <div className="flex row align-center">
-          <div className="flex row">
+        <div className="flex items-center">
+          <div className="flex">
             <button
               className="paginate-buttons"
               onClick={() => table.setPageIndex(0)}
@@ -150,7 +150,7 @@ const TablePagination = ({
               <Image src={doubleArrowRight} alt="" width={20} height={20} />
             </button>
           </div>
-          {/* <div className="flex row ml-4">
+          {/* <div className="flex ml-4">
             <span className="flex row">
               Showing{"  "}
               {currentPage * itemsPerPage + 1} -{" "}
@@ -176,7 +176,7 @@ const TablePagination = ({
               }}
             />
           </span> */}
-        <div className="flex align-center gap-2 max-w-[240px] title-medium">
+        <div className="flex items-center gap-2 max-w-[240px] title-medium">
           <span className="title-medium">Show</span>
           <select
             name="page-size"

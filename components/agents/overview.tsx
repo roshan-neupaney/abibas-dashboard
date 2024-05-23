@@ -85,7 +85,7 @@ const DetailBox = ({setActive}:any) => {
         <div className="flex p-5 flex-col flex-1 self-stretch user-detail-container">
           <div className="flex gap-5 items-center">
             <div className="title-large-NH flex flex-1">Orders</div>
-            <div className="flex py-[0.625rem] items-center justify-center viewMore pointer" onClick={() => setActive(1)}>
+            <div className="flex py-[0.625rem] items-center justify-center viewMore cursor-pointer" onClick={() => setActive(1)}>
               View More
             </div>
           </div>
@@ -148,9 +148,9 @@ const SideBar = () => {
             <span className="pt-1.5">
               <Image src={Dot} width={8} height={8} alt="" />
             </span>
-            <div className="flex col gap-3">
+            <div className="flex flex-col gap-3">
               <span className="title-small-NH">29 Mar, 2023</span>
-              <div className="flex col">
+              <div className="flex flex-col">
                 <span className="body-small-NH">02:09 PM</span>
                 <span className="label-large-NH">Bivek Rana Was assigned</span>
               </div>
@@ -160,9 +160,9 @@ const SideBar = () => {
             <span className="pt-1.5">
               <Image src={Dot} width={8} height={8} alt="" />
             </span>
-            <div className="flex col gap-3">
+            <div className="flex flex-col gap-3">
               <span className="title-small-NH">24 Mar, 2023</span>
-              <div className="flex col">
+              <div className="flex flex-col">
                 <span className="body-small-NH">02:09 PM</span>
                 <span className="label-large-NH">
                   Asim Singh booked this car.
@@ -174,9 +174,9 @@ const SideBar = () => {
             <span className="pt-1.5">
               <Image src={Dot} width={8} height={8} alt="" />
             </span>
-            <div className="flex col gap-3">
+            <div className="flex flex-col gap-3">
               <span className="title-small-NH">24 Mar, 2023</span>
-              <div className="flex col">
+              <div className="flex flex-col">
                 <span className="body-small-NH">02:09 PM</span>
                 <span className="label-large-NH">
                   Somebody updated Something.

@@ -8,8 +8,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_COLOR_CHOICE } from "../../../../../../config/endPoints";
 import {
-  PostFormAdd,
-  PostFormUpdate,
+  FormdataPost,
+  FormdataPatch,
 } from "../../../../../../utilities/apiCall";
 import { colorValidation } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
@@ -58,7 +58,7 @@ const AddEditColor = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = colorValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormAdd(
+        const response = await FormdataPost(
           CRUD_COLOR_CHOICE,
           beautifiedPayload,
           token
@@ -89,7 +89,7 @@ const AddEditColor = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = colorValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormUpdate(
+        const response = await FormdataPatch(
           CRUD_COLOR_CHOICE,
           id,
           beautifiedPayload,

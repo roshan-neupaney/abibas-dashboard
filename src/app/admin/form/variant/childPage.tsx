@@ -69,6 +69,10 @@ const Variant = ({ _data, token }: any) => {
         accessorKey: "fuel_type",
       },
       {
+        header: "Transmission",
+        accessorKey: "transmission",
+      },
+      {
         header: "Model",
         accessorKey: "model",
       },

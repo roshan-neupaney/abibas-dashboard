@@ -24,7 +24,7 @@ const PageHeader = ({
       <div className="flex justify-between">
         <div className="flex gap-2">
           {showBack && (
-            <div className="back-button pointer" onClick={() => router.back() }>
+            <div className="back-button cursor-pointer" onClick={() => router.back() }>
               <Image src={arrowIcon} width={20} height={20} alt="" />
             </div>
           )}

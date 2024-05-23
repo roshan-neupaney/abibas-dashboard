@@ -5,10 +5,10 @@ import LazyImage from "../lazyImage";
 const Overview = () => {
   return (
     <div className="" style={{flex: 0.8}}>
-    <div className="overview-container" >
-      <div className="flex col align-center gap-6 ">
+    <div className="overview-container sticky top-3" >
+      <div className="flex flex-col items-center gap-6 ">
         <LazyImage src={car} alt="car" width={460} height={345} />
-        <div className="flex col w-full">
+        <div className="flex flex-col w-full">
           <label className="title-medium">All New Hyundai Creta - 2021</label>
           <div
             className="flex flex-1 py-3 gap-5 self-stretch"

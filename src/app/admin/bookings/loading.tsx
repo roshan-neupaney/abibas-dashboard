@@ -4,7 +4,7 @@ import PageHeader from '../../../../components/pageHeader'
 
 const Loading = () => {
   return (
-    <div className="flex col gap-5">
+    <div className="flex flex-col gap-5">
       <PageHeader title="Bookings"/>
       <CircularLoader />
     </div>

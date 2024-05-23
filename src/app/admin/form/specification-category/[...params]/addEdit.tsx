@@ -8,8 +8,8 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_SPECIFICATION_CATEGORY } from "../../../../../../config/endPoints";
 import {
-  PostFormAdd,
-  PostFormUpdate,
+  FormdataPost,
+  FormdataPatch,
 } from "../../../../../../utilities/apiCall";
 import { specificationCategoryValidation } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
@@ -58,7 +58,7 @@ const AddEditSpecificationCategory = ({ token, data, isEdit, id }: any) => {
       const { isValid, error }: any =
         specificationCategoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormAdd(
+        const response = await FormdataPost(
           CRUD_SPECIFICATION_CATEGORY,
           beautifiedPayload,
           token
@@ -93,7 +93,7 @@ const AddEditSpecificationCategory = ({ token, data, isEdit, id }: any) => {
       const { isValid, error }: any =
       specificationCategoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await PostFormUpdate(
+        const response = await FormdataPatch(
           CRUD_SPECIFICATION_CATEGORY,
           id,
           beautifiedPayload,

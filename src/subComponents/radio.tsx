@@ -16,14 +16,14 @@ export const CustomRadio = ({
   return (
     <>
       <div className="flex flex-col gap-2">
-        <div className="label">{name}</div>
+        <label htmlFor="radio" className="label">{name}</label>
         <div className="gap-3 flex">
           {data.map((items: any, index: number) => {
             const element_id = items.label.replace(" ", "_");
             return (
-              <div key={index} className="flex gap-2 pointer">
-                <div className="row h-6 w-6 relative flex">
-                  <label className="radio pointer">
+              <div key={index} className="flex gap-2 cursor-pointer">
+                <div className=" h-6 w-6 relative flex">
+                  <label className="radio cursor-pointer">
                     <input
                       id={element_id}
                       type="radio"
@@ -35,7 +35,7 @@ export const CustomRadio = ({
                     <span className="radio-circle"></span>
                   </label>
                 </div>
-                <label htmlFor={element_id} className="label pointer">
+                <label htmlFor={element_id} className="label cursor-pointer">
                   {items.label}
                 </label>
               </div>

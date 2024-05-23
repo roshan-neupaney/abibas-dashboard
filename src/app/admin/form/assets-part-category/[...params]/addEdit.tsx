@@ -8,10 +8,10 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_ASSETS_PART_CATEGORY } from "../../../../../../config/endPoints";
 import {
-  FormPatchJson,
-  FormPostJson,
-  PostFormAdd,
-  PostFormUpdate,
+  JsonPatch,
+  JsonPost,
+  FormdataPost,
+  FormdataPatch,
 } from "../../../../../../utilities/apiCall";
 import { specificationCategoryValidation } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
@@ -61,7 +61,7 @@ const AddEditAssetsPartCategory = ({ token, data, isEdit, id }: any) => {
       const { isValid, error }: any =
         specificationCategoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await FormPostJson(
+        const response = await JsonPost(
           CRUD_ASSETS_PART_CATEGORY,
           beautifiedPayload,
           token
@@ -93,7 +93,7 @@ const AddEditAssetsPartCategory = ({ token, data, isEdit, id }: any) => {
       const { isValid, error }: any =
         specificationCategoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await FormPatchJson(
+        const response = await JsonPatch(
           CRUD_ASSETS_PART_CATEGORY,
           id,
           beautifiedPayload,

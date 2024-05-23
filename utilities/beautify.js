@@ -101,6 +101,7 @@ export const beautifyVariant = (data) => {
         description: "",
         colors: [],
         fuel_type: "",
+        transmission: '',
         model: "",
         status: "",
       };
@@ -110,6 +111,7 @@ export const beautifyVariant = (data) => {
       details.description = body?.description || "";
       details.colors = temp_color || [];
       details.fuel_type = body?.fuel_type || "";
+      details.transmission = body?.transmission || "";
       details.model = body?.model || "";
       details.status = body?.status || "";
       return details;
@@ -308,3 +310,79 @@ export const beautifyEnums = (data) => {
     return filteredData;
   } catch (error) {}
 };
+
+export const beautifyVehicleList = (_data, vehicleEnums) => {
+  try{
+    const {data} = _data;
+    const filteredData = data?.map((vehicle) => {
+      const details = {
+        id: '',
+        title: '',
+        brand: '',
+        model: '',
+        variant: '',
+        drive: '',
+        manufacture: '',
+        prefer_selling: '',
+        owner: '',
+        city: '',
+      }
+      const brandArray = vehicleEnums?.data?.brand.filter((items) => {
+        if(vehicle.brand_id === items.id ){
+          return items;
+        }
+      })
+      const modelArray = vehicleEnums?.data?.model.filter((items) => {
+        if(vehicle.model_id === items.id ){
+          return items;
+        }
+      })
+      const variantArray = vehicleEnums?.data?.varient.filter((items) => {
+        if(vehicle.varient_id === items.id ){
+          return items;
+        }
+      })
+      const cityArray = vehicleEnums?.data?.enum_city.filter((items) => {
+        if(vehicle.city === items.id ){
+          return items;
+        }
+      })
+      const driveArray = vehicleEnums?.data?.enum_drive.filter((items) => {
+        if(vehicle.km_drive === items.id ){
+          return items;
+        }
+      })
+      const manufactureArray = vehicleEnums?.data?.enum_made_year.filter((items) => {
+        if(vehicle.made_year === items.id ){
+          return items;
+        }
+      })
+      const ownerArray = vehicleEnums?.data?.enum_owner.filter((items) => {
+        if(vehicle.owner === items.id ){
+          return items;
+        }
+      })
+      const preferSellingArray = vehicleEnums?.data?.enum_prefer_selling.filter((items) => {
+        if(vehicle.prefer_selling === items.id ){
+          return items;
+        }
+      })
+
+      details.id = vehicle?.id || '';
+      details.title = vehicle?.title || '';
+      details.status = vehicle?.status || '';
+      details.brand = brandArray[0].title;
+      details.model = modelArray[0].title;
+      details.variant = variantArray[0].title;
+      details.city = cityArray[0].title;
+      details.drive = driveArray[0].title;
+      details.manufacture = manufactureArray[0].title;
+      details.owner = ownerArray[0].title;
+      details.prefer_selling = preferSellingArray[0].title;
+      return details;
+    })
+    return filteredData;
+  } catch (e) {
+    
+  }
+}

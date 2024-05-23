@@ -5,7 +5,7 @@ import CarLoader from '../../../../../components/loader/carLoader'
 
 const Loading = () => {
   return (
-    <div className="flex col gap-5">
+    <div className="flex flex-col gap-5">
       <PageHeader title="Assets Part Category"/>
       {/* <CircularLoader /> */}
       <CarLoader />

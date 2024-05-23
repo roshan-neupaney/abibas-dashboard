@@ -121,9 +121,9 @@ const SideBar = () => {
             <span className="pt-1.5">
               <Image src={Dot} width={8} height={8} alt="" />
             </span>
-            <div className="flex col gap-3">
+            <div className="flex flex-col gap-3">
               <span className="title-small-NH">29 Mar, 2023</span>
-              <div className="flex col">
+              <div className="flex flex-col">
                 <span className="body-small-NH">02:09 PM</span>
                 <span className="label-large-NH">Bivek Rana Was assigned</span>
               </div>
@@ -133,9 +133,9 @@ const SideBar = () => {
             <span className="pt-1.5">
               <Image src={Dot} width={8} height={8} alt="" />
             </span>
-            <div className="flex col gap-3">
+            <div className="flex flex-col gap-3">
               <span className="title-small-NH">24 Mar, 2023</span>
-              <div className="flex col">
+              <div className="flex flex-col">
                 <span className="body-small-NH">02:09 PM</span>
                 <span className="label-large-NH">
                   Asim Singh booked this car.
@@ -147,9 +147,9 @@ const SideBar = () => {
             <span className="pt-1.5">
               <Image src={Dot} width={8} height={8} alt="" />
             </span>
-            <div className="flex col gap-3">
+            <div className="flex flex-col gap-3">
               <span className="title-small-NH">24 Mar, 2023</span>
-              <div className="flex col">
+              <div className="flex flex-col">
                 <span className="body-small-NH">02:09 PM</span>
                 <span className="label-large-NH">
                   Somebody updated Something.
