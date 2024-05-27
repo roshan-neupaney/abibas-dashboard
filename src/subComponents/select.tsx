@@ -1,48 +1,31 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import ArrowIcon from "../../public/icons/arrow-right.svg";
 import Image from "next/image";
 
+interface SelectOption {
+  id: string;
+  label: string;
+}
+
 interface CustomSelectProps {
   title: string;
-  value: any;
-  data: any;
-  onChange?: any;
+  value: string[] | string;
+  data: SelectOption[];
+  onChange?: ((value: string[]) => void) | ((value: string) => void);
   placeholder?: string;
-  style?: any;
+  style?: React.CSSProperties;
   required?: boolean;
   error?: string;
 }
 
-const CustomSelect = ({
-  title,
-  value,
-  data = [],
-  onChange,
-  placeholder = "",
-  style = {},
-  required = false,
-  error = "",
-}: CustomSelectProps) => {
-  const [openBox, toggleBox] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(value || placeholder);
+const useDropdownPosition = (
+  openBox: boolean,
+  inputBoxRef: React.RefObject<HTMLDivElement>,
+  dropdownOptionRef: React.RefObject<HTMLDivElement>
+) => {
   const [dropdownPosition, setDropdownPosition] = useState("bottom");
-  const selectRef = useRef<HTMLDivElement | null>(null);
-  const dropdownOptionRef = useRef<HTMLDivElement | null>(null);
-  const inputBoxRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (value) {
-      data?.forEach((element: any) => {
-        if (element?.id.includes(value)) {
-          setSelectedValue(element?.label);
-        }
-      });
-    } else {
-      setSelectedValue(placeholder);
-    }
-  }, [data, value, placeholder]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -73,13 +56,53 @@ const CustomSelect = ({
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleResize);
     };
-  }, [openBox]);
+  }, [openBox, inputBoxRef, dropdownOptionRef]);
 
-  const handleClickOutside = (event: any) => {
+  return dropdownPosition;
+};
+
+const CustomSelect = ({
+  title,
+  value,
+  data = [],
+  onChange,
+  placeholder = "",
+  style = {},
+  required = false,
+  error = "",
+}: CustomSelectProps) => {
+  const [openBox, toggleBox] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(value || placeholder);
+  const selectRef = useRef<HTMLDivElement | null>(null);
+  const dropdownOptionRef = useRef<HTMLDivElement | null>(null);
+  const inputBoxRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (value) {
+      if(typeof value=== 'string'){
+        data?.forEach((element) => {
+          if (element?.id.includes(value)) {
+            setSelectedValue(element?.label);
+          }
+        });
+      }
+      } else {
+        setSelectedValue(placeholder);
+      }
+  }, [data, value, placeholder]);
+
+
+  const dropdownPosition = useDropdownPosition(
+    openBox,
+    inputBoxRef,
+    dropdownOptionRef
+  );
+
+  const handleClickOutside = useCallback((event: any) => {
     if (selectRef.current && !selectRef.current.contains(event.target)) {
       toggleBox(false);
     }
-  };
+  }, []);
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
   }, []);
@@ -128,7 +151,7 @@ const CustomSelect = ({
                 onClick={() => {
                   setSelectedValue(`${elements.label}`);
                   toggleBox(!openBox);
-                  onChange(elements.id);
+                  onChange?.(elements?.id);
                 }}
                 className="p-2 flex body-medium hover:bg-[#dcdce6]"
               >
@@ -156,89 +179,43 @@ export const CustomMultiSelect = ({
   error = "",
 }: CustomSelectProps) => {
   const [openBox, toggleBox] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(value);
-  const [selectedOption, setSelectOption] = useState<string[]>([]);
-  const [dropdownPosition, setDropdownPosition] = useState("bottom");
   const selectRef = useRef<HTMLDivElement | null>(null);
   const dropdownOptionRef = useRef<HTMLDivElement | null>(null);
   const inputBoxRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (value) {
-      const tempValue = data.filter((items: any) => {
-        for (let i = 0; i < value?.length; i++) {
-          if (items.id.includes(value[i])) {
-            selectedOption.push(value[i]);
-            return items;
-          }
-        }
-      });
-      const filteredValue = tempValue.map((items: any) => {
-        return items.label;
-      });
-      setSelectedValue(filteredValue);
-    } else {
-      setSelectedValue(placeholder);
-    }
-  }, [data, value, placeholder, selectedOption]);
+  const selectedLabels = useMemo(
+    () =>
+      data
+        .filter((element) => value.includes(element.id))
+        .map((element) => element.label),
+    [data, value]
+  );
 
-  console.log('data', data)
+  const dropdownPosition = useDropdownPosition(
+    openBox,
+    inputBoxRef,
+    dropdownOptionRef
+  );
 
-  const handleValue = (val: string) => {
-    let temp: String[] = value;
-    if (!value.includes(val)) {
-      temp.push(val);
-    } else {
-      const filterData = temp.filter((items: any) => {
-        if (items !== val) {
-          return items;
-        }
-      });
-      temp = filterData;
-    }
-    onChange(temp);
-  };
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (inputBoxRef.current && dropdownOptionRef.current) {
-        const inputBox = inputBoxRef.current.getBoundingClientRect();
-        const dropDownHeight =
-          dropdownOptionRef.current.scrollHeight > 240
-            ? 240
-            : dropdownOptionRef.current.scrollHeight;
-
-        const viewportHeight = window.innerHeight;
-        const spaceBelow = viewportHeight - inputBox.bottom;
-
-        if (spaceBelow < dropDownHeight) {
-          setDropdownPosition("top");
-        } else {
-          setDropdownPosition("bottom");
-        }
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("scroll", handleResize);
-    if (openBox) {
-      handleResize();
-    }
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("scroll", handleResize);
-    };
-  }, [openBox]);
-
-  const handleClickOutside = (event: any) => {
+  const handleClickOutside = useCallback((event: any) => {
     if (selectRef.current && !selectRef.current.contains(event.target)) {
       toggleBox(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
-  }, []);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [handleClickOutside]);
+
+  const handleValue = (val: string) => {
+    if (Array.isArray(value)) {
+      const updatedValue = value.includes(val)
+        ? value.filter((item) => item !== val)
+        : [...value, val];
+      (onChange as (value: string[]) => void)?.(updatedValue);
+    }
+  };
 
   return (
     <div className="form-box" ref={inputBoxRef}>
@@ -257,7 +234,9 @@ export const CustomMultiSelect = ({
           onClick={() => toggleBox(!openBox)}
         >
           <span className="body-medium">
-            {selectedValue.toString() || placeholder}
+            {selectedLabels.length > 0
+              ? selectedLabels.join(", ")
+              : placeholder}
           </span>
           <span
             className="select-arrow"
@@ -266,7 +245,7 @@ export const CustomMultiSelect = ({
               transition: "0.3s",
             }}
           >
-            <Image src={ArrowIcon} alt="" width={20} height={20} />
+            <Image src={ArrowIcon} alt="Arrow Icon" width={20} height={20} />
           </span>
         </div>
         <div
@@ -277,23 +256,17 @@ export const CustomMultiSelect = ({
           } option-box`}
           ref={dropdownOptionRef}
         >
-          {data?.map((elements: any, index: number) => {
-            // console.log('elements',elements.id)
-            return (
-              <div
-                key={index}
-                onClick={() => {
-                  setSelectedValue(`${elements.label}`);
-                  handleValue(elements.id);
-                }}
-                className={`select-options body-medium ${
-                  selectedOption?.includes(elements.id) && "bg-slate-400"
-                }`}
-              >
-                {elements.label}
-              </div>
-            );
-          })}
+          {data.map((element) => (
+            <div
+              key={element.id}
+              onClick={() => handleValue(element.id)}
+              className={`select-options body-medium ${
+                value.includes(element.id) ? "bg-slate-400" : ""
+              }`}
+            >
+              {element.label}
+            </div>
+          ))}
         </div>
       </div>
       <div className="error-label h-1">{error}</div>

@@ -31,12 +31,23 @@ export const UUidGenerator = () => {
 };
 
 export function groupBy<T>(array: T[], key: (item: T) => string): Record<string, T[]> {
-  return array.reduce((result, item) => {
+  return array?.reduce((result, item) => {
     const keyValue = key(item);
     if (!result[keyValue]) {
       result[keyValue] = [];
     }
     result[keyValue].push(item);
+    return result;
+  }, {} as Record<string, T[]>);
+}
+
+export function groupByObject<T>(array: T[], key: (item: T) => string): Record<string, T[]> {
+  return array?.reduce((result: any, item: any) => {
+    const keyValue = key(item);
+    if (!result[keyValue]) {
+      result[keyValue] = {};
+    }
+    result[keyValue]= item;
     return result;
   }, {} as Record<string, T[]>);
 }

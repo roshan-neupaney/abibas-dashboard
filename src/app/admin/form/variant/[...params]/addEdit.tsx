@@ -18,15 +18,17 @@ import Specification from "../../../../../../components/variant/specification";
 import Feature from "../../../../../../components/variant/feature";
 import Color from "../../../../../../components/variant/colorSelect";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
+import VariantInspection from "../../../../../../components/variant/inspection";
 
 const defaultForm = {
   title: "",
   model_id: "",
-  transmission: '',
+  transmission: "",
   fuel_type: "",
   colors: [],
   specifications: [],
   features: [],
+  inspections: [],
   description: "",
   status: false,
   file: "",
@@ -48,7 +50,8 @@ const AddEditVariant = ({
   specification,
   feature,
   color,
-  enums
+  enums,
+  inspection,
 }: any) => {
   const beautifiedModel = model?.data?.map((items: any) => {
     return { id: items?.id, label: items?.title };
@@ -59,16 +62,23 @@ const AddEditVariant = ({
   const beautifiedFeature = feature?.data?.map((items: any) => {
     return { id: items?.id, label: items?.title };
   });
-  
-  const result = groupBy(enums?.data, (items : any) => {
+
+  const result = groupBy(enums?.data, (items: any) => {
     return items?.slug;
-  })
-  
+  });
+
   const beautifiedTransmission = result.transmission.map((items) => {
-    return {id: items?.title, label: items?.title}
-  })
-  console.log('beautifiedTransmission',beautifiedTransmission)
-  
+    return { id: items?.title, label: items?.title };
+  });
+
+  const groupedInspections = groupBy(inspection, (items: any) => {
+    return items.inspectionCategory;
+  });
+  const beautifiedInspection = Object.entries(groupedInspections).map(
+    ([key, value]) => {
+      return { category: key, value };
+    }
+  );
 
   const beautifiedColor = color?.data?.map((items: any) => {
     return {
@@ -83,7 +93,6 @@ const AddEditVariant = ({
     { id: "ELECTRIC", label: "Electric" },
     { id: "HYBRID", label: "Hybrid" },
   ];
-
   const editForm = isEdit
     ? {
         title: data?.title || "",
@@ -92,6 +101,7 @@ const AddEditVariant = ({
         fuel_type: data?.fuel_type || "",
         colors: JSON?.parse(data?.colors == "" ? "[]" : data?.colors) || [],
         specifications: data?.VariantSpecification,
+        inspections: data?.VariantInspection,
         features: data?.VariantFeature,
         description: data?.description || "",
         file: data?.image || "",
@@ -103,6 +113,7 @@ const AddEditVariant = ({
   const [errorForm, setErrorForm] = useState(defaultError);
   const [deleteSpecifications, setDeleteSpecifications] = useState<any>([]);
   const [deleteFeatures, setDeleteFeatures] = useState<any>([]);
+  const [deleteInspections, setDeleteInspections] = useState<any>([]);
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -111,11 +122,12 @@ const AddEditVariant = ({
     const payload = {
       title: "",
       model_id: "",
-      transmission: '',
+      transmission: "",
       fuel_type: "",
       colors: [],
       specifications: [],
       features: [],
+      inspections: [],
       description: "",
       status: "",
       file: "",
@@ -128,6 +140,7 @@ const AddEditVariant = ({
     payload.description = _data.description;
     payload.features = _data.features;
     payload.specifications = _data.specifications;
+    payload.inspections = _data.inspections;
     payload.status = _data.status ? "ACTIVE" : "PENDING";
     payload.file = data?.image === _data.file ? undefined : _data.file;
     return payload;
@@ -168,6 +181,7 @@ const AddEditVariant = ({
           ...beautifiedPayload,
           delete_specifications: deleteSpecifications,
           delete_features: deleteFeatures,
+          delete_inspections: deleteInspections,
         },
         token
       );
@@ -186,7 +200,6 @@ const AddEditVariant = ({
     }
   };
 
-  console.log('formData', formData)
   return (
     <div className=" flex flex-1 p-4 flex-col gap-5">
       <div className="flex w-[30rem] flex-col gap-5">
@@ -207,7 +220,9 @@ const AddEditVariant = ({
           title="Transmission"
           data={beautifiedTransmission}
           value={formData.transmission}
-          onChange={(val: string) => updateState("transmission", val, setFormData)}
+          onChange={(val: string) =>
+            updateState("transmission", val, setFormData)
+          }
           placeholder="Select Transmission"
         />
 
@@ -253,6 +268,13 @@ const AddEditVariant = ({
         {...{ beautifiedFeature, setFormData, setDeleteFeatures, feature }}
         featureData={data?.VariantFeature}
       />
+      <VariantInspection
+        inspectionData={data?.VariantInspection}
+        inspection={beautifiedInspection}
+        setFormData={setFormData}
+        setDeleteInspections={setDeleteInspections}
+      />
+
       <CustomToggleSwitch
         title="Is Active"
         value={formData.status}

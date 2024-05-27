@@ -14,7 +14,7 @@ import {
 import { cookies } from "next/headers";
 import AddEditVehicle from "./addEdit";
 
-async function getData(token: any, id: string) {
+async function getData(token: string, id: string) {
   try {
     if (id) {
       const res = [
@@ -46,7 +46,7 @@ const AddInventory = async ({ params }: any) => {
     await getData(token, id);
   return (
     <>
-      <PageHeader title="Add Car" />
+      <PageHeader title="Add Car" showBack />
       <FormContainer>
         <AddEditVehicle
           {...{

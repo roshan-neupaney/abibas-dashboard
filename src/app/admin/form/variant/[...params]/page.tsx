@@ -10,6 +10,7 @@ import {
   CRUD_COLOR_CHOICE,
   CRUD_ENUM,
   CRUD_FEATURE,
+  CRUD_INSPECTIONS,
   CRUD_MODEL,
   CRUD_SPECIFICATION,
   CRUD_VARIANT,
@@ -27,9 +28,11 @@ async function getData(token: any, id: string) {
         await ServerSideGet(token, CRUD_FEATURE + "/active"),
         await ServerSideGet(token, CRUD_COLOR_CHOICE + "/active"),
         await ServerSideGet(token, CRUD_ENUM + "/active"),
+        await ServerSideGet(token, CRUD_INSPECTIONS),
+        
       ];
-      const [variant, model, specification, feature, color, enums] = res;
-      return { variant, model, specification, feature, color, enums };
+      const [variant, model, specification, feature, color, enums, inspection] = res;
+      return { variant, model, specification, feature, color, enums, inspection };
     } else {
       const res = [
         await ServerSideGet(token, CRUD_MODEL + "/active"),
@@ -37,9 +40,10 @@ async function getData(token: any, id: string) {
         await ServerSideGet(token, CRUD_FEATURE + "/active"),
         await ServerSideGet(token, CRUD_COLOR_CHOICE + "/active"),
         await ServerSideGet(token, CRUD_ENUM + "/active"),
+        await ServerSideGet(token, CRUD_INSPECTIONS),
       ];
-      const [model, specification, feature, color, enums] = res;
-      return { model, specification, feature, color, enums};
+      const [model, specification, feature, color, enums, inspection] = res;
+      return { model, specification, feature, color, enums, inspection};
     }
   } catch (error) {}
 }
@@ -52,7 +56,7 @@ const AddModel = async ({ params }: any) => {
   const token = cookies().get("access_token")?.value;
   const id = params.params[1];
   const isEdit = params.params[0] === "edit";
-  const { variant, model, specification, feature, color, enums }: any = await getData(
+  const { variant, model, specification, feature, color, enums, inspection }: any = await getData(
     token,
     id
   );
@@ -67,7 +71,12 @@ const AddModel = async ({ params }: any) => {
           data={variant?.data}
           isEdit={isEdit}
           id={id}
-          {...{ model, specification, feature, color, enums }}
+          model= {model}
+          specification={specification}
+          feature={feature}
+          color={color}
+          enums={enums} 
+          inspection={inspection.data}
         />
       </FormContainer>
     </>
