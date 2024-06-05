@@ -22,7 +22,6 @@ import CustomSelect, {
 } from "../../../../../subComponents/select";
 import { CustomRadio } from "../../../../../subComponents/radio";
 import {
-  commaValueIfDropdown,
   specificationOptionType,
 } from "../../../../../../config/constants";
 

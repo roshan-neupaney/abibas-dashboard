@@ -104,12 +104,12 @@ const AddInspections = ({ vehicle_inspection, token, isEdit, id }: any) => {
 
   return (
     <div className="flex gap-5 p-4">
-      <div className="flex w-[30rem] gap-5 flex-col">
+      <div className="flex gap-5 flex-col">
         {inspectionArray?.map((items: any, i: number) => {
           return (
             <div key={i} className="flex flex-col gap-4">
               <span className="headline-small">{items?.category}</span>
-              <div key={i} className="flex flex-col gap-5">
+              <div key={i} className="grid grid-cols-4 gap-5">
                 {items.value?.map((elements: any, i: number) => {
                   const specArray =
                     elements?.inspection?.comma_value_if_dropdown
@@ -121,7 +121,7 @@ const AddInspections = ({ vehicle_inspection, token, isEdit, id }: any) => {
                   const title = elements?.inspection?.title;
                   const id = elements?.inspection?.id;
                   return (
-                    <div key={i}>
+                    <div key={i} className="border">
                       {elements?.inspection?.inception_option_type ===
                       "DROPDOWN" ? (
                         <CustomSelect

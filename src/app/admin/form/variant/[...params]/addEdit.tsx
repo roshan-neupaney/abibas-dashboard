@@ -128,7 +128,6 @@ const AddEditVariant = ({
 
   const beautifyVariants = () => {
     if (variantData) {
-      console.log(variantData);
       const detail = {
         title: "",
         model_id: "",
