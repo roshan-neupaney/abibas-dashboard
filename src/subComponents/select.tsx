@@ -18,6 +18,7 @@ interface CustomSelectProps {
   style?: React.CSSProperties;
   required?: boolean;
   error?: string;
+  sx?: React.CSSProperties;
 }
 
 const useDropdownPosition = (
@@ -46,7 +47,6 @@ const useDropdownPosition = (
         }
       }
     };
-
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleResize);
     if (openBox) {
@@ -70,6 +70,7 @@ const CustomSelect = ({
   style = {},
   required = false,
   error = "",
+  sx = {}
 }: CustomSelectProps) => {
   const [openBox, toggleBox] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value || placeholder);
@@ -108,7 +109,7 @@ const CustomSelect = ({
   }, []);
 
   return (
-    <div className="form-box" ref={inputBoxRef}>
+    <div className="form-box" ref={inputBoxRef} style={{...sx}}>
       <div className="flex flex-col self-stretch relative gap-2">
         <div className="label" style={{ color: error ? "red" : "#1a1c1e" }}>
           {title}

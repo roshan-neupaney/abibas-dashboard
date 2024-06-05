@@ -1,16 +1,26 @@
 import CustomInput from "@/subComponents/input";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomSelect from "@/subComponents/select";
 import { groupBy } from "../../utilities/helper";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import clearCachesByServerAction from "../../hooks/revalidate";
 import {
-  CRUD_VEHICLE,
   CRUD_VEHICLE_SPECIFICATION,
 } from "../../config/endPoints";
 import { JsonPost } from "../../utilities/apiCall";
 import { SubmitButton } from "@/subComponents/buttons";
+
+function groupSpecificationId<T>(array: T[], key: (item: T) => string): Record<string, T[]> {
+  return array?.reduce((result: any, item: any) => {
+    const keyValue = key(item);
+    if (!result[keyValue]) {
+      result[keyValue] = {};
+    }
+    result[keyValue]= {specification_id: item.specification.id, value: item.value};
+    return result;
+  }, {} as Record<string, T[]>);
+}
 
 const AddSpecifications = ({
   vehicle_specification,
@@ -18,19 +28,25 @@ const AddSpecifications = ({
   isEdit,
   id,
 }: any) => {
-  const [formData, setFormData] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-
+  
   const router = useRouter();
-
+  
   const result = groupBy(
     vehicle_specification.data,
     (item: any) => item.specification?.specificationCategory?.title
   );
-
+  
   const specificationArray = Object.entries(result).map(([key, value]) => {
     return { category: key, value: value };
   });
+  
+  const [formData, setFormData] = useState<any>([]);
+  
+  const groupedById = groupSpecificationId(vehicle_specification.data, (item: any) => item.specification?.id);
+  useEffect(() => {
+    setFormData(groupedById)
+  }, []);
 
   const updateForm = (id: string, value: any, setForm: any) => {
     setForm((prev: any) => {
@@ -42,7 +58,6 @@ const AddSpecifications = ({
   };
   const beautifiedSubmitData = Object.values(formData);
   const payload = { vehicle_id: id, specifications: beautifiedSubmitData };
-  console.log(payload, "payload", beautifiedSubmitData);
 
   const handleAdd = async () => {
     setLoading(true);

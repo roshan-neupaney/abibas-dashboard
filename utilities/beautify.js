@@ -326,6 +326,8 @@ export const beautifyVehicleList = (_data, vehicleEnums) => {
         prefer_selling: '',
         owner: '',
         city: '',
+        km_run: '',
+        price: '',
       }
       const brandArray = vehicleEnums?.data?.brand.filter((items) => {
         if(vehicle.brand_id === items.id ){
@@ -367,10 +369,11 @@ export const beautifyVehicleList = (_data, vehicleEnums) => {
           return items;
         }
       })
-
-      details.id = vehicle?.id || '';
+      details.id = vehicle?.id + '_' + vehicle.varient_id|| '';
       details.title = vehicle?.title || '';
       details.status = vehicle?.status || '';
+      details.km_run = vehicle?.km_run || '';
+      details.price = vehicle?.price || '';
       details.brand = brandArray[0].title;
       details.model = modelArray[0].title;
       details.variant = variantArray[0].title;
@@ -386,3 +389,24 @@ export const beautifyVehicleList = (_data, vehicleEnums) => {
     
   }
 }
+
+export const beautifyVariants = (data) => {
+  try {
+    const filteredData = data.map((cat) => {
+      const details = {
+        id: "",
+        title: "",
+        order: "",
+        status: "",
+        // image: '',
+      };
+      details.id = cat?.id;
+      details.title = cat?.title;
+      details.order = cat?.order;
+      details.status = cat?.status;
+      details.image = cat?.image;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {}
+};

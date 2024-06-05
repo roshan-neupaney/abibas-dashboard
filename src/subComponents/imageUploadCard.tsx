@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import addPhotoIcon from "../../public/images/Placeholder_view_vector.svg (1).png";
+import addPhotoIcon from "../../public/images/placeHolder.png";
 import Image from "next/image";
 import { IMAGE_URL } from "../../config/constants";
+import LazyImage from "../../components/lazyImage";
 
 interface ImageUploadCardProps {
   onChange: any;
@@ -10,7 +11,7 @@ interface ImageUploadCardProps {
 
 const ImageUploadCard = ({ value, onChange }: ImageUploadCardProps) => {
   const imgUrl = IMAGE_URL + "small-" + value;
-  const [tempImage, setTempImage] = useState<any>(addPhotoIcon);
+  const [tempImage, setTempImage] = useState<any>();
 
   useEffect(() => {
     setTempImage(imgUrl);
@@ -32,9 +33,9 @@ const ImageUploadCard = ({ value, onChange }: ImageUploadCardProps) => {
     onChange(file);
   };
 
-  const handleError = () => {
-    setTempImage(addPhotoIcon);
-  };
+  // const handleError = () => {
+  //   setTempImage(addPhotoIcon);
+  // };
   return (
     <label className="cursor-pointer">
       <div className="border-2 border-dashed flex w-[19rem] h-60 items-center justify-center">
@@ -44,20 +45,20 @@ const ImageUploadCard = ({ value, onChange }: ImageUploadCardProps) => {
           onChange={(e) => onDrop(e)}
           accept="image/*"
         />
-        {tempImage ? (
           <span className="flex flex-1">
-            <Image
+            <LazyImage
               src={tempImage}
               fill={true}
               alt=""
-              onError={handleError}
+              // onError={handleError}
             />
           </span>
+        {/* {tempImage ? (
         ) : (
           <span>
             <Image src={addPhotoIcon} height={50} width={50} alt="" />
           </span>
-        )}
+        )} */}
       </div>
     </label>
   );

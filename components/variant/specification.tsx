@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import addIcon from "../../public/icons/add.svg";
 import deleteIcon from "../../public/icons/deleteIcon.svg";
 import Image from "next/image";
@@ -12,7 +12,11 @@ const Specification = ({
   setDeleteSpecifications,
   specification,
 }: any) => {
-  const [form, setForm] = useState<any>(specificationData || []);
+  const [form, setForm] = useState<any>(specificationData);
+
+  // useEffect(() => {
+  //   setForm(specificationData);
+  // }, [specificationData]);
 
   let uuid = UUidGenerator();
   const addForm = () => {
@@ -23,6 +27,7 @@ const Specification = ({
       ];
     });
   };
+  // console.log('specificationData', specificationData)
   const updateForm = (key: string, val: string, id: string) => {
     const result = form.filter((items: any) => {
       if (items.id === id) {
@@ -63,9 +68,6 @@ const Specification = ({
     >
       <div className="flex">
         <div className="title-medium flex flex-1">Specification</div>
-        <span onClick={addForm} className="cursor-pointer">
-          <Image src={addIcon} width={20} height={20} alt="" />
-        </span>
       </div>
       {form?.length > 0 &&
         form.map((item: any, i: number) => {
@@ -89,6 +91,11 @@ const Specification = ({
             </div>
           );
         })}
+      <div className="flex justify-center">
+        <span onClick={addForm} className="cursor-pointer">
+          <Image src={addIcon} width={20} height={20} alt="" />
+        </span>
+      </div>
     </div>
   );
 };

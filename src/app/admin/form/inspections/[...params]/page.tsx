@@ -43,6 +43,7 @@ const AddInspection = async ({ params }: any) => {
   const id = params.params[1];
   const isEdit = params.params[0] === "edit";
   const {inspection, inspection_category,body_part}: any = await getData(token, id);
+  console.log('data', inspection.data)
   return (
     <>
       <PageHeader

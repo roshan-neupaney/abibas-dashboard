@@ -11,7 +11,6 @@ const Sidebar = () => {
         <Image src={SawariIcon} width={98} height={24} alt="" />
       </div>
         <MenuLink />
-      
     </div>
   );
 };

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomInput from "../../../../../subComponents/input";
 import { groupBy, updateState } from "../../../../../../utilities/helper";
 import { CustomToggleSwitch } from "../../../../../subComponents/checkbox";
@@ -11,6 +11,7 @@ import { CRUD_VARIANT } from "../../../../../../config/endPoints";
 import {
   FormdataPost,
   FormdataPatch,
+  ServerSideGetWithId,
 } from "../../../../../../utilities/apiCall";
 import CustomSelect from "../../../../../subComponents/select";
 import { CustomRadio } from "../../../../../subComponents/radio";
@@ -19,6 +20,7 @@ import Feature from "../../../../../../components/variant/feature";
 import Color from "../../../../../../components/variant/colorSelect";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 import VariantInspection from "../../../../../../components/variant/inspection";
+import CustomTextableSelect from "@/subComponents/TextableSelect";
 
 const defaultForm = {
   title: "",
@@ -52,6 +54,7 @@ const AddEditVariant = ({
   color,
   enums,
   inspection,
+  variants,
 }: any) => {
   const beautifiedModel = model?.data?.map((items: any) => {
     return { id: items?.id, label: items?.title };
@@ -67,18 +70,21 @@ const AddEditVariant = ({
     return items?.slug;
   });
 
-  const beautifiedTransmission = result.transmission.map((items) => {
+  const beautifiedTransmission = result?.transmission.map((items) => {
     return { id: items?.title, label: items?.title };
   });
 
   const groupedInspections = groupBy(inspection, (items: any) => {
-    return items.inspectionCategory;
+    return items?.inspectionCategory;
   });
-  const beautifiedInspection = Object.entries(groupedInspections).map(
+  const beautifiedInspection = Object?.entries(groupedInspections).map(
     ([key, value]) => {
       return { category: key, value };
     }
   );
+  const beautifiedVariants = variants?.data?.map((items: any) => {
+    return { id: items?.id, label: items?.title };
+  });
 
   const beautifiedColor = color?.data?.map((items: any) => {
     return {
@@ -115,8 +121,57 @@ const AddEditVariant = ({
   const [deleteFeatures, setDeleteFeatures] = useState<any>([]);
   const [deleteInspections, setDeleteInspections] = useState<any>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedVariant, setSelectedVariant] = useState<string>("");
+  const [variantData, setVariantData] = useState<any>();
 
   const router = useRouter();
+
+  const beautifyVariants = () => {
+    if (variantData) {
+      console.log(variantData);
+      const detail = {
+        title: "",
+        model_id: "",
+        transmission: "",
+        fuel_type: "",
+        colors: [],
+        specifications: [],
+        features: [],
+        inspections: [],
+        description: "",
+        status: false,
+        file: "",
+      };
+      detail.title = variantData?.title || "";
+      detail.model_id = variantData?.model_id || "";
+      detail.transmission = variantData?.transmission || "";
+      detail.fuel_type = variantData?.fuel_type || "";
+      detail.colors =
+        JSON?.parse(variantData?.colors == "" ? "[]" : variantData?.colors) ||
+        [];
+      detail.specifications = variantData?.VariantSpecification;
+      detail.inspections = variantData?.VariantInspection;
+      detail.features = variantData?.VariantFeature;
+      detail.description = variantData?.description || "";
+      detail.file = variantData?.image || "";
+      detail.status = variantData?.status == "ACTIVE";
+      setFormData(detail);
+    }
+  };
+
+  useEffect(() => {
+    beautifyVariants();
+  }, [variantData]);
+
+  const getVariant = async (id: string) => {
+    try {
+      const res: any = await ServerSideGetWithId(token, CRUD_VARIANT, id);
+      setSelectedVariant(id);
+      setVariantData(res?.data);
+    } catch (e) {
+      console.error("Error while fetching variant");
+    }
+  };
 
   const beautifyPayload = (_data: any) => {
     const payload = {
@@ -202,58 +257,78 @@ const AddEditVariant = ({
 
   return (
     <div className=" flex flex-1 p-4 flex-col gap-5">
-      <div className="flex w-[30rem] flex-col gap-5">
-        <CustomInput
-          title="Title"
-          value={formData.title}
-          onChange={(val: string) => updateState("title", val, setFormData)}
-          placeholder="Enter title"
-        />
-        <CustomSelect
-          title="Model"
-          data={beautifiedModel}
-          value={formData.model_id}
-          onChange={(val: string) => updateState("model_id", val, setFormData)}
-          placeholder="Select Model"
-        />
-        <CustomSelect
-          title="Transmission"
-          data={beautifiedTransmission}
-          value={formData.transmission}
-          onChange={(val: string) =>
-            updateState("transmission", val, setFormData)
-          }
-          placeholder="Select Transmission"
-        />
-
-        <Color
-          {...{ beautifiedColor, setFormData }}
-          formData={formData.colors}
-        />
-
-        <CustomInput
-          title="Description"
-          value={formData.description}
-          onChange={(val: string) =>
-            updateState("description", val, setFormData)
-          }
-          placeholder="Write here..."
-          multiline
-          rows={8}
-        />
-
-        <CustomDropzone
-          title="Image"
-          value={formData.file}
-          onChange={(val: any) => updateState("file", val, setFormData)}
-        />
-
-        <CustomRadio
-          name="Fuel Type"
-          value={formData.fuel_type}
-          data={fuel}
-          onChange={(val: string) => updateState("fuel_type", val, setFormData)}
-        />
+      <div className="flex justify-between gap-6">
+        <div className="flex lg:w-[30rem] sm:w-[20rem] w-auto flex-col gap-5">
+          <CustomInput
+            title="Title"
+            value={formData.title}
+            onChange={(val: string) => updateState("title", val, setFormData)}
+            placeholder="Enter title"
+          />
+          {/* <CustomSelect
+            title="Model"
+            data={beautifiedModel}
+            value={formData.model_id}
+            onChange={(val: string) =>
+              updateState("model_id", val, setFormData)
+            }
+            placeholder="Select Model"
+          /> */}
+          <CustomTextableSelect
+            title="Model"
+            data={beautifiedModel}
+            value={formData.model_id}
+            onChange={(val: string) =>
+              updateState("model_id", val, setFormData)
+            }
+            placeholder="Search and Select Model"
+          />
+          <CustomSelect
+            title="Transmission"
+            data={beautifiedTransmission}
+            value={formData.transmission}
+            onChange={(val: string) =>
+              updateState("transmission", val, setFormData)
+            }
+            placeholder="Select Transmission"
+          />
+          <Color
+            {...{ beautifiedColor, setFormData }}
+            formData={formData.colors}
+          />
+          <CustomInput
+            title="Description"
+            value={formData.description}
+            onChange={(val: string) =>
+              updateState("description", val, setFormData)
+            }
+            placeholder="Write here..."
+            multiline
+            rows={8}
+          />
+          <CustomDropzone
+            title="Image"
+            value={formData.file}
+            onChange={(val: any) => updateState("file", val, setFormData)}
+          />
+          <CustomRadio
+            name="Fuel Type"
+            value={formData.fuel_type}
+            data={fuel}
+            onChange={(val: string) =>
+              updateState("fuel_type", val, setFormData)
+            }
+          />
+        </div>
+        <div className="flex w-[30rem] md:w-[20rem]">
+          <CustomSelect
+            title="Existing Variants"
+            onChange={(val: string) => getVariant(val)}
+            value={selectedVariant}
+            data={beautifiedVariants}
+            placeholder="Select Existing Variant"
+          />
+        </div>
       </div>
       <Specification
         {...{
@@ -262,14 +337,14 @@ const AddEditVariant = ({
           setDeleteSpecifications,
           specification,
         }}
-        specificationData={data?.VariantSpecification}
+        specificationData={formData?.specifications}
       />
       <Feature
         {...{ beautifiedFeature, setFormData, setDeleteFeatures, feature }}
-        featureData={data?.VariantFeature}
+        featureData={formData?.features}
       />
       <VariantInspection
-        inspectionData={data?.VariantInspection}
+        inspectionData={formData?.inspections}
         inspection={beautifiedInspection}
         setFormData={setFormData}
         setDeleteInspections={setDeleteInspections}

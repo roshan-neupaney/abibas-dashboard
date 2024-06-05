@@ -4,6 +4,7 @@ import General from "../../../../../components/addCar/general";
 import VehicleImages from "../../../../../components/addCar/images";
 import AddSpecifications from "../../../../../components/addCar/addSpecifications";
 import AddFeatures from "../../../../../components/addCar/addFeatures";
+import AddInspections from "../../../../../components/addCar/addInspections";
 
 interface VehicleProps {
   isEdit: boolean;
@@ -13,6 +14,7 @@ interface VehicleProps {
   vehicle_enum: any;
   vehicle_specification: any;
   vehicle_feature: any;
+  vehicle_inspection: any;
 }
 
 const AddEditVehicle = ({
@@ -23,8 +25,8 @@ const AddEditVehicle = ({
   vehicle_enum,
   vehicle_specification,
   vehicle_feature,
+  vehicle_inspection,
 }: VehicleProps) => {
-
   const [active, setActive] = useState(0);
   return (
     <div className="flex flex-col">
@@ -39,6 +41,7 @@ const AddEditVehicle = ({
             General
           </div>
           {isEdit && (
+            <>
             <div
               className={`nav-tabs flex items-center cursor-pointer ${
                 active == 1 ? "active-navTab" : "inactive-navTab"
@@ -47,7 +50,7 @@ const AddEditVehicle = ({
             >
               Images
             </div>
-          )}
+          
           <div
             className={`nav-tabs flex items-center cursor-pointer ${
               active == 2 ? "active-navTab" : "inactive-navTab"
@@ -70,8 +73,10 @@ const AddEditVehicle = ({
             }`}
             onClick={() => setActive(4)}
           >
-            Addons
+            Inspections
           </div>
+          </>
+          )}
           <div
             className={`nav-tabs flex items-center cursor-pointer ${
               active == 5 ? "active-navTab" : "inactive-navTab"
@@ -88,8 +93,10 @@ const AddEditVehicle = ({
         <VehicleImages {...{ isEdit, token, id }} />
       ) : active === 2 ? (
         <AddSpecifications {...{ vehicle_specification, token, isEdit, id }} />
-      ) : (
+      ) : active === 3 ? (
         <AddFeatures {...{ vehicle_feature, token, isEdit, id }} />
+      ) : (
+        <AddInspections {...{ vehicle_inspection, token, isEdit, id }} />
       )}
     </div>
   );

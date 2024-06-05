@@ -3,8 +3,8 @@ import PageHeader from "../../../../../components/pageHeader";
 import { ServerSideGet } from "../../../../../utilities/apiCall";
 import { CRUD_SPECIFICATION } from "../../../../../config/endPoints";
 import { authorization } from "../../../../../hoc/auth";
-import Feature from "./childPage";
 import { Metadata } from "next";
+import Specifications from "./childPage";
 
 async function getData(token: any) {
   authorization(token);
@@ -26,7 +26,7 @@ const SpecificationsPage = async() => {
   return (
     <>
       <PageHeader title="Specifications" addRoute="/admin/form/specifications/add" />
-        <Feature _data={data} {...{token}} />
+        <Specifications _data={data} {...{token}} />
     </>
   );
 };

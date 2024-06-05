@@ -36,6 +36,7 @@ const defaultForm = {
   end_text: "",
   inspection_option_type: "",
   comma_value_if_dropdown: "",
+  default_type: '',
   text_for_everything_fine: "",
 };
 
@@ -59,6 +60,8 @@ const AddEditInspection = ({
   inspection_category,
   body_part,
 }: any) => {
+
+  
   const editForm = isEdit
     ? {
         title: data?.title || "",
@@ -70,6 +73,7 @@ const AddEditInspection = ({
         end_text: data?.end_text || "",
         inspection_option_type: data?.inception_option_type || "",
         comma_value_if_dropdown: data?.comma_value_if_dropdown || "",
+        default_type: data?.default_type || "",
         text_for_everything_fine: data?.text_for_everything_fine || "",
       }
     : defaultForm;
@@ -100,6 +104,7 @@ const AddEditInspection = ({
       end_text: "",
       inception_option_type: "",
       comma_value_if_dropdown: "",
+      // default_type: '',
       text_for_everything_fine: "",
     };
     payload.title = _data.title;
@@ -109,7 +114,8 @@ const AddEditInspection = ({
     payload.bodypart = _data.bodypart;
     payload.end_text = _data.end_text;
     payload.inception_option_type = _data.inspection_option_type;
-    payload.comma_value_if_dropdown = _data.comma_value_if_dropdown;
+    payload.comma_value_if_dropdown = _data.comma_value_if_dropdown.replace(', ', ',');
+    // payload.default_type = _data.default_type;
     payload.text_for_everything_fine = _data.text_for_everything_fine;
     payload.status = _data.status ? "ACTIVE" : "PENDING";
     return payload;
@@ -246,22 +252,31 @@ const AddEditInspection = ({
         error={formError.bodypart}
         required
       />
-      <CustomRadio
-        name="Comma Value If Dropdown"
-        data={commaValueIfDropdown}
-        value={formData.comma_value_if_dropdown}
-        onChange={(val: string) =>
-          updateState("comma_value_if_dropdown", val, setFormData)
-        }
-      />
-      <CustomRadio
-        name="Inspection Option Type"
-        data={specificationOptionType}
-        value={formData.inspection_option_type}
-        onChange={(val: string) =>
-          updateState("inspection_option_type", val, setFormData)
-        }
-      />
+        <CustomRadio
+          name="Inspection Option Type"
+          data={specificationOptionType}
+          value={formData.inspection_option_type}
+          onChange={(val: string) =>
+            updateState("inspection_option_type", val, setFormData)
+          }
+        />
+      {formData.inspection_option_type === "DROPDOWN" && (
+        <CustomInput
+          title="Comma Value If Dropdown"
+          value={formData.comma_value_if_dropdown}
+          onChange={(val: string) =>
+            updateState(
+              "comma_value_if_dropdown",
+              val,
+              setFormData,
+              setFormError
+            )
+          }
+          placeholder="Eg: Value1,Value2,Value3"
+          error={formError.title}
+          required
+        />
+      )}
       <CustomInput
         title="Text For Everything Fine"
         value={formData.text_for_everything_fine}

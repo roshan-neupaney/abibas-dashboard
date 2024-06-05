@@ -16,15 +16,19 @@ const VariantInspection = ({
   setDeleteInspections,
 }: VariantInspectionProps) => {
   const result: any = groupByObject(inspectionData, (items: any) => {
-    return items.inspection.id;
+    return items?.inspectionId;
   });
 
-  const [inspectionsForm, setInspectionsForm] = useState<any>(result || {});
+  const [inspectionsForm, setInspectionsForm] = useState<any>(result);
+  useEffect(() => {
+    setInspectionsForm(result);
+  }, [inspectionData]);
 
   const addInspection = (id: string, status: boolean) => {
     setInspectionsForm((prev: any) => {
+      let updateForm;
       if (status) {
-        return {
+        updateForm = {
           ...prev,
           [id]: {
             ...prev[id],
@@ -34,22 +38,18 @@ const VariantInspection = ({
           },
         };
       } else {
+        updateForm = { ...prev };
         if (inspectionsForm[id]?.id) {
           setDeleteInspections((prev: any) => {
             return [...prev, { id: inspectionsForm[id]?.id }];
           });
         }
-        delete prev[id];
-        return {
-          ...prev,
-        };
+        delete updateForm[id];
       }
+      updateState("inspections", Object.values(updateForm), setFormData);
+      return updateForm;
     });
   };
-
-  useEffect(() => {
-    updateState("inspections", Object.values(inspectionsForm), setFormData);
-  }, [inspectionsForm]);
 
   return (
     <div
@@ -68,7 +68,7 @@ const VariantInspection = ({
                 {items.value.map((elements: any, i: number) => {
                   const id = elements?.id;
                   return (
-                    <React.Fragment key={'child-'+i}>
+                    <React.Fragment key={"child-" + i}>
                       <CustomToggleSwitch
                         title={elements?.title}
                         value={inspectionsForm[id]?.status === "ACTIVE"}

@@ -70,10 +70,6 @@ const Inspection = ({ _data, token }: any) => {
         header: "Inspection Option type",
         accessorKey: "inception_option_type",
       },
-      {
-        header: "Comma Value If Dropdown",
-        accessorKey: "comma_value_if_dropdown",
-      },
       // {
       //   header: "Text For Everything Fine",
       //   accessorKey: "text_for_everything_fine",

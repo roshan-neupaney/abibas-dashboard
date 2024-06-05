@@ -79,12 +79,11 @@
   background-color: var(--bg);
 }
 
-@media screen and (max-width: 834px) {
+/* @media screen and (max-width: 834px) {
   .container {
     display: flex;
     flex-direction: row;
     height: 80px;
-    /* justify-content: space-between; */
   }
 
   .menuContainer {
@@ -103,4 +102,4 @@
     padding: 18px 16px;
     gap: 4px;
   }
-}
+} */

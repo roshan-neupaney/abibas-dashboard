@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import addIcon from "../../public/icons/add.svg";
 import deleteIcon from "../../public/icons/deleteIcon.svg";
 import Image from "next/image";
@@ -12,7 +12,11 @@ const Feature = ({
   setDeleteFeatures,
   feature,
 }: any) => {
-  const [form, setForm] = useState<any>(featureData || []);
+  const [form, setForm] = useState<any>(featureData);
+
+  // useEffect(() => {
+  //   setForm(featureData);
+  // }, [featureData]);
 
   const uuid = UUidGenerator();
 
@@ -61,9 +65,6 @@ const Feature = ({
     >
       <div className="flex">
         <div className="title-medium flex flex-1">Feature</div>
-        <span onClick={addForm}>
-          <Image src={addIcon} width={20} height={20} alt="" />
-        </span>
       </div>
       {form?.length > 0 &&
         form.map((item: any, i: number) => {
@@ -71,7 +72,7 @@ const Feature = ({
             <div key={i} className="flex gap-4">
               <FeatureItems
                 {...{ beautifiedFeature, item, updateForm, feature }}
-                varFeature= {featureData[i]}
+                varFeature={featureData[i]}
               />
               <span className="flex pt-5" onClick={() => removeForm(item.id)}>
                 <Image src={deleteIcon} width={20} height={20} alt="" />
@@ -79,6 +80,11 @@ const Feature = ({
             </div>
           );
         })}
+      <div className="flex justify-center">
+        <span onClick={addForm}>
+          <Image src={addIcon} width={20} height={20} alt="" />
+        </span>
+      </div>
     </div>
   );
 };

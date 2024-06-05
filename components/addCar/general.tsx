@@ -11,6 +11,7 @@ import clearCachesByServerAction from "../../hooks/revalidate";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { vehicleValidation } from "../../utilities/validation";
+import CustomTextableSelect from "@/subComponents/TextableSelect";
 
 const defaultForm = {
   title: "",
@@ -18,6 +19,8 @@ const defaultForm = {
   model_id: "",
   variant_id: "",
   made_year: "",
+  price: "",
+  previous_price: "",
   owner: "",
   km_driven: "",
   prefer_selling: "",
@@ -25,6 +28,7 @@ const defaultForm = {
   contact_number: "",
   address: "",
   city: "",
+  km_run: "",
   status: false,
 };
 const defaultError = {
@@ -40,39 +44,44 @@ const defaultError = {
   contact_number: "",
   address: "",
   city: "",
+  km_run: "",
+  price: "",
 };
 const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
-  // const beautifiedData = beautifyVehicle(vehicle);
   const [formData, setFormData] = useState(defaultForm);
   const [formError, setFormError] = useState(defaultError);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const beautifiedBrand = vehicle_enum?.data?.brand?.map((items: any) => {
-    return { id: items?.id, label: items?.title};
+    return { id: items?.id, label: items?.title };
   });
   const beautifiedModel = vehicle_enum?.data?.model?.map((items: any) => {
-    return { id: items?.id, label: items?.title}
+    return { id: items?.id, label: items?.title };
   });
   const beautifiedVariant = vehicle_enum?.data?.varient?.map((items: any) => {
-    return { id: items?.id, label: items?.title}
+    return { id: items?.id, label: items?.title };
   });
-  const beautifiedManufacture = vehicle_enum?.data?.enum_made_year?.map((items: any) => {
-    return { id: items?.id, label: items?.title}
-  });
+  const beautifiedManufacture = vehicle_enum?.data?.enum_made_year?.map(
+    (items: any) => {
+      return { id: items?.id, label: items?.title };
+    }
+  );
   const beautifiedOwner = vehicle_enum?.data?.enum_owner?.map((items: any) => {
-    return { id: items?.id, label: items?.title}
+    return { id: items?.id, label: items?.title };
   });
   const beautifiedDriven = vehicle_enum?.data?.enum_drive?.map((items: any) => {
-    return { id: items?.id, label: items?.title}
+    return { id: items?.id, label: items?.title };
   });
-  const beautifiedPreferSelling = vehicle_enum?.data?.enum_prefer_selling?.map((items: any) => {
-    return { id: items?.id, label: items?.title}
-  });
+  const beautifiedPreferSelling = vehicle_enum?.data?.enum_prefer_selling?.map(
+    (items: any) => {
+      return { id: items?.id, label: items?.title };
+    }
+  );
   const beautifiedCity = vehicle_enum?.data?.enum_city?.map((items: any) => {
-    return { id: items?.id, label: items?.title}
+    return { id: items?.id, label: items?.title };
   });
-  
+
   const editForm = isEdit
     ? {
         title: vehicle?.data?.title || "",
@@ -87,13 +96,16 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
         contact_number: vehicle?.data?.contact_number,
         address: vehicle?.data?.address,
         city: vehicle?.data?.city,
-        status: vehicle?.data.status === 'ACTIVE',
+        price: vehicle?.data?.price,
+        previous_price: vehicle?.data?.previous_price,
+        status: vehicle?.data.status === "ACTIVE",
+        km_run: vehicle?.data.km_run,
       }
     : defaultForm;
 
   useEffect(() => {
     setFormData(editForm);
-  }, [vehicle, editForm]);
+  }, []);
 
   const beautifyPayload = (_form: any) => {
     const payload = {
@@ -110,6 +122,9 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
       address: "",
       city: "",
       status: "",
+      km_run: "",
+      price: 0,
+      previous_price: 0,
     };
     payload.title = _form.title;
     payload.brand_id = _form.brand_id;
@@ -123,6 +138,9 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
     payload.contact_number = _form.contact_number;
     payload.address = _form.address;
     payload.city = _form.city;
+    payload.km_run = _form.km_run;
+    payload.price = Number(_form.price);
+    payload.previous_price = Number(_form.previous_price);
     payload.status = _form.status ? "ACTIVE" : "PENDING";
     return payload;
   };
@@ -133,7 +151,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = vehicleValidation(beautifiedPayload);
       if (isValid) {
-        const response = await JsonPost(CRUD_VEHICLE,beautifiedPayload, token);
+        const response = await JsonPost(CRUD_VEHICLE, beautifiedPayload, token);
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Updated Vehicle Details");
@@ -201,7 +219,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             required
             error={formError.title}
           />
-          <CustomSelect
+          <CustomTextableSelect
             title="Brand"
             value={formData.brand_id}
             onChange={(val: string) =>
@@ -212,7 +230,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             required
             error={formError.brand_id}
           />
-          <CustomSelect
+          <CustomTextableSelect
             title="Model"
             value={formData.model_id}
             onChange={(val: string) =>
@@ -267,6 +285,34 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             required
             error={formError.km_driven}
           />
+          <CustomInput
+            title="Km Run"
+            onChange={(val: string) =>
+              updateState("km_run", val, setFormData, setFormError)
+            }
+            value={formData.km_run}
+            placeholder="Enter run distance"
+            required
+            error={formError.km_run}
+          />
+          <CustomInput
+            title="Price"
+            onChange={(val: string) =>
+              updateState("price", val, setFormData, setFormError)
+            }
+            value={formData.price}
+            placeholder="Enter price"
+            required
+            // error={formError.price}
+          />
+          <CustomInput
+            title="Previous Price"
+            onChange={(val: string) =>
+              updateState("previous_price", val, setFormData, setFormError)
+            }
+            value={formData.previous_price}
+            placeholder="Enter previous price"
+          />
           <CustomSelect
             title="Prefer Selling"
             value={formData.prefer_selling}
@@ -304,7 +350,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
               updateState("address", val, setFormData, setFormError)
             }
             value={formData.address}
-            placeholder="Enter Phone"
+            placeholder="Enter Address"
             required
             error={formError.address}
           />

@@ -3,71 +3,61 @@ import React, { useEffect, useState } from "react";
 import CustomSelect from "@/subComponents/select";
 import { groupBy, groupByObject } from "../../utilities/helper";
 import toast from "react-hot-toast";
-import { CRUD_VEHICLE_FEATURE } from "../../config/endPoints";
+import { CRUD_VEHICLE_INSPECTION } from "../../config/endPoints";
 import { JsonPost } from "../../utilities/apiCall";
 import clearCachesByServerAction from "../../hooks/revalidate";
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "@/subComponents/buttons";
 
-function groupFeatureId<T>(array: T[], key: (item: T) => string): Record<string, T[]> {
-  return array?.reduce((result: any, item: any) => {
-    const keyValue = key(item);
-    if (!result[keyValue]) {
-      result[keyValue] = {};
-    }
-    result[keyValue]= {feature_id: item.specification.id, value: item.value};
-    return result;
-  }, {} as Record<string, T[]>);
-}
-
-const AddFeatures = ({ vehicle_feature, token, isEdit, id }: any) => {
+const AddInspections = ({ vehicle_inspection, token, isEdit, id }: any) => {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const result = groupBy(
-    vehicle_feature.data,
-    (item: any) => item.specification?.featureCategory?.title
+    vehicle_inspection.data,
+    (item: any) => item.inspection?.inspectionCategory?.title
   );
-
-  const featureArray = Object.entries(result).map(([key, value]) => {
+  const inspectionArray = Object.entries(result).map(([key, value]) => {
     return { category: key, value: value };
   });
 
+  const groupedById = groupByObject(vehicle_inspection.data, (item: any) => item.inspection?.id);
   const [formData, setFormData] = useState<any>([]);
   
-  const groupedById = groupFeatureId(vehicle_feature.data, (item: any) => item.specification?.id);
   useEffect(() => {
     setFormData(groupedById)
   }, [])
-
+  
   const updateForm = (key: string, value: any, setForm: any) => {
     setForm((prev: any) => {
       return {
         ...prev,
-        [key]: { ...prev[key], feature_id: key, value: value },
+        [key]: { ...prev[key], inspection_id: key, value: value },
       };
     });
   };
 
   const beautifiedSubmitData = Object.values(formData);
-  const payload = { vehicle_id: id, features: beautifiedSubmitData };
+  const payload = { vehicle_id: id, inspection: beautifiedSubmitData };
 
   const handleAdd = async () => {
     setLoading(true);
     try {
-      // const beautifiedPayload = beautifyPayload(formData);
-      // const { isValid, error }: any = vehicleValidation(beautifiedPayload);
       if (true) {
-        const response = await JsonPost(CRUD_VEHICLE_FEATURE, payload, token);
+        const response = await JsonPost(
+          CRUD_VEHICLE_INSPECTION,
+          payload,
+          token
+        );
         const { status }: any = response;
         if (status) {
-          toast.success("Successfully Added Vehicle Specifications");
+          toast.success("Successfully Added Vehicle inspections");
           // setFormError(defaultError);
           clearCachesByServerAction("/admin/inventory");
           router.push("/admin/inventory");
         } else {
-          toast.error("Error While Adding Vehicle Specifications");
+          toast.error("Error While Adding Vehicle inspections");
           setLoading(false);
         }
       } else {
@@ -86,15 +76,19 @@ const AddFeatures = ({ vehicle_feature, token, isEdit, id }: any) => {
       // const beautifiedPayload = beautifyPayload(formData);
       // const { isValid, error }: any = vehicleValidation(beautifiedPayload);
       if (true) {
-        const response = await JsonPost(CRUD_VEHICLE_FEATURE, payload, token);
+        const response = await JsonPost(
+          CRUD_VEHICLE_INSPECTION,
+          payload,
+          token
+        );
         const { status }: any = response;
         if (status) {
-          toast.success("Successfully Added Vehicle Specifications");
+          toast.success("Successfully Added Vehicle inspections");
           // setFormError(defaultError);
           clearCachesByServerAction("/admin/inventory");
           router.push("/admin/inventory");
         } else {
-          toast.error("Error While Adding Vehicle Specifications");
+          toast.error("Error While Adding Vehicle inspections");
           setLoading(false);
         }
       } else {
@@ -111,24 +105,24 @@ const AddFeatures = ({ vehicle_feature, token, isEdit, id }: any) => {
   return (
     <div className="flex gap-5 p-4">
       <div className="flex w-[30rem] gap-5 flex-col">
-        {featureArray?.map((items: any, i: number) => {
+        {inspectionArray?.map((items: any, i: number) => {
           return (
             <div key={i} className="flex flex-col gap-4">
               <span className="headline-small">{items?.category}</span>
               <div key={i} className="flex flex-col gap-5">
                 {items.value?.map((elements: any, i: number) => {
                   const specArray =
-                    elements?.specification?.comma_value_if_dropdown
+                    elements?.inspection?.comma_value_if_dropdown
                       ?.split(",")
                       .map((items: any) => {
                         return { id: items.toLowerCase(), label: items };
                       });
 
-                  const title = elements?.specification?.title;
-                  const id = elements?.specification?.id;
+                  const title = elements?.inspection?.title;
+                  const id = elements?.inspection?.id;
                   return (
                     <div key={i}>
-                      {elements?.specification?.feature_option_type ===
+                      {elements?.inspection?.inception_option_type ===
                       "DROPDOWN" ? (
                         <CustomSelect
                           title={title}
@@ -168,4 +162,4 @@ const AddFeatures = ({ vehicle_feature, token, isEdit, id }: any) => {
   );
 };
 
-export default AddFeatures;
+export default AddInspections;

@@ -82,28 +82,31 @@ const AddEditFeature = ({
   const router = useRouter();
 
   const beautifyPayload = (_data: any) => {
-      const payload = {
-        title: "",
-        description: "",
-        file: "",
-        status: "",
-        comma_value_if_dropdown: "",
-        feature_option_type: "",
-        feature_category_id: "",
-        default_type: "",
-        unit_id: "",
-      };
-      payload.title = _data.title;
-      payload.description = _data.description;
-      payload.file = data?.image === _data?.file ? undefined : _data.file || undefined;
-      payload.status = _data.status ? "ACTIVE" : "PENDING";
-      payload.comma_value_if_dropdown = _data.comma_value_if_dropdown.replace(', ', ',');
-      payload.feature_option_type = _data.feature_option_type;
-      payload.default_type = _data?.default_type;
-      payload.feature_category_id = _data.feature_category_id;
-      payload.unit_id = _data.unit_id;
-      return payload;
-    
+    const payload = {
+      title: "",
+      description: "",
+      file: "",
+      status: "",
+      comma_value_if_dropdown: "",
+      feature_option_type: "",
+      feature_category_id: "",
+      default_type: "",
+      unit_id: "",
+    };
+    payload.title = _data.title;
+    payload.description = _data.description;
+    payload.file =
+      data?.image === _data?.file ? undefined : _data.file || undefined;
+    payload.status = _data.status ? "ACTIVE" : "PENDING";
+    payload.comma_value_if_dropdown = _data.comma_value_if_dropdown.replace(
+      ", ",
+      ","
+    );
+    payload.feature_option_type = _data.feature_option_type;
+    payload.default_type = _data?.default_type;
+    payload.feature_category_id = _data.feature_category_id;
+    payload.unit_id = _data.unit_id;
+    return payload;
   };
 
   const handleAdd = async () => {
@@ -243,17 +246,23 @@ const AddEditFeature = ({
           updateState("default_type", val, setFormData)
         }
       />
-
-      <CustomInput
-        title="Comma Value If Dropdown"
-        value={formData.comma_value_if_dropdown}
-        onChange={(val: string) =>
-          updateState("comma_value_if_dropdown", val, setFormData, setFormError)
-        }
-        placeholder="Eg: Value1,Value2,Value3"
-        error={formError.title}
-        required
-      />
+      {formData.feature_option_type === "DROPDOWN" && (
+        <CustomInput
+          title="Comma Value If Dropdown"
+          value={formData.comma_value_if_dropdown}
+          onChange={(val: string) =>
+            updateState(
+              "comma_value_if_dropdown",
+              val,
+              setFormData,
+              setFormError
+            )
+          }
+          placeholder="Eg: Value1,Value2,Value3"
+          error={formError.title}
+          required
+        />
+      )}
 
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}

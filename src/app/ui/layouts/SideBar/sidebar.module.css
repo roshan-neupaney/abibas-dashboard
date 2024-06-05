@@ -17,12 +17,12 @@
   border-bottom: 1px solid #2e3132;
 }
 
-@media screen and (max-width: 834px) {
+/* @media screen and (max-width: 834px) {
   .container{
     height: 80px;
   }
   .logoName{
     display: none;
   }
-}
+} */
 

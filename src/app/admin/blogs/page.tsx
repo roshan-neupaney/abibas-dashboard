@@ -3,6 +3,7 @@ import CustomSelect, { CustomMultiSelect } from "@/subComponents/select";
 import React, { useState } from "react";
 import { updateState } from "../../../../utilities/helper";
 import { DemoSelect } from "@/subComponents/demoSelect";
+import CustomTextableSelect from "@/subComponents/TextableSelect";
 
 const Page = () => {
   const [first, setFirst] = useState({form: []})
@@ -35,15 +36,15 @@ const Page = () => {
           />
         </div>
         <div>
-          <CustomSelect
+          <CustomTextableSelect
             title="sadf"
             value={""}
+            placeholder="Search and Select"
             onChange={() => {}}
             data={data}
           />
         </div>
       </div>
-      <div className="absolute bottom-[17.1px]  border">hello</div>
     </div>
   );
 };

@@ -19,7 +19,7 @@ async function getData(token: string) {
 }
 
 export const metadata: Metadata = {
-  title: "Variant",
+  title: "Inventory",
 };
 
 const InventoryPage = async () => {

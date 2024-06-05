@@ -358,6 +358,8 @@ export const vehicleValidation = (payload) => {
       contact_number,
       address,
       city,
+      km_run,
+      price,
     } = payload;
     let count = 0;
     const errorMessage = {
@@ -373,6 +375,8 @@ export const vehicleValidation = (payload) => {
       contact_number: "",
       address: "",
       city: "",
+      km_run: "",
+      // price: "",
     };
     if (!title?.length > 0) {
       errorMessage.title = "Title is required.";
@@ -422,6 +426,14 @@ export const vehicleValidation = (payload) => {
       errorMessage.city = "City is required.";
       count++;
     }
+    if (!km_run?.length > 0) {
+      errorMessage.km_run = "Run distance is required.";
+      count++;
+    }
+    // if (!price?.length > 0) {
+    //   errorMessage.price = "Price is required.";
+    //   count++;
+    // }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
     console.log(e);

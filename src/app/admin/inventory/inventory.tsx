@@ -3,14 +3,16 @@
 import CustomTableBody from "../../../../components/container/table/tableBody";
 import TableContainer from "../../../../components/container/table/tableContainer";
 import CustomTableHead from "../../../../components/container/table/tableHead";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TablePagination from "../../../../components/container/table/paginate";
 import { itemslist, dataType } from "../../../../data";
 import NoDataFound from "../../../../components/noDataFound";
 import {
   ColumnDef,
+  SortingState,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import CustomInput from "../../../subComponents/input";
@@ -27,6 +29,12 @@ const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
   const [search, setSearch] = useState("");
   const router = useRouter();
   const [data, setData] = useState(beautifiedVehicleList);
+  const [sorting, setSorting] = useState<SortingState>([])
+
+  useEffect(()=> {
+    const beautifiedCategory = beautifyVehicleList(vehicleList, vehicle_enums);
+    setData(beautifiedCategory);
+  }, [vehicleList])
 
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
@@ -48,7 +56,7 @@ const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
       },
       {
         header: "KM driven",
-        accessorKey: "drive",
+        accessorKey: "km_run",
       },
       {
         header: "Manufacture",
@@ -59,8 +67,8 @@ const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
         accessorKey: "owner",
       },
       {
-        header: "City",
-        accessorKey: "city",
+        header: "Price",
+        accessorKey: "price",
       },
       {
         header: "Status",
@@ -77,6 +85,11 @@ const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
   const table = useReactTable({
     columns,
     data,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
