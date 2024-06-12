@@ -39,7 +39,6 @@ const useDropdownPosition = (
 
         const viewportHeight = window.innerHeight;
         const spaceBelow = viewportHeight - inputBox.bottom;
-
         if (spaceBelow < dropDownHeight) {
           setDropdownPosition("top");
         } else {
@@ -70,7 +69,7 @@ const CustomSelect = ({
   style = {},
   required = false,
   error = "",
-  sx = {}
+  sx = {},
 }: CustomSelectProps) => {
   const [openBox, toggleBox] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value || placeholder);
@@ -80,18 +79,17 @@ const CustomSelect = ({
 
   useEffect(() => {
     if (value) {
-      if(typeof value=== 'string'){
+      if (typeof value === "string") {
         data?.forEach((element) => {
           if (element?.id.includes(value)) {
             setSelectedValue(element?.label);
           }
         });
       }
-      } else {
-        setSelectedValue(placeholder);
-      }
+    } else {
+      setSelectedValue(placeholder);
+    }
   }, [data, value, placeholder]);
-
 
   const dropdownPosition = useDropdownPosition(
     openBox,
@@ -109,7 +107,7 @@ const CustomSelect = ({
   }, []);
 
   return (
-    <div className="form-box" ref={inputBoxRef} style={{...sx}}>
+    <div className="form-box" ref={inputBoxRef} style={{ ...sx }}>
       <div className="flex flex-col self-stretch relative gap-2">
         <div className="label" style={{ color: error ? "red" : "#1a1c1e" }}>
           {title}

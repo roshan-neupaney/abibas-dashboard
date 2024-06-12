@@ -7,45 +7,58 @@ import toast from "react-hot-toast";
 import clearCachesByServerAction from "../../hooks/revalidate";
 import {
   CRUD_VEHICLE_SPECIFICATION,
+  UPDATE_VEHICLE_SPECIFICATION,
 } from "../../config/endPoints";
 import { JsonPost } from "../../utilities/apiCall";
 import { SubmitButton } from "@/subComponents/buttons";
 
-function groupSpecificationId<T>(array: T[], key: (item: T) => string): Record<string, T[]> {
+function groupSpecificationId<T>(
+  array: T[],
+  key: (item: T) => string
+): Record<string, T[]> {
   return array?.reduce((result: any, item: any) => {
     const keyValue = key(item);
     if (!result[keyValue]) {
       result[keyValue] = {};
     }
-    result[keyValue]= {specification_id: item.specification.id, value: item.value};
+    result[keyValue] = {
+      specification_id: item.specification.id,
+      value: item.value,
+    };
     return result;
   }, {} as Record<string, T[]>);
 }
 
 const AddSpecifications = ({
-  vehicle_specification,
+  variant_specification,
   token,
   isEdit,
   id,
+  vehicle_specification,
 }: any) => {
   const [loading, setLoading] = useState(false);
-  
+  console.log("vehicle_specification", vehicle_specification);
   const router = useRouter();
   
+  const isOldData = vehicle_specification.data.length > 0;
+
   const result = groupBy(
-    vehicle_specification.data,
+    variant_specification.data,
     (item: any) => item.specification?.specificationCategory?.title
   );
-  
+
   const specificationArray = Object.entries(result).map(([key, value]) => {
     return { category: key, value: value };
   });
-  
+
   const [formData, setFormData] = useState<any>([]);
-  
-  const groupedById = groupSpecificationId(vehicle_specification.data, (item: any) => item.specification?.id);
+
+  const groupedById = groupSpecificationId(
+    isOldData ? vehicle_specification.data : variant_specification.data,
+    (item: any) => item.specification?.id
+  );
   useEffect(() => {
-    setFormData(groupedById)
+    setFormData(groupedById);
   }, []);
 
   const updateForm = (id: string, value: any, setForm: any) => {
@@ -62,8 +75,6 @@ const AddSpecifications = ({
   const handleAdd = async () => {
     setLoading(true);
     try {
-      // const beautifiedPayload = beautifyPayload(formData);
-      // const { isValid, error }: any = vehicleValidation(beautifiedPayload);
       if (true) {
         const response = await JsonPost(
           CRUD_VEHICLE_SPECIFICATION,
@@ -93,11 +104,9 @@ const AddSpecifications = ({
   const handleUpdate = async () => {
     setLoading(true);
     try {
-      // const beautifiedPayload = beautifyPayload(formData);
-      // const { isValid, error }: any = vehicleValidation(beautifiedPayload);
       if (true) {
         const response = await JsonPost(
-          CRUD_VEHICLE_SPECIFICATION,
+          UPDATE_VEHICLE_SPECIFICATION,
           payload,
           token
         );
@@ -124,12 +133,12 @@ const AddSpecifications = ({
 
   return (
     <div className="flex gap-5 p-4">
-      <div className="flex w-[30rem] gap-5 flex-col">
+      <div className="flex w-[30rem] gap-5 flex-col flex-1">
         {specificationArray?.map((items: any, i: number) => {
           return (
             <div key={i} className="flex flex-col gap-4">
               <span className="headline-small">{items?.category}</span>
-              <div key={i} className="flex flex-col gap-5">
+              <div key={i} className="grid grid-cols-3 gap-x-10 lg:grid-cols-4 lg:gap-x-16 gap-y-5">
                 {items.value?.map((elements: any, i: number) => {
                   const specArray =
                     elements?.specification?.comma_value_if_dropdown
@@ -174,7 +183,7 @@ const AddSpecifications = ({
         <SubmitButton
           title={isEdit ? "Edit" : "Add"}
           disabled={loading}
-          onClick={isEdit ? handleUpdate : handleAdd}
+          onClick={isOldData ? handleUpdate : handleAdd}
         />
       </div>
     </div>

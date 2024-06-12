@@ -1,6 +1,6 @@
 import Image from "next/image";
 import addImage from "../../public/icons/photo-add.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IMAGE_URL } from "../../config/constants";
 
 interface CustomDropzoneProps {
@@ -16,17 +16,19 @@ const CustomDropzone = ({
   onChange,
   value,
   error = "",
-  required= false,
+  required = false,
 }: CustomDropzoneProps) => {
   const imgUrl = IMAGE_URL + "small-" + value;
   const [tempImage, setTempImage] = useState(addImage);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  // console.log("fileInputRef", tempImage);
 
   useEffect(() => {
     setTempImage(imgUrl);
   }, [imgUrl]);
 
-  const onDrop = (e: any) => {
-    const file = e.target.files[0];
+  const onUpload = (e: any) => {
+    const file = e.files[0];
     if (file) {
       const reader = new FileReader();
       reader.addEventListener(
@@ -45,6 +47,14 @@ const CustomDropzone = ({
     setTempImage(addImage);
   };
 
+  const onDrop = (e: any) => {
+    e.preventDefault();
+    if (fileInputRef?.current) {
+      fileInputRef.current.files = e.dataTransfer.files;
+      onUpload(fileInputRef.current);
+    }
+  };
+
   return (
     <div>
       <label className="label" style={{ color: error ? "red" : "#1a1c1e" }}>
@@ -54,15 +64,22 @@ const CustomDropzone = ({
       <label
         className="dropzone"
         style={{ border: error ? "1px dashed red" : "" }}
+        onDrop={(e) => onDrop(e)}
+        onDragOver={(e) => e.preventDefault()}
       >
-        <input type="file" onChange={(e) => onDrop(e)} accept="image/*" />
-        <div className="dropzone-image-box">
+        <input
+          type="file"
+          onChange={(e) => onUpload(e.target)}
+          accept="image/*"
+          ref={fileInputRef}
+        />
+        <div className="p-1">
           <Image
-            className="dropzone-image"
+            className="rounded"
             src={tempImage}
             alt="image"
             width={80}
-            height={0}
+            height={80}
             onError={handleError}
           />
         </div>

@@ -11,6 +11,10 @@ import {
   GET_VARIANT_FEATURE,
   GET_VARIANT_INSPECTION,
   GET_VARIANT_SPECIFICATION,
+  GET_VEHICLE_FEATURE,
+  GET_VEHICLE_IMAGES,
+  GET_VEHICLE_INSPECTION,
+  GET_VEHICLE_SPECIFICATION,
 } from "../../../../../config/endPoints";
 import { cookies } from "next/headers";
 import AddEditVehicle from "./addEdit";
@@ -27,20 +31,33 @@ async function getData(token: string, _id: string) {
         await ServerSideGetWithId(token, GET_VARIANT_SPECIFICATION, variant_id),
         await ServerSideGetWithId(token, GET_VARIANT_FEATURE, variant_id),
         await ServerSideGetWithId(token, GET_VARIANT_INSPECTION, variant_id),
+        await ServerSideGetWithId(token, GET_VEHICLE_IMAGES, id),
+        await ServerSideGetWithId(token, GET_VEHICLE_SPECIFICATION, id),
+        await ServerSideGetWithId(token, GET_VEHICLE_FEATURE, id),
+        await ServerSideGetWithId(token, GET_VEHICLE_INSPECTION, id),
+
       ];
       const [
         vehicle,
         vehicle_enum,
+        variant_specification,
+        variant_feature,
+        variant_inspection,
+        vechile_images,
         vehicle_specification,
-        vehicle_feature,
-        vehicle_inspection,
+        vehicle_features,
+        vehicle_inspection
       ] = res;
       return {
         vehicle,
         vehicle_enum,
+        variant_specification,
+        variant_feature,
+        variant_inspection,
+        vechile_images,
         vehicle_specification,
-        vehicle_feature,
-        vehicle_inspection,
+        vehicle_features,
+        vehicle_inspection
       };
     } else {
       const res = [
@@ -48,8 +65,8 @@ async function getData(token: string, _id: string) {
         await ServerSideGet(token, GET_VARIANT_SPECIFICATION),
         await ServerSideGet(token, GET_VARIANT_FEATURE),
       ];
-      const [vehicle_enum, vehicle_specification, vehicle_feature] = res;
-      return { vehicle_enum, vehicle_specification, vehicle_feature };
+      const [vehicle_enum, variant_specification, variant_feature] = res;
+      return { vehicle_enum, variant_specification, variant_feature };
     }
   } catch (error) {}
 }
@@ -61,9 +78,13 @@ const AddInventory = async ({ params }: any) => {
   const {
     vehicle,
     vehicle_enum,
+    variant_specification,
+    variant_feature,
+    variant_inspection,
+    vechile_images,
     vehicle_specification,
-    vehicle_feature,
-    vehicle_inspection,
+    vehicle_features,
+    vehicle_inspection
   }: any = await getData(token, _id);
   const ids = _id?.split("_") || [];
   const id = ids[0] || '';
@@ -78,9 +99,13 @@ const AddInventory = async ({ params }: any) => {
             id,
             vehicle,
             vehicle_enum,
+            variant_specification,
+            variant_feature,
+            variant_inspection,
+            vechile_images,
             vehicle_specification,
-            vehicle_feature,
-            vehicle_inspection,
+            vehicle_features,
+            vehicle_inspection
           }}
         />
       </FormContainer>

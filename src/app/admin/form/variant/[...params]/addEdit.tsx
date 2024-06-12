@@ -1,7 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import CustomInput from "../../../../../subComponents/input";
-import { groupBy, updateState } from "../../../../../../utilities/helper";
+import {
+  UUidGenerator,
+  groupBy,
+  updateState,
+} from "../../../../../../utilities/helper";
 import { CustomToggleSwitch } from "../../../../../subComponents/checkbox";
 import CustomDropzone from "../../../../../subComponents/dropzone";
 import { SubmitButton } from "@/subComponents/buttons";
@@ -165,12 +169,75 @@ const AddEditVariant = ({
   const getVariant = async (id: string) => {
     try {
       const res: any = await ServerSideGetWithId(token, CRUD_VARIANT, id);
+      const specificationArray = res?.data?.VariantSpecification.map(
+        (items: any) => {
+          const uuid = UUidGenerator();
+          return {
+            id: "uuid_" + uuid,
+            specificationId: items.specificationId,
+            value: items.value,
+            status: items.status,
+          };
+        }
+      );
+      const featureArray = res?.data?.VariantFeature.map((items: any) => {
+        const uuid = UUidGenerator();
+        return {
+          id: "uuid_" + uuid,
+          featureId: items.featureId,
+          value: items.value,
+          status: items.status,
+        };
+      });
+      const inspectionArray = res?.data?.VariantInspection.map((items: any) => {
+        const uuid = UUidGenerator();
+        return {
+          id: "uuid_" + uuid,
+          inspectionId: items.inspectionId,
+          status: items.status,
+        };
+      });
+      console.log(res.data);
+      const finalData = {
+        ...res.data,
+        image: "",
+        VariantSpecification: specificationArray,
+        VariantFeature: featureArray,
+        VariantInspection: inspectionArray,
+      };
       setSelectedVariant(id);
-      setVariantData(res?.data);
+      setVariantData(finalData);
     } catch (e) {
       console.error("Error while fetching variant");
     }
   };
+
+  const modifiedSpecification = formData.specifications.map((items: any) => {
+    if (items?.id?.includes("uuid")) {
+      return { ...items, id: undefined };
+    } else {
+      return items;
+    }
+  });
+  const modifiedFeature = formData.features.map((items: any) => {
+    if (items?.id?.includes("uuid")) {
+      return { ...items, id: undefined };
+    } else {
+      return items;
+    }
+  });
+  const modifiedInspection = formData.inspections.map((items: any) => {
+    if (items?.id?.includes("uuid")) {
+      return { ...items, id: undefined };
+    } else {
+      return items;
+    }
+  });
+  console.log(
+    formData.features,
+    "modifiedSpecification",
+    modifiedSpecification
+  );
 
   const beautifyPayload = (_data: any) => {
     const payload = {
@@ -192,11 +259,12 @@ const AddEditVariant = ({
     payload.fuel_type = _data.fuel_type;
     payload.colors = _data.colors;
     payload.description = _data.description;
-    payload.features = _data.features;
-    payload.specifications = _data.specifications;
-    payload.inspections = _data.inspections;
+    payload.features = modifiedFeature;
+    payload.specifications = modifiedSpecification;
+    payload.inspections = modifiedInspection;
     payload.status = _data.status ? "ACTIVE" : "PENDING";
-    payload.file = data?.image === _data.file ? undefined : _data.file;
+    payload.file =
+      data?.image === _data.file ? undefined : _data.file || undefined;
     return payload;
   };
 
@@ -256,23 +324,23 @@ const AddEditVariant = ({
 
   return (
     <div className=" flex flex-1 p-4 flex-col gap-5">
-      <div className="flex justify-between gap-6">
+      <div className="flex gap-6">
         <div className="flex lg:w-[30rem] sm:w-[20rem] w-auto flex-col gap-5">
+          {!isEdit && (
+            <CustomSelect
+              title="Existing Variants"
+              onChange={(val: string) => getVariant(val)}
+              value={selectedVariant}
+              data={beautifiedVariants}
+              placeholder="Select Existing Variant"
+            />
+          )}
           <CustomInput
             title="Title"
             value={formData.title}
             onChange={(val: string) => updateState("title", val, setFormData)}
             placeholder="Enter title"
           />
-          {/* <CustomSelect
-            title="Model"
-            data={beautifiedModel}
-            value={formData.model_id}
-            onChange={(val: string) =>
-              updateState("model_id", val, setFormData)
-            }
-            placeholder="Select Model"
-          /> */}
           <CustomTextableSelect
             title="Model"
             data={beautifiedModel}
@@ -317,15 +385,6 @@ const AddEditVariant = ({
             onChange={(val: string) =>
               updateState("fuel_type", val, setFormData)
             }
-          />
-        </div>
-        <div className="flex w-[30rem] md:w-[20rem]">
-          <CustomSelect
-            title="Existing Variants"
-            onChange={(val: string) => getVariant(val)}
-            value={selectedVariant}
-            data={beautifiedVariants}
-            placeholder="Select Existing Variant"
           />
         </div>
       </div>

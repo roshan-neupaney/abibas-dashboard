@@ -5,7 +5,7 @@ import Avatar from "../../../public/images/avatar.png";
 const DetailSideBar = () => {
   return (
     <>
-      <div className="flex w-[25rem] border-2 border-solid overview-sidebar h-fit">
+      <div className="flex flex-col w-96 border border-solid  h-fit bg-[#eff1f1] rounded ">
         <div
           className="flex py-4 px-5 flex-col w-full"
           style={{ borderBottom: "1px solid #D8DADB" }}

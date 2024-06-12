@@ -46,7 +46,7 @@ const CustomTableBody = ({
             {row?._getAllVisibleCells().map((cell: any, _index: any) => {
               const id = cell.row.original["id"];
               return (
-                <td className="body-medium-NH table-cell" key={_index}>
+                <td className="body-medium-NH min-w-28 p-3" key={_index}>
                   {cell.column.id.includes("image") ? (
                     <div className="table-image relative">
                       <LazyImage
@@ -57,10 +57,7 @@ const CustomTableBody = ({
                       />
                     </div>
                   ) : cell.column.id == "title" ? (
-                    <div
-                      className="gap-4 flex"
-                      style={{ width: titleImage && "300px" }}
-                    >
+                    <div className="gap-4 flex min-w-72">
                       {titleImage && (
                         <div className="table-image relative">
                           <LazyImage
@@ -75,7 +72,7 @@ const CustomTableBody = ({
                       <div className="flex flex-col gap-2">
                         <div className="flex justify-start items-center body-medium">
                           {internalTitleRoute ? (
-                            <Link href={internalTitleRoute}>
+                            <Link href={internalTitleRoute} className="font-semibold">
                               {cell.row.original["title"]}
                             </Link>
                           ) : (
@@ -107,20 +104,21 @@ const CustomTableBody = ({
                     </div>
                   ) : cell.column.id == "colors" ? (
                     <div className="flex gap-1">
-                      {cell?.row?.original["colors"]?.map((items:any, i:number) => {
-                        return (
-                          <div
-                            className="flex rounded-md border"
-                            style={{
-                              width: 20,
-                              height: 20,
-                              background: items,
-                            }}
-                            key={i}
-                            
-                          ></div>
-                        );
-                      })}
+                      {cell?.row?.original["colors"]?.map(
+                        (items: any, i: number) => {
+                          return (
+                            <div
+                              className="flex rounded-md border"
+                              style={{
+                                width: 20,
+                                height: 20,
+                                background: items,
+                              }}
+                              key={i}
+                            ></div>
+                          );
+                        }
+                      )}
                     </div>
                   ) : cell.column.id == "status" ? (
                     <div

@@ -14,15 +14,18 @@ const Feature = ({
 }: any) => {
   const [form, setForm] = useState<any>(featureData);
 
-  // useEffect(() => {
-  //   setForm(featureData);
-  // }, [featureData]);
+  useEffect(() => {
+    setForm(featureData);
+  }, [featureData]);
 
   const uuid = UUidGenerator();
 
   const addForm = () => {
     setForm((prev: any) => {
-      return [...prev, { id: uuid, featureId: "", value: "", status: "" }];
+      return [
+        ...prev,
+        { id: "uuid_" + uuid, featureId: "", value: "", status: "" },
+      ];
     });
   };
 
@@ -36,7 +39,7 @@ const Feature = ({
     setForm(result);
     const finalForm = result.map((element: any) => {
       return {
-        id: element?.createdAt ? element.id : undefined,
+        id: element.id,
         featureId: element.featureId,
         value: element.value,
         status: element.status,

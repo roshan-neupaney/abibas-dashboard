@@ -26,5 +26,12 @@ export const GET_VARIANT_INSPECTION = "/vehicle/inspection";
 export const CRUD_VEHICLE_SPECIFICATION = "/vehicle/specifications";
 export const CRUD_VEHICLE_FEATURE = "/vehicle/features";
 export const CRUD_VEHICLE_INSPECTION = "/vehicle/inspections";
+export const GET_VEHICLE_IMAGES = '/vehicle/getImages'
+export const GET_VEHICLE_SPECIFICATION = '/vehicle/vehicleSpecification'
+export const GET_VEHICLE_FEATURE = '/vehicle/vehicleFeatures'
+export const GET_VEHICLE_INSPECTION = '/vehicle/vehicleInspection'
+export const UPDATE_VEHICLE_SPECIFICATION = '/vehicle/specifications/update'
+export const UPDATE_VEHICLE_FEATURE = "/vehicle/features/update";
+export const UPDATE_VEHICLE_INSPECTION = "/vehicle/inspections/update";
 
 

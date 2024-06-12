@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Red_Hat_Display, Roboto, Poppins } from "next/font/google";
 import "./style/globals.css";
 import { Toaster } from "react-hot-toast";
-import NextTopLoader from "nextjs-toploader";
-import Head from "next/head";
 
 const redHatDisplay = Red_Hat_Display({
   subsets: ["latin"],

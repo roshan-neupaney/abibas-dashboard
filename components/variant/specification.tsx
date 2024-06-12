@@ -14,16 +14,16 @@ const Specification = ({
 }: any) => {
   const [form, setForm] = useState<any>(specificationData);
 
-  // useEffect(() => {
-  //   setForm(specificationData);
-  // }, [specificationData]);
+  useEffect(() => {
+    setForm(specificationData);
+  }, [specificationData]);
 
   let uuid = UUidGenerator();
   const addForm = () => {
     setForm((prev: any) => {
       return [
         ...prev,
-        { id: uuid, specificationId: "", value: "", status: "" },
+        { id: 'uuid_'+uuid, specificationId: "", value: "", status: "" },
       ];
     });
   };
@@ -38,7 +38,7 @@ const Specification = ({
     setForm(result);
     const finalForm = result.map((element: any) => {
       return {
-        id: element?.createdAt ? element.id : undefined,
+        id:  element.id,
         specificationId: element.specificationId,
         value: element.value,
         status: element.status,

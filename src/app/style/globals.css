@@ -25,6 +25,10 @@ body::-webkit-scrollbar {
   width: 0px;
   height: 0px;
 }
+.noScrollBar::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -81,17 +85,6 @@ input[type="number"]::-webkit-outer-spin-button {
   font-weight: 400;
   line-height: 2rem;
 }
-
-.table-container {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  border-radius: 4px;
-  background: #fcfcfc;
-  overflow: auto;
-  max-height: 70vh;
-}
-
 .table-container::-webkit-scrollbar {
   width: 0px;
   height: 0px;
@@ -114,11 +107,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .table-body-row {
   height: 72px;
-}
-
-.table-cell {
-  padding: 12px;
-  min-width: 100px;
 }
 
 .add-button {
@@ -600,10 +588,10 @@ input[type="number"]::-webkit-outer-spin-button {
   padding: 4px;
 }
 
-.dropzone-image {
+/* .dropzone-image {
   width: 80px;
   aspect-ratio: auto;
-}
+} */
 
 .table-image {
   display: flex;
@@ -700,17 +688,6 @@ input[type="number"]::-webkit-outer-spin-button {
   gap: 12px;
   border-radius: 4px;
   border: 1px solid #c4c7c7;
-  background: #eff1f1;
-}
-
-.overview-sidebar {
-  display: flex;
-  width: 24rem;
-  flex-direction: column;
-  align-items: flex-start;
-  align-self: stretch;
-  border-radius: 0.25rem;
-  border: 1px solid #d8dadb;
   background: #eff1f1;
 }
 

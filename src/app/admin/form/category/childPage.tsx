@@ -36,7 +36,7 @@ const Category = ({ _data, token }: any) => {
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
   const [sorting, setSorting] = useState<SortingState>([]);
-
+console.log('beautifiedCategory', beautifiedCategory);
   const router = useRouter();
 
   const columns: ColumnDef<dataType>[] = useMemo(

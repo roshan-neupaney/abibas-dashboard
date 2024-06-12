@@ -23,7 +23,7 @@ const VariantInspection = ({
   useEffect(() => {
     setInspectionsForm(result);
   }, [inspectionData]);
-
+console.log('inspectionsForm', inspectionsForm)
   const addInspection = (id: string, status: boolean) => {
     setInspectionsForm((prev: any) => {
       let updateForm;

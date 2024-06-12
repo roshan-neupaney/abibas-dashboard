@@ -380,7 +380,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
           </div>
         </div>
       </div>
-      <Overview />
+      {/* <Overview /> */}
     </div>
   );
 };

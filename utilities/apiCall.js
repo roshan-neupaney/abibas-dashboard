@@ -187,6 +187,26 @@ export const FormdataPatch = async (url, id, payload, token) => {
     console.error(e);
   }
 };
+export const VechicleImagesPatch = async (url, payload, token) => {
+  try {
+    const response = {
+      data: "",
+      status: false,
+    };
+    const res = await PATCH_FORM(url, payload, token);
+    const { status, data } = res;
+    if (status === 200) {
+      response.data = data;
+      response.status = true;
+    } else {
+      response.data = data.message;
+      response.status = false;
+    }
+    return response;
+  } catch (e) {
+    console.error(e);
+  }
+};
 export const DeleteWithId = async (url, id, token) => {
   try {
     const response = {

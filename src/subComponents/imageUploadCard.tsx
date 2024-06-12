@@ -7,18 +7,40 @@ import LazyImage from "../../components/lazyImage";
 interface ImageUploadCardProps {
   onChange: any;
   value: any;
+  i: any;
+  isEditable: boolean;
 }
 
-const ImageUploadCard = ({ value, onChange }: ImageUploadCardProps) => {
-  const imgUrl = IMAGE_URL + "small-" + value;
-  const [tempImage, setTempImage] = useState<any>();
+const ImageUploadCard = ({
+  value,
+  onChange,
+  isEditable,
+  i,
+}: ImageUploadCardProps) => {
+  const imgUrl = IMAGE_URL + value;
+  const [tempImage, setTempImage] = useState<any>(imgUrl);
 
   useEffect(() => {
-    setTempImage(imgUrl);
-  }, [imgUrl]);
+    if (typeof value === "object") {
+      const file = value;
+      if (file) {
+        const reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          () => {
+            setTempImage(reader.result);
+          },
+          false
+        );
+        reader?.readAsDataURL(file);
+      }
+    } else {
+      setTempImage(imgUrl);
+    }
+  }, [value]);
 
   const onDrop = (e: any) => {
-    const file = e.target.files[0];
+    const file = e.files[0];
     if (file) {
       const reader = new FileReader();
       reader.addEventListener(
@@ -33,26 +55,23 @@ const ImageUploadCard = ({ value, onChange }: ImageUploadCardProps) => {
     onChange(file);
   };
 
-  // const handleError = () => {
-  //   setTempImage(addPhotoIcon);
-  // };
   return (
     <label className="cursor-pointer">
       <div className="border-2 border-dashed flex w-[19rem] h-60 items-center justify-center">
         <input
           className="opacity-0 w-0 h-0"
           type="file"
-          onChange={(e) => onDrop(e)}
+          onChange={(e) => onDrop(e.target)}
           accept="image/*"
         />
-          <span className="flex flex-1">
-            <LazyImage
-              src={tempImage}
-              fill={true}
-              alt=""
-              // onError={handleError}
-            />
-          </span>
+        <span className="flex flex-1">
+          <LazyImage
+            src={tempImage}
+            fill={true}
+            alt=""
+            // onError={handleError}
+          />
+        </span>
         {/* {tempImage ? (
         ) : (
           <span>

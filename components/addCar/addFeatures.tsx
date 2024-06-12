@@ -3,30 +3,39 @@ import React, { useEffect, useState } from "react";
 import CustomSelect from "@/subComponents/select";
 import { groupBy, groupByObject } from "../../utilities/helper";
 import toast from "react-hot-toast";
-import { CRUD_VEHICLE_FEATURE } from "../../config/endPoints";
+import { CRUD_VEHICLE_FEATURE, UPDATE_VEHICLE_FEATURE } from "../../config/endPoints";
 import { JsonPost } from "../../utilities/apiCall";
 import clearCachesByServerAction from "../../hooks/revalidate";
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "@/subComponents/buttons";
 
-function groupFeatureId<T>(array: T[], key: (item: T) => string): Record<string, T[]> {
+function groupFeatureId<T>(
+  array: T[],
+  key: (item: T) => string
+): Record<string, T[]> {
   return array?.reduce((result: any, item: any) => {
     const keyValue = key(item);
     if (!result[keyValue]) {
       result[keyValue] = {};
     }
-    result[keyValue]= {feature_id: item.specification.id, value: item.value};
+    result[keyValue] = { feature_id: item.specification.id, value: item.value };
     return result;
   }, {} as Record<string, T[]>);
 }
 
-const AddFeatures = ({ vehicle_feature, token, isEdit, id }: any) => {
+const AddFeatures = ({
+  variant_feature,
+  token,
+  isEdit,
+  id,
+  vehicle_features,
+}: any) => {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-
+// console.log(variant_feature,'feature',vehicle_features)
   const result = groupBy(
-    vehicle_feature.data,
+    variant_feature.data,
     (item: any) => item.specification?.featureCategory?.title
   );
 
@@ -35,11 +44,16 @@ const AddFeatures = ({ vehicle_feature, token, isEdit, id }: any) => {
   });
 
   const [formData, setFormData] = useState<any>([]);
-  
-  const groupedById = groupFeatureId(vehicle_feature.data, (item: any) => item.specification?.id);
+
+  const isOldData = vehicle_features.data.length > 0;
+
+  const groupedById = groupFeatureId(
+    isOldData ? vehicle_features.data : variant_feature.data,
+    (item: any) => item.specification?.id
+  );
   useEffect(() => {
-    setFormData(groupedById)
-  }, [])
+    setFormData(groupedById);
+  }, []);
 
   const updateForm = (key: string, value: any, setForm: any) => {
     setForm((prev: any) => {
@@ -62,12 +76,12 @@ const AddFeatures = ({ vehicle_feature, token, isEdit, id }: any) => {
         const response = await JsonPost(CRUD_VEHICLE_FEATURE, payload, token);
         const { status }: any = response;
         if (status) {
-          toast.success("Successfully Added Vehicle Specifications");
+          toast.success("Successfully Added Vehicle Features");
           // setFormError(defaultError);
           clearCachesByServerAction("/admin/inventory");
           router.push("/admin/inventory");
         } else {
-          toast.error("Error While Adding Vehicle Specifications");
+          toast.error("Error While Adding Vehicle Features");
           setLoading(false);
         }
       } else {
@@ -86,15 +100,15 @@ const AddFeatures = ({ vehicle_feature, token, isEdit, id }: any) => {
       // const beautifiedPayload = beautifyPayload(formData);
       // const { isValid, error }: any = vehicleValidation(beautifiedPayload);
       if (true) {
-        const response = await JsonPost(CRUD_VEHICLE_FEATURE, payload, token);
+        const response = await JsonPost(UPDATE_VEHICLE_FEATURE, payload, token);
         const { status }: any = response;
         if (status) {
-          toast.success("Successfully Added Vehicle Specifications");
+          toast.success("Successfully Added Vehicle Features");
           // setFormError(defaultError);
           clearCachesByServerAction("/admin/inventory");
           router.push("/admin/inventory");
         } else {
-          toast.error("Error While Adding Vehicle Specifications");
+          toast.error("Error While Adding Vehicle Features");
           setLoading(false);
         }
       } else {
@@ -110,12 +124,12 @@ const AddFeatures = ({ vehicle_feature, token, isEdit, id }: any) => {
 
   return (
     <div className="flex gap-5 p-4">
-      <div className="flex w-[30rem] gap-5 flex-col">
+      <div className="flex w-[30rem] gap-5 flex-col flex-1">
         {featureArray?.map((items: any, i: number) => {
           return (
             <div key={i} className="flex flex-col gap-4">
               <span className="headline-small">{items?.category}</span>
-              <div key={i} className="flex flex-col gap-5">
+              <div key={i} className="grid grid-cols-3 gap-x-10 lg:grid-cols-4 lg:gap-x-16 gap-y-5">
                 {items.value?.map((elements: any, i: number) => {
                   const specArray =
                     elements?.specification?.comma_value_if_dropdown
@@ -161,7 +175,7 @@ const AddFeatures = ({ vehicle_feature, token, isEdit, id }: any) => {
         <SubmitButton
           title={isEdit ? "Edit" : "Add"}
           disabled={loading}
-          onClick={isEdit ? handleUpdate : handleAdd}
+          onClick={isOldData ? handleUpdate : handleAdd}
         />
       </div>
     </div>

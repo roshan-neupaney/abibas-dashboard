@@ -4,6 +4,12 @@ import Dot from "../../public/icons/Ellipse.svg";
 import ProductOverview from "./dropdown/productOverview";
 import CarSpecification from "./dropdown/carSpecification";
 import DetailHeroSection from "./section/detailHeroSection";
+import CarSvg from "../carSvg";
+import frontBumper from '../../public/images/damagedCar.png'
+import rearLeftHeadlight from '../../public/images/DamagedCarParts/Car-Parts-That-Get-Damaged-The-Most-During-Accidents.jpg'
+import LeftBackDoor from '../../public/images/DamagedCarParts/stock-photo-damaged-car-parts-after-a-car-accident-1108491329.jpg'
+import LeftFrontDoor from '../../public/images/DamagedCarParts/top-5-vehicle-parts-most-commonly-damaged-in-auto-accidents.jpg'
+import RightBackWindow from '../../public/images/DamagedCarParts/xga-4x3-5-of-the-most-easily-damaged-parts-of-a-car-1661178209.jpg'
 
 const Overview = () => {
   return (
@@ -17,11 +23,21 @@ const Overview = () => {
 export default Overview;
 
 const DetailBox = () => {
+
+  const damagedImages = {
+    frontLeftHeadlight: frontBumper,
+    LeftFrontDoor: LeftFrontDoor,
+    LeftBackDoor: LeftBackDoor,
+    rearLeftHeadlight: rearLeftHeadlight,
+    RightBackWindow: RightBackWindow
+  }
+
   return (
     <div className="flex flex-1 flex-col gap-2">
       <DetailHeroSection />
       <ProductOverview />
       <CarSpecification />
+    <CarSvg damagedImages={damagedImages} />
     </div>
   );
 };
@@ -29,7 +45,7 @@ const DetailBox = () => {
 const SideBar = () => {
   return (
     <>
-      <div className="flex border-2 border-solid overview-sidebar max-h-[47rem]">
+      <div className="flex flex-col border lg:max-w-96 max-w-64 border-solid border-[#d8dadb] h-fit bg-[#eff1f1] rounded sticky top-3 ">
         <div
           className="flex py-4 px-5 flex-col w-full"
           style={{ borderBottom: "1px solid #D8DADB" }}
