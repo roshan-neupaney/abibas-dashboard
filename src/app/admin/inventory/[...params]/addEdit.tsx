@@ -85,14 +85,6 @@ const AddEditVehicle = ({
               </div>
             </>
           )}
-          {/* <div
-            className={`nav-tabs flex items-center cursor-pointer ${
-              active == 5 ? "active-navTab" : "inactive-navTab"
-            }`}
-            onClick={() => setActive(5)}
-          >
-            Pricing
-          </div> */}
         </div>
       </div>
       {active === 0 ? (

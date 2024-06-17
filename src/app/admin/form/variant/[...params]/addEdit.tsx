@@ -197,7 +197,6 @@ const AddEditVariant = ({
           status: items.status,
         };
       });
-      console.log(res.data);
       const finalData = {
         ...res.data,
         image: "",
@@ -233,11 +232,6 @@ const AddEditVariant = ({
       return items;
     }
   });
-  console.log(
-    formData.features,
-    "modifiedSpecification",
-    modifiedSpecification
-  );
 
   const beautifyPayload = (_data: any) => {
     const payload = {

@@ -77,12 +77,12 @@ const AddEditBlog = ({ token, data, isEdit, id, blog_category }: any) => {
       blog_category: "",
     };
     payload.title = _data.title;
-    payload.slug_url = _data.title.toLowerCase().replace(" ", "_");
+    payload.slug_url = _data.title.toLowerCase().replaceAll(" ", "_");
     payload.description = _data.description;
     payload.short_description = _data.short_description;
     payload.blog_category = _data.blog_category;
     payload.author = _data.author;
-    payload.file = data.image === _data.file ? undefined : _data.file;
+    payload.file = data?.image === _data.file ? undefined : _data.file;
     payload.status = _data.status ? "ACTIVE" : "PENDING";
     payload.is_published = _data.is_published ? "ACTIVE" : "PENDING";
     payload.is_showcase = _data.is_showcase ? "ACTIVE" : "PENDING";
@@ -119,6 +119,7 @@ const AddEditBlog = ({ token, data, isEdit, id, blog_category }: any) => {
       }
     } catch (e) {
       toast.error("Error While Adding");
+      console.log(e)
       setLoading(false);
     }
   };

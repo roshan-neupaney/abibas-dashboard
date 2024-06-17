@@ -18,18 +18,25 @@ import {
 import CustomInput from "../../../subComponents/input";
 import { useRouter } from "next/navigation";
 import { beautifyVehicleList } from "../../../../utilities/beautify";
+import DeleteModal from "../../../../components/modals/deleteModal";
+import { defaultStateModal } from "../../../../config/constants";
+import { CRUD_VEHICLE } from "../../../../config/endPoints";
+import { DeleteWithId } from "../../../../utilities/apiCall";
+import toast from "react-hot-toast";
 
 interface InventoryProps {
   vehicleList: any;
   vehicle_enums: any;
+  token: string;
 }
 
-const Inventory = ({vehicleList ,vehicle_enums}: InventoryProps) => {
+const Inventory = ({vehicleList ,vehicle_enums, token}: InventoryProps) => {
 const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
   const [search, setSearch] = useState("");
   const router = useRouter();
   const [data, setData] = useState(beautifiedVehicleList);
   const [sorting, setSorting] = useState<SortingState>([])
+  const [openModal, toggleModal] = useState(defaultStateModal);
 
   useEffect(()=> {
     const beautifiedCategory = beautifyVehicleList(vehicleList, vehicle_enums);
@@ -109,6 +116,23 @@ const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const ids = openModal.id.split('_')[0];
+      const res = await DeleteWithId(CRUD_VEHICLE, ids, token);
+      const { status }: any = res;
+      if (status) {
+        toast.success("Vehicle successfully deleted");
+        router.refresh();
+        toggleModal(defaultStateModal);
+      } else {
+        toast.error("Error while deleting Vehicle");
+      }
+    } catch (e) {
+      toast.error("Error while deleting Vehicle");
+    }
+  };
+
   return (
     <>
       <div style={{ border: "1px solid #d8dadb" }}>
@@ -131,7 +155,8 @@ const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
               <CustomTableBody
                 internalTitleRoute="/admin/inventory/detail/id"
                 entireRoute="/admin/inventory/edit/"
-                {...{ table }}
+                {...{ table, toggleModal }}
+
               />
             </>
           ) : (
@@ -140,6 +165,12 @@ const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
         </TableContainer>
         <TablePagination {...{ table }} />
       </div>
+      <DeleteModal
+        type="vehicle"
+        open={openModal.state}
+        handleDelete={handleDelete}
+        handleClose={() => toggleModal(defaultStateModal)}
+      />
     </>
   );
 };

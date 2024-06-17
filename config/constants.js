@@ -33,6 +33,7 @@ export const enumSlug = [
   { id: "enum_city", label: "City" },
   { id: "price_range", label: "Price Range" },
   { id: "transmission", label: "Transmission" },
+  { id: "static_page", label: "Static Page" },
 ];
 
 export const metadata = {

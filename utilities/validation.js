@@ -96,27 +96,27 @@ export const modelValidation = (payload) => {
       body_type_id: "",
       brand_id: "",
     };
-    if (!title.length > 0) {
+    if (!title?.length > 0) {
       errorMessage.title = "Title is required.";
       count++;
     }
-    if (!description.length > 0) {
+    if (!description?.length > 0) {
       errorMessage.description = "Description is required.";
       count++;
     }
-    if (!category_id.length > 0) {
+    if (!category_id?.length > 0) {
       errorMessage.category_id = "Category is required.";
       count++;
     }
-    if (!body_type_id.length > 0) {
+    if (!body_type_id?.length > 0) {
       errorMessage.body_type_id = "Body type is required.";
       count++;
     }
-    if (!brand_id.length > 0) {
+    if (!brand_id?.length > 0) {
       errorMessage.brand_id = "Brand is required.";
       count++;
     }
-    if (file.length == 0) {
+    if (file?.length == 0) {
       errorMessage.file = "Image is required.";
       count++;
     }
@@ -314,12 +314,14 @@ export const inspectionValidation = (payload) => {
 
 export const enumValidation = (payload) => {
   try {
-    const { title, file, order, slug } = payload;
+    const { title, file, order, slug, high_range, low_range } = payload;
     let count = 0;
     const errorMessage = {
       title: "",
       order: "",
       slug: "",
+      high_range: "",
+      low_range: "",
       // file: "",
     };
     if (!title?.length > 0) {
@@ -332,6 +334,14 @@ export const enumValidation = (payload) => {
     }
     if (!slug?.length > 0) {
       errorMessage.slug = "Slug is required.";
+      count++;
+    }
+    if (!(high_range?.length > 0)) {
+      errorMessage.high_range = "High Range is required.";
+      count++;
+    }
+    if (!(low_range?.length > 0)) {
+      errorMessage.low_range = "Low Range is required.";
       count++;
     }
     // if (file?.length == 0) {
@@ -434,6 +444,33 @@ export const vehicleValidation = (payload) => {
     //   errorMessage.price = "Price is required.";
     //   count++;
     // }
+    return { error: errorMessage, isValid: count === 0 };
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const staticPageValidation = (payload) => {
+  try {
+    const { title, description, enum_type } = payload;
+    let count = 0;
+    const errorMessage = {
+      title: "",
+      description: "",
+      enum_type: "",
+    };
+    if (!title?.length > 0) {
+      errorMessage.title = "Title is required.";
+      count++;
+    }
+    if (!description?.length > 0) {
+      errorMessage.description = "Description is required.";
+      count++;
+    }
+    if (!enum_type?.length > 0) {
+      errorMessage.enum_type = "Enum Type is required.";
+      count++;
+    }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
     console.log(e);

@@ -298,7 +298,7 @@ export const beautifyEnums = (data) => {
         title: "",
         order: "",
         status: "",
-        // image: '',
+        image: '',
       };
       details.id = cat?.id;
       details.title = cat?.title;
@@ -403,6 +403,27 @@ export const beautifyVariants = (data) => {
       details.id = cat?.id;
       details.title = cat?.title;
       details.order = cat?.order;
+      details.status = cat?.status;
+      details.image = cat?.image;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {}
+};
+
+export const beautifyStaticPage = (data) => {
+  try {
+    const filteredData = data.map((cat) => {
+      const details = {
+        id: "",
+        title: "",
+        description: '',
+        status: "",
+        image: '',
+      };
+      details.id = cat?.id;
+      details.title = cat?.title;
+      details.description = cat?.description.replace(/<[^>]*>/g, '');
       details.status = cat?.status;
       details.image = cat?.image;
       return details;

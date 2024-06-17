@@ -78,28 +78,3 @@
   gap: 12px;
   background-color: var(--bg);
 }
-
-/* @media screen and (max-width: 834px) {
-  .container {
-    display: flex;
-    flex-direction: row;
-    height: 80px;
-  }
-
-  .menuContainer {
-    flex-direction: row;
-  }
-  .linkContainer {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-  .subContainer {
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 18px 16px;
-    gap: 4px;
-  }
-} */

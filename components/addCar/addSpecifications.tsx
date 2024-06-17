@@ -37,7 +37,6 @@ const AddSpecifications = ({
   vehicle_specification,
 }: any) => {
   const [loading, setLoading] = useState(false);
-  console.log("vehicle_specification", vehicle_specification);
   const router = useRouter();
   
   const isOldData = vehicle_specification.data.length > 0;

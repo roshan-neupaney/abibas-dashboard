@@ -33,5 +33,5 @@ export const GET_VEHICLE_INSPECTION = '/vehicle/vehicleInspection'
 export const UPDATE_VEHICLE_SPECIFICATION = '/vehicle/specifications/update'
 export const UPDATE_VEHICLE_FEATURE = "/vehicle/features/update";
 export const UPDATE_VEHICLE_INSPECTION = "/vehicle/inspections/update";
-
+export const CRUD_STATIC_PAGE = "/static-page";
 

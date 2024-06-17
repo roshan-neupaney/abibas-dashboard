@@ -17,28 +17,27 @@ import {
 import CustomInput from "../../../../subComponents/input";
 import { defaultStateModal } from "../../../../../config/constants";
 import { DeleteWithId } from "../../../../../utilities/apiCall";
-import { CRUD_BLOG } from "../../../../../config/endPoints";
+import { CRUD_STATIC_PAGE } from "../../../../../config/endPoints";
 import toast from "react-hot-toast";
-import { beautifyBlog } from "../../../../../utilities/beautify";
+import { beautifyStaticPage } from "../../../../../utilities/beautify";
 import DeleteModal from "../../../../../components/modals/deleteModal";
 import { useRouter } from "next/navigation";
 
 interface dataType {
-  image: string;
   title: string;
-  description: string;
+  order: number;
   status: string;
 }
 
-const Blog = ({ _data, token }: any) => {
-  const beautifiedData = beautifyBlog(_data);
+const Static = ({ _data, token }: any) => {
+  const beautifiedData = beautifyStaticPage(_data);
   const [data, setData] = useState(beautifiedData);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
   const [sorting, setSorting] = useState<SortingState>([]);
 
   useEffect(() => {
-    const beautifiedData = beautifyBlog(_data);
+    const beautifiedData = beautifyStaticPage(_data);
     setData(beautifiedData);
   }, [_data]);
 
@@ -57,10 +56,6 @@ const Blog = ({ _data, token }: any) => {
       {
         header: "Description",
         accessorKey: "description",
-      },
-      {
-        header: "Author",
-        accessorKey: "author",
       },
       {
         header: "Status",
@@ -100,17 +95,17 @@ const Blog = ({ _data, token }: any) => {
 
   const handleDelete = async () => {
     try {
-      const res = await DeleteWithId(CRUD_BLOG, openModal.id, token);
+      const res = await DeleteWithId(CRUD_STATIC_PAGE, openModal.id, token);
       const { status }: any = res;
       if (status) {
-        toast.success("Blog successfully deleted");
+        toast.success("Static page successfully deleted");
         router.refresh();
         toggleModal(defaultStateModal);
       } else {
-        toast.error("Error while deleting Blog");
+        toast.error("Error while deleting Static page");
       }
     } catch (e) {
-      toast.error("Error while deleting Blog");
+      toast.error("Error while deleting Static page");
     }
   };
 
@@ -133,7 +128,7 @@ const Blog = ({ _data, token }: any) => {
           {data?.length > 0 ? (
             <>
               <CustomTableHead {...{ table }} />
-              <CustomTableBody entireRoute="/admin/form/blogs/edit"
+              <CustomTableBody entireRoute="/admin/form/static-page/edit" 
               {...{ table, toggleModal }} />
             </>
           ) : (
@@ -144,7 +139,7 @@ const Blog = ({ _data, token }: any) => {
       </div>
 
       <DeleteModal
-        type="blog"
+        type="static page"
         open={openModal.state}
         handleDelete={handleDelete}
         handleClose={() => toggleModal(defaultStateModal)}
@@ -153,4 +148,4 @@ const Blog = ({ _data, token }: any) => {
   );
 };
 
-export default Blog;
+export default Static;

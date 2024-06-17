@@ -33,7 +33,6 @@ const AddFeatures = ({
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-// console.log(variant_feature,'feature',vehicle_features)
   const result = groupBy(
     variant_feature.data,
     (item: any) => item.specification?.featureCategory?.title

@@ -19,7 +19,7 @@ export const CustomRadio = ({
         <label htmlFor="radio" className="label">{name}</label>
         <div className="gap-3 flex">
           {data.map((items: any, index: number) => {
-            const element_id = items.label.replace(" ", "_");
+            const element_id = items.label.replaceAll(" ", "_");
             return (
               <div key={index} className="flex gap-2 cursor-pointer">
                 <div className=" h-6 w-6 relative flex">
@@ -27,7 +27,7 @@ export const CustomRadio = ({
                     <input
                       id={element_id}
                       type="radio"
-                      name={name.replace(" ", "-")}
+                      name={name.replaceAll(" ", "-")}
                       checked={value === items.id}
                       className="opacity-0 w-0 h-0"
                       onChange={() => onChange(items.id)}

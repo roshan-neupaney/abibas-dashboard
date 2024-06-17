@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import noImage from '../public/images/placeHolder.png'
 
 const LazyImage = (props: any) => {
-  const { src, ...rest } = props;
+  const { src, className,...rest } = props;
   const [imgSrc, setImgSrc] = useState(src);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const LazyImage = (props: any) => {
     setImgSrc(noImage);
   };
   return (
-    <Image src={imgSrc} {...rest} loading="lazy" onError={handleError} alt="" className="rounded" />
+    <Image src={imgSrc} {...rest} loading="lazy" onError={handleError} alt="" className={className} />
   );
 };
 

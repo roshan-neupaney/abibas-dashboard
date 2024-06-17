@@ -7,15 +7,11 @@ import LazyImage from "../../components/lazyImage";
 interface ImageUploadCardProps {
   onChange: any;
   value: any;
-  i: any;
-  isEditable: boolean;
 }
 
 const ImageUploadCard = ({
   value,
-  onChange,
-  isEditable,
-  i,
+  onChange
 }: ImageUploadCardProps) => {
   const imgUrl = IMAGE_URL + value;
   const [tempImage, setTempImage] = useState<any>(imgUrl);
@@ -57,7 +53,7 @@ const ImageUploadCard = ({
 
   return (
     <label className="cursor-pointer">
-      <div className="border-2 border-dashed flex w-[19rem] h-60 items-center justify-center">
+      <div className="border-2 border-dashed flex h-60 items-center justify-center">
         <input
           className="opacity-0 w-0 h-0"
           type="file"
@@ -69,15 +65,9 @@ const ImageUploadCard = ({
             src={tempImage}
             fill={true}
             alt=""
-            // onError={handleError}
+            className='rounded-lg'
           />
         </span>
-        {/* {tempImage ? (
-        ) : (
-          <span>
-            <Image src={addPhotoIcon} height={50} width={50} alt="" />
-          </span>
-        )} */}
       </div>
     </label>
   );

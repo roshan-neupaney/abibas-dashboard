@@ -28,7 +28,7 @@ const InventoryPage = async () => {
   return (
     <>
       <PageHeader title="Inventory" addRoute="/admin/inventory/add" />
-      <Inventory {...{ vehicleList, vehicle_enums }} />
+      <Inventory {...{ vehicleList, vehicle_enums, token }} />
     </>
   );
 };

@@ -54,6 +54,7 @@ const CustomTableBody = ({
                         alt="table-image"
                         fill
                         loading="lazy"
+                        className="rounded"
                       />
                     </div>
                   ) : cell.column.id == "title" ? (
@@ -66,13 +67,17 @@ const CustomTableBody = ({
                             width={70}
                             height={50}
                             loading="lazy"
+                            className="rounded"
                           />
                         </div>
                       )}
                       <div className="flex flex-col gap-2">
                         <div className="flex justify-start items-center body-medium">
                           {internalTitleRoute ? (
-                            <Link href={internalTitleRoute} className="font-semibold">
+                            <Link
+                              href={internalTitleRoute}
+                              className="font-semibold"
+                            >
                               {cell.row.original["title"]}
                             </Link>
                           ) : (
@@ -101,6 +106,10 @@ const CustomTableBody = ({
                   ) : cell.column.id == "id" ? (
                     <div className="label-large-NH">
                       {cell.row.original["id"]}
+                    </div>
+                  ): cell.column.id == "description" ? (
+                    <div className="label-large-NH min-w-96">
+                      {cell.row.original["description"]}
                     </div>
                   ) : cell.column.id == "colors" ? (
                     <div className="flex gap-1">

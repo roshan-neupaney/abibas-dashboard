@@ -3,7 +3,7 @@
 import CustomTableBody from "../../../../../components/container/table/tableBody";
 import TableContainer from "../../../../../components/container/table/tableContainer";
 import CustomTableHead from "../../../../../components/container/table/tableHead";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TablePagination from "../../../../../components/container/table/paginate";
 import NoDataFound from "../../../../../components/noDataFound";
 import {
@@ -36,8 +36,12 @@ const Category = ({ _data, token }: any) => {
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
   const [sorting, setSorting] = useState<SortingState>([]);
-console.log('beautifiedCategory', beautifiedCategory);
   const router = useRouter();
+
+  useEffect(() => {
+    const beautifiedData = beautifyCategory(_data);
+    setData(beautifiedData);
+  }, [_data]);
 
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [

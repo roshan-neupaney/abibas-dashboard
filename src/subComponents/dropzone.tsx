@@ -21,7 +21,6 @@ const CustomDropzone = ({
   const imgUrl = IMAGE_URL + "small-" + value;
   const [tempImage, setTempImage] = useState(addImage);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  // console.log("fileInputRef", tempImage);
 
   useEffect(() => {
     setTempImage(imgUrl);

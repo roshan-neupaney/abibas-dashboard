@@ -184,6 +184,12 @@ const mainMenu = [
         link: "/admin/form/enums",
         icon: Circle,
       },
+      {
+        title: "Static Page",
+        link: "/admin/form/static-page",
+        icon: Circle,
+      },
+
     ],
     icon: Form,
   },
@@ -202,8 +208,8 @@ const MenuLink = () => {
 
   const pathname = usePathname();
   return (
-    <div className={styles.container}>
-      <div className={styles.menuContainer}>
+    <div className='flex flex-col justify-between h-full'>
+      <div>
         {mainMenu.map((items, index) => {
           return (
             <div key={`parent-${index}`}>

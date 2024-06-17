@@ -49,7 +49,6 @@ const AddInspections = ({
     isOldData ? vehicle_inspection.data : variant_inspection.data,
     (item: any) => item.inspection?.id
   );
-  // console.log('groupedById', groupedById)
   const [formData, setFormData] = useState<any>([]);
 
   useEffect(() => {

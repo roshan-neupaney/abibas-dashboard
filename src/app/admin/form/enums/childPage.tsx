@@ -17,7 +17,7 @@ import {
 import CustomInput from "../../../../subComponents/input";
 import { defaultStateModal } from "../../../../../config/constants";
 import { DeleteWithId } from "../../../../../utilities/apiCall";
-import { CRUD_BLOG, CRUD_ENUM } from "../../../../../config/endPoints";
+import { CRUD_ENUM } from "../../../../../config/endPoints";
 import toast from "react-hot-toast";
 import { beautifyEnums } from "../../../../../utilities/beautify";
 import DeleteModal from "../../../../../components/modals/deleteModal";
@@ -40,7 +40,6 @@ const Enums = ({ _data, token }: any) => {
     const beautifiedData = beautifyEnums(_data);
     setData(beautifiedData);
   }, [_data]);
-
   const router = useRouter();
 
   const columns: ColumnDef<dataType>[] = useMemo(

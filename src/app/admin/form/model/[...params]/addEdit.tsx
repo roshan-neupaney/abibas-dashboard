@@ -15,6 +15,7 @@ import {
 import CustomSelect from "../../../../../subComponents/select";
 import { modelValidation } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
+import CustomTextableSelect from "@/subComponents/TextableSelect";
 
 const defaultForm = {
   title: "",
@@ -202,7 +203,7 @@ const AddEditModel = ({
         error={formError.body_type_id}
         required
       />
-      <CustomSelect
+      <CustomTextableSelect
         title="Brand"
         data={beautifiedBrand}
         value={formData.brand_id}

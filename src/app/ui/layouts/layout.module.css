@@ -7,7 +7,7 @@
 .header {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 220px);
+  width: calc(100%-250px);
   /* width: 87%; */
   flex: 1;
 }

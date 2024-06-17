@@ -906,16 +906,6 @@ input[type="number"]::-webkit-outer-spin-button {
   /* backdrop-filter: blur(3px); */
 }
 
-.modal {
-  display: flex;
-  width: 30rem;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 0.5rem;
-  background: #f9f7f7;
-  box-shadow: 4px 4px 32px 0px rgba(0, 0, 0, 0.24);
-}
-
 #v360-menu-btns {
   display: none !important;
 }
@@ -935,4 +925,8 @@ input[type="number"]::-webkit-outer-spin-button {
 .show-activity-dropdown::-webkit-scrollbar,
 .hide-activity-dropdown::-webkit-scrollbar {
   width: 0px;
+}
+
+.ck-editor__editable_inline {
+  min-height: 300px;
 }

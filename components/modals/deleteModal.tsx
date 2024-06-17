@@ -19,8 +19,8 @@ const DeleteModal = ({
   return (
     <>
       {open && (
-        <div className="modal-container">
-          <div className="modal">
+        <div className="modal-container z-50">
+          <div className="flex min-w-[30rem] flex-col items-center rounded-lg bg-[#f9f7f7] shadow-2xl ">
             <div className="flex py-3 px-5 gap-4 items-center self-stretch border-b-[1px] border-solid border-[#D8DADB]">
               <div className="flex flex-1 headline-small-NH">Delete {type}</div>
               <span

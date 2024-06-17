@@ -63,7 +63,6 @@ const VehicleImages = ({
   };
 
   const updateImageCard = (id: string, val: any, key: string) => {
-    // imageCards[i].image = val;
     const filteredData = imageCards.filter((items: any) => {
       if (items.id === id) {
         items[key] = val;
@@ -72,6 +71,7 @@ const VehicleImages = ({
     });
     setImageCards(filteredData);
   };
+
   const handleAdd = async () => {
     setLoading(true);
     try {
@@ -109,7 +109,6 @@ const VehicleImages = ({
           formData.append("file", items.image);
       });
       formData.append("deleteImages", JSON.stringify(deletedImages));
-      console.log(JSON.stringify(formData.getAll("deleteImages")));
       const response = await VechicleImagesPatch(
         CRUD_VEHICLE + "/" + id + "/images",
         formData,
@@ -132,28 +131,26 @@ const VehicleImages = ({
 
   return (
     <div className="flex p-4 flex-col gap-4">
-      <div className="flex flex-1 items-center gap-4 flex-wrap">
-        {imageCards.map((cards: any, index: number) => {
+      <div className="grid grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-10">
+        {imageCards?.map((cards: any, index: number) => {
           return (
-            <div key={index} className="flex relative">
+            <div key={index} className="flex relative rounded-lg">
               <ImageUploadCard
                 value={cards.image}
                 onChange={(val: any) => updateImageCard(cards.id, val, "image")}
-                i={index}
-                isEditable={isEditable}
               />
               <span
                 className="absolute bg-[#FCFCFC] border"
                 onClick={() => removeCard(cards.id)}
               >
-                <Image src={RemoveIcon} width={30} height={30} alt="" />
+                <Image src={RemoveIcon} width={25} height={25} alt="" />
               </span>
             </div>
           );
         })}
         <div
           onClick={addCard}
-          className="cursor-pointer flex items-center justify-center h-[15rem] w-[19rem] border-2 border-dashed"
+          className="cursor-pointer flex items-center justify-center h-[15rem] border-2 border-dashed rounded-lg"
         >
           <span>
             <Image src={AddIcon} width={40} height={40} alt="" />
