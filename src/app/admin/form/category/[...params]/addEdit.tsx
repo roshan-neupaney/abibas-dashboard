@@ -84,7 +84,7 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Added Category");
-          clearCachesByServerAction("/admin/form/category");
+          // clearCachesByServerAction("/admin/form/category");
           router.push("/admin/form/category");
           setFormError(defaultError);
         } else {
@@ -116,7 +116,7 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Updated Category");
-          clearCachesByServerAction("/admin/form/category");
+          // clearCachesByServerAction("/admin/form/category");
           router.push("/admin/form/category");
           setFormError(defaultError);
           

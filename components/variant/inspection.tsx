@@ -23,6 +23,7 @@ const VariantInspection = ({
   useEffect(() => {
     setInspectionsForm(result);
   }, [inspectionData]);
+
   const addInspection = (id: string, status: boolean) => {
     setInspectionsForm((prev: any) => {
       let updateForm;
@@ -38,11 +39,15 @@ const VariantInspection = ({
         };
       } else {
         updateForm = { ...prev };
-        if (inspectionsForm[id]?.id) {
-          setDeleteInspections((prev: any) => {
-            return [...prev, { id: inspectionsForm[id]?.id }];
-          });
-        }
+        setDeleteInspections((prevs: any) => {
+          const alreadyDeleted = prevs.some(
+            (inspection: any) => inspection.id === prev[id]?.id
+          );
+          if (!alreadyDeleted) {
+            return [...prevs, { id: prev[id]?.id }];
+          }
+          return prevs;
+        });
         delete updateForm[id];
       }
       updateState("inspections", Object.values(updateForm), setFormData);

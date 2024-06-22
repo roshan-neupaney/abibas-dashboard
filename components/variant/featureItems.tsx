@@ -79,6 +79,7 @@ const FeatureItems = ({
         onChange={(val: string) => updateForm("status", val, item.id)}
         placeholder="Select Status"
       />
+      {/* <CustomToggleSwitch title="Status" value={item.status === 'ACTIVE'} onChange={(val: boolean) => updateForm('status', val, item.id)} /> */}
     </div>
   );
 };

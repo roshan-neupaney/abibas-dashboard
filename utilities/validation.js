@@ -476,3 +476,45 @@ export const staticPageValidation = (payload) => {
     console.log(e);
   }
 };
+
+export const usersValidation = (payload) => {
+  try {
+    const { firstName, lastName, email, hash, role, mobile } = payload;
+    let count = 0;
+    const errorMessage = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      hash: "",
+      role: "",
+      mobile: "",
+    };
+    if (!firstName.length > 0) {
+      errorMessage.firstName = "FirstName is required.";
+      count++;
+    }
+    if (!lastName.length > 0) {
+      errorMessage.lastName = "LastName is required.";
+      count++;
+    }
+    if (!email?.length > 0) {
+      errorMessage.email = "Email is required.";
+      count++;
+    }
+    if (!hash?.length > 0) {
+      errorMessage.hash = "Password is required.";
+      count++;
+    }
+    if (!mobile?.length > 0) {
+      errorMessage.mobile = "Mobile is required.";
+      count++;
+    }
+    if (!role?.length > 0) {
+      errorMessage.role = "Role is required.";
+      count++;
+    }
+    return { error: errorMessage, isValid: count === 0 };
+  } catch (e) {
+    console.log(e);
+  }
+};

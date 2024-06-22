@@ -39,3 +39,11 @@ export const enumSlug = [
 export const metadata = {
   title: "",
 };
+
+export const UserRoles = [
+  { id: "SUPERADMIN", label: "SUPERADMIN" },
+  { id: "ADMIN", label: "ADMIN" },
+  { id: "PROVIDERADMIN", label: "PROVIDERADMIN" },
+  { id: "PROVIDER", label: "PROVIDER" },
+  { id: "USER", label: "USER" },
+];

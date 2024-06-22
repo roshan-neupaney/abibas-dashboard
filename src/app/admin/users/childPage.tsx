@@ -5,7 +5,6 @@ import TableContainer from "../../../../components/container/table/tableContaine
 import CustomTableHead from "../../../../components/container/table/tableHead";
 import React, { useEffect, useMemo, useState } from "react";
 import TablePagination from "../../../../components/container/table/paginate";
-import { itemslist, dataType } from "../../../../data";
 import NoDataFound from "../../../../components/noDataFound";
 import {
   ColumnDef,
@@ -16,66 +15,57 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import CustomInput from "../../../subComponents/input";
-import { useRouter } from "next/navigation";
-import { beautifyVehicleList } from "../../../../utilities/beautify";
-import DeleteModal from "../../../../components/modals/deleteModal";
 import { defaultStateModal } from "../../../../config/constants";
-import { CRUD_VEHICLE } from "../../../../config/endPoints";
 import { DeleteWithId } from "../../../../utilities/apiCall";
+import { CRUD_USER} from "../../../../config/endPoints";
 import toast from "react-hot-toast";
+import { beautifyUsers } from "../../../../utilities/beautify";
+import DeleteModal from "../../../../components/modals/deleteModal";
+import { useRouter } from "next/navigation";
 
-interface InventoryProps {
-  vehicleList: any;
-  vehicle_enums: any;
-  token: string;
+interface dataType {
+  image: string;
+  title: string;
+  description: string;
+  status: string;
 }
 
-const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
-  const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
+const Users = ({ _data, token }: any) => {
+  const beautifiedCategory = beautifyUsers(_data);
+  const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
-  const router = useRouter();
-  const [data, setData] = useState(beautifiedVehicleList);
-  const [sorting, setSorting] = useState<SortingState>([]);
   const [openModal, toggleModal] = useState(defaultStateModal);
-
+  const [sorting, setSorting] = useState<SortingState>([]);
+  
+  console.log('_data', _data)
   useEffect(() => {
-    const beautifiedCategory = beautifyVehicleList(vehicleList, vehicle_enums);
+    const beautifiedCategory = beautifyUsers(_data);
     setData(beautifiedCategory);
-  }, [vehicleList]);
+  }, [_data]);
+
+const router = useRouter();
 
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
       {
-        header: "Title",
-        accessorKey: "title",
+        header: "Firstname",
+        accessorKey: "firstName",
       },
       {
-        header: "Brand",
-        accessorKey: "brand",
+        header: "Lastname",
+        accessorKey: "lastName",
       },
       {
-        header: "Model",
-        accessorKey: "model",
+        header: "Role",
+        accessorKey: "role",
       },
       {
-        header: "Variant",
-        accessorKey: "variant",
+        header: "Email",
+        accessorKey: "email",
       },
       {
-        header: "KM driven",
-        accessorKey: "km_run",
-      },
-      {
-        header: "Manufacture",
-        accessorKey: "manufacture",
-      },
-      {
-        header: "Owner",
-        accessorKey: "owner",
-      },
-      {
-        header: "Price",
-        accessorKey: "price",
+        header: "Mobile",
+        accessorKey: "mobile",
       },
       {
         header: "Status",
@@ -104,34 +94,31 @@ const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
   const handleSearch = (val: string) => {
     try {
       setSearch(val);
-      const filteredData = itemslist.filter((items: any) => {
+      const filteredData = beautifiedCategory.filter((items: any) => {
         if (items.title.toLowerCase().includes(val.toLowerCase())) {
           return items;
         }
       });
       setData(filteredData);
-    } catch (e) {
-      console.log(e);
-      setData([]);
-    }
+    } catch (e) {}
   };
 
   const handleDelete = async () => {
     try {
-      const ids = openModal.id.split("_")[0];
-      const res = await DeleteWithId(CRUD_VEHICLE, ids, token);
+      const res = await DeleteWithId(CRUD_USER, openModal.id, token);
       const { status }: any = res;
       if (status) {
-        toast.success("Vehicle successfully deleted");
+        toast.success("User successfully deleted");
         router.refresh();
         toggleModal(defaultStateModal);
       } else {
-        toast.error("Error while deleting Vehicle");
+        toast.error("Error While Deleting User");
       }
     } catch (e) {
-      toast.error("Error while deleting Vehicle");
+      toast.error("Error While Deleting User");
     }
   };
+
   return (
     <>
       <div style={{ border: "1px solid #d8dadb" }}>
@@ -151,20 +138,18 @@ const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
           {data?.length > 0 ? (
             <>
               <CustomTableHead {...{ table }} />
-              <CustomTableBody
-                internalTitleRoute="/admin/inventory/detail/id"
-                entireRoute="/admin/inventory/edit/"
-                {...{ table, toggleModal }}
-              />
+              <CustomTableBody entireRoute="/admin/users/edit"
+              {...{ table, toggleModal }} />
             </>
           ) : (
             <NoDataFound />
           )}
         </TableContainer>
-        {data.length > 0 && <TablePagination {...{ table }} />}
+        {data?.length > 0 && <TablePagination {...{ table }} />}
       </div>
+
       <DeleteModal
-        type="vehicle"
+        type="user"
         open={openModal.state}
         handleDelete={handleDelete}
         handleClose={() => toggleModal(defaultStateModal)}
@@ -173,4 +158,4 @@ const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
   );
 };
 
-export default Inventory;
+export default Users;

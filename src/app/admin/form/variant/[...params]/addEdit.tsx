@@ -127,7 +127,6 @@ const AddEditVariant = ({
   const [loading, setLoading] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<string>("");
   const [variantData, setVariantData] = useState<any>();
-
   const router = useRouter();
 
   const beautifyVariants = () => {

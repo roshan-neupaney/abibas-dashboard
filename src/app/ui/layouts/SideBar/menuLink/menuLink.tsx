@@ -16,7 +16,7 @@ import Setting from "../../../../../../public/icons/setting.svg";
 import Arrow from "../../../../../../public/icons/icon-right.svg";
 import Feedback from "../../../../../../public/icons/feedback.svg";
 import Form from "../../../../../../public/icons/form.svg";
-import News from '../../../../../../public/icons/news.svg'
+import News from "../../../../../../public/icons/news.svg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -34,42 +34,47 @@ const mainMenu = [
     ],
     icon: Car,
   },
+  // {
+  //   title: "Leads",
+  //   category: [
+  //     { title: "Bookings", link: "/admin/bookings", icon: Circle },
+  //     { title: "Test Drives", link: "/admin/test-drives", icon: Circle },
+  //     { title: "Offers", link: "/admin/offers", icon: Circle },
+  //   ],
+  //   icon: Target,
+  // },
+  // {
+  //   title: "Quote Review",
+  //   link: "/admin/quote-review",
+  //   icon: Quote,
+  // },
+  // {
+  //   title: "Customers",
+  //   link: "/admin/customers",
+  //   icon: UserGroup,
+  // },
+  // {
+  //   title: "Agents",
+  //   link: "/admin/agents",
+  //   icon: UserGroup,
+  // },
+  // { title: "Blogs", link: "/admin/blogs", icon: Blog },
+  // {
+  //   title: "Report & Analysis",
+  //   link: "/admin/report",
+  //   icon: Graph,
+  // },
+  // {
+  //   title: "App Management",
+  //   link: "/admin/app-management",
+  //   icon: AppManagement,
+  // },
+  // { title: "Settings", link: "/admin/settings", icon: Setting },
   {
-    title: "Leads",
-    category: [
-      { title: "Bookings", link: "/admin/bookings", icon: Circle },
-      { title: "Test Drives", link: "/admin/test-drives", icon: Circle },
-      { title: "Offers", link: "/admin/offers", icon: Circle },
-    ],
-    icon: Target,
-  },
-  {
-    title: "Quote Review",
-    link: "/admin/quote-review",
-    icon: Quote,
-  },
-  {
-    title: "Customers",
-    link: "/admin/customers",
+    title: "Users",
+    link: "/admin/users",
     icon: UserGroup,
   },
-  {
-    title: "Agents",
-    link: "/admin/agents",
-    icon: UserGroup,
-  },
-  { title: "Blogs", link: "/admin/blogs", icon: Blog },
-  {
-    title: "Report & Analysis",
-    link: "/admin/report",
-    icon: Graph,
-  },
-  {
-    title: "App Management",
-    link: "/admin/app-management",
-    icon: AppManagement,
-  },
-  { title: "Settings", link: "/admin/settings", icon: Setting },
   {
     title: "News",
     category: [
@@ -82,9 +87,9 @@ const mainMenu = [
         title: "News Category",
         link: "/admin/news/news-category",
         icon: Circle,
-      }
+      },
     ],
-    icon: News
+    icon: News,
   },
   {
     title: "Forms",
@@ -189,7 +194,6 @@ const mainMenu = [
         link: "/admin/form/static-page",
         icon: Circle,
       },
-
     ],
     icon: Form,
   },
@@ -208,7 +212,7 @@ const MenuLink = () => {
 
   const pathname = usePathname();
   return (
-    <div className='flex flex-col justify-between h-full'>
+    <div className="flex flex-col justify-between h-full">
       <div>
         {mainMenu.map((items, index) => {
           return (

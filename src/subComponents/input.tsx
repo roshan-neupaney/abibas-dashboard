@@ -17,6 +17,7 @@ interface CustomInputProps {
   rows?: number;
   error?: string;
   required?: boolean;
+  autoComplete?: string;
 }
 const CustomInput = ({
   title,
@@ -32,6 +33,7 @@ const CustomInput = ({
   style = {},
   error = "",
   required = false,
+  autoComplete = 'on',
 }: CustomInputProps) => {
   return (
     <div className="form-box">
@@ -63,6 +65,7 @@ const CustomInput = ({
               border: error ? "1px solid red" : "1px solid #92959a",
             }}
             required={required}
+            autoComplete={autoComplete}
           />
         ) : (
           <textarea
