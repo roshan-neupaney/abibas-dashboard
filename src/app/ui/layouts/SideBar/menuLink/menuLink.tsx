@@ -34,15 +34,16 @@ const mainMenu = [
     ],
     icon: Car,
   },
-  // {
-  //   title: "Leads",
-  //   category: [
-  //     { title: "Bookings", link: "/admin/bookings", icon: Circle },
-  //     { title: "Test Drives", link: "/admin/test-drives", icon: Circle },
-  //     { title: "Offers", link: "/admin/offers", icon: Circle },
-  //   ],
-  //   icon: Target,
-  // },
+  {
+    title: "Leads",
+    category: [
+      { title: "WatchList", link: "/admin/watchlist", icon: Circle },
+      { title: "Bookings", link: "/admin/bookings", icon: Circle },
+      { title: "Test Drives", link: "/admin/test-drives", icon: Circle },
+      { title: "Offers", link: "/admin/offers", icon: Circle },
+    ],
+    icon: Target,
+  },
   // {
   //   title: "Quote Review",
   //   link: "/admin/quote-review",

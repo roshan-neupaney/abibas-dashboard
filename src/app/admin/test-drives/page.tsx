@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
 import PageHeader from "../../../../components/pageHeader";
-import { GET_ALL_BOOKED_LIST } from "../../../../config/endPoints";
+import { GET_ALL_TEST_DRIVE_LIST } from "../../../../config/endPoints";
 import { authorization } from "../../../../hoc/auth";
 import { ServerSideGetWithParams } from "../../../../utilities/apiCall";
-import Bookings from "./bookings";
+import TestDrives from "./testDrive";
 
 async function getData(token: any, page: string, pageSize: string) {
   try {
@@ -11,27 +11,27 @@ async function getData(token: any, page: string, pageSize: string) {
     const res = [
       await ServerSideGetWithParams(
         token,
-        GET_ALL_BOOKED_LIST,
+        GET_ALL_TEST_DRIVE_LIST,
         `page=${page}&pageSize=${pageSize}`
       ),
     ];
-    const [bookingList] = res;
-    return { bookingList };
+    const [testDriveList] = res;
+    return { testDriveList };
   } catch (e) {}
 }
 
-const AllBookedPage = async (props: any) => {
+const AllTestDrivesPage = async (props: any) => {
   const token = cookies().get("access_token")?.value || "";
   const { searchParams } = props;
   const page = searchParams?.page || 1;
   const pageSize = searchParams?.pageSize || 10;
-  const { bookingList }: any = await getData(token, page, pageSize);
+  const { testDriveList }: any = await getData(token, page, pageSize);
   return (
     <>
-      <PageHeader title="Bookings" addRoute="/admin/bookings/add" />
-      <Bookings bookingList={bookingList.data} />
+      <PageHeader title="Test Drives" addRoute="/admin/bookings/add" />
+      <TestDrives testDriveList={testDriveList.data} />
     </>
   );
 };
 
-export default AllBookedPage;
+export default AllTestDrivesPage;

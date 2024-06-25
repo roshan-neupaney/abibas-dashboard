@@ -1,11 +1,11 @@
 "use client";
 
-import CustomTableBody from "../../../../components/container/table/tableBody";
-import TableContainer from "../../../../components/container/table/tableContainer";
-import CustomTableHead from "../../../../components/container/table/tableHead";
-import React, { useEffect, useMemo, useState } from "react";
-import TablePagination from "../../../../components/container/table/paginate";
-import NoDataFound from "../../../../components/noDataFound";
+import CustomTableBody from "../container/table/tableBody";
+import TableContainer from "../container/table/tableContainer";
+import CustomTableHead from "../container/table/tableHead";
+import { useEffect, useMemo, useState } from "react";
+import TablePagination from "../container/table/paginate";
+import NoDataFound from "../noDataFound";
 import {
   ColumnDef,
   SortingState,
@@ -14,57 +14,43 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import CustomInput from "../../../subComponents/input";
-import { defaultStateModal } from "../../../../config/constants";
-import { DeleteWithId } from "../../../../utilities/apiCall";
-import { CRUD_USER} from "../../../../config/endPoints";
-import toast from "react-hot-toast";
-import { beautifyUsers } from "../../../../utilities/beautify";
-import DeleteModal from "../../../../components/modals/deleteModal";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { beautifyWatchList } from "../../utilities/beautify";
+import { defaultStateModal } from "../../config/constants";
+import { dataType } from "../../data";
+import { DeleteWithId } from "../../utilities/apiCall";
+import { GET_WATCH_LIST } from "../../config/endPoints";
+import CustomInput from "@/subComponents/input";
+import DeleteModal from "../modals/deleteModal";
 
-interface dataType {
-  image: string;
-  title: string;
-  description: string;
-  status: string;
+interface BookingListProps {
+  bookingList: any;
+  token: string;
 }
 
-const Users = ({ _data, token }: any) => {
-  const beautifiedCategory = beautifyUsers(_data);
-  const [data, setData] = useState(beautifiedCategory);
+const InventoryBookings = ({ bookingList, token }: BookingListProps) => {
+  const beautifiedData = beautifyWatchList(bookingList);
   const [search, setSearch] = useState("");
-  const [openModal, toggleModal] = useState(defaultStateModal);
+  const router = useRouter();
+  const [data, setData] = useState(beautifiedData);
   const [sorting, setSorting] = useState<SortingState>([]);
-  
-  useEffect(() => {
-    const beautifiedCategory = beautifyUsers(_data);
-    setData(beautifiedCategory);
-  }, [_data]);
+  const [openModal, toggleModal] = useState(defaultStateModal);
 
-const router = useRouter();
+  useEffect(() => {
+    const beautifiedData = beautifyWatchList(bookingList);
+    setData(beautifiedData);
+  }, [bookingList]);
 
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
       {
-        header: "Firstname",
-        accessorKey: "firstName",
-      },
-      {
-        header: "Lastname",
-        accessorKey: "lastName",
-      },
-      {
-        header: "Role",
-        accessorKey: "role",
+        header: "Name",
+        accessorKey: "title",
       },
       {
         header: "Email",
         accessorKey: "email",
-      },
-      {
-        header: "Mobile",
-        accessorKey: "mobile",
       },
       {
         header: "Status",
@@ -93,31 +79,34 @@ const router = useRouter();
   const handleSearch = (val: string) => {
     try {
       setSearch(val);
-      const filteredData = beautifiedCategory.filter((items: any) => {
+      const filteredData = data.filter((items: any) => {
         if (items.title.toLowerCase().includes(val.toLowerCase())) {
           return items;
         }
       });
       setData(filteredData);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+      setData([]);
+    }
   };
 
   const handleDelete = async () => {
     try {
-      const res = await DeleteWithId(CRUD_USER, openModal.id, token);
+      const ids = openModal.id.split("_")[0];
+      const res = await DeleteWithId(GET_WATCH_LIST, ids, token);
       const { status }: any = res;
       if (status) {
-        toast.success("User successfully deleted");
+        toast.success("Booking successfully deleted");
         router.refresh();
         toggleModal(defaultStateModal);
       } else {
-        toast.error("Error While Deleting User");
+        toast.error("Error while deleting Booking");
       }
     } catch (e) {
-      toast.error("Error While Deleting User");
+      toast.error("Error while deleting Booking");
     }
   };
-
   return (
     <>
       <div style={{ border: "1px solid #d8dadb" }}>
@@ -137,18 +126,20 @@ const router = useRouter();
           {data?.length > 0 ? (
             <>
               <CustomTableHead {...{ table }} />
-              <CustomTableBody entireRoute="/admin/users/edit"
-              {...{ table, toggleModal }} />
+              <CustomTableBody
+                hideEdit
+                hideDelete
+                {...{ table, toggleModal }}
+              />
             </>
           ) : (
             <NoDataFound />
           )}
         </TableContainer>
-        {data?.length > 0 && <TablePagination {...{ table }} />}
+        {data.length > 0 && <TablePagination {...{ table }} />}
       </div>
-
       <DeleteModal
-        type="user"
+        type="booking"
         open={openModal.state}
         handleDelete={handleDelete}
         handleClose={() => toggleModal(defaultStateModal)}
@@ -157,4 +148,6 @@ const router = useRouter();
   );
 };
 
-export default Users;
+
+
+export default InventoryBookings

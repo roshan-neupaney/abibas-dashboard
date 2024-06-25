@@ -12,20 +12,18 @@ import {
 } from "@tanstack/react-table";
 import ServerPagination from "../../../../components/container/table/serverPagination";
 import { useEffect, useState } from "react";
-import { beautifyAllBookingList } from "../../../../utilities/beautify";
+import { beautifyAllOffersList } from "../../../../utilities/beautify";
 
-const Bookings = ({ bookingList }: any) => {
-  const [pageSize, setPageSize] = useState(
-    bookingList?.paginationDto?.pageSize
-  );
-  const beautifiedData = beautifyAllBookingList(bookingList);
+const Offers = ({ offerList }: any) => {
+  const [pageSize, setPageSize] = useState(offerList?.paginationDto?.pageSize);
+  const beautifiedData = beautifyAllOffersList(offerList);
   const [data, setData] = useState(beautifiedData);
 
   useEffect(() => {
-    const beautifiedData = beautifyAllBookingList(bookingList);
+    const beautifiedData = beautifyAllOffersList(offerList);
     setData(beautifiedData);
-    setPageSize(bookingList?.paginationDto?.pageSize);
-  }, [bookingList]);
+    setPageSize(offerList?.paginationDto?.pageSize);
+  }, [offerList]);
 
   const columns: ColumnDef<dataType>[] = [
     {
@@ -35,6 +33,10 @@ const Bookings = ({ bookingList }: any) => {
     {
       header: "Email",
       accessorKey: "email",
+    },
+    {
+      header: "Offer",
+      accessorKey: "offer_amount",
     },
     {
       header: "Status",
@@ -54,7 +56,6 @@ const Bookings = ({ bookingList }: any) => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-  
   return (
     <>
       {data?.length > 0 ? (
@@ -66,8 +67,8 @@ const Bookings = ({ bookingList }: any) => {
           <ServerPagination
             setPageSize={setPageSize}
             pageSize={pageSize}
-            page={bookingList.paginationDto.page}
-            totalData={bookingList.totalCount}
+            page={offerList.paginationDto.page}
+            totalData={offerList.totalCount}
           />
         </div>
       ) : (
@@ -77,4 +78,4 @@ const Bookings = ({ bookingList }: any) => {
   );
 };
 
-export default Bookings;
+export default Offers;

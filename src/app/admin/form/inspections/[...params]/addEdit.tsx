@@ -148,7 +148,7 @@ const AddEditInspection = ({
       }
     } catch (e) {
       toast.error("Error While Adding");
-      console.log(e);
+      console.error(e);
       setLoading(false);
     }
   };

@@ -1,3 +1,5 @@
+import { FormatPrice } from "./helper";
+
 export const beautifyCategory = (data) => {
   try {
     const filteredData = data.map((cat) => {
@@ -118,7 +120,7 @@ export const beautifyVariant = (data) => {
     });
     return filteredData;
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
   }
 };
 
@@ -457,4 +459,189 @@ export const beautifyUsers = (data) => {
     });
     return filteredData;
   } catch (error) {}
+};
+
+export const beautifyWatchList = (_data) => {
+  const { data } = _data;
+  try {
+    const filteredData = data.map((user) => {
+      const details = {
+        id: "",
+        title: "",
+        email: "",
+        user_id: "",
+        status: "",
+      };
+      details.id = user?.id;
+      details.title =
+        user?.user?.firstName + " " + user?.user?.lastName || "N/A";
+      details.email = user?.user?.email || "N/A";
+      details.user_id = user?.user_id;
+      details.status = user?.status;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {}
+};
+export const beautifyOfferList = (_data) => {
+  const { data } = _data;
+  try {
+    const filteredData = data.map((user) => {
+      const details = {
+        id: "",
+        title: "",
+        email: "",
+        user_id: "",
+        offer_amount: "",
+        status: "",
+      };
+      details.id = user?.id;
+      details.title =
+        user?.user?.firstName + " " + user?.user?.lastName || "N/A";
+      details.email = user?.user?.email || "N/A";
+      details.user_id = user?.user_id;
+      details.offer_amount = FormatPrice(user.offer_amount);
+      details.status = user?.status;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {}
+};
+export const beautifyTestDriveList = (_data) => {
+  const { data } = _data;
+  try {
+    const filteredData = data.map((user) => {
+      const details = {
+        id: "",
+        title: "",
+        email: "",
+        user_id: "",
+        date: "",
+        time: "",
+        status: "",
+      };
+      details.id = user?.id;
+      details.title =
+        user?.user?.firstName + " " + user?.user?.lastName || "N/A";
+      details.email = user?.user?.email || "N/A";
+      details.user_id = user?.user_id;
+      details.date = user?.date_day;
+      details.time = user?.day_time;
+
+      details.status = user?.status;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {}
+};
+
+export const beautifyAllBookingList = (_data) => {
+  const { vehicles } = _data;
+  try {
+    const filteredData = vehicles.map((element) => {
+      const details = {
+        id: "",
+        title: "",
+        email: "",
+        user_id: "",
+        status: "",
+        media: "",
+      };
+      details.id = element?.id;
+      details.title =
+        element?.user?.firstName + " " + element?.user?.lastName || "N/A";
+      details.email = element?.user?.email || "N/A";
+      details.user_id = element?.user_id;
+      details.media = element?.vehicle?.vehicleImages[0]?.image_name;
+      details.status = element?.status;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const beautifyAllWatchList = (_data) => {
+  const { vehicles } = _data;
+  try {
+    const filteredData = vehicles.map((element) => {
+      const details = {
+        id: "",
+        title: "",
+        email: "",
+        user_id: "",
+        status: "",
+        media: "",
+      };
+      details.id = element?.id;
+      details.title =
+        element?.user?.firstName + " " + element?.user?.lastName || "N/A";
+      details.email = element?.user?.email || "N/A";
+      details.user_id = element?.user_id;
+      details.media = element?.vehicle?.vehicleImages[0]?.image_name || "";
+      details.status = element?.status;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const beautifyAllTestDriveList = (_data) => {
+  const { vehicles } = _data;
+  try {
+    const filteredData = vehicles.map((element) => {
+      const details = {
+        id: "",
+        title: "",
+        email: "",
+        user_id: "",
+        date: "",
+        time: "",
+        status: "",
+        media: "",
+      };
+      details.id = element?.id;
+      details.title =
+        element?.user?.firstName + " " + element?.user?.lastName || "N/A";
+      details.email = element?.user?.email || "N/A";
+      details.user_id = element?.user_id;
+      details.media = element?.vehicle?.vehicleImages[0]?.image_name || "";
+      details.date = element?.date_day;
+      details.time = element?.day_time;
+      details.status = element?.status;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const beautifyAllOffersList = (_data) => {
+  const { vehicles } = _data;
+  try {
+    const filteredData = vehicles.map((element) => {
+      const details = {
+        id: "",
+        title: "",
+        email: "",
+        user_id: "",
+        offer_amount: "",
+        status: "",
+        media: "",
+      };
+      details.id = element?.id;
+      details.title =
+        element?.user?.firstName + " " + element?.user?.lastName || "N/A";
+      details.email = element?.user?.email || "N/A";
+      details.user_id = element?.user_id;
+      details.media = element?.vehicle?.vehicleImages[0]?.image_name || "";
+      details.offer_amount = FormatPrice(element.offer_amount);
+      details.status = element?.status;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {
+    console.error(error);
+  }
 };

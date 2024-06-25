@@ -1,4 +1,13 @@
-import { DELETE, GET, LOGIN_POST, PATCH, PATCH_FORM, POST, POST_FORM, SERVER_SIDE_GET } from "../config/method";
+import {
+  DELETE,
+  GET,
+  LOGIN_POST,
+  PATCH,
+  PATCH_FORM,
+  POST,
+  POST_FORM,
+  SERVER_SIDE_GET,
+} from "../config/method";
 
 export const Login_Post = async (url, payload) => {
   try {
@@ -83,6 +92,34 @@ export const ServerSideGetWithParams = async (token, url, params) => {
   }
 };
 
+export const ServerSideGetWithParamsPagination = async (token, url, params) => {
+  try {
+    const response = {
+      data: "",
+      status: false,
+      page: 1,
+      size: 10,
+      totalData: 0,
+    };
+    const URL = url + "?" + params;
+    const res = await SERVER_SIDE_GET(token, URL);
+    const { status, data } = res;
+    if (status === 200) {
+      response.data = data;
+      response.status = true;
+      response.page = data.paginationDto.page || 1;
+      response.size = data.paginationDto.pageSize || 10;
+      response.totalData = data.totalCount || 0;
+    } else {
+      response.data = data.message;
+      response.status = false;
+    }
+    return response;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 export const ClientSideGet = async (url, token) => {
   try {
     const response = {
@@ -124,13 +161,13 @@ export const JsonPost = async (url, payload, token) => {
     console.error(e);
   }
 };
-export const JsonPatch = async (url,id, payload, token) => {
+export const JsonPatch = async (url, id, payload, token) => {
   try {
     const response = {
       data: "",
       status: false,
     };
-    const URL = url + '/' + id
+    const URL = url + "/" + id;
     const res = await PATCH(URL, payload, token);
     const { status, data } = res;
     if (status === 200) {
@@ -172,7 +209,7 @@ export const FormdataPatch = async (url, id, payload, token) => {
       data: "",
       status: false,
     };
-    const URL = url + '/' + id;
+    const URL = url + "/" + id;
     const res = await PATCH_FORM(URL, payload, token);
     const { status, data } = res;
     if (status === 200) {
@@ -213,7 +250,7 @@ export const DeleteWithId = async (url, id, token) => {
       data: "",
       status: false,
     };
-    const URL = url + '/' + id;
+    const URL = url + "/" + id;
     const res = await DELETE(URL, token);
     const { status, data } = res;
     if (status === 200) {

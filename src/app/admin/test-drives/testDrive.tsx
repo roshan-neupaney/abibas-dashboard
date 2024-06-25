@@ -12,20 +12,20 @@ import {
 } from "@tanstack/react-table";
 import ServerPagination from "../../../../components/container/table/serverPagination";
 import { useEffect, useState } from "react";
-import { beautifyAllBookingList } from "../../../../utilities/beautify";
+import { beautifyAllTestDriveList } from "../../../../utilities/beautify";
 
-const Bookings = ({ bookingList }: any) => {
+const TestDrives = ({ testDriveList }: any) => {
   const [pageSize, setPageSize] = useState(
-    bookingList?.paginationDto?.pageSize
+    testDriveList?.paginationDto?.pageSize
   );
-  const beautifiedData = beautifyAllBookingList(bookingList);
+  const beautifiedData = beautifyAllTestDriveList(testDriveList);
   const [data, setData] = useState(beautifiedData);
 
   useEffect(() => {
-    const beautifiedData = beautifyAllBookingList(bookingList);
+    const beautifiedData = beautifyAllTestDriveList(testDriveList);
     setData(beautifiedData);
-    setPageSize(bookingList?.paginationDto?.pageSize);
-  }, [bookingList]);
+    setPageSize(testDriveList?.paginationDto?.pageSize);
+  }, [testDriveList]);
 
   const columns: ColumnDef<dataType>[] = [
     {
@@ -35,6 +35,14 @@ const Bookings = ({ bookingList }: any) => {
     {
       header: "Email",
       accessorKey: "email",
+    },
+    {
+      header: "Date",
+      accessorKey: "date",
+    },
+    {
+      header: "Time",
+      accessorKey: "time",
     },
     {
       header: "Status",
@@ -54,7 +62,7 @@ const Bookings = ({ bookingList }: any) => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-  
+
   return (
     <>
       {data?.length > 0 ? (
@@ -66,8 +74,8 @@ const Bookings = ({ bookingList }: any) => {
           <ServerPagination
             setPageSize={setPageSize}
             pageSize={pageSize}
-            page={bookingList.paginationDto.page}
-            totalData={bookingList.totalCount}
+            page={testDriveList.paginationDto.page}
+            totalData={testDriveList.totalCount}
           />
         </div>
       ) : (
@@ -77,4 +85,4 @@ const Bookings = ({ bookingList }: any) => {
   );
 };
 
-export default Bookings;
+export default TestDrives;

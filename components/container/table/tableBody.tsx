@@ -62,7 +62,7 @@ const CustomTableBody = ({
                       {titleImage && (
                         <div className="table-image relative">
                           <LazyImage
-                            src={cell?.row?.original[titleImage]}
+                            src={IMAGE_URL + cell?.row?.original[titleImage]}
                             alt="table-image"
                             width={70}
                             height={50}
@@ -75,7 +75,7 @@ const CustomTableBody = ({
                         <div className="flex justify-start items-center body-medium">
                           {internalTitleRoute ? (
                             <Link
-                              href={internalTitleRoute}
+                              href={internalTitleRoute + '/' + id}
                               className="font-semibold"
                             >
                               {cell.row.original["title"]}

@@ -111,7 +111,7 @@ const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
       });
       setData(filteredData);
     } catch (e) {
-      console.log(e);
+      console.error(e);
       setData([]);
     }
   };
@@ -152,8 +152,8 @@ const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
             <>
               <CustomTableHead {...{ table }} />
               <CustomTableBody
-                internalTitleRoute="/admin/inventory/detail/id"
-                entireRoute="/admin/inventory/edit/"
+                internalTitleRoute="/admin/inventory/detail"
+                entireRoute="/admin/inventory/edit"
                 {...{ table, toggleModal }}
               />
             </>

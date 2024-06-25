@@ -4,8 +4,26 @@ import Overview from "./overView";
 import Insights from "./insights";
 import Offers from "./offers";
 import TestDrives from "./testDrives";
+import InventoryWatchList from "./watchList";
+import InventoryBookings from "./bookings";
 
-const InventoryDetail = () => {
+interface typeInventoryDetail {
+  watchList: any;
+  bookingList: any;
+  testDriveList: any;
+  offerList: any;
+  token: string;
+  id: string;
+}
+
+const InventoryDetail = ({
+  watchList,
+  bookingList,
+  testDriveList,
+  offerList,
+  token,
+  id,
+}: typeInventoryDetail) => {
   const [active, setActive] = useState(0);
   return (
     <div className="flex flex-col">
@@ -33,13 +51,29 @@ const InventoryDetail = () => {
             }`}
             onClick={() => setActive(2)}
           >
-            Offers
+            Watchlist
           </div>
           <div
             className={`nav-tabs flex items-center cursor-pointer ${
               active == 3 ? "active-navTab" : "inactive-navTab"
             }`}
             onClick={() => setActive(3)}
+          >
+            Booking
+          </div>
+          <div
+            className={`nav-tabs flex items-center cursor-pointer ${
+              active == 4 ? "active-navTab" : "inactive-navTab"
+            }`}
+            onClick={() => setActive(4)}
+          >
+            Offers
+          </div>
+          <div
+            className={`nav-tabs flex items-center cursor-pointer ${
+              active == 5 ? "active-navTab" : "inactive-navTab"
+            }`}
+            onClick={() => setActive(5)}
           >
             Test Drives
           </div>
@@ -50,9 +84,13 @@ const InventoryDetail = () => {
       ) : active === 1 ? (
         <Insights />
       ) : active === 2 ? (
-        <Offers />
+        <InventoryWatchList {...{ watchList, token }} />
+      ) : active === 3 ? (
+        <InventoryBookings {...{ bookingList, token }} />
+      ) : active === 4 ? (
+        <Offers {...{ offerList, token }} />
       ) : (
-        <TestDrives />
+        <TestDrives {...{ testDriveList, token }} />
       )}
     </div>
   );

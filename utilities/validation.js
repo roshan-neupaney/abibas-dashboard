@@ -16,7 +16,7 @@ export const loginValidation = (payload) => {
     }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 
@@ -43,7 +43,7 @@ export const categoryValidation = (payload) => {
     }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 
@@ -80,7 +80,7 @@ export const featureValidation = (payload) => {
     // }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 
@@ -122,7 +122,7 @@ export const modelValidation = (payload) => {
     }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 
@@ -160,7 +160,7 @@ export const specificationValidation = (payload) => {
     // }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 
@@ -182,7 +182,7 @@ export const colorValidation = (payload) => {
     }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 export const unitValidation = (payload) => {
@@ -199,7 +199,7 @@ export const unitValidation = (payload) => {
 
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 export const specificationCategoryValidation = (payload) => {
@@ -220,7 +220,7 @@ export const specificationCategoryValidation = (payload) => {
     }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 
@@ -253,7 +253,7 @@ export const assetsPartValidation = (payload) => {
     }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 export const inspectionValidation = (payload) => {
@@ -308,7 +308,7 @@ export const inspectionValidation = (payload) => {
     }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 
@@ -350,7 +350,7 @@ export const enumValidation = (payload) => {
     // }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 export const vehicleValidation = (payload) => {
@@ -446,7 +446,7 @@ export const vehicleValidation = (payload) => {
     // }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 
@@ -473,7 +473,7 @@ export const staticPageValidation = (payload) => {
     }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };
 
@@ -515,6 +515,6 @@ export const usersValidation = (payload) => {
     }
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.log(e);
+    console.errror(e);
   }
 };

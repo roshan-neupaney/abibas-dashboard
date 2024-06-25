@@ -139,7 +139,7 @@ const AddEditUser = ({ token, data, isEdit, id }: any) => {
       setLoading(false);
     }
   };
-console.log('formData',formData)
+  
   return (
     <div className="flex flex-1 w-[30rem] p-4 flex-col gap-5">
       <CustomInput
