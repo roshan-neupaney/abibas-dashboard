@@ -30,7 +30,7 @@ const mainMenu = [
     title: "Products",
     category: [
       { title: "Inventory", link: "/admin/inventory", icon: Circle },
-      { title: "Catalogue", link: "/admin/catalogue", icon: Circle },
+      // { title: "Catalogue", link: "/admin/catalogue", icon: Circle },
     ],
     icon: Car,
   },
