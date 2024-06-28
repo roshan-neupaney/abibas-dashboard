@@ -56,10 +56,10 @@ const InventoryBookings = ({ bookingList, token }: BookingListProps) => {
         header: "Status",
         accessorKey: "status",
       },
-      {
-        header: "Action",
-        accessorKey: "action",
-      },
+      // {
+      //   header: "Action",
+      //   accessorKey: "action",
+      // },
     ],
     []
   );

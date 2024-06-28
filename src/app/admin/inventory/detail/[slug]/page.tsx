@@ -10,8 +10,10 @@ import {
   GET_TEST_DRIVE_LIST,
   GET_WATCH_LIST,
 } from "../../../../../../config/endPoints";
+import { authorization } from "../../../../../../hoc/auth";
 
 async function getData(token: string, id: string) {
+  authorization(token)
   try {
     const res = [
       await ServerSideGetWithId(token, GET_WATCH_LIST, id),

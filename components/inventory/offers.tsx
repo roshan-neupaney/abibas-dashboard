@@ -60,10 +60,10 @@ const InventoryOfferList = ({ offerList, token }: OfferListProps) => {
         header: "Status",
         accessorKey: "status",
       },
-      {
-        header: "Action",
-        accessorKey: "action",
-      },
+      // {
+      //   header: "Action",
+      //   accessorKey: "action",
+      // },
     ],
     []
   );

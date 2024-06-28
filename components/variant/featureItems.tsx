@@ -1,3 +1,4 @@
+import CustomTextableSelect from "@/subComponents/TextableSelect";
 import CustomInput from "@/subComponents/input";
 import CustomSelect from "@/subComponents/select";
 import React, { useEffect, useState } from "react";
@@ -46,7 +47,7 @@ const FeatureItems = ({
 
   return (
     <div className="flex flex-1 gap-4 items-center my-2">
-      <CustomSelect
+      <CustomTextableSelect
         title="Feature"
         value={item.featureId}
         data={beautifiedFeature}
@@ -79,7 +80,6 @@ const FeatureItems = ({
         onChange={(val: string) => updateForm("status", val, item.id)}
         placeholder="Select Status"
       />
-      {/* <CustomToggleSwitch title="Status" value={item.status === 'ACTIVE'} onChange={(val: boolean) => updateForm('status', val, item.id)} /> */}
     </div>
   );
 };

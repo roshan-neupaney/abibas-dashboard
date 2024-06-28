@@ -56,10 +56,10 @@ const InventoryWatchList = ({ watchList, token }: WatchListProps) => {
         header: "Status",
         accessorKey: "status",
       },
-      {
-        header: "Action",
-        accessorKey: "action",
-      },
+      // {
+      //   header: "Action",
+      //   accessorKey: "action",
+      // },
     ],
     []
   );

@@ -1,3 +1,4 @@
+import CustomTextableSelect from "@/subComponents/TextableSelect";
 import CustomInput from "@/subComponents/input";
 import CustomSelect from "@/subComponents/select";
 import React, { useEffect, useState } from "react";
@@ -48,7 +49,7 @@ const SpecificationItems = ({
 
   return (
     <div className="flex flex-1 gap-4 items-center my-2">
-      <CustomSelect
+      <CustomTextableSelect
         title="Specification"
         value={item.specificationId}
         data={beautifiedSpecification}

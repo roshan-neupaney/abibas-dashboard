@@ -63,10 +63,10 @@ const TestDrives = ({ testDriveList, token }: OfferListProps) => {
         header: "Status",
         accessorKey: "status",
       },
-      {
-        header: "Action",
-        accessorKey: "action",
-      },
+      // {
+      //   header: "Action",
+      //   accessorKey: "action",
+      // },
     ],
     []
   );
