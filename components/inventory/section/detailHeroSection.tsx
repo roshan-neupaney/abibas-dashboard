@@ -3,7 +3,7 @@ import ReactImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import React360 from "../360View";
 
-const DetailHeroSection = () => {
+const DetailHeroSection = ({Images360, id}:any) => {
   const [open360, toggle360] = useState(false);
   const images = [
     {
@@ -58,9 +58,9 @@ const DetailHeroSection = () => {
         </span>
       </div>
       {open360 ? (
-        <React360 />
+      <ReactImageGallery items={images} thumbnailPosition="left" />
       ) : (
-        <ReactImageGallery items={images} thumbnailPosition="left" />
+        <React360 {...{Images360, id}} />
       )}
     </div>
   );

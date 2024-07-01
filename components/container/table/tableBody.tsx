@@ -50,7 +50,7 @@ const CustomTableBody = ({
                   {cell.column.id.includes("image") ? (
                     <div className="table-image relative">
                       <LazyImage
-                        src={IMAGE_URL + "small-" + cell?.row.original["image"]}
+                        src={IMAGE_URL + "/small-" + cell?.row.original["image"]}
                         alt="table-image"
                         fill
                         loading="lazy"
@@ -62,7 +62,7 @@ const CustomTableBody = ({
                       {titleImage && (
                         <div className="table-image relative">
                           <LazyImage
-                            src={IMAGE_URL + cell?.row?.original[titleImage]}
+                            src={IMAGE_URL + '/' + cell?.row?.original[titleImage]}
                             alt="table-image"
                             width={70}
                             height={50}

@@ -7,13 +7,15 @@ import LazyImage from "../../components/lazyImage";
 interface ImageUploadCardProps {
   onChange: any;
   value: any;
+  id: string;
 }
 
 const ImageUploadCard = ({
   value,
+  id,
   onChange
 }: ImageUploadCardProps) => {
-  const imgUrl = IMAGE_URL + value;
+  const imgUrl = IMAGE_URL + '/' + value;
   const [tempImage, setTempImage] = useState<any>(imgUrl);
 
   useEffect(() => {
@@ -38,6 +40,11 @@ const ImageUploadCard = ({
   const onDrop = (e: any) => {
     const file = e.files[0];
     if (file) {
+    //   const originalFileName = file.name;
+    // const extension = originalFileName.split('.').pop();
+    // const baseName = originalFileName.substring(0, originalFileName.lastIndexOf('.'));
+    // const suffix = baseName.substring(baseName.lastIndexOf('-'));
+    //   const newFile = new File([file], `${suffix}.${extension}`, { type: file.type });
       const reader = new FileReader();
       reader.addEventListener(
         "load",
@@ -47,8 +54,8 @@ const ImageUploadCard = ({
         false
       );
       reader?.readAsDataURL(file);
-    }
     onChange(file);
+    }
   };
 
   return (

@@ -8,6 +8,7 @@ import {
 import {
   CRUD_VEHICLE,
   CRUD_VEHICLE_ENUM,
+  GET_IMAGES_360,
   GET_VARIANT_FEATURE,
   GET_VARIANT_INSPECTION,
   GET_VARIANT_SPECIFICATION,
@@ -35,7 +36,7 @@ async function getData(token: string, _id: string) {
         await ServerSideGetWithId(token, GET_VEHICLE_SPECIFICATION, id),
         await ServerSideGetWithId(token, GET_VEHICLE_FEATURE, id),
         await ServerSideGetWithId(token, GET_VEHICLE_INSPECTION, id),
-
+        await ServerSideGetWithId(token, GET_IMAGES_360, id),
       ];
       const [
         vehicle,
@@ -46,7 +47,8 @@ async function getData(token: string, _id: string) {
         vechile_images,
         vehicle_specification,
         vehicle_features,
-        vehicle_inspection
+        vehicle_inspection,
+        vehicle_360_images
       ] = res;
       return {
         vehicle,
@@ -57,7 +59,8 @@ async function getData(token: string, _id: string) {
         vechile_images,
         vehicle_specification,
         vehicle_features,
-        vehicle_inspection
+        vehicle_inspection,
+        vehicle_360_images
       };
     } else {
       const res = [
@@ -84,7 +87,8 @@ const AddInventory = async ({ params }: any) => {
     vechile_images,
     vehicle_specification,
     vehicle_features,
-    vehicle_inspection
+    vehicle_inspection,
+    vehicle_360_images
   }: any = await getData(token, _id);
   const ids = _id?.split("_") || [];
   const id = ids[0] || '';
@@ -105,7 +109,8 @@ const AddInventory = async ({ params }: any) => {
             vechile_images,
             vehicle_specification,
             vehicle_features,
-            vehicle_inspection
+            vehicle_inspection,
+            vehicle_360_images
           }}
         />
       </FormContainer>

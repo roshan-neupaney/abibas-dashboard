@@ -18,7 +18,7 @@ const CustomDropzone = ({
   error = "",
   required = false,
 }: CustomDropzoneProps) => {
-  const imgUrl = IMAGE_URL + "small-" + value;
+  const imgUrl = IMAGE_URL + "/small-" + value;
   const [tempImage, setTempImage] = useState(addImage);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

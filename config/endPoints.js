@@ -42,4 +42,5 @@ export const GET_OFFER_LIST = "/vehicle/vehicleOfferList";
 export const GET_ALL_BOOKED_LIST = '/vehicle/allBookedList'
 export const GET_ALL_OFFER_LIST = '/vehicle/allOffList'
 export const GET_ALL_TEST_DRIVE_LIST = '/vehicle/allTestDriveList'
-export const GET_ALL_WATCH_LIST = '/vehicle/allWatchList'
+export const GET_ALL_WATCH_LIST = '/vehicle/allWatchList';
+export const GET_IMAGES_360 ='/vehicle/getImages360';

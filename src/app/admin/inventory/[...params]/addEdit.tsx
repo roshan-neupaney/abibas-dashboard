@@ -5,6 +5,7 @@ import VehicleImages from "../../../../../components/addCar/images";
 import AddSpecifications from "../../../../../components/addCar/addSpecifications";
 import AddFeatures from "../../../../../components/addCar/addFeatures";
 import AddInspections from "../../../../../components/addCar/addInspections";
+import Vehicle360Images from "../../../../../components/addCar/add360Image";
 
 interface VehicleProps {
   isEdit: boolean;
@@ -19,6 +20,7 @@ interface VehicleProps {
   vehicle_specification: any;
   vehicle_features: any;
   vehicle_inspection: any;
+  vehicle_360_images: any;
 }
 
 const AddEditVehicle = ({
@@ -34,6 +36,7 @@ const AddEditVehicle = ({
   vehicle_specification,
   vehicle_features,
   vehicle_inspection,
+  vehicle_360_images,
 }: VehicleProps) => {
   const [active, setActive] = useState(0);
   return (
@@ -83,6 +86,14 @@ const AddEditVehicle = ({
               >
                 Inspections
               </div>
+              <div
+                className={`nav-tabs flex items-center cursor-pointer ${
+                  active == 5 ? "active-navTab" : "inactive-navTab"
+                }`}
+                onClick={() => setActive(5)}
+              >
+                360 Images
+              </div>
             </>
           )}
         </div>
@@ -105,10 +116,12 @@ const AddEditVehicle = ({
         <AddFeatures
           {...{ variant_feature, token, isEdit, id, vehicle_features }}
         />
-      ) : (
+      ) : active === 4 ? (
         <AddInspections
           {...{ variant_inspection, token, isEdit, id, vehicle_inspection }}
         />
+      ) : (
+        <Vehicle360Images {...{ isEdit, token, id, vehicle_360_images }} />
       )}
     </div>
   );

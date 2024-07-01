@@ -11,10 +11,10 @@ import LeftBackDoor from '../../public/images/DamagedCarParts/stock-photo-damage
 import LeftFrontDoor from '../../public/images/DamagedCarParts/top-5-vehicle-parts-most-commonly-damaged-in-auto-accidents.jpg'
 import RightBackWindow from '../../public/images/DamagedCarParts/xga-4x3-5-of-the-most-easily-damaged-parts-of-a-car-1661178209.jpg'
 
-const Overview = () => {
+const Overview = ({Images360, id}:any) => {
   return (
     <div className="body-container flex gap-5 p-4">
-      <DetailBox />
+      <DetailBox {...{Images360, id}} />
       <SideBar />
     </div>
   );
@@ -22,7 +22,7 @@ const Overview = () => {
 
 export default Overview;
 
-const DetailBox = () => {
+const DetailBox = ({Images360, id}: any) => {
 
   const damagedImages = {
     frontLeftHeadlight: frontBumper,
@@ -34,7 +34,7 @@ const DetailBox = () => {
 
   return (
     <div className="flex flex-1 flex-col gap-2">
-      <DetailHeroSection />
+      <DetailHeroSection {...{Images360, id}} />
       <ProductOverview />
       <CarSpecification />
     <CarSvg damagedImages={damagedImages} />
