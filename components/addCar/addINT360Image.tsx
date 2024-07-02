@@ -7,6 +7,7 @@ import { UUidGenerator } from "../../utilities/helper";
 import { SubmitButton } from "@/subComponents/buttons";
 import toast from "react-hot-toast";
 import {
+  FormdataPatch,
   FormdataPost,
   VechicleImagesPatch,
 } from "../../utilities/apiCall";
@@ -14,27 +15,25 @@ import { CRUD_VEHICLE } from "../../config/endPoints";
 import { useRouter } from "next/navigation";
 import clearCachesByServerAction from "../../hooks/revalidate";
 
-interface Vehicle360ImagesProps {
+interface VehicleInt360ImagesProps {
   isEdit: boolean;
   token: string;
   id: string;
-  vehicle_ext_360_images: any;
+  vehicle_int_360_images: any;
 }
 
-const Vehicle360Images = ({
+const VehicleInt360Images = ({
   isEdit,
   token,
   id,
-  vehicle_ext_360_images,
-}: Vehicle360ImagesProps) => {
+  vehicle_int_360_images,
+}: VehicleInt360ImagesProps) => {
   const [imageCards, setImageCards] = useState([{ id: "", image: "" }]);
-  const isEditable = vehicle_ext_360_images?.data?.length > 0;
-  const beautifiedImageList = vehicle_ext_360_images?.data?.map(
-    (items: any) => {
-      return { id: items.id, image: items.image_name };
-    }
-  );
-
+  const isEditable = vehicle_int_360_images?.data?.length > 0;
+  const beautifiedImageList = vehicle_int_360_images?.data?.map((items: any) => {
+    return { id: items.id, image: items.image_name };
+  });
+  console.log('vehicle_int_360_images', vehicle_int_360_images)
   const [deletedImages, setDeletedImages] = useState<any>([]);
 
   useEffect(() => {
@@ -73,7 +72,7 @@ const Vehicle360Images = ({
     });
     setImageCards(filteredData);
   };
-  console.log("image", imageCards);
+console.log('image', imageCards)
   const handleAdd = async () => {
     setLoading(true);
     try {
@@ -83,21 +82,21 @@ const Vehicle360Images = ({
       });
 
       const response = await FormdataPost(
-        CRUD_VEHICLE + "/" + id + "/images360/EXT",
+        CRUD_VEHICLE + "/" + id + "/images360/INT",
         formData,
         token
       );
       const { status }: any = response;
       if (status) {
-        toast.success("Successfully Updated Vehicle Details");
+        toast.success("Successfully Added Vehicle Interior Images");
         clearCachesByServerAction("/admin/inventory");
         router.push("/admin/inventory");
       } else {
-        toast.error("Error While Updating Vehicle Details");
+        toast.error("Error While Adding Vehicle Interior Images");
         setLoading(false);
       }
     } catch (e) {
-      toast.error("Error While Updating");
+      toast.error("Error While Adding");
       setLoading(false);
     }
   };
@@ -112,17 +111,17 @@ const Vehicle360Images = ({
       });
       formData.append("deleteImages", JSON.stringify(deletedImages));
       const response = await VechicleImagesPatch(
-        CRUD_VEHICLE + "/" + id + "/images360/EXT",
+        CRUD_VEHICLE + "/" + id + "/images360/INT",
         formData,
         token
       );
       const { status }: any = response;
       if (status) {
-        toast.success("Successfully Updated Vehicle Details");
+        toast.success("Successfully Updated Vehicle Interior Images");
         clearCachesByServerAction("/admin/inventory");
         router.push("/admin/inventory");
       } else {
-        toast.error("Error While Updating Vehicle Details");
+        toast.error("Error While Updating Vehicle Interior Images");
         setLoading(false);
       }
     } catch (e) {
@@ -145,7 +144,7 @@ const Vehicle360Images = ({
                 className="absolute bg-[#FCFCFC] border"
                 onClick={() => removeCard(cards.id)}
               >
-                <Image src={RemoveIcon} width={25} height={25} alt="" />
+                <Image src={RemoveIcon} width={25} height={25} alt="" /> 
               </span>
             </div>
           );
@@ -168,4 +167,4 @@ const Vehicle360Images = ({
   );
 };
 
-export default Vehicle360Images;
+export default VehicleInt360Images;

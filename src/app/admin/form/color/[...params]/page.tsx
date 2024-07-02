@@ -4,8 +4,10 @@ import { cookies } from "next/headers";
 import { ServerSideGetWithId } from "../../../../../../utilities/apiCall";
 import { CRUD_COLOR_CHOICE } from "../../../../../../config/endPoints";
 import AddEditColor from "./addEdit";
+import { authorization } from "../../../../../../hoc/auth";
 
 async function getData(token: any, id: string) {
+  authorization(token);
   try {
     const res = await ServerSideGetWithId(token, CRUD_COLOR_CHOICE, id);
     return res?.data;

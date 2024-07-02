@@ -6,6 +6,9 @@ import AddSpecifications from "../../../../../components/addCar/addSpecification
 import AddFeatures from "../../../../../components/addCar/addFeatures";
 import AddInspections from "../../../../../components/addCar/addInspections";
 import Vehicle360Images from "../../../../../components/addCar/add360Image";
+import Demo360Images from "../../../../../components/addCar/demo360Upload";
+import VehicleInt360Images from "../../../../../components/addCar/addINT360Image";
+import VehicleDamagedImages from "../../../../../components/addCar/addDamagePartImage";
 
 interface VehicleProps {
   isEdit: boolean;
@@ -20,7 +23,8 @@ interface VehicleProps {
   vehicle_specification: any;
   vehicle_features: any;
   vehicle_inspection: any;
-  vehicle_360_images: any;
+  vehicle_ext_360_images: any;
+  vehicle_int_360_images: any;
 }
 
 const AddEditVehicle = ({
@@ -36,7 +40,8 @@ const AddEditVehicle = ({
   vehicle_specification,
   vehicle_features,
   vehicle_inspection,
-  vehicle_360_images,
+  vehicle_ext_360_images,
+  vehicle_int_360_images,
 }: VehicleProps) => {
   const [active, setActive] = useState(0);
   return (
@@ -92,7 +97,23 @@ const AddEditVehicle = ({
                 }`}
                 onClick={() => setActive(5)}
               >
-                360 Images
+                Exterior 360 Images
+              </div>
+              <div
+                className={`nav-tabs flex items-center cursor-pointer ${
+                  active == 6 ? "active-navTab" : "inactive-navTab"
+                }`}
+                onClick={() => setActive(6)}
+              >
+                Interior 360 Images
+              </div>
+              <div
+                className={`nav-tabs flex items-center cursor-pointer ${
+                  active == 7 ? "active-navTab" : "inactive-navTab"
+                }`}
+                onClick={() => setActive(7)}
+              >
+                Damaged Parts Images
               </div>
             </>
           )}
@@ -120,8 +141,16 @@ const AddEditVehicle = ({
         <AddInspections
           {...{ variant_inspection, token, isEdit, id, vehicle_inspection }}
         />
+      ) : active === 5 ? (
+        <Vehicle360Images {...{ isEdit, token, id, vehicle_ext_360_images }} />
+      ) : active === 6 ? (
+        <VehicleInt360Images
+          {...{ isEdit, token, id, vehicle_int_360_images }}
+        />
       ) : (
-        <Vehicle360Images {...{ isEdit, token, id, vehicle_360_images }} />
+        <VehicleDamagedImages
+          {...{ isEdit, token, id, vehicle_int_360_images }}
+        />
       )}
     </div>
   );

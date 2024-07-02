@@ -6,8 +6,8 @@ import { ServerSideGetWithParams } from "../../../../utilities/apiCall";
 import TestDrives from "./testDrive";
 
 async function getData(token: any, page: string, pageSize: string) {
+  authorization(token);
   try {
-    authorization(token);
     const res = [
       await ServerSideGetWithParams(
         token,

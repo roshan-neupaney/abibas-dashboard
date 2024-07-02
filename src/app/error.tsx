@@ -17,7 +17,7 @@ export default function Error  ({
 
   return (
     <div className='bg-[#fcfcfc]'>
-      <h1 >Something went wrong!</h1>
+      <div  className='' style={{fontSize: '2.25rem'}} >Something went wrong!</div>
       
       <button
         onClick={

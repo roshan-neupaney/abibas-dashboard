@@ -5,8 +5,10 @@ import { cookies } from "next/headers";
 import { ServerSideGetWithId } from "../../../../../../utilities/apiCall";
 import { CRUD_BODY_TYPE } from "../../../../../../config/endPoints";
 import AddEditBodyType from "./addEdit";
+import { authorization } from "../../../../../../hoc/auth";
 
 async function getData(token: any, id: string) {
+  authorization(token);
   try {
     const res = await ServerSideGetWithId(token, CRUD_BODY_TYPE, id);
     return res?.data;

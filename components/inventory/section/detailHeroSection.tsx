@@ -1,9 +1,9 @@
 import { useState } from "react";
 import ReactImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import React360 from "../360View";
+import Vehicle360View from "../360View";
 
-const DetailHeroSection = ({Images360, id}:any) => {
+const DetailHeroSection = ({ExtImages360, IntImages360, id}:any) => {
   const [open360, toggle360] = useState(false);
   const images = [
     {
@@ -60,7 +60,7 @@ const DetailHeroSection = ({Images360, id}:any) => {
       {open360 ? (
       <ReactImageGallery items={images} thumbnailPosition="left" />
       ) : (
-        <React360 {...{Images360, id}} />
+        <Vehicle360View {...{ExtImages360, IntImages360}} />
       )}
     </div>
   );

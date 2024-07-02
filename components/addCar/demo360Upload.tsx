@@ -7,34 +7,34 @@ import { UUidGenerator } from "../../utilities/helper";
 import { SubmitButton } from "@/subComponents/buttons";
 import toast from "react-hot-toast";
 import {
+  FormdataPatch,
   FormdataPost,
   VechicleImagesPatch,
 } from "../../utilities/apiCall";
 import { CRUD_VEHICLE } from "../../config/endPoints";
 import { useRouter } from "next/navigation";
 import clearCachesByServerAction from "../../hooks/revalidate";
+import DemoUploadCard from "@/subComponents/demoUpload";
 
-interface Vehicle360ImagesProps {
+interface Demo360ImagesProps {
   isEdit: boolean;
   token: string;
   id: string;
-  vehicle_ext_360_images: any;
+  vehicle_360_images: any;
 }
 
-const Vehicle360Images = ({
+const Demo360Images = ({
   isEdit,
   token,
   id,
-  vehicle_ext_360_images,
-}: Vehicle360ImagesProps) => {
+  vehicle_360_images,
+}: Demo360ImagesProps) => {
   const [imageCards, setImageCards] = useState([{ id: "", image: "" }]);
-  const isEditable = vehicle_ext_360_images?.data?.length > 0;
-  const beautifiedImageList = vehicle_ext_360_images?.data?.map(
-    (items: any) => {
-      return { id: items.id, image: items.image_name };
-    }
-  );
-
+  const isEditable = vehicle_360_images?.data?.length > 0;
+  const beautifiedImageList = vehicle_360_images?.data?.map((items: any) => {
+    return { id: items.id, image: items.image_name };
+  });
+  console.log('vehicle_360_images', vehicle_360_images)
   const [deletedImages, setDeletedImages] = useState<any>([]);
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const Vehicle360Images = ({
     });
     setImageCards(filteredData);
   };
-  console.log("image", imageCards);
+console.log('image', imageCards)
   const handleAdd = async () => {
     setLoading(true);
     try {
@@ -137,7 +137,10 @@ const Vehicle360Images = ({
         {imageCards?.map((cards: any, index: number) => {
           return (
             <div key={index} className="flex relative rounded-lg">
-              <ImageUploadCard
+              <DemoUploadCard
+              id={id}
+              setImageCard={setImageCards}
+              addCard={addCard}
                 value={cards.image}
                 onChange={(val: any) => updateImageCard(cards.id, val, "image")}
               />
@@ -168,4 +171,4 @@ const Vehicle360Images = ({
   );
 };
 
-export default Vehicle360Images;
+export default Demo360Images;

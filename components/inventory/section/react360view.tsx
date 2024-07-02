@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 // @ts-ignore
 import ThreeSixty from "react-360-view";
-import { IMAGE_URL } from "../../config/constants";
+import { IMAGE_URL } from "../../../config/constants";
 
 const Vehicle360View =({ExtImages360, IntImages360}: any) => {
   

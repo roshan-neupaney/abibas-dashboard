@@ -21,21 +21,24 @@ async function getData(token: string, id: string) {
       await ServerSideGetWithId(token, GET_BOOKING_LIST, id),
       await ServerSideGetWithId(token, GET_TEST_DRIVE_LIST, id),
       await ServerSideGetWithId(token, GET_OFFER_LIST, id),
-      await ServerSideGetWithId(token, GET_IMAGES_360, id),
+      await ServerSideGetWithId(token, GET_IMAGES_360, id+'/EXT'),
+      await ServerSideGetWithId(token, GET_IMAGES_360, id+'/INT'),
     ];
     const [
       watchList,
       bookingList,
       testDriveList,
       offerList,
-      vehicle_360_images,
+      ext_360_images,
+      int_360_images,
     ] = res;
     return {
       watchList,
       bookingList,
       testDriveList,
       offerList,
-      vehicle_360_images,
+      ext_360_images,
+      int_360_images
     };
   } catch (e) {}
 }
@@ -44,7 +47,7 @@ const CarDetails = async ({ params }: any) => {
   const _id = params.slug;
   const id = _id.split("_")[0];
   const token = cookies().get("access_token")?.value || "";
-  const { watchList, bookingList, testDriveList, offerList, vehicle_360_images }: any =
+  const { watchList, bookingList, testDriveList, offerList, ext_360_images, int_360_images }: any =
     await getData(token, id);
   return (
     <>
@@ -55,7 +58,8 @@ const CarDetails = async ({ params }: any) => {
           bookingList={bookingList}
           testDriveList={testDriveList}
           offerList={offerList}
-          Images360={vehicle_360_images}
+          ExtImages360={ext_360_images}
+          IntImages360={int_360_images}
           {...{ token, id }}
         />
       </DetailContainer>

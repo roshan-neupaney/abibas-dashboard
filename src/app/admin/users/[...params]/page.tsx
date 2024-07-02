@@ -5,8 +5,10 @@ import { cookies } from "next/headers";
 import { ServerSideGetWithId } from "../../../../../utilities/apiCall";
 import { CRUD_USER } from "../../../../../config/endPoints";
 import AddEditUsers from "./addEdit";
+import { authorization } from "../../../../../hoc/auth";
 
 async function getData(token: any, id: string) {
+  authorization(token);
   try {
     const res = await ServerSideGetWithId(token, CRUD_USER, id);
     return res?.data;

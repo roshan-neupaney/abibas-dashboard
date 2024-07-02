@@ -10,8 +10,8 @@ import {
 import WatchLists from "./watchList";
 
 async function getData(token: any, page: string, pageSize: string) {
+  authorization(token);
   try {
-    authorization(token);
     const res = [
       await ServerSideGetWithParams(
         token,

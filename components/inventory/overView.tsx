@@ -11,10 +11,10 @@ import LeftBackDoor from '../../public/images/DamagedCarParts/stock-photo-damage
 import LeftFrontDoor from '../../public/images/DamagedCarParts/top-5-vehicle-parts-most-commonly-damaged-in-auto-accidents.jpg'
 import RightBackWindow from '../../public/images/DamagedCarParts/xga-4x3-5-of-the-most-easily-damaged-parts-of-a-car-1661178209.jpg'
 
-const Overview = ({Images360, id}:any) => {
+const Overview = ({ExtImages360, IntImages360, id}:any) => {
   return (
     <div className="body-container flex gap-5 p-4">
-      <DetailBox {...{Images360, id}} />
+      <DetailBox {...{ExtImages360, IntImages360, id}} />
       <SideBar />
     </div>
   );
@@ -22,19 +22,47 @@ const Overview = ({Images360, id}:any) => {
 
 export default Overview;
 
-const DetailBox = ({Images360, id}: any) => {
+const DetailBox = ({ExtImages360, IntImages360, id}: any) => {
 
   const damagedImages = {
-    frontLeftHeadlight: frontBumper,
-    LeftFrontDoor: LeftFrontDoor,
-    LeftBackDoor: LeftBackDoor,
-    rearLeftHeadlight: rearLeftHeadlight,
-    RightBackWindow: RightBackWindow
+    grille: '/grille',
+    frontBumper: '/frontBumper',
+    leftFrontHeadLight: '/leftFrontHeadLight',
+    hood: '/hood',
+    leftFender : '/leftFender',
+    frontWindShield: '/frontWindShield',
+    leftSideViewMirror: '/leftSideViewMirror',
+    leftFrontDoor: '/leftFrontDoor',
+    leftFrontWindow: '/leftFrontWindow',
+    roof: '/roof',
+    leftRunningBoard: '/leftRunningBoard',
+    leftRearDoor: '/leftRearDoor',
+    leftRearWindow: '/leftRearWindow',
+    leftQuarterPanel: '/leftQuarterPanel',
+    leftRearHeadlight: '/leftRearHeadlight',
+    trunkLid: '/trunkLid',
+    rearWindShield: '/rearWindShield',
+    rearBumper: '/rearBumper',
+    rightRearHeadlight: '/rightRearHeadlight',
+    rightQuarterPanel: '/rightQuarterPanel',
+    rightRearDoor: '/rightRearDoor',
+    rightRearWindow: '/rightRearWindow',
+    rightRunningBoard: '/rightRunningBoard',
+    rightFrontDoor: '/rightFrontDoor',
+    rightFrontWindow: '/rightFrontWindow',
+    rightSideViewMirror: '/rightSideViewMirror',
+    rightFender: '/rightFender',
+    rightFrontHeadlight: '/rightFrontHeadlight',
+    frontLeftHeadlight: '/frontLeftHeadlight',
+    LeftFrontDoor: '/LeftFrontDoor',
+    LeftBackDoor: '/LeftBackDoor',
+    rearLeftHeadlight: '/rearLeftHeadlight',
+    RightBackWindow: '/RightBackWindow'
   }
 
   return (
     <div className="flex flex-1 flex-col gap-2">
-      <DetailHeroSection {...{Images360, id}} />
+      <DetailHeroSection {...{ExtImages360, IntImages360, id}} />
       <ProductOverview />
       <CarSpecification />
     <CarSvg damagedImages={damagedImages} />

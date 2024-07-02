@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import LazyImage from "./lazyImage";
 
 const CarSvg = ({ damagedImages }: any) => {
   const firstImage = Object.keys(damagedImages)[0];
-  const [value, setValue] = useState( damagedImages[firstImage] ||'');
+  const [value, setValue] = useState(damagedImages[firstImage] || "");
   return (
     <div className="relative z-10 border border-[#d8dadb] rounded-lg flex justify-center">
       <svg
@@ -570,112 +571,591 @@ const CarSvg = ({ damagedImages }: any) => {
           d="M41.0242 177.496C40.9416 177.557 40.8647 177.652 40.7959 177.645C40.727 177.638 40.6719 177.529 40.6099 177.468C40.6788 177.413 40.7545 177.317 40.8234 177.324C40.8923 177.331 40.9622 177.434 41.0242 177.496Z"
           fill="#F9F9F9"
         />
-
-        {damagedImages?.frontLeftHeadlight && (
+        {/* Grille */}
+        {damagedImages?.grille && (
+          <circle
+            cx="5"
+            cy="100"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.grille)}
+            className="cursor-pointer"
+          >
+            <title>Grille</title>
+          </circle>
+        )}
+        {/* Front Bumper */}
+        {damagedImages?.frontBumper && (
+          <circle
+            cx="10"
+            cy="130"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.frontBumper)}
+            className="cursor-pointer"
+          >
+            <title>Front Bumper</title>
+          </circle>
+        )}
+        {/* Left Front Headlight */}
+        {damagedImages?.leftFrontHeadLight && (
           <circle
             cx="20"
-            cy="150"
-            r="6"
+            cy="160"
+            r="4"
             fill="#F3342F"
-            onClick={() => setValue(damagedImages?.frontLeftHeadlight)}
+            onClick={() => setValue(damagedImages?.leftFrontHeadLight)}
             className="cursor-pointer"
-          />
+          >
+            <title>Left Front Headlight</title>
+          </circle>
         )}
-        {damagedImages?.LeftFrontDoor && (
+        {damagedImages?.hood && (
+          <circle
+            cx="50"
+            cy="100"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.hood)}
+            className="cursor-pointer"
+          >
+            <title>Hood</title>
+          </circle>
+        )}
+        {/* Left Fender */}
+        {damagedImages?.leftFender && (
+          <circle
+            cx="100"
+            cy="180"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.leftFender)}
+            className="cursor-pointer"
+          >
+            <title>Left Fender</title>
+          </circle>
+        )}
+        {damagedImages?.frontWindShield && (
+          <circle
+            cx="150"
+            cy="100"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.frontWindShield)}
+            className="cursor-pointer"
+          >
+            <title>Front Windshield</title>
+          </circle>
+        )}
+
+        {/* Left Side View Mirror */}
+        {damagedImages?.leftSideViewMirror && (
+          <circle
+            cx="185"
+            cy="190"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.leftSideViewMirror)}
+            className="cursor-pointer"
+          >
+            <title>Left Side View Mirror</title>
+          </circle>
+        )}
+        {/* Left Front Door */}
+        {damagedImages?.leftFrontDoor && (
           <circle
             cx="230"
             cy="190"
-            r="6"
+            r="4"
             fill="#F3342F"
-            onClick={() => setValue(damagedImages?.LeftFrontDoor)}
+            onClick={() => setValue(damagedImages?.leftFrontDoor)}
             className="cursor-pointer"
-          />
+          >
+            <title>Left Front Door</title>
+          </circle>
         )}
-        {damagedImages?.LeftBackDoor && (
+        {/* Left Front Window*/}
+        {damagedImages?.leftFrontWindow && (
+          <circle
+            cx="230"
+            cy="170"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.leftFrontWindow)}
+            className="cursor-pointer"
+          >
+            <title>Left Front Window</title>
+          </circle>
+        )}
+        {/* Roof */}
+        {damagedImages?.roof && (
+          <circle
+            cx="300"
+            cy="100"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.roof)}
+            className="cursor-pointer"
+          >
+            <title>Roof</title>
+          </circle>
+        )}
+        {/* leftRunningBoard*/}
+        {damagedImages?.leftRunningBoard && (
+          <circle
+            cx="270"
+            cy="192"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.leftRunningBoard)}
+            className="cursor-pointer"
+          >
+            <title>Left Running Board</title>
+          </circle>
+        )}
+        {/* leftRearDoor*/}
+        {damagedImages?.leftRearDoor && (
           <circle
             cx="300"
             cy="190"
-            r="6"
+            r="4"
             fill="#F3342F"
-            onClick={() => setValue(damagedImages?.LeftBackDoor)}
+            onClick={() => setValue(damagedImages?.leftRearDoor)}
             className="cursor-pointer"
-          />
+          >
+            <title>Left Rear Door</title>
+          </circle>
         )}
-        {damagedImages?.rearLeftHeadlight && (
+        {/* leftRearWindow*/}
+        {damagedImages?.leftRearWindow && (
+          <circle
+            cx="300"
+            cy="170"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.leftRearWindow)}
+            className="cursor-pointer"
+          >
+            <title>Left Rear Window</title>
+          </circle>
+        )}
+        {damagedImages?.leftQuarterPanel && (
+          <circle
+            cx="430"
+            cy="170"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.leftQuarterPanel)}
+            className="cursor-pointer"
+          >
+            <title>Left Quarter Panel</title>
+          </circle>
+        )}
+        {/* Left Rear Headlight */}
+        {damagedImages?.leftRearHeadlight && (
+          <circle
+            cx="475"
+            cy="170"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.leftRearHeadlight)}
+            className="cursor-pointer"
+          >
+            <title>Left Rear Headlight</title>
+          </circle>
+        )}
+        {/* Trunk Lid/Tail Gate */}
+        {damagedImages?.trunkLid && (
+          <circle
+            cx="470"
+            cy="130"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.trunkLid)}
+            className="cursor-pointer"
+          >
+            <title>Trunk Lid/Tail Gate</title>
+          </circle>
+        )}
+        {/* Rear Windshield */}
+        {damagedImages?.rearWindShield && (
+          <circle
+            cx="400"
+            cy="100"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.rearWindShield)}
+            className="cursor-pointer"
+          >
+            <title>Rear Windshield</title>
+          </circle>
+        )}
+        {/* Rear Bumper */}
+        {damagedImages?.rearBumper && (
+          <circle
+            cx="495"
+            cy="80"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.rearBumper)}
+            className="cursor-pointer"
+          >
+            <title>Rear Bumper</title>
+          </circle>
+        )}
+        {/* Right Rear Headlight */}
+        {damagedImages?.rightRearHeadlight && (
           <circle
             cx="475"
             cy="25"
-            r="6"
+            r="4"
             fill="#F3342F"
-            onClick={() => setValue(damagedImages?.rearLeftHeadlight)}
+            onClick={() => setValue(damagedImages?.rightRearHeadlight)}
             className="cursor-pointer"
-          />
+          >
+            <title>Right Rear Headlight</title>
+          </circle>
         )}
-        {damagedImages?.RightBackWindow && (
+        {/* Right Quarter Panel */}
+        {damagedImages?.rightQuarterPanel && (
+          <circle
+            cx="430"
+            cy="25"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.rightQuarterPanel)}
+            className="cursor-pointer"
+          >
+            <title>Right Quarter Panel</title>
+          </circle>
+        )}
+        {/* Right Rear Door */}
+        {damagedImages?.rightRearDoor && (
+          <circle
+            cx="300"
+            cy="8"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.rightRearDoor)}
+            className="cursor-pointer"
+          >
+            <title>Right Rear Door</title>
+          </circle>
+        )}
+        {/* Right Rear Window */}
+        {damagedImages?.rightRearWindow && (
           <circle
             cx="300"
             cy="25"
-            r="6"
+            r="4"
             fill="#F3342F"
-            onClick={() => setValue(damagedImages?.RightBackWindow)}
+            onClick={() => setValue(damagedImages?.rightRearWindow)}
             className="cursor-pointer"
-          />
+          >
+            <title>Right Rear Window</title>
+          </circle>
+        )}
+        {/* Right Running Board */}
+        {damagedImages?.rightRunningBoard && (
+          <circle
+            cx="270"
+            cy="4"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.rightRunningBoard)}
+            className="cursor-pointer"
+          >
+            <title>Right Running Board</title>
+          </circle>
+        )}
+        {/* Right Front Door */}
+        {damagedImages?.rightFrontDoor && (
+          <circle
+            cx="230"
+            cy="8"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.rightFrontDoor)}
+            className="cursor-pointer"
+          >
+            <title>Right Front Door</title>
+          </circle>
+        )}
+        {/* Right Front Window */}
+        {damagedImages?.rightFrontWindow && (
+          <circle
+            cx="230"
+            cy="25"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.rightFrontWindow)}
+            className="cursor-pointer"
+          >
+            <title>Right Front Window</title>
+          </circle>
+        )}
+        {/* Right Side View Mirror */}
+        {damagedImages?.rightSideViewMirror && (
+          <circle
+            cx="185"
+            cy="7"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.rightSideViewMirror)}
+            className="cursor-pointer"
+          >
+            <title>Right Side View Mirror</title>
+          </circle>
+        )}
+        {/* Right Fender */}
+        {damagedImages?.rightFender && (
+          <circle
+            cx="100"
+            cy="12"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.rightFender)}
+            className="cursor-pointer"
+          >
+            <title>Right Fender</title>
+          </circle>
+        )}
+        {/* Right Front Headlight */}
+        {damagedImages?.rightFrontHeadlight && (
+          <circle
+            cx="20"
+            cy="40"
+            r="4"
+            fill="#F3342F"
+            onClick={() => setValue(damagedImages?.rightFrontHeadlight)}
+            className="cursor-pointer"
+          >
+            <title>Right Front Headlight</title>
+          </circle>
         )}
 
-        {/* <circle
-          cx="450"
-          cy="170"
-          r="6"
-          fill="#F3342F"
-          onClick={() => setValue(2)}
-          className="cursor-pointer"
-        /> */}
-
-        {value === damagedImages.frontLeftHeadlight ? (
-          <>
+        {/* lines */}
+        {value === damagedImages.grille ? (
+          <line
+            x1="5"
+            y1="100"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages.frontBumper ? (
+          <line
+            x1="10"
+            y1="130"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages.leftFrontHeadLight ? (
+          <line
+            x1="20"
+            y1="160"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.hood ? (
+          <line
+            x1="50"
+            y1="100"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.leftFender ? (
+          <line
+            x1="100"
+            y1="180"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.frontWindShield ? (
+          <line
+            x1="150"
+            y1="100"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.leftSideViewMirror ? (
+          <line
+            x1="185"
+            y1="190"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.leftFrontDoor ? (
+          <line
+            x1="230"
+            y1="190"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.leftFrontWindow ? (
+          <line
+            x1="230"
+            y1="170"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.roof ? (
+          <line
+            x1="300"
+            y1="100"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.leftRunningBoard ? (
+          <line
+            x1="270"
+            y1="192"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.leftRearDoor ? (
+          <line
+            x1="300"
+            y1="190"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.leftRearWindow ? (
+          <line
+            x1="300"
+            y1="170"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.leftQuarterPanel ? (
+          <line
+            x1="430"
+            y1="170"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.leftRearHeadlight ? (
+          <line
+            x1="475"
+            y1="170"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.trunkLid ? (
+          <line
+            x1="470"
+            y1="130"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.rearWindShield ? (
+          <line
+            x1="400"
+            y1="100"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.rearBumper ? (
+          <line
+            x1="495"
+            y1="80"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.rightRearHeadlight ? (
+          <line
+            x1="475"
+            y1="25"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.rightQuarterPanel ? (
+          <line
+            x1="430"
+            y1="25"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.rightRearDoor ? (
+          <line
+            x1="300"
+            y1="8"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.rightRearWindow ? (
+          <line
+            x1="300"
+            y1="25"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.rightRunningBoard ? (
+          <line
+            x1="270"
+            y1="4"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.rightFrontDoor ? (
+          <line
+            x1="230"
+            y1="8"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.rightFrontWindow ? (
+          <line
+            x1="230"
+            y1="25"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.rightSideViewMirror ? (
+          <line
+            x1="185"
+            y1="7"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : value === damagedImages?.rightFender ? (
+          <line
+            x1="100"
+            y1="12"
+            x2="250"
+            y2="270"
+            style={{ stroke: "#F3342F", strokeWidth: 1 }}
+          />
+        ) : (
+          value === damagedImages.rightFrontHeadlight && (
             <line
               x1="20"
-              y1="150"
-              x2="250"
-              y2="270"
-              style={{ stroke: "#F3342F", strokeWidth: 1 }}
-            />
-          </>
-        ) : value === damagedImages.LeftFrontDoor ? (
-          <>
-            <line
-              x1="230"
-              y1="190"
-              x2="250"
-              y2="270"
-              style={{ stroke: "#F3342F", strokeWidth: 1 }}
-            />
-          </>
-        ) : value === damagedImages.LeftBackDoor ? (
-          <>
-            <line
-              x1="300"
-              y1="190"
-              x2="250"
-              y2="270"
-              style={{ stroke: "#F3342F", strokeWidth: 1 }}
-            />
-          </>
-        ) : value === damagedImages?.rearLeftHeadlight ? (
-          <>
-            <line
-              x1="475"
-              y1="25"
-              x2="250"
-              y2="270"
-              style={{ stroke: "#F3342F", strokeWidth: 1 }}
-            />
-          </>
-        ) : (
-          value === damagedImages.RightBackWindow && (
-            <line
-              x1="300"
-              y1="25"
+              y1="40"
               x2="250"
               y2="270"
               style={{ stroke: "#F3342F", strokeWidth: 1 }}
@@ -683,16 +1163,11 @@ const CarSvg = ({ damagedImages }: any) => {
           )
         )}
       </svg>
-      {value && 
-      <div className="flex absolute top-[43%] -z-10 max-h-[30rem]">
-        <Image
-          src={value}
-          width={800}
-          height={100}
-          alt="damaged Part"
-        />
-      </div>
-      }
+      {value && (
+        <div className="flex absolute top-[43%] -z-10 max-h-[30rem]">
+          <LazyImage src={value} width={800} height={100} alt="damaged Part" />
+        </div>
+      )}
     </div>
   );
 };

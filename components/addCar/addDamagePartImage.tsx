@@ -7,34 +7,36 @@ import { UUidGenerator } from "../../utilities/helper";
 import { SubmitButton } from "@/subComponents/buttons";
 import toast from "react-hot-toast";
 import {
+  FormdataPatch,
   FormdataPost,
   VechicleImagesPatch,
 } from "../../utilities/apiCall";
 import { CRUD_VEHICLE } from "../../config/endPoints";
 import { useRouter } from "next/navigation";
 import clearCachesByServerAction from "../../hooks/revalidate";
+import CustomSelect from "@/subComponents/select";
 
-interface Vehicle360ImagesProps {
+interface VehicleDamagedImagesProps {
   isEdit: boolean;
   token: string;
   id: string;
-  vehicle_ext_360_images: any;
+  vehicle_int_360_images: any;
 }
 
-const Vehicle360Images = ({
+const VehicleDamagedImages = ({
   isEdit,
   token,
   id,
-  vehicle_ext_360_images,
-}: Vehicle360ImagesProps) => {
+  vehicle_int_360_images,
+}: VehicleDamagedImagesProps) => {
   const [imageCards, setImageCards] = useState([{ id: "", image: "" }]);
-  const isEditable = vehicle_ext_360_images?.data?.length > 0;
-  const beautifiedImageList = vehicle_ext_360_images?.data?.map(
+  const isEditable = vehicle_int_360_images?.data?.length > 0;
+  const beautifiedImageList = vehicle_int_360_images?.data?.map(
     (items: any) => {
       return { id: items.id, image: items.image_name };
     }
   );
-
+  console.log("vehicle_int_360_images", vehicle_int_360_images);
   const [deletedImages, setDeletedImages] = useState<any>([]);
 
   useEffect(() => {
@@ -83,21 +85,21 @@ const Vehicle360Images = ({
       });
 
       const response = await FormdataPost(
-        CRUD_VEHICLE + "/" + id + "/images360/EXT",
+        CRUD_VEHICLE + "/" + id + "/images360/INT",
         formData,
         token
       );
       const { status }: any = response;
       if (status) {
-        toast.success("Successfully Updated Vehicle Details");
+        toast.success("Successfully Added Vehicle Interior Images");
         clearCachesByServerAction("/admin/inventory");
         router.push("/admin/inventory");
       } else {
-        toast.error("Error While Updating Vehicle Details");
+        toast.error("Error While Adding Vehicle Interior Images");
         setLoading(false);
       }
     } catch (e) {
-      toast.error("Error While Updating");
+      toast.error("Error While Adding");
       setLoading(false);
     }
   };
@@ -112,17 +114,17 @@ const Vehicle360Images = ({
       });
       formData.append("deleteImages", JSON.stringify(deletedImages));
       const response = await VechicleImagesPatch(
-        CRUD_VEHICLE + "/" + id + "/images360/EXT",
+        CRUD_VEHICLE + "/" + id + "/images360/INT",
         formData,
         token
       );
       const { status }: any = response;
       if (status) {
-        toast.success("Successfully Updated Vehicle Details");
+        toast.success("Successfully Updated Vehicle Interior Images");
         clearCachesByServerAction("/admin/inventory");
         router.push("/admin/inventory");
       } else {
-        toast.error("Error While Updating Vehicle Details");
+        toast.error("Error While Updating Vehicle Interior Images");
         setLoading(false);
       }
     } catch (e) {
@@ -136,17 +138,28 @@ const Vehicle360Images = ({
       <div className="grid grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-10">
         {imageCards?.map((cards: any, index: number) => {
           return (
-            <div key={index} className="flex relative rounded-lg">
-              <ImageUploadCard
-                value={cards.image}
-                onChange={(val: any) => updateImageCard(cards.id, val, "image")}
+            <div className="flex flex-col">
+              <div key={index} className="flex relative rounded-lg">
+                <ImageUploadCard
+                  value={cards.image}
+                  onChange={(val: any) =>
+                    updateImageCard(cards.id, val, "image")
+                  }
+                />
+                <span
+                  className="absolute bg-[#FCFCFC] border"
+                  onClick={() => removeCard(cards.id)}
+                >
+                  <Image src={RemoveIcon} width={25} height={25} alt="" />
+                </span>
+              </div>
+              <CustomSelect
+                title=""
+                value={""}
+                onChange={() => {}}
+                data={[]}
+                placeholder="Select Damaged Body Part"
               />
-              <span
-                className="absolute bg-[#FCFCFC] border"
-                onClick={() => removeCard(cards.id)}
-              >
-                <Image src={RemoveIcon} width={25} height={25} alt="" />
-              </span>
             </div>
           );
         })}
@@ -168,4 +181,4 @@ const Vehicle360Images = ({
   );
 };
 
-export default Vehicle360Images;
+export default VehicleDamagedImages;

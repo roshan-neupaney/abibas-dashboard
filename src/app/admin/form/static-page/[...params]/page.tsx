@@ -11,8 +11,10 @@ import {
   CRUD_STATIC_PAGE,
 } from "../../../../../../config/endPoints";
 import AddEditStaticPage from "./addEdit";
+import { authorization } from "../../../../../../hoc/auth";
 
 async function getData(token: any, id: string) {
+  authorization(token);
   try {
     if (id) {
       const res = [

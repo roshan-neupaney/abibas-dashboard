@@ -5,8 +5,10 @@ import { cookies } from "next/headers";
 import { ServerSideGetWithId } from "../../../../../../utilities/apiCall";
 import { CRUD_FEATURE_CATEGORY } from "../../../../../../config/endPoints";
 import AddEditFeatureCategory from "./addEdit";
+import { authorization } from "../../../../../../hoc/auth";
 
 async function getData(token: any, id: string) {
+  authorization(token);
   try {
     const res = await ServerSideGetWithId(token, CRUD_FEATURE_CATEGORY, id);
     return res?.data;

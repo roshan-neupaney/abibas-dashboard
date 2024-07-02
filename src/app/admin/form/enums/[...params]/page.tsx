@@ -5,8 +5,10 @@ import { cookies } from "next/headers";
 import { ServerSideGetWithId } from "../../../../../../utilities/apiCall";
 import { CRUD_ENUM } from "../../../../../../config/endPoints";
 import AddEditEnum from "./addEdit";
+import { authorization } from "../../../../../../hoc/auth";
 
 async function getData(token: any, id: string) {
+  authorization(token);
   try {
     if(id){
       const res = [

@@ -7,12 +7,10 @@ import LazyImage from "../../components/lazyImage";
 interface ImageUploadCardProps {
   onChange: any;
   value: any;
-  id: string;
 }
 
 const ImageUploadCard = ({
   value,
-  id,
   onChange
 }: ImageUploadCardProps) => {
   const imgUrl = IMAGE_URL + '/' + value;

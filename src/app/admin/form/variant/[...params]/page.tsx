@@ -17,8 +17,10 @@ import {
 } from "../../../../../../config/endPoints";
 import AddEditVariant from "./addEdit";
 import { Metadata } from "next";
+import { authorization } from "../../../../../../hoc/auth";
 
 async function getData(token: any, id: string) {
+  authorization(token);
   try {
     if (id !== undefined) {
       const res = [

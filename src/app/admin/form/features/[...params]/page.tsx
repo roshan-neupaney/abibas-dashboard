@@ -12,8 +12,10 @@ import {
   CRUD_UNIT,
 } from "../../../../../../config/endPoints";
 import AddEditFeature from "./addEdit";
+import { authorization } from "../../../../../../hoc/auth";
 
 async function getData(token: any, id: string) {
+  authorization(token);
   try {
     if (id !== undefined) {
       const res = [

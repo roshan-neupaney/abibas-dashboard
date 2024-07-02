@@ -13,8 +13,10 @@ import {
 } from "../../../../../../config/endPoints";
 import AddEditInspection from "./addEdit";
 import { Metadata } from "next";
+import { authorization } from "../../../../../../hoc/auth";
 
 async function getData(token: any, id: string) {
+  authorization(token);
   try {
     if (id !== undefined) {
       const [inspection, inspection_category,body_part] = [

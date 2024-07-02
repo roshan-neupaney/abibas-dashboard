@@ -13,8 +13,10 @@ import {
   CRUD_MODEL,
 } from "../../../../../../config/endPoints";
 import AddEditModel from "./addEdit";
+import { authorization } from "../../../../../../hoc/auth";
 
 async function getData(token: any, id: string) {
+  authorization(token);
   try {
     if (id !== undefined) {
       const res = [

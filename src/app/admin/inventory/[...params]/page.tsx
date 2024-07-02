@@ -19,8 +19,10 @@ import {
 } from "../../../../../config/endPoints";
 import { cookies } from "next/headers";
 import AddEditVehicle from "./addEdit";
+import { authorization } from "../../../../../hoc/auth";
 
 async function getData(token: string, _id: string) {
+  authorization(token);
   try {
     if (_id) {
       const ids = _id.split("_");
@@ -36,7 +38,8 @@ async function getData(token: string, _id: string) {
         await ServerSideGetWithId(token, GET_VEHICLE_SPECIFICATION, id),
         await ServerSideGetWithId(token, GET_VEHICLE_FEATURE, id),
         await ServerSideGetWithId(token, GET_VEHICLE_INSPECTION, id),
-        await ServerSideGetWithId(token, GET_IMAGES_360, id),
+        await ServerSideGetWithId(token, GET_IMAGES_360, id+'/EXT'),
+        await ServerSideGetWithId(token, GET_IMAGES_360, id+'/INT'),
       ];
       const [
         vehicle,
@@ -48,7 +51,8 @@ async function getData(token: string, _id: string) {
         vehicle_specification,
         vehicle_features,
         vehicle_inspection,
-        vehicle_360_images
+        vehicle_ext_360_images,
+        vehicle_int_360_images
       ] = res;
       return {
         vehicle,
@@ -60,7 +64,8 @@ async function getData(token: string, _id: string) {
         vehicle_specification,
         vehicle_features,
         vehicle_inspection,
-        vehicle_360_images
+        vehicle_ext_360_images,
+        vehicle_int_360_images
       };
     } else {
       const res = [
@@ -88,7 +93,8 @@ const AddInventory = async ({ params }: any) => {
     vehicle_specification,
     vehicle_features,
     vehicle_inspection,
-    vehicle_360_images
+    vehicle_ext_360_images,
+    vehicle_int_360_images
   }: any = await getData(token, _id);
   const ids = _id?.split("_") || [];
   const id = ids[0] || '';
@@ -110,7 +116,8 @@ const AddInventory = async ({ params }: any) => {
             vehicle_specification,
             vehicle_features,
             vehicle_inspection,
-            vehicle_360_images
+            vehicle_ext_360_images,
+            vehicle_int_360_images
           }}
         />
       </FormContainer>

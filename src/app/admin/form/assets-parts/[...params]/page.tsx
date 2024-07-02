@@ -11,8 +11,10 @@ import {
   CRUD_ASSETS_PART_CATEGORY,
 } from "../../../../../../config/endPoints";
 import AddEditAssetsPart from "./addEdit";
+import { authorization } from "../../../../../../hoc/auth";
 
 async function getData(token: any, id: string) {
+  authorization(token);
   try {
     if (id) {
       const [assets_part, assets_part_category] = [
