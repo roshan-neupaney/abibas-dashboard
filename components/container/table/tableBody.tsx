@@ -5,7 +5,7 @@ import DeleteIcon from "../../../public/icons/deleteIcon.svg";
 import LazyImage from "../../lazyImage";
 import Link from "next/link";
 import { flexRender } from "@tanstack/react-table";
-import { BASE_URL, IMAGE_URL } from "../../../config/constants";
+import { IMAGE_URL } from "../../../config/constants";
 import { useRouter } from "next/navigation";
 
 interface CustomTableBodyProps {
@@ -15,6 +15,7 @@ interface CustomTableBodyProps {
   secondSubTitle?: string;
   thirdSubTitle?: string;
   internalTitleRoute?: string;
+  internalTitleRouteId?: string;
   toggleModal?: any;
   hideDelete?: boolean;
   hideEdit?: boolean;
@@ -28,6 +29,7 @@ const CustomTableBody = ({
   secondSubTitle = "",
   thirdSubTitle = "",
   internalTitleRoute = "",
+  internalTitleRouteId = "",
   toggleModal,
   hideDelete = false,
   hideEdit = false,
@@ -75,7 +77,7 @@ const CustomTableBody = ({
                         <div className="flex justify-start items-center body-medium">
                           {internalTitleRoute ? (
                             <Link
-                              href={internalTitleRoute + '/' + id}
+                              href={internalTitleRoute + '/' + cell?.row?.original[internalTitleRouteId]}
                               className="font-semibold"
                             >
                               {cell.row.original["title"]}

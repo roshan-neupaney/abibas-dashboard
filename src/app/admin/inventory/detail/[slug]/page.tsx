@@ -9,57 +9,60 @@ import {
   GET_IMAGES_360,
   GET_OFFER_LIST,
   GET_TEST_DRIVE_LIST,
+  GET_VEHICLE,
   GET_WATCH_LIST,
 } from "../../../../../../config/endPoints";
 import { authorization } from "../../../../../../hoc/auth";
 
-async function getData(token: string, id: string) {
+async function getData(token: string, _id: string) {
   authorization(token);
   try {
+    const ids = _id.split("_");
+    const [id, slug] = ids;
     const res = [
       await ServerSideGetWithId(token, GET_WATCH_LIST, id),
       await ServerSideGetWithId(token, GET_BOOKING_LIST, id),
       await ServerSideGetWithId(token, GET_TEST_DRIVE_LIST, id),
       await ServerSideGetWithId(token, GET_OFFER_LIST, id),
-      await ServerSideGetWithId(token, GET_IMAGES_360, id+'/EXT'),
-      await ServerSideGetWithId(token, GET_IMAGES_360, id+'/INT'),
+      await ServerSideGetWithId(token, GET_VEHICLE, slug),
     ];
-    const [
-      watchList,
-      bookingList,
-      testDriveList,
-      offerList,
-      ext_360_images,
-      int_360_images,
-    ] = res;
+    const [watchList, bookingList, testDriveList, offerList, vehicle_detail] =
+      res;
     return {
+      id,
+      slug,
       watchList,
       bookingList,
       testDriveList,
       offerList,
-      ext_360_images,
-      int_360_images
+      vehicle_detail,
     };
   } catch (e) {}
 }
 
 const CarDetails = async ({ params }: any) => {
   const _id = params.slug;
-  const id = _id.split("_")[0];
+
   const token = cookies().get("access_token")?.value || "";
-  const { watchList, bookingList, testDriveList, offerList, ext_360_images, int_360_images }: any =
-    await getData(token, id);
+  const {
+    watchList,
+    bookingList,
+    testDriveList,
+    offerList,
+    vehicle_detail,
+    id,
+  }: any = await getData(token, _id);
+  const pageTitle = vehicle_detail?.data?.title;
   return (
     <>
-      <PageHeader title="All New Hyundai Creta - 2021" showBack />
+      <PageHeader title={pageTitle} showBack />
       <DetailContainer>
         <InventoryDetail
           watchList={watchList}
           bookingList={bookingList}
           testDriveList={testDriveList}
           offerList={offerList}
-          ExtImages360={ext_360_images}
-          IntImages360={int_360_images}
+          vehicle_detail={vehicle_detail?.data}
           {...{ token, id }}
         />
       </DetailContainer>

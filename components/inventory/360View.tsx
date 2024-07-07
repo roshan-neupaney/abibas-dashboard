@@ -1,35 +1,38 @@
-import { useEffect } from "react";
-// @ts-ignore
-import ThreeSixty from "react-360-view";
-import { IMAGE_URL } from "../../config/constants";
+"use client";
 
-const Vehicle360View =({ExtImages360, IntImages360}: any) => {
-  
-  useEffect(() => {
-    const container = document.getElementById("identifier");
-    container?.addEventListener("wheel", (event) => {
-      event.stopPropagation();
-    });
-    return () => {
-      container?.removeEventListener("wheel", (event) => {
-        event.stopPropagation();
-      });
-    };
-  }, []);
+import { useState } from "react";
+import VehicleExterior360View from "./section/exterior360view";
+import VehicleInterior360View from "./section/interior360view";
 
-const imageName = ExtImages360?.data[0]?.image_name?.replace(/(\d+)(?=\.\w+$)/, '{index}');
-console.log(imageName);
-
+const Vehicle360View = ({ ExtImages360, IntImages360 }: any) => {
+  const [viewType, setViewType] = useState<string>("ext");
   return (
-    <div className="w-full">
-      <ThreeSixty
-        amount={ExtImages360?.data?.length}
-        imagePath={IMAGE_URL}
-        fileName={imageName}
-        disableZoomin
-      />
-    </div>
+    <>
+      <div className="relative w-full">
+        <div
+          className={`title-medium absolute z-10 bottom-[5%] left-1/3 py-2 px-4  rounded-xl cursor-pointer ${
+            viewType === "ext" ? "bg-[#10a9e650]" : "bg-[#20252950]"
+          }`}
+          onClick={() => setViewType("ext")}
+        >
+          <label className="text-white">Exterior</label>
+        </div>
+        <div
+          className={`title-medium absolute z-10 bottom-[5%] right-1/3 py-2 px-4  rounded-xl cursor-pointer ${
+            viewType === "int" ? "bg-[#10a9e650]" : "bg-[#20252950]"
+          }`}
+          onClick={() => setViewType("int")}
+        >
+          <label className="text-white">Interior</label>
+        </div>
+        {viewType === "ext" ? (
+          <VehicleExterior360View {...{ ExtImages360 }} />
+        ) : (
+          <VehicleInterior360View IntImages360={IntImages360} />
+        )}
+      </div>
+    </>
   );
-}
+};
 
 export default Vehicle360View;

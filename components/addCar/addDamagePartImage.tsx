@@ -11,7 +11,7 @@ import {
   FormdataPost,
   VechicleImagesPatch,
 } from "../../utilities/apiCall";
-import { CRUD_VEHICLE } from "../../config/endPoints";
+import { CRUD_VEHICLE, POST_SCRATCH } from "../../config/endPoints";
 import { useRouter } from "next/navigation";
 import clearCachesByServerAction from "../../hooks/revalidate";
 import CustomSelect from "@/subComponents/select";
@@ -21,6 +21,7 @@ interface VehicleDamagedImagesProps {
   token: string;
   id: string;
   vehicle_int_360_images: any;
+  vehicle_body_part: any;
 }
 
 const VehicleDamagedImages = ({
@@ -28,27 +29,31 @@ const VehicleDamagedImages = ({
   token,
   id,
   vehicle_int_360_images,
+  vehicle_body_part
 }: VehicleDamagedImagesProps) => {
-  const [imageCards, setImageCards] = useState([{ id: "", image: "" }]);
-  const isEditable = vehicle_int_360_images?.data?.length > 0;
-  const beautifiedImageList = vehicle_int_360_images?.data?.map(
-    (items: any) => {
-      return { id: items.id, image: items.image_name };
-    }
-  );
-  console.log("vehicle_int_360_images", vehicle_int_360_images);
+  const [imageCards, setImageCards] = useState<any>([]);
+  const isEditable = false;
+  // const beautifiedImageList = vehicle_int_360_images?.data?.map(
+  //   (items: any) => {
+  //     return { id: items.id, image_name: items.image_name };
+  //   }
+  // );
+  console.log("vehicle_body_part", vehicle_body_part);
+  const beautifiedBodyParts = vehicle_body_part?.data?.map((items: any) => {
+    return {id: items?.id, label: items?.title};
+  })
   const [deletedImages, setDeletedImages] = useState<any>([]);
 
-  useEffect(() => {
-    setImageCards(beautifiedImageList);
-  }, []);
+  // useEffect(() => {
+  //   setImageCards(beautifiedImageList);
+  // }, []);
   const [loading, setLoading] = useState(false);
   const uuid = UUidGenerator();
   const router = useRouter();
 
   const addCard = () => {
     setImageCards((prev: any) => {
-      return [...prev, { id: "uuid_" + uuid, image: "" }];
+      return [...prev, { id: "uuid_" + uuid, image_name: "", value: '', vehicle_id: id, status: 'ACTIVE' }];
     });
   };
 
@@ -75,18 +80,26 @@ const VehicleDamagedImages = ({
     });
     setImageCards(filteredData);
   };
-  console.log("image", imageCards);
-  const handleAdd = async () => {
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      imageCards?.map((items: any) => {
-        formData.append("file", items.image);
-      });
 
+  const beautifyPayload = (_data:any) => {
+    const filteredData = _data.map((items: any) => {
+      return {image_name: items.image_name, value: items.value, vehicle_id: items.vehicle_id, status: items.status}
+    })
+    return filteredData;
+  }
+  // console.log("image", imageCards);
+  const handleAdd = async () => {
+    // setLoading(true);
+    try {
+      const beautifiedPayload = beautifyPayload(imageCards);
+      console.log('imageCards', beautifiedPayload)
+      // const formData = new FormData();
+      // imageCards?.map((items: any) => {
+      //   formData.append("file", items.image);
+      // });
       const response = await FormdataPost(
-        CRUD_VEHICLE + "/" + id + "/images360/INT",
-        formData,
+        POST_SCRATCH,
+        beautifiedPayload,
         token
       );
       const { status }: any = response;
@@ -105,28 +118,30 @@ const VehicleDamagedImages = ({
   };
 
   const handleUpdate = async () => {
-    setLoading(true);
+    // setLoading(true);
     try {
-      const formData = new FormData();
-      imageCards?.map((items: any) => {
-        if (!(typeof items.image === "string"))
-          formData.append("file", items.image);
-      });
-      formData.append("deleteImages", JSON.stringify(deletedImages));
-      const response = await VechicleImagesPatch(
-        CRUD_VEHICLE + "/" + id + "/images360/INT",
-        formData,
-        token
-      );
-      const { status }: any = response;
-      if (status) {
-        toast.success("Successfully Updated Vehicle Interior Images");
-        clearCachesByServerAction("/admin/inventory");
-        router.push("/admin/inventory");
-      } else {
-        toast.error("Error While Updating Vehicle Interior Images");
-        setLoading(false);
-      }
+      const beautifiedPayload = beautifyPayload(imageCards);
+        console.log('imageCards', beautifiedPayload)
+      // const formData = new FormData();
+      // imageCards?.map((items: any) => {
+      //   if (!(typeof items.image === "string"))
+      //     formData.append("file", items.image);
+      // });
+      // formData.append("deleteImages", JSON.stringify(deletedImages));
+      // const response = await VechicleImagesPatch(
+      //   CRUD_VEHICLE + "/" + id + "/images360/INT",
+      //   formData,
+      //   token
+      // );
+      // const { status }: any = response;
+      // if (status) {
+      //   toast.success("Successfully Updated Vehicle Interior Images");
+      //   clearCachesByServerAction("/admin/inventory");
+      //   router.push("/admin/inventory");
+      // } else {
+      //   toast.error("Error While Updating Vehicle Interior Images");
+      //   setLoading(false);
+      // }
     } catch (e) {
       toast.error("Error While Updating");
       setLoading(false);
@@ -141,9 +156,9 @@ const VehicleDamagedImages = ({
             <div className="flex flex-col">
               <div key={index} className="flex relative rounded-lg">
                 <ImageUploadCard
-                  value={cards.image}
+                  value={cards.image_name}
                   onChange={(val: any) =>
-                    updateImageCard(cards.id, val, "image")
+                    updateImageCard(cards.id, val, "image_name")
                   }
                 />
                 <span
@@ -155,9 +170,9 @@ const VehicleDamagedImages = ({
               </div>
               <CustomSelect
                 title=""
-                value={""}
-                onChange={() => {}}
-                data={[]}
+                value={cards.value}
+                onChange={(val: string) => updateImageCard(cards.id, val, 'value')}
+                data={beautifiedBodyParts}
                 placeholder="Select Damaged Body Part"
               />
             </div>

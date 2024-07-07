@@ -3,64 +3,27 @@ import ReactImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import Vehicle360View from "../360View";
 
-const DetailHeroSection = ({ExtImages360, IntImages360, id}:any) => {
+const DetailHeroSection = ({ExtImages360, IntImages360, galleryImages}:any) => {
   const [open360, toggle360] = useState(false);
-  const images = [
-    {
-      original: "https://picsum.photos/id/1018/1000/600/",
-      thumbnail: "https://picsum.photos/id/1018/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1015/1000/600/",
-      thumbnail: "https://picsum.photos/id/1015/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1019/1000/600/",
-      thumbnail: "https://picsum.photos/id/1019/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1018/1000/600/",
-      thumbnail: "https://picsum.photos/id/1018/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1015/1000/600/",
-      thumbnail: "https://picsum.photos/id/1015/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1019/1000/600/",
-      thumbnail: "https://picsum.photos/id/1019/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1018/1000/600/",
-      thumbnail: "https://picsum.photos/id/1018/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1015/1000/600/",
-      thumbnail: "https://picsum.photos/id/1015/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1019/1000/600/",
-      thumbnail: "https://picsum.photos/id/1019/250/150/",
-    },
-  ];
+  
   return (
     <div
-      style={{ width: "100%" }}
+      style={{ width: "100%", height: 'fit-content' }}
       className="relative flex justify-center items-center"
     >
       <div
-        className="flex justify-center items-center py-3 px-10 absolute bottom-[5%] rounded bg-[#747878] z-10 cursor-pointer"
+        className="flex justify-center items-center absolute bottom-[5%] py-2 px-4 bg-[#20252938] rounded-xl z-10 cursor-pointer"
         onClick={() => toggle360(!open360)}
       >
         <span className="text-white text-base">
-          {open360 ? "Hide" : "Show"} 360&deg; VIEW
+          {open360 ? "Hide" : "Show"} 360&deg; view
           
         </span>
       </div>
       {open360 ? (
-      <ReactImageGallery items={images} thumbnailPosition="left" />
-      ) : (
         <Vehicle360View {...{ExtImages360, IntImages360}} />
+      ) : (
+        <ReactImageGallery items={galleryImages} thumbnailPosition="left" />
       )}
     </div>
   );

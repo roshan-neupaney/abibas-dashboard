@@ -44,3 +44,6 @@ export const GET_ALL_OFFER_LIST = '/vehicle/allOffList'
 export const GET_ALL_TEST_DRIVE_LIST = '/vehicle/allTestDriveList'
 export const GET_ALL_WATCH_LIST = '/vehicle/allWatchList';
 export const GET_IMAGES_360 ='/vehicle/getImages360';
+export const GET_VEHICLE ='/home';
+export const POST_SCRATCH ='/vehicle/createScratch';
+

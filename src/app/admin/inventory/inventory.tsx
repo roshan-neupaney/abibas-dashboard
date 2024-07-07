@@ -31,6 +31,7 @@ interface InventoryProps {
 }
 
 const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
+  // console.log('vehicleList', vehicleList)
   const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
   const [search, setSearch] = useState("");
   const router = useRouter();
@@ -153,6 +154,7 @@ const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
               <CustomTableHead {...{ table }} />
               <CustomTableBody
                 internalTitleRoute="/admin/inventory/detail"
+                internalTitleRouteId="slugId"
                 entireRoute="/admin/inventory/edit"
                 {...{ table, toggleModal }}
               />

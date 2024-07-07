@@ -319,6 +319,7 @@ export const beautifyVehicleList = (_data, vehicleEnums) => {
     const filteredData = data?.map((vehicle) => {
       const details = {
         id: "",
+        slugId: '',
         title: "",
         brand: "",
         model: "",
@@ -376,6 +377,7 @@ export const beautifyVehicleList = (_data, vehicleEnums) => {
         }
       );
       details.id = vehicle?.id + "_" + vehicle.varient_id || "";
+      details.slugId = vehicle?.id + '_' + vehicle.slug;
       details.title = vehicle?.title || "";
       details.status = vehicle?.status || "";
       details.km_run = vehicle?.km_run || "";

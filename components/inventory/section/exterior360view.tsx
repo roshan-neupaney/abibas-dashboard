@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import ThreeSixty from "react-360-view";
 import { IMAGE_URL } from "../../../config/constants";
 
-const Vehicle360View =({ExtImages360, IntImages360}: any) => {
+const VehicleExterior360View =({ExtImages360}: any) => {
   
   useEffect(() => {
     const container = document.getElementById("identifier");
@@ -17,13 +17,12 @@ const Vehicle360View =({ExtImages360, IntImages360}: any) => {
     };
   }, []);
 
-const imageName = ExtImages360?.data[0]?.image_name?.replace(/(\d+)(?=\.\w+$)/, '{index}');
-console.log(imageName);
+const imageName = ExtImages360[0]?.image_name?.replace(/(\d+)(?=\.\w+$)/, '{index}');
 
   return (
     <div className="w-full">
       <ThreeSixty
-        amount={ExtImages360?.data?.length}
+        amount={ExtImages360?.length}
         imagePath={IMAGE_URL}
         fileName={imageName}
         disableZoomin
@@ -32,4 +31,4 @@ console.log(imageName);
   );
 }
 
-export default Vehicle360View;
+export default VehicleExterior360View;

@@ -6,6 +6,9 @@ const nextConfig = {
       {
         hostname: "apidev.nepalhomes.com",
       },
+      {
+        hostname: "localhost",
+      },
     ],
   },
 };

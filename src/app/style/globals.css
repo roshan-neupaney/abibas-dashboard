@@ -771,6 +771,14 @@ input[type="number"]::-webkit-outer-spin-button {
   img {
   height: 100vh;
 }
+.image-gallery-content
+  .image-gallery-slide-wrapper
+  .image-gallery-swipe
+  .image-gallery-slides
+  .image-gallery-slide
+  img {
+  height: 68vh;
+}
 
 .image-gallery-svg {
   height: 50px !important;

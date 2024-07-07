@@ -226,7 +226,7 @@ export const specificationCategoryValidation = (payload) => {
 
 export const assetsPartValidation = (payload) => {
   try {
-    const { title, description, image, assets_part_category_id } = payload;
+    const { title, description, file, assets_part_category_id } = payload;
     let count = 0;
     const errorMessage = {
       title: "",
@@ -247,7 +247,7 @@ export const assetsPartValidation = (payload) => {
         "Assets Part Category is required.";
       count++;
     }
-    if (image?.length == 0) {
+    if (file?.length == 0) {
       errorMessage.file = "Image is required.";
       count++;
     }
