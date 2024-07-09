@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${redHatDisplay.variable} ${roboto.variable} ${poppins.variable}`}
+        className={`${redHatDisplay.variable} ${roboto.variable} ${poppins.variable} bg-[#fcfcfc]`}
       >
         {/* <NextTopLoader /> */}
         <Toaster />

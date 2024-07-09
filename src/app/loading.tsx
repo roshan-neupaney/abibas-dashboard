@@ -5,7 +5,6 @@ import CarLoader from "../../components/loader/carLoader";
 const Loading = () => {
   return (
     <div className="flex flex-col gap-5 bg-[#fcfcfc] w-full h-screen">
-      {/* <CircularLoader /> */}
       <CarLoader />
     </div>
   );

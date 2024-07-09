@@ -36,7 +36,7 @@ const DetailBox = ({ vehicle_detail }: any) => {
       thumbnail: IMAGE_URL + "/" + items.image_name,
     };
   });
-  console.log(IntImages360);
+
   const damagedImages = {
     grille: "/grille",
     frontBumper: "/frontBumper",
@@ -72,16 +72,16 @@ const DetailBox = ({ vehicle_detail }: any) => {
     rearLeftHeadlight: "/rearLeftHeadlight",
     RightBackWindow: "/RightBackWindow",
   };
-
+console.log('vehicle_detail', vehicle_detail)
   return (
-    <div className="flex flex-1 flex-col gap-2">
+    <div className="flex flex-1 flex-col gap-6">
       <DetailHeroSection
         ExtImages360={ExtImages360}
         IntImages360={IntImages360}
         galleryImages={galleryImages}
       />
-      <ProductOverview />
-      <CarSpecification />
+      <ProductOverview {...{vehicle_detail}} />
+      <CarSpecification vehicleSpecification={vehicle_detail?.vehicleSpecification} />
       <CarSvg damagedImages={damagedImages} />
     </div>
   );

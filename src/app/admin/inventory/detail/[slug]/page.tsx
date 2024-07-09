@@ -6,7 +6,6 @@ import { ServerSideGetWithId } from "../../../../../../utilities/apiCall";
 import { cookies } from "next/headers";
 import {
   GET_BOOKING_LIST,
-  GET_IMAGES_360,
   GET_OFFER_LIST,
   GET_TEST_DRIVE_LIST,
   GET_VEHICLE,

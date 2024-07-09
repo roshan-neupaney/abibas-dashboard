@@ -54,20 +54,23 @@ export function groupByObject<T>(array: T[], key: (item: T) => string): Record<s
 
 export const FormatPrice = (_amount: string) => {
   const amount = Number(_amount);
-  if(amount > 10000000) {
+  if(amount >= 10000000) {
     const num = (amount/10000000) + ' Cr';
     return num;
-  } else if(amount > 1000000) {
+  } else if(amount >= 100000) {
     const num = (amount/100000) + ' Lac';
     return num;
-  } else if(amount > 100000) {
-    const num = (amount/100000) + ' Lac';
-    return num;
-  } else if(amount > 10000) {
+  } else if(amount >= 1000) {
     const num = (amount/1000) + ' K';
     return num;
-  } else if(amount > 1000) {
-    const num = (amount/1000) + ' K';
+  } else {
+    return amount;
+  }
+}
+export const FormatDistance = (_amount: string) => {
+  const amount = Number(_amount);
+  if(amount >= 1000) {
+    const num = (amount/1000) + 'K';
     return num;
   } else {
     return amount;

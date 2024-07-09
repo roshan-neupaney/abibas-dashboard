@@ -83,23 +83,40 @@ const VehicleDamagedImages = ({
 
   const beautifyPayload = (_data:any) => {
     const filteredData = _data.map((items: any) => {
-      return {image_name: items.image_name, value: items.value, vehicle_id: items.vehicle_id, status: items.status}
+      return {file: items.image_name, value: items.value, vehicle_id: items.vehicle_id, status: items.status}
     })
     return filteredData;
   }
+  const convertToFormData = (array:any) => {
+    const formData = new FormData();
+    array.forEach((item:any, index:number) => {
+      formData.append(`file${index}`, item.file);
+      formData.append(`status${index}`, item.status);
+      formData.append(`value${index}`, item.value);
+      formData.append(`vehicle_id${index}`, item.vehicle_id);
+    });
+    return formData;
+  };
   // console.log("image", imageCards);
   const handleAdd = async () => {
+    event?.preventDefault();
     // setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(imageCards);
-      console.log('imageCards', beautifiedPayload)
+      console.log('imageCards', beautifiedPayload);
       // const formData = new FormData();
-      // imageCards?.map((items: any) => {
-      //   formData.append("file", items.image);
-      // });
+      // const formData = convertToFormData(beautifiedPayload);
+      const formData = new FormData();
+      imageCards.forEach((item:any, index:number) => {
+      formData.append(`file${index}`, item.image_name);
+      formData.append(`status${index}`, item.status);
+      formData.append(`value${index}`, item.value);
+      formData.append(`vehicle_id${index}`, item.vehicle_id);
+    });
+    console.log(JSON.stringify(beautifiedPayload))
       const response = await FormdataPost(
         POST_SCRATCH,
-        beautifiedPayload,
+        formData,
         token
       );
       const { status }: any = response;
