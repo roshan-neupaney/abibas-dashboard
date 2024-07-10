@@ -46,4 +46,6 @@ export const GET_ALL_WATCH_LIST = '/vehicle/allWatchList';
 export const GET_IMAGES_360 ='/vehicle/getImages360';
 export const GET_VEHICLE ='/home';
 export const POST_SCRATCH ='/vehicle/createScratch';
+export const GET_SCRATCH ='/vehicle/scratchWithVehicleId';
+export const UPDATE_SCRATCH ='/vehicle/updateScratch';
 

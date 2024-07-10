@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import addPhotoIcon from "../../public/images/placeHolder.png";
-import Image from "next/image";
 import { IMAGE_URL } from "../../config/constants";
 import LazyImage from "../../components/lazyImage";
 
@@ -38,11 +36,6 @@ const ImageUploadCard = ({
   const onDrop = (e: any) => {
     const file = e.files[0];
     if (file) {
-    //   const originalFileName = file.name;
-    // const extension = originalFileName.split('.').pop();
-    // const baseName = originalFileName.substring(0, originalFileName.lastIndexOf('.'));
-    // const suffix = baseName.substring(baseName.lastIndexOf('-'));
-    //   const newFile = new File([file], `${suffix}.${extension}`, { type: file.type });
       const reader = new FileReader();
       reader.addEventListener(
         "load",
@@ -58,7 +51,7 @@ const ImageUploadCard = ({
 
   return (
     <label className="cursor-pointer">
-      <div className="border-2 border-dashed flex h-60 items-center justify-center">
+      <div className=" flex h-60 items-center justify-center">
         <input
           className="opacity-0 w-0 h-0"
           type="file"

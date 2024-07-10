@@ -123,7 +123,7 @@ const AddEditAssetsPart = ({
         if (status) {
           toast.success("Successfully Added Assets Part");
           setFormError(defaultError);
-          clearCachesByServerAction("/admin/form/assets-parts");
+          // clearCachesByServerAction("/admin/form/assets-parts");
           router.push("/admin/form/assets-parts");
         } else {
           toast.error("Error While Adding Assets Part");
@@ -156,7 +156,7 @@ const AddEditAssetsPart = ({
         if (status) {
           toast.success("Successfully Updated Assets Part");
           setFormError(defaultError);
-          clearCachesByServerAction("/admin/form/assets-parts");
+          // clearCachesByServerAction("/admin/form/assets-parts");
           router.push("/admin/form/assets-parts");
         } else {
           toast.error("Error While Updating Assets Part");

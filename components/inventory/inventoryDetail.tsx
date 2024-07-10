@@ -15,6 +15,7 @@ interface typeInventoryDetail {
   token: string;
   id?: string;
   vehicle_detail: any;
+  vehicleDamage: any;
 }
 
 const InventoryDetail = ({
@@ -24,6 +25,7 @@ const InventoryDetail = ({
   offerList,
   token,
   vehicle_detail,
+  vehicleDamage
 }: typeInventoryDetail) => {
   const [active, setActive] = useState(0);
   return (
@@ -81,7 +83,7 @@ const InventoryDetail = ({
         </div>
       </div>
       {active === 0 ? (
-        <Overview {...{vehicle_detail}} />
+        <Overview {...{vehicle_detail, vehicleDamage}} />
       ) : active === 1 ? (
         <Insights />
       ) : active === 2 ? (

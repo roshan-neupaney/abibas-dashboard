@@ -14,7 +14,7 @@ const CarSpecification = ({ vehicleSpecification }: any) => {
       return { category: key, value: value };
     }
   );
-  console.log("groupedSpecification", mappedSpecification);
+  // console.log("groupedSpecification", mappedSpecification);
   return (
     <div className="detail-dropdown-box">
       <div className="detail-dropdown-header" onClick={() => toggleOpen(!open)}>
@@ -40,14 +40,14 @@ const CarSpecification = ({ vehicleSpecification }: any) => {
           } detail-dropdown-body`}
         >
           <div className="flex flex-col p-4 gap-6 w-full">
-            {mappedSpecification.map((elements: any) => {
+            {mappedSpecification.map((elements: any, index: number) => {
               return (
-                <div className="flex flex-col gap-2 w-full">
+                <div className="flex flex-col gap-2 w-full" key={index}>
                   <span className="title-large-NH">{elements?.category}</span>
                   <div className="grid grid-cols-3 gap-5 w-full border-b py-3 px-5">
-                    {elements?.value.map((spec: any) => {
+                    {elements?.value.map((spec: any, i: number) => {
                       return (
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1" key={i}>
                           <span
                             className="body-medium"
                             style={{ color: "#45474A !important" }}

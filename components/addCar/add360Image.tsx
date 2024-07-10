@@ -75,7 +75,7 @@ const Vehicle360Images = ({
   };
   console.log("image", imageCards);
   const handleAdd = async () => {
-    setLoading(true);
+    // setLoading(true);
     try {
       const formData = new FormData();
       imageCards?.map((items: any) => {
@@ -132,6 +132,7 @@ const Vehicle360Images = ({
   };
 
   return (
+    
     <div className="flex p-4 flex-col gap-4">
       <div className="grid grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-10">
         {imageCards?.map((cards: any, index: number) => {

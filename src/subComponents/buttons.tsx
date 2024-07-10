@@ -39,11 +39,14 @@ export const SubmitButton = ({
       onClick={onClick}
       disabled={disabled}
     >
-      <span className="label-submit">{title}</span>
+      {disabled ? (
+        <div className="border-2 border-solid border-r-transparent animate-spin rounded-full w-5 h-5"></div>
+      ) : (
+        <span className="label-submit">{title}</span>
+      )}
     </button>
   );
 };
-
 
 export const CancelButton = ({ title, onClick }: ButtonProps) => {
   return (

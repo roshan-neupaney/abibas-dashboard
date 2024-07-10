@@ -26,6 +26,7 @@ interface VehicleProps {
   vehicle_ext_360_images: any;
   vehicle_int_360_images: any;
   vehicle_body_part: any;
+  vehicle_scratch: any;
 }
 
 const AddEditVehicle = ({
@@ -44,6 +45,7 @@ const AddEditVehicle = ({
   vehicle_ext_360_images,
   vehicle_int_360_images,
   vehicle_body_part,
+  vehicle_scratch
 }: VehicleProps) => {
   const [active, setActive] = useState(0);
   return (
@@ -151,7 +153,7 @@ const AddEditVehicle = ({
         />
       ) : (
         <VehicleDamagedImages
-          {...{ isEdit, token, id, vehicle_int_360_images, vehicle_body_part }}
+          {...{ isEdit, token, id, vehicle_int_360_images, vehicle_body_part, vehicle_scratch }}
         />
       )}
     </div>

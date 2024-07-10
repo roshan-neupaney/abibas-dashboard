@@ -10,6 +10,7 @@ import {
   CRUD_VEHICLE,
   CRUD_VEHICLE_ENUM,
   GET_IMAGES_360,
+  GET_SCRATCH,
   GET_VARIANT_FEATURE,
   GET_VARIANT_INSPECTION,
   GET_VARIANT_SPECIFICATION,
@@ -42,6 +43,7 @@ async function getData(token: string, _id: string) {
         await ServerSideGetWithId(token, GET_IMAGES_360, id+'/EXT'),
         await ServerSideGetWithId(token, GET_IMAGES_360, id+'/INT'),
         await ServerSideGetWithId(token, CRUD_ASSETS_PART_CATEGORY, 'c2fb64a9-b4a8-43f9-ac16-8b14d9383bd3/detail'),
+        await ServerSideGetWithId(token, GET_SCRATCH, id),
       ];
       const [
         vehicle,
@@ -55,7 +57,9 @@ async function getData(token: string, _id: string) {
         vehicle_inspection,
         vehicle_ext_360_images,
         vehicle_int_360_images,
-        vehicle_body_part
+        vehicle_body_part,
+        vehicle_scratch,
+
       ] = res;
       return {
         vehicle,
@@ -69,7 +73,8 @@ async function getData(token: string, _id: string) {
         vehicle_inspection,
         vehicle_ext_360_images,
         vehicle_int_360_images,
-        vehicle_body_part
+        vehicle_body_part,
+        vehicle_scratch
       };
     } else {
       const res = [
@@ -99,7 +104,8 @@ const AddInventory = async ({ params }: any) => {
     vehicle_inspection,
     vehicle_ext_360_images,
     vehicle_int_360_images,
-    vehicle_body_part
+    vehicle_body_part,
+    vehicle_scratch
   }: any = await getData(token, _id);
   const ids = _id?.split("_") || [];
   const id = ids[0] || '';
@@ -123,7 +129,8 @@ const AddInventory = async ({ params }: any) => {
             vehicle_inspection,
             vehicle_ext_360_images,
             vehicle_int_360_images,
-            vehicle_body_part
+            vehicle_body_part,
+            vehicle_scratch
           }}
         />
       </FormContainer>

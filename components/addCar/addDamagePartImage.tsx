@@ -1,215 +1,51 @@
-import ImageUploadCard from "@/subComponents/imageUploadCard";
-import AddIcon from "../../public/icons/add.svg";
-import RemoveIcon from "../../public/icons/cross.svg";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { UUidGenerator } from "../../utilities/helper";
-import { SubmitButton } from "@/subComponents/buttons";
-import toast from "react-hot-toast";
-import {
-  FormdataPatch,
-  FormdataPost,
-  VechicleImagesPatch,
-} from "../../utilities/apiCall";
-import { CRUD_VEHICLE, POST_SCRATCH } from "../../config/endPoints";
-import { useRouter } from "next/navigation";
-import clearCachesByServerAction from "../../hooks/revalidate";
-import CustomSelect from "@/subComponents/select";
+import React, { useState } from "react";
+import SVGAdd from "./svgAdd";
+import DamageImageModal from "./modal/damageImageModal";
 
 interface VehicleDamagedImagesProps {
-  isEdit: boolean;
   token: string;
   id: string;
-  vehicle_int_360_images: any;
   vehicle_body_part: any;
+  vehicle_scratch: any;
 }
 
 const VehicleDamagedImages = ({
-  isEdit,
   token,
   id,
-  vehicle_int_360_images,
-  vehicle_body_part
+  vehicle_body_part,
+  vehicle_scratch,
 }: VehicleDamagedImagesProps) => {
-  const [imageCards, setImageCards] = useState<any>([]);
-  const isEditable = false;
-  // const beautifiedImageList = vehicle_int_360_images?.data?.map(
-  //   (items: any) => {
-  //     return { id: items.id, image_name: items.image_name };
-  //   }
-  // );
-  console.log("vehicle_body_part", vehicle_body_part);
+  const defaultState = {
+    id: "",
+    state: false,
+    vehicle_id: id,
+    file: "",
+    value: "",
+    status: "ACTIVE",
+  };
+
+  const [openModal, toggleModal] = useState(defaultState);
+
   const beautifiedBodyParts = vehicle_body_part?.data?.map((items: any) => {
-    return {id: items?.id, label: items?.title};
-  })
-  const [deletedImages, setDeletedImages] = useState<any>([]);
-
-  // useEffect(() => {
-  //   setImageCards(beautifiedImageList);
-  // }, []);
-  const [loading, setLoading] = useState(false);
-  const uuid = UUidGenerator();
-  const router = useRouter();
-
-  const addCard = () => {
-    setImageCards((prev: any) => {
-      return [...prev, { id: "uuid_" + uuid, image_name: "", value: '', vehicle_id: id, status: 'ACTIVE' }];
-    });
-  };
-
-  const removeCard = (id: string) => {
-    if (!id.includes("uuid")) {
-      setDeletedImages((prev: any) => {
-        return [...prev, { image_id: id }];
-      });
-    }
-    const filteredCard = imageCards.filter((item: any) => {
-      if (item.id !== id) {
-        return item;
-      }
-    });
-    setImageCards(filteredCard);
-  };
-
-  const updateImageCard = (id: string, val: any, key: string) => {
-    const filteredData = imageCards.filter((items: any) => {
-      if (items.id === id) {
-        items[key] = val;
-      }
-      return items;
-    });
-    setImageCards(filteredData);
-  };
-
-  const beautifyPayload = (_data:any) => {
-    const filteredData = _data.map((items: any) => {
-      return {file: items.image_name, value: items.value, vehicle_id: items.vehicle_id, status: items.status}
-    })
-    return filteredData;
-  }
-  const convertToFormData = (array:any) => {
-    const formData = new FormData();
-    array.forEach((item:any, index:number) => {
-      formData.append(`file${index}`, item.file);
-      formData.append(`status${index}`, item.status);
-      formData.append(`value${index}`, item.value);
-      formData.append(`vehicle_id${index}`, item.vehicle_id);
-    });
-    return formData;
-  };
-  // console.log("image", imageCards);
-  const handleAdd = async () => {
-    event?.preventDefault();
-    // setLoading(true);
-    try {
-      const beautifiedPayload = beautifyPayload(imageCards);
-      console.log('imageCards', beautifiedPayload);
-      // const formData = new FormData();
-      // const formData = convertToFormData(beautifiedPayload);
-      const formData = new FormData();
-      imageCards.forEach((item:any, index:number) => {
-      formData.append(`file${index}`, item.image_name);
-      formData.append(`status${index}`, item.status);
-      formData.append(`value${index}`, item.value);
-      formData.append(`vehicle_id${index}`, item.vehicle_id);
-    });
-    console.log(JSON.stringify(beautifiedPayload))
-      const response = await FormdataPost(
-        POST_SCRATCH,
-        formData,
-        token
-      );
-      const { status }: any = response;
-      if (status) {
-        toast.success("Successfully Added Vehicle Interior Images");
-        clearCachesByServerAction("/admin/inventory");
-        router.push("/admin/inventory");
-      } else {
-        toast.error("Error While Adding Vehicle Interior Images");
-        setLoading(false);
-      }
-    } catch (e) {
-      toast.error("Error While Adding");
-      setLoading(false);
-    }
-  };
-
-  const handleUpdate = async () => {
-    // setLoading(true);
-    try {
-      const beautifiedPayload = beautifyPayload(imageCards);
-        console.log('imageCards', beautifiedPayload)
-      // const formData = new FormData();
-      // imageCards?.map((items: any) => {
-      //   if (!(typeof items.image === "string"))
-      //     formData.append("file", items.image);
-      // });
-      // formData.append("deleteImages", JSON.stringify(deletedImages));
-      // const response = await VechicleImagesPatch(
-      //   CRUD_VEHICLE + "/" + id + "/images360/INT",
-      //   formData,
-      //   token
-      // );
-      // const { status }: any = response;
-      // if (status) {
-      //   toast.success("Successfully Updated Vehicle Interior Images");
-      //   clearCachesByServerAction("/admin/inventory");
-      //   router.push("/admin/inventory");
-      // } else {
-      //   toast.error("Error While Updating Vehicle Interior Images");
-      //   setLoading(false);
-      // }
-    } catch (e) {
-      toast.error("Error While Updating");
-      setLoading(false);
-    }
-  };
+    return { id: items?.id, label: items?.title };
+  });
 
   return (
-    <div className="flex p-4 flex-col gap-4">
-      <div className="grid grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-10">
-        {imageCards?.map((cards: any, index: number) => {
-          return (
-            <div className="flex flex-col">
-              <div key={index} className="flex relative rounded-lg">
-                <ImageUploadCard
-                  value={cards.image_name}
-                  onChange={(val: any) =>
-                    updateImageCard(cards.id, val, "image_name")
-                  }
-                />
-                <span
-                  className="absolute bg-[#FCFCFC] border"
-                  onClick={() => removeCard(cards.id)}
-                >
-                  <Image src={RemoveIcon} width={25} height={25} alt="" />
-                </span>
-              </div>
-              <CustomSelect
-                title=""
-                value={cards.value}
-                onChange={(val: string) => updateImageCard(cards.id, val, 'value')}
-                data={beautifiedBodyParts}
-                placeholder="Select Damaged Body Part"
-              />
-            </div>
-          );
-        })}
-        <div
-          onClick={addCard}
-          className="cursor-pointer flex items-center justify-center h-[15rem] border-2 border-dashed rounded-lg"
-        >
-          <span>
-            <Image src={AddIcon} width={40} height={40} alt="" />
-          </span>
-        </div>
+    <>
+      <div className="flex p-4 flex-col gap-4">
+        <SVGAdd
+          vehicleScratch={vehicle_scratch.data}
+          {...{ toggleModal, beautifiedBodyParts }}
+        />
       </div>
-      <SubmitButton
-        title={isEdit ? "Edit" : "Add"}
-        disabled={loading}
-        onClick={isEditable ? handleUpdate : handleAdd}
+      <DamageImageModal
+        open={openModal.state}
+        handleClose={() => toggleModal(defaultState)}
+        token={token}
+        openModal={openModal}
+        vehicleScratch={vehicle_scratch.data}
       />
-    </div>
+    </>
   );
 };
 

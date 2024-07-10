@@ -5,17 +5,12 @@ import ProductOverview from "./dropdown/productOverview";
 import CarSpecification from "./dropdown/carSpecification";
 import DetailHeroSection from "./section/detailHeroSection";
 import CarSvg from "../carSvg";
-import frontBumper from "../../public/images/damagedCar.png";
-import rearLeftHeadlight from "../../public/images/DamagedCarParts/Car-Parts-That-Get-Damaged-The-Most-During-Accidents.jpg";
-import LeftBackDoor from "../../public/images/DamagedCarParts/stock-photo-damaged-car-parts-after-a-car-accident-1108491329.jpg";
-import LeftFrontDoor from "../../public/images/DamagedCarParts/top-5-vehicle-parts-most-commonly-damaged-in-auto-accidents.jpg";
-import RightBackWindow from "../../public/images/DamagedCarParts/xga-4x3-5-of-the-most-easily-damaged-parts-of-a-car-1661178209.jpg";
 import { IMAGE_URL } from "../../config/constants";
 
-const Overview = ({ vehicle_detail }: any) => {
+const Overview = ({ vehicle_detail, vehicleDamage }: any) => {
   return (
     <div className="body-container flex gap-5 p-4">
-      <DetailBox {...{ vehicle_detail }} />
+      <DetailBox {...{ vehicle_detail, vehicleDamage }} />
       <SideBar />
     </div>
   );
@@ -23,7 +18,7 @@ const Overview = ({ vehicle_detail }: any) => {
 
 export default Overview;
 
-const DetailBox = ({ vehicle_detail }: any) => {
+const DetailBox = ({ vehicle_detail, vehicleDamage }: any) => {
   const ExtImages360 = vehicle_detail?.vehicle360Images?.filter(
     (items: any) => items.type === "EXT"
   );
@@ -37,42 +32,6 @@ const DetailBox = ({ vehicle_detail }: any) => {
     };
   });
 
-  const damagedImages = {
-    grille: "/grille",
-    frontBumper: "/frontBumper",
-    leftFrontHeadLight: "/leftFrontHeadLight",
-    hood: "/hood",
-    leftFender: "/leftFender",
-    frontWindShield: "/frontWindShield",
-    leftSideViewMirror: "/leftSideViewMirror",
-    leftFrontDoor: "/leftFrontDoor",
-    leftFrontWindow: "/leftFrontWindow",
-    roof: "/roof",
-    leftRunningBoard: "/leftRunningBoard",
-    leftRearDoor: "/leftRearDoor",
-    leftRearWindow: "/leftRearWindow",
-    leftQuarterPanel: "/leftQuarterPanel",
-    leftRearHeadlight: "/leftRearHeadlight",
-    trunkLid: "/trunkLid",
-    rearWindShield: "/rearWindShield",
-    rearBumper: "/rearBumper",
-    rightRearHeadlight: "/rightRearHeadlight",
-    rightQuarterPanel: "/rightQuarterPanel",
-    rightRearDoor: "/rightRearDoor",
-    rightRearWindow: "/rightRearWindow",
-    rightRunningBoard: "/rightRunningBoard",
-    rightFrontDoor: "/rightFrontDoor",
-    rightFrontWindow: "/rightFrontWindow",
-    rightSideViewMirror: "/rightSideViewMirror",
-    rightFender: "/rightFender",
-    rightFrontHeadlight: "/rightFrontHeadlight",
-    frontLeftHeadlight: "/frontLeftHeadlight",
-    LeftFrontDoor: "/LeftFrontDoor",
-    LeftBackDoor: "/LeftBackDoor",
-    rearLeftHeadlight: "/rearLeftHeadlight",
-    RightBackWindow: "/RightBackWindow",
-  };
-console.log('vehicle_detail', vehicle_detail)
   return (
     <div className="flex flex-1 flex-col gap-6">
       <DetailHeroSection
@@ -82,7 +41,7 @@ console.log('vehicle_detail', vehicle_detail)
       />
       <ProductOverview {...{vehicle_detail}} />
       <CarSpecification vehicleSpecification={vehicle_detail?.vehicleSpecification} />
-      <CarSvg damagedImages={damagedImages} />
+      <CarSvg vehicleDamage={vehicleDamage} />
     </div>
   );
 };

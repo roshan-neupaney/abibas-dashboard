@@ -7,6 +7,7 @@ import { cookies } from "next/headers";
 import {
   GET_BOOKING_LIST,
   GET_OFFER_LIST,
+  GET_SCRATCH,
   GET_TEST_DRIVE_LIST,
   GET_VEHICLE,
   GET_WATCH_LIST,
@@ -24,8 +25,9 @@ async function getData(token: string, _id: string) {
       await ServerSideGetWithId(token, GET_TEST_DRIVE_LIST, id),
       await ServerSideGetWithId(token, GET_OFFER_LIST, id),
       await ServerSideGetWithId(token, GET_VEHICLE, slug),
+      await ServerSideGetWithId(token, GET_SCRATCH, id),
     ];
-    const [watchList, bookingList, testDriveList, offerList, vehicle_detail] =
+    const [watchList, bookingList, testDriveList, offerList, vehicle_detail, vehicle_damage] =
       res;
     return {
       id,
@@ -35,13 +37,13 @@ async function getData(token: string, _id: string) {
       testDriveList,
       offerList,
       vehicle_detail,
+      vehicle_damage,
     };
   } catch (e) {}
 }
 
 const CarDetails = async ({ params }: any) => {
   const _id = params.slug;
-
   const token = cookies().get("access_token")?.value || "";
   const {
     watchList,
@@ -50,7 +52,9 @@ const CarDetails = async ({ params }: any) => {
     offerList,
     vehicle_detail,
     id,
+    vehicle_damage
   }: any = await getData(token, _id);
+  
   const pageTitle = vehicle_detail?.data?.title;
   return (
     <>
@@ -62,6 +66,7 @@ const CarDetails = async ({ params }: any) => {
           testDriveList={testDriveList}
           offerList={offerList}
           vehicle_detail={vehicle_detail?.data}
+          vehicleDamage={vehicle_damage?.data}
           {...{ token, id }}
         />
       </DetailContainer>
