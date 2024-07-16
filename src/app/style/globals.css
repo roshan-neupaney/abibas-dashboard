@@ -358,7 +358,7 @@ input[type="number"]::-webkit-outer-spin-button {
   overflow: auto;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
-  background-color: #fcfcfc;
+  background-color: #ffffff;
   z-index: 10;
   width: 100%;
   transition: all 0.3s ease;
@@ -366,7 +366,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .option-box {
-  --sb-track-color: #F8F7F7;
+  --sb-track-color: #f8f7f7;
   --sb-thumb-color: #f1e6e6;
 }
 
@@ -711,28 +711,30 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .detail-dropdown-body {
   display: flex;
-  padding: 0 1.25rem;
+  padding: 0 2.25rem;
   align-items: flex-start;
   gap: 0.5rem;
   align-self: stretch;
-  border-top: 1px solid #d8dadb;
-  /* max-height: 30rem; */
   overflow: auto;
 }
 
 .detail-dropdown-body::-webkit-scrollbar {
-  width: 0px;
+  width: 5px;
   height: 0px;
+}
+
+.detail-dropdown-body::-webkit-scrollbar-thumb {
+  background-color: #f1e6e6;
+  border-radius: 3px;
 }
 
 .hide-dropdown {
   border-top: 0px solid #d8dadb;
   max-height: 0rem;
   overflow: hidden;
-  transition: max-height 0.3s, border-top 0.3s;
+  transition: max-height 0.3s;
 }
 .show-dropdown {
-  max-height: 30rem;
   transition: max-height 0.3s;
 }
 

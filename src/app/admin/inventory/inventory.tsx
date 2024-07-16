@@ -31,7 +31,6 @@ interface InventoryProps {
 }
 
 const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
-  // console.log('vehicleList', vehicleList)
   const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
   const [search, setSearch] = useState("");
   const router = useRouter();
@@ -163,7 +162,7 @@ const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
             <NoDataFound />
           )}
         </TableContainer>
-        {data.length > 0 && <TablePagination {...{ table }} />}
+        {data?.length > 0 && <TablePagination {...{ table }} />}
       </div>
       <DeleteModal
         type="vehicle"

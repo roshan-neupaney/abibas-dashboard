@@ -16,16 +16,16 @@ export const CustomRadio = ({
   return (
     <>
       <div className="flex flex-col gap-2">
-        <label htmlFor="radio" className="label">{name}</label>
-        <div className="gap-3 flex">
-          {data.map((items: any, index: number) => {
+        <label htmlFor={name.replaceAll(" ", "-")} className="label">{name}</label>
+        <div className="gap-3 flex flex-wrap">
+          {data?.map((items: any, index: number) => {
             const element_id = items.label.replaceAll(" ", "_");
             return (
               <div key={index} className="flex gap-2 cursor-pointer">
                 <div className=" h-6 w-6 relative flex">
                   <label className="radio cursor-pointer">
                     <input
-                      id={element_id}
+                      id={items.id}
                       type="radio"
                       name={name.replaceAll(" ", "-")}
                       checked={value === items.id}

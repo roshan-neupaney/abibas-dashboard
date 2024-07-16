@@ -32,6 +32,7 @@ const SVGAdd = ({
   };
 
   const getAvailableParts = () => {
+    setPartData({});
     vehicleScratch?.forEach((items: any) => {
       setPartData((prev: any) => {
         return { ...prev, [items?.assetsPart?.title]: items?.image_name };
@@ -41,10 +42,10 @@ const SVGAdd = ({
 
   useEffect(() => {
     getAvailableParts();
-  }, []);
+  }, [vehicleScratch]);
   return (
     <div className="relative z-10 border border-[#d8dadb] rounded-lg flex flex-col items-center py-4">
-      <span className="title-medium">Please Select part to insert the image</span>
+      <span className="title-medium">Please Select Respective Dots To Insert The Image</span>
       <div className="w-1/2 md:w-3/4 h-[420px] py-6 flex justify-center ">
       <svg
         xmlns="http://www.w3.org/2000/svg"

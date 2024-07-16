@@ -1,11 +1,11 @@
-'use client'
+"use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 // import noImage from "../public/icons/noImage.svg";
-import noImage from '../public/images/placeHolder.png'
+import noImage from "../public/images/placeHolder.png";
 
 const LazyImage = (props: any) => {
-  const { src, className,...rest } = props;
+  const { src, className, ...rest } = props;
   const [imgSrc, setImgSrc] = useState(src);
 
   useEffect(() => {
@@ -15,8 +15,17 @@ const LazyImage = (props: any) => {
   const handleError = () => {
     setImgSrc(noImage);
   };
+
   return (
-    <Image src={imgSrc} {...rest} loading="lazy" onError={handleError} alt="" className={className} quality={100} />
+    <Image
+      src={imgSrc}
+      {...rest}
+      loading="lazy"
+      onError={handleError}
+      alt=""
+      className={className}
+      quality={100}
+    />
   );
 };
 

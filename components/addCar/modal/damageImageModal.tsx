@@ -6,6 +6,7 @@ import { POST_SCRATCH, UPDATE_SCRATCH } from "../../../config/endPoints";
 import clearCachesByServerAction from "../../../hooks/revalidate";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface DamageImageModal {
   open: boolean;
@@ -13,6 +14,7 @@ interface DamageImageModal {
   openModal?: any;
   token: string;
   vehicleScratch: any;
+  handleDelete: any;
 }
 
 const DamageImageModal = ({
@@ -21,13 +23,16 @@ const DamageImageModal = ({
   token,
   openModal,
   vehicleScratch,
+  handleDelete,
 }: DamageImageModal) => {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
+  const router = useRouter();
   useEffect(() => {
+    setImage("");
     vehicleScratch.forEach((items: any) => {
       if (openModal?.value === items?.assetsPart?.id) {
-        setImage(items?.image_name);
+        setImage(items?.image_name || "");
       }
     });
   }, [openModal.state]);
@@ -44,7 +49,7 @@ const DamageImageModal = ({
     detail.value = data.value;
     return detail;
   };
-  
+
   const handleAdd = async (val: any) => {
     try {
       setLoading(true);
@@ -56,10 +61,10 @@ const DamageImageModal = ({
       );
       const { status }: any = response;
       if (status) {
-        toast.success("Successfully Added Vehicle Interior Images");
-        clearCachesByServerAction("/admin/inventory");
+        toast.success("Successfully Added Image");
+        router.refresh();
       } else {
-        toast.error("Error While Adding Vehicle Interior Images");
+        toast.error("Error While Adding Image");
       }
     } catch (e) {
       toast.error("Error While Adding");
@@ -79,10 +84,10 @@ const DamageImageModal = ({
       );
       const { status }: any = response;
       if (status) {
-        toast.success("Successfully Added Vehicle Interior Images");
-        clearCachesByServerAction("/admin/inventory");
+        toast.success("Successfully Added Image");
+        router.refresh();
       } else {
-        toast.error("Error While Adding Vehicle Interior Images");
+        toast.error("Error While Adding Image");
       }
     } catch (e) {
       toast.error("Error While Adding");
@@ -90,6 +95,7 @@ const DamageImageModal = ({
       setLoading(false);
     }
   };
+
   return (
     <>
       {open && (
@@ -101,13 +107,13 @@ const DamageImageModal = ({
                 className="flex p-[0.625rem] justify-center items-center cursor-pointer"
                 onClick={() => {
                   handleClose();
-                  setImage('')
+                  setImage("");
                 }}
               >
                 <Image src={crossIcon} height={20} width={20} alt="" />
               </span>
             </div>
-            <div className="flex w-80 h-60 border relative m-4">
+            <div className="flex flex-col w-80 h-60 border relative m-4">
               {loading && (
                 <div className="flex w-full h-full absolute bg-[#c7c7c7a3] justify-center items-center z-10">
                   <div className="border-4 border-solid border-[#202529] border-b-transparent w-14 h-14 rounded-full animate-spin"></div>
@@ -115,9 +121,19 @@ const DamageImageModal = ({
               )}
               <ImageUploadCard
                 value={image}
-                onChange={(val: any) => openModal.id ? handleUpdate(val) :  handleAdd(val)}
+                onChange={(val: any) =>
+                  openModal.id ? handleUpdate(val) : handleAdd(val)
+                }
               />
             </div>
+            {openModal.id && (
+              <span
+                className="text-red-600 cursor-pointer px-2 pb-3"
+                onClick={() => handleDelete(openModal.id)}
+              >
+                Delete
+              </span>
+            )}
           </div>
         </div>
       )}

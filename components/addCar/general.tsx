@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomSelect from "../../src/subComponents/select";
 import { CancelButton, SubmitButton } from "@/subComponents/buttons";
-import Overview from "./overview";
 import CustomInput from "@/subComponents/input";
 import { updateState } from "../../utilities/helper";
 import { CustomToggleSwitch } from "@/subComponents/checkbox";
@@ -12,6 +11,8 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { vehicleValidation } from "../../utilities/validation";
 import CustomTextableSelect from "@/subComponents/TextableSelect";
+import { CustomLogoRadio } from "@/subComponents/logoRadio";
+import { CustomTitleRadio } from "@/subComponents/titleRadio";
 
 const defaultForm = {
   title: "",
@@ -54,8 +55,9 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
   const router = useRouter();
 
   const beautifiedBrand = vehicle_enum?.data?.brand?.map((items: any) => {
-    return { id: items?.id, label: items?.title };
+    return { id: items?.id, label: items?.title, image: items.image };
   });
+  console.log('beautifiedBrand', vehicle_enum?.data?.brand)
   const beautifiedModel = vehicle_enum?.data?.model?.map((items: any) => {
     return { id: items?.id, label: items?.title };
   });
@@ -208,7 +210,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
   return (
     <div className="body-container flex gap-5 p-4">
       <div className="flex flex-col gap-4 flex-1">
-        <div className="w-[30rem] gap-5 flex-col flex">
+        <div className="gap-5 flex-col flex">
           <CustomInput
             title="Title"
             onChange={(val: string) =>
@@ -218,8 +220,9 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Enter title"
             required
             error={formError.title}
+            width="30rem"
           />
-          <CustomTextableSelect
+          {/* <CustomTextableSelect
             title="Brand"
             value={formData.brand_id}
             onChange={(val: string) =>
@@ -229,7 +232,28 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Select Brand"
             required
             error={formError.brand_id}
+            sx={{width: '30rem'}}
+          /> */}
+          <CustomLogoRadio
+            value={formData.brand_id}
+            onChange={(val: string) =>
+              updateState("brand_id", val, setFormData, setFormError)
+            }
+            name="Brand"
+            data={beautifiedBrand}
+            required
+            error={formError.brand_id}
           />
+          {/* <CustomTitleRadio
+            value={formData.model_id}
+            onChange={(val: string) =>
+              updateState("model_id", val, setFormData, setFormError)
+            }
+            name="Model"
+            data={beautifiedModel}
+            required
+            error={formError.model_id}
+          /> */}
           <CustomTextableSelect
             title="Model"
             value={formData.model_id}
@@ -240,6 +264,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Select Model"
             required
             error={formError.model_id}
+            sx={{width: '30rem'}}
           />
           <CustomSelect
             title="Variant"
@@ -251,6 +276,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Select Variant"
             required
             error={formError.variant_id}
+            sx={{width: '30rem'}}
           />
           <CustomSelect
             title="Manufacture"
@@ -262,6 +288,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Select Manufacture"
             required
             error={formError.made_year}
+            sx={{width: '30rem'}}
           />
           <CustomSelect
             title="Owner"
@@ -273,6 +300,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Select Owner"
             required
             error={formError.owner}
+            sx={{width: '30rem'}}
           />
           <CustomSelect
             title="Driven"
@@ -284,6 +312,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Select Driven"
             required
             error={formError.km_driven}
+            sx={{width: '30rem'}}
           />
           <CustomInput
             title="Km Run"
@@ -291,9 +320,10 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
               updateState("km_run", val, setFormData, setFormError)
             }
             value={formData.km_run}
-            placeholder="Enter run distance"
+            placeholder="Ex. 40000"
             required
             error={formError.km_run}
+            width="30rem"
           />
           <CustomInput
             title="Price"
@@ -303,6 +333,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             value={formData.price}
             placeholder="Enter price"
             required
+            width="30rem"
             // error={formError.price}
           />
           <CustomInput
@@ -312,6 +343,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             }
             value={formData.previous_price}
             placeholder="Enter previous price"
+            width="30rem"
           />
           <CustomSelect
             title="Prefer Selling"
@@ -323,6 +355,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Select Prefer Selling"
             required
             error={formError.prefer_selling}
+            sx={{width: '30rem'}}
           />
           <CustomInput
             title="Email"
@@ -333,7 +366,9 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Enter Contact Email"
             required
             error={formError.contact_email}
+            width="30rem"
           />
+
           <CustomInput
             title="Phone"
             onChange={(val: string) =>
@@ -343,6 +378,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Enter Phone"
             required
             error={formError.contact_number}
+            width="30rem"
           />
           <CustomInput
             title="Address"
@@ -353,6 +389,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Enter Address"
             required
             error={formError.address}
+            width="30rem"
           />
           <CustomSelect
             title="City"
@@ -364,6 +401,7 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             placeholder="Select City"
             required
             error={formError.city}
+            sx={{width: '30rem'}}
           />
           <CustomToggleSwitch
             title="Is Active"

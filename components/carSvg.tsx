@@ -16,11 +16,11 @@ const CarSvg = ({ vehicleDamage }: any) => {
 
   useEffect(() => {
     const firstImage = Object.keys(damagedParts)[0];
-    setImage(damagedParts[firstImage]);
+    setImage(damagedParts[firstImage] || '');
   }, [damagedParts]);
 
   return (
-    <div className="relative z-10 border border-[#d8dadb] rounded-lg flex justify-center">
+    <div className="relative z-10 rounded-lg flex justify-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         // width="600"

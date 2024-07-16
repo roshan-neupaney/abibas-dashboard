@@ -70,6 +70,7 @@ const CustomSelect = ({
   required = false,
   error = "",
   sx = {},
+  
 }: CustomSelectProps) => {
   const [openBox, toggleBox] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value || placeholder);
@@ -107,14 +108,14 @@ const CustomSelect = ({
   }, []);
 
   return (
-    <div className="form-box" ref={inputBoxRef} style={{ ...sx }}>
+    <div className="flex flex-1 flex-col items-start gap-0.5 self-stretch" ref={inputBoxRef} style={{ ...sx }}>
       <div className="flex flex-col self-stretch relative gap-2">
         <div className="label" style={{ color: error ? "red" : "#1a1c1e" }}>
           {title}
           {required ? "*" : ""}{" "}
         </div>
         <div
-          className="form-input select-box cursor-pointer justify-between"
+          className="form-input select-box cursor-pointer justify-between bg-[#ffffff]"
           ref={selectRef}
           style={{
             ...style,
@@ -140,7 +141,7 @@ const CustomSelect = ({
             openBox ? "max-h-60 border border-[#92959a]" : "max-h-[0]"
           } ${
             dropdownPosition === "top" ? "bottom-[38px]" : "top-[65px]"
-          } option-box`}
+          } option-box `}
           ref={dropdownOptionRef}
         >
           {data?.map((elements: any, index: number) => {

@@ -40,6 +40,7 @@ const Vehicle360Images = ({
   useEffect(() => {
     setImageCards(beautifiedImageList);
   }, []);
+
   const [loading, setLoading] = useState(false);
   const uuid = UUidGenerator();
   const router = useRouter();
@@ -73,7 +74,7 @@ const Vehicle360Images = ({
     });
     setImageCards(filteredData);
   };
-  console.log("image", imageCards);
+  
   const handleAdd = async () => {
     // setLoading(true);
     try {

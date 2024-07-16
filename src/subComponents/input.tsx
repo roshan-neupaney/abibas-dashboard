@@ -18,6 +18,7 @@ interface CustomInputProps {
   error?: string;
   required?: boolean;
   autoComplete?: string;
+  width?: string;
 }
 const CustomInput = ({
   title,
@@ -33,10 +34,14 @@ const CustomInput = ({
   style = {},
   error = "",
   required = false,
-  autoComplete = 'on',
+  autoComplete = "on",
+  width = "",
 }: CustomInputProps) => {
   return (
-    <div className="form-box">
+    <div
+      className="flex flex-1 flex-col items-start gap-0.5 self-stretch"
+      style={{ width: width }}
+    >
       <div className="flex flex-col self-stretch relative gap-2">
         {title && (
           <span className="label" style={{ color: error ? "red" : "#1a1c1e" }}>

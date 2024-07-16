@@ -34,7 +34,7 @@ const Demo360Images = ({
   const beautifiedImageList = vehicle_360_images?.data?.map((items: any) => {
     return { id: items.id, image: items.image_name };
   });
-  console.log('vehicle_360_images', vehicle_360_images)
+  
   const [deletedImages, setDeletedImages] = useState<any>([]);
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const Demo360Images = ({
     });
     setImageCards(filteredData);
   };
-console.log('image', imageCards)
+
   const handleAdd = async () => {
     setLoading(true);
     try {

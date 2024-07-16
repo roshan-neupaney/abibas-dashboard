@@ -4,14 +4,18 @@ import Dot from "../../public/icons/Ellipse.svg";
 import ProductOverview from "./dropdown/productOverview";
 import CarSpecification from "./dropdown/carSpecification";
 import DetailHeroSection from "./section/detailHeroSection";
-import CarSvg from "../carSvg";
 import { IMAGE_URL } from "../../config/constants";
+import DamageMap from "./dropdown/damageMap";
+import CarFeature from "./dropdown/carFeature";
+import CarInspection from "./dropdown/carInspection";
 
 const Overview = ({ vehicle_detail, vehicleDamage }: any) => {
   return (
     <div className="body-container flex gap-5 p-4">
       <DetailBox {...{ vehicle_detail, vehicleDamage }} />
-      <SideBar />
+      <div className="hidden xl:flex">
+        <SideBar />
+      </div>
     </div>
   );
 };
@@ -31,7 +35,6 @@ const DetailBox = ({ vehicle_detail, vehicleDamage }: any) => {
       thumbnail: IMAGE_URL + "/" + items.image_name,
     };
   });
-
   return (
     <div className="flex flex-1 flex-col gap-6">
       <DetailHeroSection
@@ -39,9 +42,22 @@ const DetailBox = ({ vehicle_detail, vehicleDamage }: any) => {
         IntImages360={IntImages360}
         galleryImages={galleryImages}
       />
-      <ProductOverview {...{vehicle_detail}} />
-      <CarSpecification vehicleSpecification={vehicle_detail?.vehicleSpecification} />
-      <CarSvg vehicleDamage={vehicleDamage} />
+      <ProductOverview {...{ vehicle_detail }} />
+
+      {vehicle_detail?.vehicleSpecification?.length > 0 && (
+        <CarSpecification
+          vehicleSpecification={vehicle_detail?.vehicleSpecification}
+        />
+      )}
+      {vehicle_detail?.vehicleFeatures?.length > 0 && (
+        <CarFeature vehicleFeature={vehicle_detail?.vehicleFeatures} />
+      )}
+
+      {vehicleDamage.length > 0 && <DamageMap vehicleDamage={vehicleDamage} />}
+
+      {vehicle_detail?.vehicleFeatures?.length > 0 && (
+        <CarInspection vehicleInspection={vehicle_detail?.vehicleInspection} />
+      )}
     </div>
   );
 };

@@ -33,7 +33,7 @@ const VehicleInt360Images = ({
   const beautifiedImageList = vehicle_int_360_images?.data?.map((items: any) => {
     return { id: items.id, image: items.image_name };
   });
-  console.log('vehicle_int_360_images', vehicle_int_360_images)
+  
   const [deletedImages, setDeletedImages] = useState<any>([]);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const VehicleInt360Images = ({
     });
     setImageCards(filteredData);
   };
-console.log('image', imageCards)
+
   const handleAdd = async () => {
     setLoading(true);
     try {
@@ -149,14 +149,14 @@ console.log('image', imageCards)
             </div>
           );
         })}
-        <div
+        {/* <div
           onClick={addCard}
           className="cursor-pointer flex items-center justify-center h-[15rem] border-2 border-dashed rounded-lg"
         >
           <span>
             <Image src={AddIcon} width={40} height={40} alt="" />
           </span>
-        </div>
+        </div> */}
       </div>
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}

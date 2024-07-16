@@ -108,7 +108,9 @@ const CustomTextableSelect = ({
 
   const handleChange = (val: string) => {
     toggleBox(true);
-    const filteredData = data.filter((items) => items.label.toLowerCase().includes(val.toLocaleLowerCase()));
+    const filteredData = data.filter((items) =>
+      items.label.toLowerCase().includes(val.toLocaleLowerCase())
+    );
     setDropdownList(filteredData);
     setSelectedValue(val);
   };

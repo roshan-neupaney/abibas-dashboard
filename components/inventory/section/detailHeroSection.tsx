@@ -3,12 +3,16 @@ import ReactImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import Vehicle360View from "../360View";
 
-const DetailHeroSection = ({ExtImages360, IntImages360, galleryImages}:any) => {
+const DetailHeroSection = ({
+  ExtImages360,
+  IntImages360,
+  galleryImages,
+}: any) => {
   const [open360, toggle360] = useState(false);
-  
+
   return (
     <div
-      style={{ width: "100%", height: 'fit-content' }}
+      style={{ width: "100%", height: "fit-content" }}
       className="relative flex justify-center items-center"
     >
       <div
@@ -17,13 +21,22 @@ const DetailHeroSection = ({ExtImages360, IntImages360, galleryImages}:any) => {
       >
         <span className="text-white text-base">
           {open360 ? "Hide" : "Show"} 360&deg; view
-          
         </span>
       </div>
       {open360 ? (
-        <Vehicle360View {...{ExtImages360, IntImages360}} />
+        <Vehicle360View {...{ ExtImages360, IntImages360 }} />
       ) : (
-        <ReactImageGallery items={galleryImages} thumbnailPosition="left" />
+        <>
+          <div className="hidden lg:flex">
+            <ReactImageGallery items={galleryImages} thumbnailPosition="left" />
+          </div>
+          <div className="flex lg:hidden">
+            <ReactImageGallery
+              items={galleryImages}
+              thumbnailPosition="bottom"
+            />
+          </div>
+        </>
       )}
     </div>
   );

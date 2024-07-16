@@ -45,7 +45,6 @@ const DemoUploadCard = ({
 
   const onUpload = (e: any) => {
     // const file = e.files[0];
-    console.log("hello", Array.from(e.files));
     const fileArray = Array.from(e.files);
     fileArray.map((items: any) => {
       if (items) {
@@ -76,7 +75,6 @@ const DemoUploadCard = ({
       fileInputRef.current.files = e.dataTransfer.files;
       //   onUpload(fileInputRef.current);
       const fileArray = Array.from(fileInputRef.current.files || []);
-      console.log("fileArray", fileArray);
       fileArray.map((items: any) => {
         if (items) {
           const reader = new FileReader();

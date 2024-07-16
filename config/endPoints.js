@@ -48,4 +48,5 @@ export const GET_VEHICLE ='/home';
 export const POST_SCRATCH ='/vehicle/createScratch';
 export const GET_SCRATCH ='/vehicle/scratchWithVehicleId';
 export const UPDATE_SCRATCH ='/vehicle/updateScratch';
+export const DELETE_SCRATCH ='/vehicle/scratchDelete';
 
