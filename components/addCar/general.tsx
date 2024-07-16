@@ -12,7 +12,6 @@ import toast from "react-hot-toast";
 import { vehicleValidation } from "../../utilities/validation";
 import CustomTextableSelect from "@/subComponents/TextableSelect";
 import { CustomLogoRadio } from "@/subComponents/logoRadio";
-import { CustomTitleRadio } from "@/subComponents/titleRadio";
 
 const defaultForm = {
   title: "",
@@ -57,7 +56,6 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
   const beautifiedBrand = vehicle_enum?.data?.brand?.map((items: any) => {
     return { id: items?.id, label: items?.title, image: items.image };
   });
-  console.log('beautifiedBrand', vehicle_enum?.data?.brand)
   const beautifiedModel = vehicle_enum?.data?.model?.map((items: any) => {
     return { id: items?.id, label: items?.title };
   });
@@ -222,18 +220,6 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             error={formError.title}
             width="30rem"
           />
-          {/* <CustomTextableSelect
-            title="Brand"
-            value={formData.brand_id}
-            onChange={(val: string) =>
-              updateState("brand_id", val, setFormData, setFormError)
-            }
-            data={beautifiedBrand}
-            placeholder="Select Brand"
-            required
-            error={formError.brand_id}
-            sx={{width: '30rem'}}
-          /> */}
           <CustomLogoRadio
             value={formData.brand_id}
             onChange={(val: string) =>
@@ -244,16 +230,6 @@ const General = ({ vehicle, vehicle_enum, token, id, isEdit }: any) => {
             required
             error={formError.brand_id}
           />
-          {/* <CustomTitleRadio
-            value={formData.model_id}
-            onChange={(val: string) =>
-              updateState("model_id", val, setFormData, setFormError)
-            }
-            name="Model"
-            data={beautifiedModel}
-            required
-            error={formError.model_id}
-          /> */}
           <CustomTextableSelect
             title="Model"
             value={formData.model_id}
