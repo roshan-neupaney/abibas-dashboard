@@ -6,84 +6,41 @@ import {
   ServerSideGetWithId,
 } from "../../../../../utilities/apiCall";
 import {
-  CRUD_ASSETS_PART_CATEGORY,
-  CRUD_VEHICLE,
-  CRUD_VEHICLE_ENUM,
-  GET_IMAGES_360,
-  GET_SCRATCH,
-  GET_VARIANT_FEATURE,
-  GET_VARIANT_INSPECTION,
-  GET_VARIANT_SPECIFICATION,
-  GET_VEHICLE_FEATURE,
-  GET_VEHICLE_IMAGES,
-  GET_VEHICLE_INSPECTION,
-  GET_VEHICLE_SPECIFICATION,
+  CRUD_BRAND,
+  CRUD_CATEGORY,
+  CRUD_SHOE,
 } from "../../../../../config/endPoints";
 import { cookies } from "next/headers";
 import AddEditVehicle from "./addEdit";
 import { authorization } from "../../../../../hoc/auth";
 
-async function getData(token: string, _id: string) {
+async function getData(token: string, id: string) {
   authorization(token);
   try {
-    if (_id) {
-      const ids = _id.split("_");
-      const id = ids[0];
-      const variant_id = ids[1];
+    if (id) {
       const res = [
-        await ServerSideGetWithId(token, CRUD_VEHICLE, id),
-        await ServerSideGet(token, CRUD_VEHICLE_ENUM),
-        await ServerSideGetWithId(token, GET_VARIANT_SPECIFICATION, variant_id),
-        await ServerSideGetWithId(token, GET_VARIANT_FEATURE, variant_id),
-        await ServerSideGetWithId(token, GET_VARIANT_INSPECTION, variant_id),
-        await ServerSideGetWithId(token, GET_VEHICLE_IMAGES, id),
-        await ServerSideGetWithId(token, GET_VEHICLE_SPECIFICATION, id),
-        await ServerSideGetWithId(token, GET_VEHICLE_FEATURE, id),
-        await ServerSideGetWithId(token, GET_VEHICLE_INSPECTION, id),
-        await ServerSideGetWithId(token, GET_IMAGES_360, id+'/EXT'),
-        await ServerSideGetWithId(token, GET_IMAGES_360, id+'/INT'),
-        await ServerSideGetWithId(token, CRUD_ASSETS_PART_CATEGORY, 'c2fb64a9-b4a8-43f9-ac16-8b14d9383bd3/detail'),
-        await ServerSideGetWithId(token, GET_SCRATCH, id),
+        await ServerSideGetWithId(token, CRUD_SHOE, id),
+        await ServerSideGet(token, CRUD_CATEGORY+'/active'),
+        await ServerSideGet(token, CRUD_BRAND+'/active'),
       ];
       const [
-        vehicle,
-        vehicle_enum,
-        variant_specification,
-        variant_feature,
-        variant_inspection,
-        vechile_images,
-        vehicle_specification,
-        vehicle_features,
-        vehicle_inspection,
-        vehicle_ext_360_images,
-        vehicle_int_360_images,
-        vehicle_body_part,
-        vehicle_scratch,
-
+        shoe,
+        shoe_category,
+        shoe_brand,
       ] = res;
       return {
-        vehicle,
-        vehicle_enum,
-        variant_specification,
-        variant_feature,
-        variant_inspection,
-        vechile_images,
-        vehicle_specification,
-        vehicle_features,
-        vehicle_inspection,
-        vehicle_ext_360_images,
-        vehicle_int_360_images,
-        vehicle_body_part,
-        vehicle_scratch
+        shoe,
+        shoe_category,
+        shoe_brand
       };
     } else {
       const res = [
-        await ServerSideGet(token, CRUD_VEHICLE_ENUM),
-        await ServerSideGet(token, GET_VARIANT_SPECIFICATION),
-        await ServerSideGet(token, GET_VARIANT_FEATURE),
+        await ServerSideGet(token, CRUD_CATEGORY+'/active'),
+        await ServerSideGet(token, CRUD_BRAND+'/active'),
+
       ];
-      const [vehicle_enum, variant_specification, variant_feature] = res;
-      return { vehicle_enum, variant_specification, variant_feature };
+      const [shoe_category, shoe_brand] = res;
+      return { shoe_category, shoe_brand };
     }
   } catch (error) {}
 }
@@ -93,19 +50,9 @@ const AddInventory = async ({ params }: any) => {
   const _id = params.params[1];
   const isEdit = params.params[0] === "edit";
   const {
-    vehicle,
-    vehicle_enum,
-    variant_specification,
-    variant_feature,
-    variant_inspection,
-    vechile_images,
-    vehicle_specification,
-    vehicle_features,
-    vehicle_inspection,
-    vehicle_ext_360_images,
-    vehicle_int_360_images,
-    vehicle_body_part,
-    vehicle_scratch
+    shoe,
+    shoe_category,
+    shoe_brand
   }: any = await getData(token, _id);
   const ids = _id?.split("_") || [];
   const id = ids[0] || '';
@@ -118,19 +65,9 @@ const AddInventory = async ({ params }: any) => {
             isEdit,
             token,
             id,
-            vehicle,
-            vehicle_enum,
-            variant_specification,
-            variant_feature,
-            variant_inspection,
-            vechile_images,
-            vehicle_specification,
-            vehicle_features,
-            vehicle_inspection,
-            vehicle_ext_360_images,
-            vehicle_int_360_images,
-            vehicle_body_part,
-            vehicle_scratch
+            shoe,
+            shoe_category,
+            shoe_brand
           }}
         />
       </FormContainer>

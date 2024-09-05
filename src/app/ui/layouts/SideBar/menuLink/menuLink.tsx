@@ -4,21 +4,21 @@ import Link from "next/link";
 import React, { useState } from "react";
 import styles from "./menuLink.module.css";
 import DashboardIcon from "../../../../../../public/icons/dashboard.svg";
-import Car from "../../../../../../public/icons/car.svg";
+import ShoeIcon from "../../../../../../public/icons/shoesIcon.svg";
 import Circle from "../../../../../../public/icons/circle.svg";
-import Target from "../../../../../../public/icons/target.svg";
-import Quote from "../../../../../../public/icons/clipboard-quote.svg";
 import UserGroup from "../../../../../../public/icons/user-group.svg";
-import Blog from "../../../../../../public/icons/blog.svg";
-import Graph from "../../../../../../public/icons/graph-bar.svg";
-import AppManagement from "../../../../../../public/icons/app-management.svg";
-import Setting from "../../../../../../public/icons/setting.svg";
 import Arrow from "../../../../../../public/icons/icon-right.svg";
 import Feedback from "../../../../../../public/icons/feedback.svg";
-import Form from "../../../../../../public/icons/form.svg";
-import News from "../../../../../../public/icons/news.svg";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import Form from "../../../../../../public/icons/form.svg";
+// import Target from "../../../../../../public/icons/target.svg";
+// import Quote from "../../../../../../public/icons/clipboard-quote.svg";
+// import Blog from "../../../../../../public/icons/blog.svg";
+// import Graph from "../../../../../../public/icons/graph-bar.svg";
+// import AppManagement from "../../../../../../public/icons/app-management.svg";
+// import Setting from "../../../../../../public/icons/setting.svg";
+// import News from "../../../../../../public/icons/news.svg";
 
 const mainMenu = [
   {
@@ -30,171 +30,19 @@ const mainMenu = [
     title: "Products",
     category: [
       { title: "Inventory", link: "/admin/inventory", icon: Circle },
-      // { title: "Catalogue", link: "/admin/catalogue", icon: Circle },
     ],
-    icon: Car,
+    icon: ShoeIcon,
   },
-  {
-    title: "Leads",
-    category: [
-      { title: "WatchList", link: "/admin/watchlist", icon: Circle },
-      { title: "Bookings", link: "/admin/bookings", icon: Circle },
-      { title: "Test Drives", link: "/admin/test-drives", icon: Circle },
-      { title: "Offers", link: "/admin/offers", icon: Circle },
-    ],
-    icon: Target,
-  },
-  // {
-  //   title: "Quote Review",
-  //   link: "/admin/quote-review",
-  //   icon: Quote,
-  // },
-  // {
-  //   title: "Customers",
-  //   link: "/admin/customers",
-  //   icon: UserGroup,
-  // },
-  // {
-  //   title: "Agents",
-  //   link: "/admin/agents",
-  //   icon: UserGroup,
-  // },
-  // { title: "Blogs", link: "/admin/blogs", icon: Blog },
-  // {
-  //   title: "Report & Analysis",
-  //   link: "/admin/report",
-  //   icon: Graph,
-  // },
-  // {
-  //   title: "App Management",
-  //   link: "/admin/app-management",
-  //   icon: AppManagement,
-  // },
-  // { title: "Settings", link: "/admin/settings", icon: Setting },
   {
     title: "Users",
     link: "/admin/users",
     icon: UserGroup,
   },
   {
-    title: "News",
+    title: "Form",
     category: [
-      {
-        title: "News List",
-        link: "/admin/news/news-list",
-        icon: Circle,
-      },
-      {
-        title: "News Category",
-        link: "/admin/news/news-category",
-        icon: Circle,
-      },
-    ],
-    icon: News,
-  },
-  {
-    title: "Forms",
-    category: [
-      {
-        title: "Category",
-        link: "/admin/form/category",
-        icon: Circle,
-      },
-      {
-        title: "Body Type",
-        link: "/admin/form/body-type",
-        icon: Circle,
-      },
-      {
-        title: "Brand",
-        link: "/admin/form/brand",
-        icon: Circle,
-      },
-      {
-        title: "Model",
-        link: "/admin/form/model",
-        icon: Circle,
-      },
-      {
-        title: "Color For Choice",
-        link: "/admin/form/color",
-        icon: Circle,
-      },
-      {
-        title: "Variant",
-        link: "/admin/form/variant",
-        icon: Circle,
-      },
-      {
-        title: "Unit",
-        link: "/admin/form/unit",
-        icon: Circle,
-      },
-      {
-        title: "Assets Part Category",
-        link: "/admin/form/assets-part-category",
-        icon: Circle,
-      },
-      {
-        title: "Assets Parts",
-        link: "/admin/form/assets-parts",
-        icon: Circle,
-      },
-      {
-        title: "Inspection Category",
-        link: "/admin/form/inspection-category",
-        icon: Circle,
-      },
-      {
-        title: "Inspections",
-        link: "/admin/form/inspections",
-        icon: Circle,
-      },
-      {
-        title: "Specification Category",
-        link: "/admin/form/specification-category",
-        icon: Circle,
-      },
-      {
-        title: "Specifications",
-        link: "/admin/form/specifications",
-        icon: Circle,
-      },
-      {
-        title: "Feature Category",
-        link: "/admin/form/feature-category",
-        icon: Circle,
-      },
-      {
-        title: "Features",
-        link: "/admin/form/features",
-        icon: Circle,
-      },
-      {
-        title: "Slider",
-        link: "/admin/form/slider",
-        icon: Circle,
-      },
-      {
-        title: "Blog Category",
-        link: "/admin/form/blog-category",
-        icon: Circle,
-      },
-      {
-        title: "Blog",
-        link: "/admin/form/blogs",
-        icon: Circle,
-      },
-      {
-        title: "Enums",
-        link: "/admin/form/enums",
-        icon: Circle,
-      },
-      {
-        title: "Static Page",
-        link: "/admin/form/static-page",
-        icon: Circle,
-      },
+      { title: "Category", link: "/admin/form/category", icon: Circle },
+      { title: "Brand", link: "/admin/form/brand", icon: Circle },
     ],
     icon: Form,
   },

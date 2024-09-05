@@ -14,38 +14,18 @@ interface VehicleProps {
   isEdit: boolean;
   token: string;
   id: string;
-  vehicle: any;
-  vehicle_enum: any;
-  variant_specification: any;
-  variant_feature: any;
-  variant_inspection: any;
-  vechile_images: any;
-  vehicle_specification: any;
-  vehicle_features: any;
-  vehicle_inspection: any;
-  vehicle_ext_360_images: any;
-  vehicle_int_360_images: any;
-  vehicle_body_part: any;
-  vehicle_scratch: any;
+  shoe: any;
+  shoe_category: any;
+  shoe_brand: any;
 }
 
 const AddEditVehicle = ({
   isEdit,
   token,
   id,
-  vehicle,
-  vehicle_enum,
-  variant_specification,
-  variant_feature,
-  variant_inspection,
-  vechile_images,
-  vehicle_specification,
-  vehicle_features,
-  vehicle_inspection,
-  vehicle_ext_360_images,
-  vehicle_int_360_images,
-  vehicle_body_part,
-  vehicle_scratch
+  shoe,
+  shoe_category,
+  shoe_brand,
 }: VehicleProps) => {
   const [active, setActive] = useState(0);
   return (
@@ -123,8 +103,8 @@ const AddEditVehicle = ({
           )}
         </div>
       </div>
-      {active === 0 ? (
-        <General {...{ vehicle, vehicle_enum, isEdit, token, id }} />
+      <General {...{ shoe, shoe_category, shoe_brand, isEdit, token, id }} />
+      {/* {active === 0 ? (
       ) : active === 1 ? (
         <VehicleImages {...{ isEdit, token, id, vechile_images }} />
       ) : active === 2 ? (
@@ -155,7 +135,7 @@ const AddEditVehicle = ({
         <VehicleDamagedImages
           {...{ isEdit, token, id, vehicle_int_360_images, vehicle_body_part, vehicle_scratch }}
         />
-      )}
+      )} */}
     </div>
   );
 };

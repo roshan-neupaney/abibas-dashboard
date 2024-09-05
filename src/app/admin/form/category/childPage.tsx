@@ -30,8 +30,14 @@ interface dataType {
   status: string;
 }
 
-const Category = ({ _data, token }: any) => {
-  const beautifiedCategory = beautifyCategory(_data);
+interface CategoryProps {
+  category: any;
+  token: string;
+}
+
+const Category = ({ category, token }: CategoryProps) => {
+  const beautifiedCategory = beautifyCategory(category);
+  console.log(category)
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
@@ -39,15 +45,15 @@ const Category = ({ _data, token }: any) => {
   const router = useRouter();
 
   useEffect(() => {
-    const beautifiedData = beautifyCategory(_data);
-    setData(beautifiedData);
-  }, [_data]);
+    const beautifiedCategory = beautifyCategory(category);
+    setData(beautifiedCategory);
+  }, []);
 
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
       {
-        header: "Image",
-        accessorKey: "image",
+        header: "Created At",
+        accessorKey: "createdAt",
       },
       {
         header: "Title",

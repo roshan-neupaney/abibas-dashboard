@@ -3,14 +3,13 @@ import React, { useState } from "react";
 import CustomInput from "../../../../../subComponents/input";
 import { updateState } from "../../../../../../utilities/helper";
 import { CustomToggleSwitch } from "../../../../../subComponents/checkbox";
-import CustomDropzone from "../../../../../subComponents/dropzone";
 import { SubmitButton } from "@/subComponents/buttons";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CRUD_CATEGORY } from "../../../../../../config/endPoints";
 import {
-  FormdataPost,
-  FormdataPatch,
+  JsonPatch,
+  JsonPost,
 } from "../../../../../../utilities/apiCall";
 import { categoryValidation } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
@@ -19,13 +18,11 @@ const defaultForm = {
   title: "",
   description: "",
   status: false,
-  file: "",
 };
 
 const defaultError = {
   title: "",
   description: "",
-  file: "",
 };
 
 const AddEditCategory = ({ token, data, isEdit, id }: any) => {
@@ -33,7 +30,6 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
     ? {
         title: data?.title || "",
         description: data?.description || "",
-        file: data?.image || "",
         status: data?.status == "ACTIVE",
       }
     : defaultForm;
@@ -76,7 +72,7 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await FormdataPost(
+        const response = await JsonPost(
           CRUD_CATEGORY,
           beautifiedPayload,
           token
@@ -84,7 +80,7 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Added Category");
-          // clearCachesByServerAction("/admin/form/category");
+          clearCachesByServerAction("/admin/form/category");
           router.push("/admin/form/category");
           setFormError(defaultError);
         } else {
@@ -107,7 +103,7 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = categoryValidation(beautifiedPayload);
       if (isValid) {
-        const response = await FormdataPatch(
+        const response = await JsonPatch(
           CRUD_CATEGORY,
           id,
           beautifiedPayload,
@@ -116,7 +112,6 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
         const { status }: any = response;
         if (status) {
           toast.success("Successfully Updated Category");
-          // clearCachesByServerAction("/admin/form/category");
           router.push("/admin/form/category");
           setFormError(defaultError);
           
@@ -164,15 +159,6 @@ const AddEditCategory = ({ token, data, isEdit, id }: any) => {
         title="Is Active"
         value={formData.status}
         onChange={(val: boolean) => updateState("status", val, setFormData)}
-      />
-      <CustomDropzone
-        title="Image"
-        value={formData.file}
-        onChange={(val: any) =>
-          updateState("file", val, setFormData, setFormError)
-        }
-        error={formError.file}
-        required
       />
       <SubmitButton
         title={isEdit ? "Edit" : "Add"}

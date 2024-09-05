@@ -1,7 +1,7 @@
-export const LOGIN = "/auth/local/signin";
-export const CRUD_CATEGORY = "/category";
+// export const LOGIN = "/auth/local/signin";
+// export const CRUD_CATEGORY = "/category";
 export const CRUD_BODY_TYPE = "/bodytype";
-export const CRUD_BRAND = "/brand";
+// export const CRUD_BRAND = "/brand";
 export const CRUD_MODEL = "/model";
 export const CRUD_COLOR_CHOICE = "/color-for-choice";
 export const CRUD_VARIANT = "/variant";
@@ -50,3 +50,9 @@ export const GET_SCRATCH ='/vehicle/scratchWithVehicleId';
 export const UPDATE_SCRATCH ='/vehicle/updateScratch';
 export const DELETE_SCRATCH ='/vehicle/scratchDelete';
 
+//for Abibas Website
+
+export const LOGIN = "/authentication/login";
+export const CRUD_SHOE = '/shoes';
+export const CRUD_CATEGORY = "/category"
+export const CRUD_BRAND = "/brand";

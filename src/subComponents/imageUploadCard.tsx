@@ -51,14 +51,14 @@ const ImageUploadCard = ({
 
   return (
     <label className="cursor-pointer">
-      <div className=" flex h-60 items-center justify-center">
+      <div className="flex h-60 items-center justify-center">
         <input
           className="opacity-0 w-0 h-0"
           type="file"
           onChange={(e) => onDrop(e.target)}
           accept="image/*"
         />
-        <span className="flex flex-1">
+        <span className="flex flex-1 relative h-full">
           <LazyImage
             src={tempImage}
             fill={true}

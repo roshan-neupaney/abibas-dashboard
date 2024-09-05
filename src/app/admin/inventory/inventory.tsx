@@ -17,7 +17,7 @@ import {
 } from "@tanstack/react-table";
 import CustomInput from "../../../subComponents/input";
 import { useRouter } from "next/navigation";
-import { beautifyVehicleList } from "../../../../utilities/beautify";
+import { beautifyShoeList } from "../../../../utilities/beautify";
 import DeleteModal from "../../../../components/modals/deleteModal";
 import { defaultStateModal } from "../../../../config/constants";
 import { CRUD_VEHICLE } from "../../../../config/endPoints";
@@ -25,26 +25,29 @@ import { DeleteWithId } from "../../../../utilities/apiCall";
 import toast from "react-hot-toast";
 
 interface InventoryProps {
-  vehicleList: any;
-  vehicle_enums: any;
+  shoeList: any;
   token: string;
 }
 
-const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
-  const beautifiedVehicleList = beautifyVehicleList(vehicleList, vehicle_enums);
+const Inventory = ({ shoeList, token }: InventoryProps) => {
+  const beautifiedshoeList = beautifyShoeList(shoeList);
+  console.log(shoeList)
   const [search, setSearch] = useState("");
   const router = useRouter();
-  const [data, setData] = useState(beautifiedVehicleList);
+  const [data, setData] = useState(beautifiedshoeList);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [openModal, toggleModal] = useState(defaultStateModal);
-
   useEffect(() => {
-    const beautifiedCategory = beautifyVehicleList(vehicleList, vehicle_enums);
+    const beautifiedCategory = beautifyShoeList(shoeList);
     setData(beautifiedCategory);
-  }, [vehicleList]);
+  }, [shoeList]);
 
   const columns: ColumnDef<dataType>[] = useMemo(
     () => [
+      {
+        header: "Created At",
+        accessorKey: "createdAt",
+      },
       {
         header: "Title",
         accessorKey: "title",
@@ -54,24 +57,8 @@ const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
         accessorKey: "brand",
       },
       {
-        header: "Model",
-        accessorKey: "model",
-      },
-      {
-        header: "Variant",
-        accessorKey: "variant",
-      },
-      {
-        header: "KM driven",
-        accessorKey: "km_run",
-      },
-      {
-        header: "Manufacture",
-        accessorKey: "manufacture",
-      },
-      {
-        header: "Owner",
-        accessorKey: "owner",
+        header: "Category",
+        accessorKey: "category",
       },
       {
         header: "Price",
@@ -154,6 +141,7 @@ const Inventory = ({ vehicleList, vehicle_enums, token }: InventoryProps) => {
               <CustomTableBody
                 internalTitleRoute="/admin/inventory/detail"
                 internalTitleRouteId="slugId"
+                titleImage="image"
                 entireRoute="/admin/inventory/edit"
                 {...{ table, toggleModal }}
               />

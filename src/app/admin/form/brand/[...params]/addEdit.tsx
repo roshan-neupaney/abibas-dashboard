@@ -34,7 +34,7 @@ const AddEditBrand = ({ token, data, isEdit, id }: any) => {
     ? {
         title: data?.title || "",
         description: data?.description || "",
-        file: data?.image || "",
+        file: data?.image_name || "",
         status: data?.status == "ACTIVE",
       }
     : defaultForm;
@@ -46,17 +46,7 @@ const AddEditBrand = ({ token, data, isEdit, id }: any) => {
   const router = useRouter();
 
   const beautifyPayload = (_data: any) => {
-    if (data?.image === _data.file) {
-      const payload = {
-        title: "",
-        description: "",
-        status: "",
-      };
-      payload.title = _data.title;
-      payload.description = _data.description;
-      payload.status = _data.status ? "ACTIVE" : "PENDING";
-      return payload;
-    } else {
+    
       const payload = {
         title: "",
         description: "",
@@ -65,10 +55,10 @@ const AddEditBrand = ({ token, data, isEdit, id }: any) => {
       };
       payload.title = _data.title;
       payload.description = _data.description;
-      payload.file = _data.file;
+      payload.file = data?.image_name !== _data?.file ? _data.file : undefined;
       payload.status = _data.status ? "ACTIVE" : "PENDING";
       return payload;
-    }
+    
   };
 
   const handleAdd = async () => {

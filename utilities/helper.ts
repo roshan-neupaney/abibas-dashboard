@@ -30,7 +30,10 @@ export const UUidGenerator = () => {
   return uuid;
 };
 
-export function groupBy<T>(array: T[], key: (item: T) => string): Record<string, T[]> {
+export function groupBy<T>(
+  array: T[],
+  key: (item: T) => string
+): Record<string, T[]> {
   return array?.reduce((result, item) => {
     const keyValue = key(item);
     if (!result[keyValue]) {
@@ -41,38 +44,50 @@ export function groupBy<T>(array: T[], key: (item: T) => string): Record<string,
   }, {} as Record<string, T[]>);
 }
 
-export function groupByObject<T>(array: T[], key: (item: T) => string): Record<string, T[]> {
+export function groupByObject<T>(
+  array: T[],
+  key: (item: T) => string
+): Record<string, T[]> {
   return array?.reduce((result: any, item: any) => {
     const keyValue = key(item);
     if (!result[keyValue]) {
       result[keyValue] = {};
     }
-    result[keyValue]= item;
+    result[keyValue] = item;
     return result;
   }, {} as Record<string, T[]>);
 }
 
 export const FormatPrice = (_amount: string) => {
   const amount = Number(_amount);
-  if(amount >= 10000000) {
-    const num = (amount/10000000) + ' Cr';
+  if (amount >= 10000000) {
+    const num = amount / 10000000 + " Cr";
     return num;
-  } else if(amount >= 100000) {
-    const num = (amount/100000) + ' Lac';
+  } else if (amount >= 100000) {
+    const num = amount / 100000 + " Lac";
     return num;
-  } else if(amount >= 1000) {
-    const num = (amount/1000) + ' K';
+  } else if (amount >= 1000) {
+    const num = amount / 1000 + " K";
     return num;
   } else {
-    return amount;
+    return _amount;
   }
-}
+};
 export const FormatDistance = (_amount: string) => {
   const amount = Number(_amount);
-  if(amount >= 1000) {
-    const num = (amount/1000) + 'K';
+  if (amount >= 1000) {
+    const num = amount / 1000 + "K";
     return num;
   } else {
     return amount;
   }
-}
+};
+
+export const FormatDate = (date: string) => {
+  const _date = new Date(date);
+  return _date.toLocaleDateString("En-Us", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+};

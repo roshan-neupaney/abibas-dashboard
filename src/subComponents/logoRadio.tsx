@@ -22,7 +22,7 @@ export const CustomLogoRadio = ({
     <>
       <div className="flex flex-col gap-2">
         <label
-          htmlFor="radio"
+          htmlFor={name}
           className="label"
           style={{ color: error ? "red" : "#1a1c1e" }}
         >
@@ -55,6 +55,7 @@ export const CustomLogoRadio = ({
                   <input
                     id={items.id}
                     type="radio"
+                    name={name}
                     className="opacity-0 w-0 h-0"
                     onChange={() => onChange(items.id)}
                   />

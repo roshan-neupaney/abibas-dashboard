@@ -1,29 +1,56 @@
-import { FormatPrice } from "./helper";
+import { FormatDate, FormatPrice } from "./helper";
 
-export const beautifyCategory = (data) => {
+export const beautifyShoeList = (_data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const { data } = _data;
+    const filteredData = data.map((shoe: any) => {
       const details = {
         id: "",
         image: "",
         title: "",
-        description: "",
+        price: "",
+        brand: "",
+        category: "",
+        createdAt: "",
         status: "",
       };
+      details.id = shoe?.id;
+      details.image = shoe?.colorVariation[0]?.image_url;
+      details.title = shoe?.title;
+      details.price = shoe?.price;
+      details.brand = shoe?.brand?.title;
+      details.category = shoe?.category?.title;
+      details.createdAt = FormatDate(shoe.createdAt);
+      details.status = shoe?.status;
+      return details;
+    });
+    return filteredData;
+  } catch (error) {}
+};
+export const beautifyCategory = (data: any) => {
+  try {
+    const filteredData = data?.map((cat: any) => {
+      const details = {
+        id: "",
+        title: "",
+        description: "",
+        status: "",
+        createdAt: ""
+      };
       details.id = cat?.id;
-      details.image = cat?.image;
       details.title = cat?.title;
       details.description = cat?.description;
       details.status = cat?.status;
+      details.createdAt = FormatDate(cat?.createdAt);
       return details;
     });
     return filteredData;
   } catch (error) {}
 };
 
-export const beautifyBodyType = (data) => {
+export const beautifyBodyType = (data: any) => {
   try {
-    const filteredData = data.map((body) => {
+    const filteredData = data.map((body: any) => {
       const details = {
         id: "",
         image: "",
@@ -32,7 +59,7 @@ export const beautifyBodyType = (data) => {
         status: "",
       };
       details.id = body?.id;
-      details.image = body?.image;
+      details.image = body?.image_name;
       details.title = body?.title;
       details.description = body?.description;
       details.status = body?.status;
@@ -42,9 +69,9 @@ export const beautifyBodyType = (data) => {
   } catch (error) {}
 };
 
-export const beautifyModel = (data) => {
+export const beautifyModel = (data: any) => {
   try {
-    const filteredData = data.map((body) => {
+    const filteredData = data.map((body: any) => {
       const details = {
         id: "",
         image: "",
@@ -69,9 +96,9 @@ export const beautifyModel = (data) => {
   } catch (error) {}
 };
 
-export const beautifyColor = (data) => {
+export const beautifyColor = (data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const filteredData = data.map((cat: any) => {
       const details = {
         id: "",
         color: "",
@@ -88,12 +115,12 @@ export const beautifyColor = (data) => {
   } catch (error) {}
 };
 
-export const beautifyVariant = (data) => {
+export const beautifyVariant = (data: any) => {
   try {
-    const filteredData = data?.map((body) => {
+    const filteredData = data?.map((body: any) => {
       const temp = body?.colors == "" ? "[]" : body?.colors;
       const color = JSON.parse(temp);
-      const temp_color = color?.map((items) => {
+      const temp_color = color?.map((items: any) => {
         return items.color_code;
       });
       const details = {
@@ -124,9 +151,9 @@ export const beautifyVariant = (data) => {
   }
 };
 
-export const beautifyUnit = (data) => {
+export const beautifyUnit = (data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const filteredData = data.map((cat: any) => {
       const details = {
         id: "",
         title: "",
@@ -141,9 +168,9 @@ export const beautifyUnit = (data) => {
   } catch (error) {}
 };
 
-export const beautifySpecificationCategory = (data) => {
+export const beautifySpecificationCategory = (data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const filteredData = data.map((cat: any) => {
       const details = {
         id: "",
         image: "",
@@ -162,9 +189,9 @@ export const beautifySpecificationCategory = (data) => {
   } catch (error) {}
 };
 
-export const beautifyFeature = (data) => {
+export const beautifyFeature = (data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const filteredData = data.map((cat: any) => {
       const details = {
         id: "",
         image: "",
@@ -190,9 +217,9 @@ export const beautifyFeature = (data) => {
     return filteredData;
   } catch (error) {}
 };
-export const beautifySpecification = (data) => {
+export const beautifySpecification = (data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const filteredData = data.map((cat: any) => {
       const details = {
         id: "",
         image: "",
@@ -216,9 +243,9 @@ export const beautifySpecification = (data) => {
     return filteredData;
   } catch (error) {}
 };
-export const beautifyAssetsPart = (data) => {
+export const beautifyAssetsPart = (data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const filteredData = data.map((cat: any) => {
       const details = {
         id: "",
         image: "",
@@ -238,9 +265,9 @@ export const beautifyAssetsPart = (data) => {
     return filteredData;
   } catch (error) {}
 };
-export const beautifyInspection = (data) => {
+export const beautifyInspection = (data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const filteredData = data.map((cat: any) => {
       const details = {
         id: "",
         title: "",
@@ -254,7 +281,6 @@ export const beautifyInspection = (data) => {
         text_for_everything_fine: "",
       };
       details.id = cat?.id;
-      details.image = cat?.image;
       details.title = cat?.title;
       details.description = cat?.description;
       details.start_text = cat?.start_text;
@@ -270,9 +296,9 @@ export const beautifyInspection = (data) => {
   } catch (error) {}
 };
 
-export const beautifyBlog = (data) => {
+export const beautifyBlog = (data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const filteredData = data.map((cat: any) => {
       const details = {
         id: "",
         image: "",
@@ -292,9 +318,9 @@ export const beautifyBlog = (data) => {
     return filteredData;
   } catch (error) {}
 };
-export const beautifyEnums = (data) => {
+export const beautifyEnums = (data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const filteredData = data.map((cat: any) => {
       const details = {
         id: "",
         title: "",
@@ -313,13 +339,13 @@ export const beautifyEnums = (data) => {
   } catch (error) {}
 };
 
-export const beautifyVehicleList = (_data, vehicleEnums) => {
+export const beautifyVehicleList = (_data: any, vehicleEnums: any) => {
   try {
     const { data } = _data;
-    const filteredData = data?.map((vehicle) => {
+    const filteredData = data?.map((vehicle: any) => {
       const details = {
         id: "",
-        slugId: '',
+        slugId: "",
         title: "",
         brand: "",
         model: "",
@@ -332,54 +358,53 @@ export const beautifyVehicleList = (_data, vehicleEnums) => {
         km_run: "",
         price: "",
       };
-      const brandArray = vehicleEnums?.data?.brand.filter((items) => {
+      const brandArray = vehicleEnums?.data?.brand.filter((items: any) => {
         if (vehicle.brand_id === items.id) {
           return items;
         }
       });
-      const modelArray = vehicleEnums?.data?.model.filter((items) => {
+      const modelArray = vehicleEnums?.data?.model.filter((items: any) => {
         if (vehicle.model_id === items.id) {
           return items;
         }
       });
-      const variantArray = vehicleEnums?.data?.varient.filter((items) => {
+      const variantArray = vehicleEnums?.data?.varient.filter((items: any) => {
         if (vehicle.varient_id === items.id) {
           return items;
         }
       });
-      const cityArray = vehicleEnums?.data?.enum_city.filter((items) => {
+      const cityArray = vehicleEnums?.data?.enum_city.filter((items: any) => {
         if (vehicle.city === items.id) {
           return items;
         }
       });
-      const driveArray = vehicleEnums?.data?.enum_drive.filter((items) => {
+      const driveArray = vehicleEnums?.data?.enum_drive.filter((items: any) => {
         if (vehicle.km_drive === items.id) {
           return items;
         }
       });
       const manufactureArray = vehicleEnums?.data?.enum_made_year.filter(
-        (items) => {
+        (items: any) => {
           if (vehicle.made_year === items.id) {
             return items;
           }
         }
       );
-      const ownerArray = vehicleEnums?.data?.enum_owner.filter((items) => {
+      const ownerArray = vehicleEnums?.data?.enum_owner.filter((items: any) => {
         if (vehicle.owner === items.id) {
           return items;
         }
       });
       const preferSellingArray = vehicleEnums?.data?.enum_prefer_selling.filter(
-        (items) => {
+        (items: any) => {
           if (vehicle.prefer_selling === items.id) {
             return items;
           }
         }
       );
       details.id = vehicle?.id + "_" + vehicle.varient_id || "";
-      details.slugId = vehicle?.id + '_' + vehicle.slug;
+      details.slugId = vehicle?.id + "_" + vehicle.slug;
       details.title = vehicle?.title || "";
-      details.status = vehicle?.status || "";
       details.km_run = vehicle?.km_run || "";
       details.price = vehicle?.price || "";
       details.brand = brandArray[0].title;
@@ -396,9 +421,9 @@ export const beautifyVehicleList = (_data, vehicleEnums) => {
   } catch (e) {}
 };
 
-export const beautifyVariants = (data) => {
+export const beautifyVariants = (data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const filteredData = data.map((cat: any) => {
       const details = {
         id: "",
         title: "",
@@ -410,16 +435,15 @@ export const beautifyVariants = (data) => {
       details.title = cat?.title;
       details.order = cat?.order;
       details.status = cat?.status;
-      details.image = cat?.image;
       return details;
     });
     return filteredData;
   } catch (error) {}
 };
 
-export const beautifyStaticPage = (data) => {
+export const beautifyStaticPage = (data: any) => {
   try {
-    const filteredData = data.map((cat) => {
+    const filteredData = data.map((cat: any) => {
       const details = {
         id: "",
         title: "",
@@ -438,9 +462,9 @@ export const beautifyStaticPage = (data) => {
   } catch (error) {}
 };
 
-export const beautifyUsers = (data) => {
+export const beautifyUsers = (data: any) => {
   try {
-    const filteredData = data.map((user) => {
+    const filteredData = data.map((user: any) => {
       const details = {
         id: "",
         firstName: "",
@@ -463,10 +487,10 @@ export const beautifyUsers = (data) => {
   } catch (error) {}
 };
 
-export const beautifyWatchList = (_data) => {
+export const beautifyWatchList = (_data: any) => {
   const { data } = _data;
   try {
-    const filteredData = data.map((user) => {
+    const filteredData = data.map((user: any) => {
       const details = {
         id: "",
         title: "",
@@ -485,10 +509,10 @@ export const beautifyWatchList = (_data) => {
     return filteredData;
   } catch (error) {}
 };
-export const beautifyOfferList = (_data) => {
+export const beautifyOfferList = (_data: any) => {
   const { data } = _data;
   try {
-    const filteredData = data.map((user) => {
+    const filteredData = data.map((user: any) => {
       const details = {
         id: "",
         title: "",
@@ -509,10 +533,10 @@ export const beautifyOfferList = (_data) => {
     return filteredData;
   } catch (error) {}
 };
-export const beautifyTestDriveList = (_data) => {
+export const beautifyTestDriveList = (_data: any) => {
   const { data } = _data;
   try {
-    const filteredData = data.map((user) => {
+    const filteredData = data.map((user: any) => {
       const details = {
         id: "",
         title: "",
@@ -537,10 +561,10 @@ export const beautifyTestDriveList = (_data) => {
   } catch (error) {}
 };
 
-export const beautifyAllBookingList = (_data) => {
+export const beautifyAllBookingList = (_data: any) => {
   const { vehicles } = _data;
   try {
-    const filteredData = vehicles.map((element) => {
+    const filteredData = vehicles.map((element: any) => {
       const details = {
         id: "",
         title: "",
@@ -563,10 +587,10 @@ export const beautifyAllBookingList = (_data) => {
     console.error(error);
   }
 };
-export const beautifyAllWatchList = (_data) => {
+export const beautifyAllWatchList = (_data: any) => {
   const { vehicles } = _data;
   try {
-    const filteredData = vehicles.map((element) => {
+    const filteredData = vehicles.map((element: any) => {
       const details = {
         id: "",
         title: "",
@@ -589,10 +613,10 @@ export const beautifyAllWatchList = (_data) => {
     console.error(error);
   }
 };
-export const beautifyAllTestDriveList = (_data) => {
+export const beautifyAllTestDriveList = (_data: any) => {
   const { vehicles } = _data;
   try {
-    const filteredData = vehicles.map((element) => {
+    const filteredData = vehicles.map((element: any) => {
       const details = {
         id: "",
         title: "",
@@ -619,10 +643,10 @@ export const beautifyAllTestDriveList = (_data) => {
     console.error(error);
   }
 };
-export const beautifyAllOffersList = (_data) => {
+export const beautifyAllOffersList = (_data: any) => {
   const { vehicles } = _data;
   try {
-    const filteredData = vehicles.map((element) => {
+    const filteredData = vehicles.map((element: any) => {
       const details = {
         id: "",
         title: "",

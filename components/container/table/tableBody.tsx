@@ -52,7 +52,9 @@ const CustomTableBody = ({
                   {cell.column.id.includes("image") ? (
                     <div className="table-image relative">
                       <LazyImage
-                        src={IMAGE_URL + "/small-" + cell?.row.original["image"]}
+                        src={
+                          IMAGE_URL + "/small-" + cell?.row.original["image"]
+                        }
                         alt="table-image"
                         fill
                         loading="lazy"
@@ -64,7 +66,9 @@ const CustomTableBody = ({
                       {titleImage && (
                         <div className="table-image relative">
                           <LazyImage
-                            src={IMAGE_URL + '/' + cell?.row?.original[titleImage]}
+                            src={
+                              IMAGE_URL + "/" + cell?.row?.original[titleImage]
+                            }
                             alt="table-image"
                             width={70}
                             height={50}
@@ -73,11 +77,15 @@ const CustomTableBody = ({
                           />
                         </div>
                       )}
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col gap-2 justify-center">
                         <div className="flex justify-start items-center body-medium">
                           {internalTitleRoute ? (
                             <Link
-                              href={internalTitleRoute + '/' + cell?.row?.original[internalTitleRouteId]}
+                              href={
+                                internalTitleRoute +
+                                "/" +
+                                cell?.row?.original[internalTitleRouteId]
+                              }
                               className="font-semibold"
                             >
                               {cell.row.original["title"]}
@@ -86,30 +94,32 @@ const CustomTableBody = ({
                             <span>{cell.row.original["title"]}</span>
                           )}
                         </div>
-                        <div className="flex gap-4">
-                          {firstSubTitle && (
-                            <span className="label-medium">
-                              {cell.row.original[firstSubTitle]}
-                            </span>
-                          )}
-                          {secondSubTitle && (
-                            <span className="label-medium">
-                              {cell.row.original[secondSubTitle]}
-                            </span>
-                          )}
-                          {thirdSubTitle && (
-                            <span className="label-medium">
-                              {cell.row.original[thirdSubTitle]}
-                            </span>
-                          )}
-                        </div>
+                        {(firstSubTitle || secondSubTitle || thirdSubTitle) && (
+                          <div className="flex gap-4">
+                            {firstSubTitle && (
+                              <span className="label-medium">
+                                {cell.row.original[firstSubTitle]}
+                              </span>
+                            )}
+                            {secondSubTitle && (
+                              <span className="label-medium">
+                                {cell.row.original[secondSubTitle]}
+                              </span>
+                            )}
+                            {thirdSubTitle && (
+                              <span className="label-medium">
+                                {cell.row.original[thirdSubTitle]}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   ) : cell.column.id == "id" ? (
                     <div className="label-large-NH">
                       {cell.row.original["id"]}
                     </div>
-                  ): cell.column.id == "description" ? (
+                  ) : cell.column.id == "description" ? (
                     <div className="label-large-NH min-w-96">
                       {cell.row.original["description"]}
                     </div>

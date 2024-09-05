@@ -70,10 +70,9 @@ const CustomSelect = ({
   required = false,
   error = "",
   sx = {},
-  
 }: CustomSelectProps) => {
   const [openBox, toggleBox] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(value || placeholder);
+  const [selectedValue, setSelectedValue] = useState(value);
   const selectRef = useRef<HTMLDivElement | null>(null);
   const dropdownOptionRef = useRef<HTMLDivElement | null>(null);
   const inputBoxRef = useRef<HTMLDivElement | null>(null);
@@ -87,10 +86,8 @@ const CustomSelect = ({
           }
         });
       }
-    } else {
-      setSelectedValue(placeholder);
     }
-  }, [data, value, placeholder]);
+  }, [data, value]);
 
   const dropdownPosition = useDropdownPosition(
     openBox,
@@ -108,7 +105,11 @@ const CustomSelect = ({
   }, []);
 
   return (
-    <div className="flex flex-1 flex-col items-start gap-0.5 self-stretch" ref={inputBoxRef} style={{ ...sx }}>
+    <div
+      className="flex flex-1 flex-col items-start gap-0.5 self-stretch"
+      ref={inputBoxRef}
+      style={{ ...sx }}
+    >
       <div className="flex flex-col self-stretch relative gap-2">
         <div className="label" style={{ color: error ? "red" : "#1a1c1e" }}>
           {title}
@@ -125,7 +126,13 @@ const CustomSelect = ({
             toggleBox(!openBox);
           }}
         >
-          <span className="body-medium">{selectedValue || placeholder}</span>
+          {selectedValue ? (
+            <span className="body-medium">{selectedValue}</span>
+          ) : (
+            <span className="body-medium" style={{ color: "#9ca3be" }}>
+              {placeholder}
+            </span>
+          )}
           <span
             className="select-arrow"
             style={{

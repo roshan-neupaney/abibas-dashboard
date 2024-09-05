@@ -6,7 +6,7 @@ const page = () => {
   const token = cookies().get('access_token')?.value;
   authorization(token)
   
-  // redirect("/admin/dashboard");
+  redirect("/admin/dashboard");
 };
 
 export default page;

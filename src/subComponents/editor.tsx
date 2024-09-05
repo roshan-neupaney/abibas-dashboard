@@ -9,6 +9,7 @@ interface CustomEditorProps {
   onChange: any;
   required?: boolean;
   error?: any;
+  style?: any;
 }
 
 const CustomEditor = ({
@@ -18,6 +19,7 @@ const CustomEditor = ({
   onChange,
   required,
   error = '',
+  style= {}
 }: CustomEditorProps) => {
   const editorRef = useRef<any>();
   const [editorLoaded, setEditorLoaded] = useState(false);
@@ -36,7 +38,7 @@ const CustomEditor = ({
   }, [name]);
   return (
     editorLoaded && (
-      <div className="flex flex-col gap-2 self-stretch">
+      <div className="flex flex-col gap-2 self-stretch" style={style}>
         {title && (
           <span className="label" style={{ color: error ? "red" : "#1a1c1e" }}>
             {title}

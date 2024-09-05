@@ -13,7 +13,6 @@ import { LOGIN } from "../../../config/endPoints";
 
 const defaultForm = {
   email: "",
-  role: "SUPERADMIN",
   password: "",
 };
 
