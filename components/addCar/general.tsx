@@ -9,7 +9,7 @@ import { FormdataPost, FormdataPatch } from "../../utilities/apiCall";
 import clearCachesByServerAction from "../../hooks/revalidate";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { vehicleValidation } from "../../utilities/validation";
+import { shoeValidation } from "../../utilities/validation";
 import { CustomLogoRadio } from "@/subComponents/logoRadio";
 import AddShoeVariation from "./addShoeVariation";
 import CustomEditor from "@/subComponents/editor";
@@ -29,7 +29,11 @@ const defaultForm = {
       id: "uuid_" + uuid,
       color: "",
       file: "",
-      sizes: [],
+      sizes: [{
+        id: "uuid_" + uuid,
+        size: '',
+        stock: ''
+      }],
     },
   ],
   status: false,
@@ -42,6 +46,16 @@ const defaultError = {
   previous_price: "",
   description: "",
   details: "",
+  color_variation: [
+    {
+      color: "",
+      file: "",
+      sizes: [{
+         size: '',
+        stock: ''
+      }],
+    },
+  ],
 };
 const General = ({
   shoe,
@@ -118,8 +132,10 @@ const General = ({
     // setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
-      const { isValid, error }: any = vehicleValidation(beautifiedPayload);
-      if (true) {
+      const { isValid, error }: any = shoeValidation(beautifiedPayload);
+      console.log('beautifiedPayload', beautifiedPayload)
+      console.log('error', error)
+      if (isValid) {
         const response = await FormdataPost(CRUD_SHOE, beautifiedPayload, token);
         const { status }: any = response;
         if (status) {
@@ -145,7 +161,7 @@ const General = ({
     setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
-      const { isValid, error }: any = vehicleValidation(beautifiedPayload);
+      const { isValid, error }: any = shoeValidation(beautifiedPayload);
       if (true) {
         const response = await FormdataPatch(
           CRUD_SHOE,
@@ -174,7 +190,6 @@ const General = ({
     }
   };
 
-  console.log("formData", formData);
 
   return (
     <div className="body-container flex gap-5 p-4">
@@ -226,7 +241,7 @@ const General = ({
             placeholder="Write here..."
             required
             width="30rem"
-            // error={formError.price}
+            error={formError.description}
           />
 
           <CustomEditor
@@ -238,7 +253,7 @@ const General = ({
             data={formData.details}
             required
             style={{width: '30rem'}}
-            // error={formError.price}
+            error={formError.details}
           />
           <CustomInput
             title="Price"
@@ -250,7 +265,7 @@ const General = ({
             required
             width="30rem"
             type="number"
-            // error={formError.price}
+            error={formError.price}
           />
           <CustomInput
             title="Previous Price"
@@ -265,6 +280,7 @@ const General = ({
           <AddShoeVariation
             {...{ isEdit, setFormData }}
             color_variation={formData?.color_variation}
+            formError={formError.color_variation}
           />
           <CustomToggleSwitch
             title="Is Active"

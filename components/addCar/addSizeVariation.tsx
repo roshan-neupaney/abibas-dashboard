@@ -10,35 +10,32 @@ const AddSizeVariation = ({
   setColorVariation,
   colorVariationId,
   size_variation,
+  sizeError,
   isEdit,
 }: any) => {
   const uuid = UUidGenerator();
+  const defaultSizeForm = {
+    id: "uuid_" + uuid,
+    size: "",
+    stock: "",
+  };
 
-  const defaultForm = [
-    {
-      id: "uuid_" + uuid,
-      size: "",
-      stock: "",
-    },
-  ];
-
-  const [sizeVariation, setSizeVariation] = useState(defaultForm);
-console.log('size_variation', size_variation)
+  const [sizeVariation, setSizeVariation] = useState(size_variation);
+  // console.log('size_variation', size_variation)
   useEffect(() => {
-    setSizeVariation(size_variation?.length > 0 ? size_variation : defaultForm);
+    setSizeVariation(size_variation);
   }, [size_variation]);
 
   const handleAdd = () => {
-    let uuid = UUidGenerator();
     setSizeVariation((prev: any) => {
-      return [
-        ...prev,
-        {
-          id: "uuid_" + uuid,
-          size: "",
-          stock: "",
-        },
-      ];
+      const result = [...prev, defaultSizeForm];
+      colorVariation?.map((cv: any) => {
+        if (cv.id === colorVariationId) {
+          cv["sizes"] = result;
+        }
+        return cv;
+      });
+      return result;
     });
   };
 
@@ -74,13 +71,17 @@ console.log('size_variation', size_variation)
     });
     setColorVariation(updatedResult);
   };
+  console.log('sizeError',sizeError)
 
   return (
     <div className="">
       <div className="grid grid-cols-6 gap-6">
         {sizeVariation?.map((size: any, index: number) => {
           return (
-            <div className="flex gap-2 border-2 rounded-2xl items-center p-2" key={index}>
+            <div
+              className="flex gap-2 border-2 rounded-2xl items-center p-2"
+              key={index}
+            >
               <CustomInput
                 title="Size"
                 value={size?.size}
@@ -88,6 +89,7 @@ console.log('size_variation', size_variation)
                 placeholder="Size"
                 type="number"
                 width="4rem"
+                // error={sizeError[index]?.size}
               />
               <CustomInput
                 title="Stock"
@@ -96,6 +98,7 @@ console.log('size_variation', size_variation)
                 placeholder="Stock"
                 type="number"
                 width="4rem"
+                // error={sizeError[index]?.stock}
               />
               <span
                 className="mt-5 cursor-pointer "

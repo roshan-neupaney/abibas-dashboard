@@ -1,3 +1,5 @@
+import { defaults } from "chart.js";
+
 export const loginValidation = (payload) => {
   try {
     const { email, password } = payload;
@@ -353,40 +355,37 @@ export const enumValidation = (payload) => {
     console.errror(e);
   }
 };
-export const vehicleValidation = (payload) => {
+export const shoeValidation = (payload) => {
   try {
     const {
       title,
       brand_id,
-      model_id,
-      varient_id,
-      made_year,
-      owner,
-      km_drive,
-      prefer_selling,
-      contact_email,
-      contact_number,
-      address,
-      city,
-      km_run,
+      category_id,
       price,
+      description,
+      details,
+      color_variation,
     } = payload;
+
+    const defaultSizeVariation = {
+      size: "",
+      stock: "",
+    };
+    const defaultColorVariation = {
+      color: "",
+      file: "",
+      sizes: [],
+    };
     let count = 0;
     const errorMessage = {
       title: "",
       brand_id: "",
-      model_id: "",
-      variant_id: "",
-      made_year: "",
-      owner: "",
-      km_driven: "",
-      prefer_selling: "",
-      contact_email: "",
-      contact_number: "",
-      address: "",
-      city: "",
-      km_run: "",
-      // price: "",
+      category_id: "",
+      price: "",
+      previous_price: "",
+      description: "",
+      details: "",
+      color_variation: [],
     };
     if (!title?.length > 0) {
       errorMessage.title = "Title is required.";
@@ -396,57 +395,55 @@ export const vehicleValidation = (payload) => {
       errorMessage.brand_id = "Brand is required.";
       count++;
     }
-    if (!model_id?.length > 0) {
-      errorMessage.model_id = "Model is required.";
+    if (!category_id?.length > 0) {
+      errorMessage.category_id = "Model is required.";
       count++;
     }
-    if (!varient_id?.length > 0) {
-      errorMessage.variant_id = "Variant is required.";
+    if (!price?.length > 0) {
+      errorMessage.price = "Variant is required.";
       count++;
     }
-    if (!made_year?.length > 0) {
-      errorMessage.made_year = "Manufacture Year is required.";
+    if (!description?.length > 0) {
+      errorMessage.description = "Manufacture Year is required.";
       count++;
     }
-    if (!owner?.length > 0) {
-      errorMessage.owner = "Owner is required.";
+    if (!details?.length > 0) {
+      errorMessage.details = "Owner is required.";
       count++;
     }
-    if (!km_drive?.length > 0) {
-      errorMessage.km_driven = "Driven is required.";
-      count++;
+
+    for (let i = 0; i < color_variation?.length; i++) {
+      const colorError = {
+        color: "",
+        file: "",
+        sizes: [],
+      }
+      if (!color_variation[i]?.color?.length > 0) {
+        colorError.color = "Color is required";
+      }
+      if (color_variation[i]?.file?.length === 0) {
+        colorError.file = "Image is required";
+      }
+      for (let j = 0; j < color_variation[i]?.sizes?.length; j++) {
+        const sizeError = {
+          size: "",
+          stock: "",
+        };
+        console.log(i,errorMessage.color_variation)
+        if (!color_variation[i]?.sizes[j]?.size?.length > 0) {
+          sizeError.size = "Size is required";
+        }
+        if (!color_variation[i]?.sizes[j]?.stock?.length > 0) {
+          sizeError.stock = "Stock is required";
+        }
+        colorError.sizes.push(sizeError);
+      }
+      errorMessage.color_variation.push(colorError);
     }
-    if (!prefer_selling?.length > 0) {
-      errorMessage.prefer_selling = "Prefer Selling is required.";
-      count++;
-    }
-    if (!contact_email?.length > 0) {
-      errorMessage.contact_email = "Email is required.";
-      count++;
-    }
-    if (!contact_number?.length > 0) {
-      errorMessage.contact_number = "Phone number is required.";
-      count++;
-    }
-    if (!address?.length > 0) {
-      errorMessage.address = "Address is required.";
-      count++;
-    }
-    if (!city?.length > 0) {
-      errorMessage.city = "City is required.";
-      count++;
-    }
-    if (!km_run?.length > 0) {
-      errorMessage.km_run = "Run distance is required.";
-      count++;
-    }
-    // if (!price?.length > 0) {
-    //   errorMessage.price = "Price is required.";
-    //   count++;
-    // }
+
     return { error: errorMessage, isValid: count === 0 };
   } catch (e) {
-    console.errror(e);
+    console.error(e);
   }
 };
 

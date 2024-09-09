@@ -7,9 +7,8 @@ import ImageUploadCard from "@/subComponents/imageUploadCard";
 import AddSizeVariation from "./addSizeVariation";
 import deleteIcon from "../../public/icons/deleteIcon.svg";
 
-const AddShoeVariation = ({ isEdit, color_variation, setFormData }: any) => {
+const AddShoeVariation = ({ isEdit, color_variation, setFormData, formError }: any) => {
   const [colorVariation, setColorVariation] = useState(color_variation);
-  console.log("colorVariation", colorVariation);
 
   useEffect(() => {
     setColorVariation(color_variation);
@@ -18,7 +17,8 @@ const AddShoeVariation = ({ isEdit, color_variation, setFormData }: any) => {
   useEffect(() => {
     updateState("color_variation", colorVariation, setFormData);
   }, [colorVariation]);
-
+  
+console.log('colorVariation', colorVariation)
   const handleAdd = () => {
     let uuid = UUidGenerator();
     setColorVariation((prev: any) => {
@@ -28,7 +28,11 @@ const AddShoeVariation = ({ isEdit, color_variation, setFormData }: any) => {
           id: "uuid_" + uuid,
           color: "",
           file: "",
-          sizes: [],
+          sizes: [{
+            id: 'uuid_' + uuid,
+            size: '',
+            stock: ''
+          }],
         },
       ];
     });
@@ -68,12 +72,14 @@ const AddShoeVariation = ({ isEdit, color_variation, setFormData }: any) => {
                 value={items.color}
                 onChange={(val: string) => updateForm(items.id, "color", val)}
                 placeholder="Enter Color"
+                error={formError[index]?.color}
               />
             </div>
             <AddSizeVariation
               {...{ colorVariation, setColorVariation, isEdit }}
               colorVariationId={items?.id}
               size_variation={items?.sizes}
+              sizeError={formError[index]?.sizes}
             />
             <span
               onClick={() => handleDelete(items?.id)}
