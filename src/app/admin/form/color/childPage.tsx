@@ -48,7 +48,7 @@ const Color = ({ _data, token }: any) => {
     () => [
       {
         header: "Color",
-        accessorKey: "color",
+        accessorKey: "title",
       },
       {
         header: "Color Code",

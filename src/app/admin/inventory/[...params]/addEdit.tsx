@@ -17,6 +17,7 @@ interface VehicleProps {
   shoe: any;
   shoe_category: any;
   shoe_brand: any;
+  color: any;
 }
 
 const AddEditVehicle = ({
@@ -26,6 +27,7 @@ const AddEditVehicle = ({
   shoe,
   shoe_category,
   shoe_brand,
+  color,
 }: VehicleProps) => {
   const [active, setActive] = useState(0);
   return (
@@ -103,7 +105,7 @@ const AddEditVehicle = ({
           )}
         </div>
       </div>
-      <General {...{ shoe, shoe_category, shoe_brand, isEdit, token, id }} />
+      <General {...{ shoe, shoe_category, shoe_brand, isEdit, token, id, color }} />
       {/* {active === 0 ? (
       ) : active === 1 ? (
         <VehicleImages {...{ isEdit, token, id, vechile_images }} />

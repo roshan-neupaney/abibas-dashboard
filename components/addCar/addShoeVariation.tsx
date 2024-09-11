@@ -6,8 +6,17 @@ import { updateState, UUidGenerator } from "../../utilities/helper";
 import ImageUploadCard from "@/subComponents/imageUploadCard";
 import AddSizeVariation from "./addSizeVariation";
 import deleteIcon from "../../public/icons/deleteIcon.svg";
+import { CustomMultiSelect } from "@/subComponents/select";
 
-const AddShoeVariation = ({ isEdit, color_variation, setFormData, formError }: any) => {
+const AddShoeVariation = ({
+  isEdit,
+  color_variation,
+  setFormData,
+  formError,
+  beautifiedColor,
+  setDeleteColorVariation,
+  setDeleteSizeVariation,
+}: any) => {
   const [colorVariation, setColorVariation] = useState(color_variation);
 
   useEffect(() => {
@@ -17,8 +26,7 @@ const AddShoeVariation = ({ isEdit, color_variation, setFormData, formError }: a
   useEffect(() => {
     updateState("color_variation", colorVariation, setFormData);
   }, [colorVariation]);
-  
-console.log('colorVariation', colorVariation)
+
   const handleAdd = () => {
     let uuid = UUidGenerator();
     setColorVariation((prev: any) => {
@@ -26,19 +34,21 @@ console.log('colorVariation', colorVariation)
         ...prev,
         {
           id: "uuid_" + uuid,
-          color: "",
+          color: [],
           file: "",
-          sizes: [{
-            id: 'uuid_' + uuid,
-            size: '',
-            stock: ''
-          }],
+          sizes: [
+            {
+              id: "uuid_" + uuid,
+              size: "",
+              stock: "",
+            },
+          ],
         },
       ];
     });
   };
 
-  const updateForm = (id: string, key: string, value: string) => {
+  const updateForm = (id: string, key: string, value: any) => {
     const result = colorVariation.map((items: any) => {
       if (items.id === id) {
         items[key] = value;
@@ -49,14 +59,19 @@ console.log('colorVariation', colorVariation)
   };
 
   const handleDelete = (id: string) => {
-    const remainingColorVariation = colorVariation?.filter((items:any) => {
+    if (!id.includes("uuid_")) {
+      setDeleteColorVariation((prev: any) => {
+        return [...prev, id ];
+      });
+    }
+    const remainingColorVariation = colorVariation?.filter((items: any) => {
       if (items?.id !== id) {
         return items;
       }
     });
     setColorVariation(remainingColorVariation);
   };
-
+  
   return (
     <div className="flex flex-1 flex-col gap-4">
       {colorVariation?.map((items: any, index: number) => {
@@ -67,16 +82,17 @@ console.log('colorVariation', colorVariation)
                 value={items.image_url}
                 onChange={(val: string) => updateForm(items.id, "file", val)}
               />
-              <CustomInput
+              <CustomMultiSelect
                 title="Color"
+                data={beautifiedColor}
                 value={items.color}
-                onChange={(val: string) => updateForm(items.id, "color", val)}
+                onChange={(val: any) => updateForm(items.id, "color", val)}
                 placeholder="Enter Color"
                 error={formError[index]?.color}
               />
             </div>
             <AddSizeVariation
-              {...{ colorVariation, setColorVariation, isEdit }}
+              {...{ colorVariation, setColorVariation, isEdit, setDeleteSizeVariation }}
               colorVariationId={items?.id}
               size_variation={items?.sizes}
               sizeError={formError[index]?.sizes}

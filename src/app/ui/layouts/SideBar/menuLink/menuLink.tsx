@@ -43,6 +43,7 @@ const mainMenu = [
     category: [
       { title: "Category", link: "/admin/form/category", icon: Circle },
       { title: "Brand", link: "/admin/form/brand", icon: Circle },
+      { title: "Color", link: "/admin/form/color", icon: Circle },
     ],
     icon: Form,
   },

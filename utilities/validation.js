@@ -21,6 +21,42 @@ export const loginValidation = (payload) => {
     console.error(e);
   }
 };
+export const signupValidation = (payload) => {
+  try {
+    const { email, password, firstName, lastName, mobile } = payload;
+    let count = 0;
+    const errorMessage = {
+      firstName: "",
+      lastName: "",
+      mobile: "",
+      email: "",
+      password: "",
+    };
+    if (!firstName.length > 0) {
+      errorMessage.firstName = "Firstname is required.";
+      count++;
+    }
+    if (!lastName.length > 0) {
+      errorMessage.lastName = "Lastname is required.";
+      count++;
+    }
+    if (!mobile.length > 0) {
+      errorMessage.mobile = "Mobile is required.";
+      count++;
+    }
+    if (!email.length > 0) {
+      errorMessage.email = "Email is required.";
+      count++;
+    }
+    if (!password.length > 0) {
+      errorMessage.password = "Password is required.";
+      count++;
+    }
+    return { error: errorMessage, isValid: count === 0 };
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 export const categoryValidation = (payload) => {
   try {
@@ -168,14 +204,14 @@ export const specificationValidation = (payload) => {
 
 export const colorValidation = (payload) => {
   try {
-    const { color, color_code } = payload;
+    const { title, color_code } = payload;
     let count = 0;
     const errorMessage = {
-      color: "",
+      title: "",
       color_code: "",
     };
-    if (!color.length > 0) {
-      errorMessage.color = "Color is required.";
+    if (!title.length > 0) {
+      errorMessage.title = "Color is required.";
       count++;
     }
     if (!color_code.length > 0) {
@@ -367,15 +403,6 @@ export const shoeValidation = (payload) => {
       color_variation,
     } = payload;
 
-    const defaultSizeVariation = {
-      size: "",
-      stock: "",
-    };
-    const defaultColorVariation = {
-      color: "",
-      file: "",
-      sizes: [],
-    };
     let count = 0;
     const errorMessage = {
       title: "",
@@ -396,19 +423,19 @@ export const shoeValidation = (payload) => {
       count++;
     }
     if (!category_id?.length > 0) {
-      errorMessage.category_id = "Model is required.";
+      errorMessage.category_id = "Category is required.";
       count++;
     }
     if (!price?.length > 0) {
-      errorMessage.price = "Variant is required.";
+      errorMessage.price = "Price is required.";
       count++;
     }
     if (!description?.length > 0) {
-      errorMessage.description = "Manufacture Year is required.";
+      errorMessage.description = "Description Year is required.";
       count++;
     }
     if (!details?.length > 0) {
-      errorMessage.details = "Owner is required.";
+      errorMessage.details = "Details is required.";
       count++;
     }
 
@@ -417,7 +444,7 @@ export const shoeValidation = (payload) => {
         color: "",
         file: "",
         sizes: [],
-      }
+      };
       if (!color_variation[i]?.color?.length > 0) {
         colorError.color = "Color is required";
       }
@@ -429,7 +456,7 @@ export const shoeValidation = (payload) => {
           size: "",
           stock: "",
         };
-        console.log(i,errorMessage.color_variation)
+        console.log(i, errorMessage.color_variation);
         if (!color_variation[i]?.sizes[j]?.size?.length > 0) {
           sizeError.size = "Size is required";
         }

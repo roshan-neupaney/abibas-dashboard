@@ -29,6 +29,27 @@ export const Login_Post = async (url, payload) => {
     console.error(e);
   }
 };
+export const Signup_Post = async (url, payload) => {
+  try {
+    const response = {
+      data: "",
+      status: false,
+    };
+    const res = await LOGIN_POST(url, payload);
+    const { status, data } = res;
+    if (status == 201) {
+      response.data = data;
+      response.status = true;
+    } else {
+      response.data = data;
+      response.status = false;
+    }
+    return response;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 export const ServerSideGet = async (token, url) => {
   try {
     const response = {

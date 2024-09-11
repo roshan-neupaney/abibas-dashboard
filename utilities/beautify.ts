@@ -98,17 +98,17 @@ export const beautifyModel = (data: any) => {
 
 export const beautifyColor = (data: any) => {
   try {
-    const filteredData = data.map((cat: any) => {
+    const filteredData = data.map((col: any) => {
       const details = {
         id: "",
-        color: "",
+        title: "",
         color_code: "",
         status: "",
       };
-      details.id = cat?.id;
-      details.color = cat?.color;
-      details.color_code = cat?.color_code;
-      details.status = cat?.status;
+      details.id = col?.id;
+      details.title = col?.title;
+      details.color_code = col?.color_code;
+      details.status = col?.status;
       return details;
     });
     return filteredData;

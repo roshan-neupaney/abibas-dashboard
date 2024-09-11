@@ -53,6 +53,8 @@ export const DELETE_SCRATCH ='/vehicle/scratchDelete';
 //for Abibas Website
 
 export const LOGIN = "/authentication/login";
+export const SIGNUP = "/authentication/signup";
 export const CRUD_SHOE = '/shoes';
 export const CRUD_CATEGORY = "/category"
 export const CRUD_BRAND = "/brand";
+export const CRUD_COLOR = "/color";

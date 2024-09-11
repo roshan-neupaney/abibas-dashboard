@@ -12,6 +12,7 @@ const AddSizeVariation = ({
   size_variation,
   sizeError,
   isEdit,
+  setDeleteSizeVariation
 }: any) => {
   const uuid = UUidGenerator();
   const defaultSizeForm = {
@@ -41,6 +42,11 @@ const AddSizeVariation = ({
 
   const handleDelete = (id: string) => {
     const remainingSize = sizeVariation?.filter((items: any) => {
+      if (!id.includes("uuid_")) {
+        setDeleteSizeVariation((prev: any) => {
+          return [...prev, id ];
+        });
+      }
       if (items.id !== id) {
         return items;
       }
@@ -71,7 +77,6 @@ const AddSizeVariation = ({
     });
     setColorVariation(updatedResult);
   };
-  console.log('sizeError',sizeError)
 
   return (
     <div className="">

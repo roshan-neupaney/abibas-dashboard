@@ -1,15 +1,21 @@
 import { Metadata } from "next";
 import PageHeader from "../../../../components/pageHeader";
-import { CRUD_SHOE, CRUD_VEHICLE_ENUM } from "../../../../config/endPoints";
+import { CRUD_SHOE } from "../../../../config/endPoints";
 import { authorization } from "../../../../hoc/auth";
-import { ServerSideGet } from "../../../../utilities/apiCall";
+import { ServerSideGet, ServerSideGetWithParams } from "../../../../utilities/apiCall";
 import Inventory from "./inventory";
 import { cookies } from "next/headers";
 
-async function getData(token: string) {
+interface searchParamsType {
+  color: string;
+  category: string;
+}
+
+async function getData(token: string, searchParams: searchParamsType) {
   authorization(token);
+  const {color} = searchParams;
   try {
-    const res = [await ServerSideGet(token, CRUD_SHOE)];
+    const res = [await ServerSideGetWithParams(token, CRUD_SHOE, `color=${color}`)];
     const [shoeList] = res;
     return { shoeList };
   } catch (e) {}
@@ -19,9 +25,11 @@ export const metadata: Metadata = {
   title: "Inventory",
 };
 
-const InventoryPage = async () => {
+const InventoryPage = async ({searchParams}: {searchParams: searchParamsType}) => {
+  console.log(searchParams)
+
   const token = cookies().get("access_token")?.value || "";
-  const { shoeList }: any = await getData(token);
+  const { shoeList }: any = await getData(token, searchParams);
   return (
     <>
       <PageHeader title="Inventory" addRoute="/admin/inventory/add" />

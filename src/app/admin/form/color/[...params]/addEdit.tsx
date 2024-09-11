@@ -6,29 +6,29 @@ import { CustomToggleSwitch } from "../../../../../subComponents/checkbox";
 import { SubmitButton } from "@/subComponents/buttons";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { CRUD_COLOR_CHOICE } from "../../../../../../config/endPoints";
+import { CRUD_COLOR } from "../../../../../../config/endPoints";
 import {
-  FormdataPost,
-  FormdataPatch,
+  JsonPost,
+  JsonPatch,
 } from "../../../../../../utilities/apiCall";
 import { colorValidation } from "../../../../../../utilities/validation";
 import clearCachesByServerAction from "../../../../../../hooks/revalidate";
 
 const defaultForm = {
-  color: "",
+  title: "",
   color_code: "#000000",
   status: false,
 };
 
 const defaultError = {
-  color: "",
+  title: "",
   color_code: "",
 };
 
 const AddEditColor = ({ token, data, isEdit, id }: any) => {
   const editForm = isEdit
     ? {
-        color: data?.color || "",
+        title: data?.title || "",
         color_code: data?.color_code || "",
         status: data?.status == "ACTIVE",
       }
@@ -42,11 +42,11 @@ const AddEditColor = ({ token, data, isEdit, id }: any) => {
 
   const beautifyPayload = (_data: any) => {
     const payload = {
-      color: "",
+      title: "",
       color_code: "",
       status: "",
     };
-    payload.color = _data.color;
+    payload.title = _data.title;
     payload.color_code = _data.color_code;
     payload.status = _data.status ? "ACTIVE" : "PENDING";
     return payload;
@@ -58,8 +58,8 @@ const AddEditColor = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = colorValidation(beautifiedPayload);
       if (isValid) {
-        const response = await FormdataPost(
-          CRUD_COLOR_CHOICE,
+        const response = await JsonPost(
+          CRUD_COLOR,
           beautifiedPayload,
           token
         );
@@ -89,8 +89,8 @@ const AddEditColor = ({ token, data, isEdit, id }: any) => {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = colorValidation(beautifiedPayload);
       if (isValid) {
-        const response = await FormdataPatch(
-          CRUD_COLOR_CHOICE,
+        const response = await JsonPatch(
+          CRUD_COLOR,
           id,
           beautifiedPayload,
           token
@@ -120,12 +120,12 @@ const AddEditColor = ({ token, data, isEdit, id }: any) => {
     <div className="flex flex-1 w-[30rem] p-4 flex-col gap-5">
       <CustomInput
         title="Color"
-        value={formData.color}
+        value={formData.title}
         onChange={(val: string) =>
-          updateState("color", val, setFormData, setFormError)
+          updateState("title", val, setFormData, setFormError)
         }
         placeholder="Enter color"
-        error={formError.color}
+        error={formError.title}
         required
       />
       <CustomInput

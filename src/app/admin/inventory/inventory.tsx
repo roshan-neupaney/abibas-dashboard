@@ -31,12 +31,13 @@ interface InventoryProps {
 
 const Inventory = ({ shoeList, token }: InventoryProps) => {
   const beautifiedshoeList = beautifyShoeList(shoeList);
-  console.log(shoeList)
+  // console.log('shoeList', shoeList?.data)
   const [search, setSearch] = useState("");
   const router = useRouter();
   const [data, setData] = useState(beautifiedshoeList);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [openModal, toggleModal] = useState(defaultStateModal);
+  
   useEffect(() => {
     const beautifiedCategory = beautifyShoeList(shoeList);
     setData(beautifiedCategory);
@@ -89,7 +90,6 @@ const Inventory = ({ shoeList, token }: InventoryProps) => {
   });
 
   const handleSearch = (val: string) => {
-    try {
       setSearch(val);
       const filteredData = itemslist.filter((items: any) => {
         if (items.title.toLowerCase().includes(val.toLowerCase())) {
@@ -97,10 +97,6 @@ const Inventory = ({ shoeList, token }: InventoryProps) => {
         }
       });
       setData(filteredData);
-    } catch (e) {
-      console.error(e);
-      setData([]);
-    }
   };
 
   const handleDelete = async () => {

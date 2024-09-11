@@ -27,13 +27,15 @@ const defaultForm = {
   color_variation: [
     {
       id: "uuid_" + uuid,
-      color: "",
+      color: [],
       file: "",
-      sizes: [{
-        id: "uuid_" + uuid,
-        size: '',
-        stock: ''
-      }],
+      sizes: [
+        {
+          id: "uuid_" + uuid,
+          size: "",
+          stock: "",
+        },
+      ],
     },
   ],
   status: false,
@@ -50,10 +52,12 @@ const defaultError = {
     {
       color: "",
       file: "",
-      sizes: [{
-         size: '',
-        stock: ''
-      }],
+      sizes: [
+        {
+          size: "",
+          stock: "",
+        },
+      ],
     },
   ],
 };
@@ -64,9 +68,14 @@ const General = ({
   token,
   id,
   isEdit,
+  color,
 }: any) => {
   const [formData, setFormData] = useState(defaultForm);
   const [formError, setFormError] = useState(defaultError);
+  const [deleteColorVariation, setDeleteColorVariation] = useState<string[]>(
+    []
+  );
+  const [deleteSizeVariation, setDeleteSizeVariation] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -75,6 +84,13 @@ const General = ({
   });
   const beautifiedCategory = shoe_category?.data?.map((items: any) => {
     return { id: items?.id, label: items?.title };
+  });
+
+  const beautifiedColor = color?.data?.map((items: any) => {
+    return {
+      id: items?.title.toLowerCase().replace(" ", "_"),
+      label: items?.title,
+    };
   });
   const editForm = isEdit
     ? {
@@ -86,7 +102,7 @@ const General = ({
         description: shoe?.data?.description,
         details: shoe?.data?.details,
         color_variation: shoe?.data?.colorVariation,
-        status: shoe?.data?.status === 'ACTIVE',
+        status: shoe?.data?.status === "ACTIVE",
       }
     : defaultForm;
 
@@ -109,12 +125,21 @@ const General = ({
     const finalColorVariation = _form.color_variation.map((cv: any) => {
       const fileteredSV = cv.sizes.map((sv: any) => {
         if (sv.id.includes("uuid")) return { size: sv.size, stock: sv.stock };
-        return { id: sv.id, size: sv.size, stock: sv.stock} ;
+        return { id: sv.id, size: sv.size, stock: sv.stock };
       });
-      if (cv.id.includes("uuid")){
-        return { color: cv.color, file: cv.file, sizes: fileteredSV }
+      if (cv.id.includes("uuid")) {
+        return {
+          color: JSON.stringify(cv.color),
+          file: cv.file,
+          sizes: fileteredSV,
+        };
       }
-      return { id: cv.id, color: cv.color, file: cv.file || cv.image_url, sizes: fileteredSV };
+      return {
+        id: cv.id,
+        color: cv.color,
+        file: cv.file || cv.image_url,
+        sizes: fileteredSV,
+      };
     });
     payload.title = _form.title;
     payload.brand_id = _form.brand_id;
@@ -127,24 +152,26 @@ const General = ({
     payload.status = _form.status ? "ACTIVE" : "PENDING";
     return payload;
   };
-
+console.log('deleteColorVariation', deleteColorVariation)
   const handleAdd = async () => {
     // setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = shoeValidation(beautifiedPayload);
-      console.log('beautifiedPayload', beautifiedPayload)
-      console.log('error', error)
       if (isValid) {
-        const response = await FormdataPost(CRUD_SHOE, beautifiedPayload, token);
+        const response = await FormdataPost(
+          CRUD_SHOE,
+          beautifiedPayload,
+          token
+        );
         const { status }: any = response;
         if (status) {
-          toast.success("Successfully Updated Vehicle Details");
+          toast.success("Successfully Added Shoes");
           setFormError(defaultError);
           clearCachesByServerAction("/admin/inventory");
           router.push("/admin/inventory");
         } else {
-          toast.error("Error While Updating Vehicle Details");
+          toast.error("Error While Adding Shoes");
           setLoading(false);
         }
       } else {
@@ -153,7 +180,7 @@ const General = ({
         setLoading(false);
       }
     } catch (e) {
-      toast.error("Error While Updating");
+      toast.error("Error While Adding");
       setLoading(false);
     }
   };
@@ -162,21 +189,21 @@ const General = ({
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = shoeValidation(beautifiedPayload);
-      if (true) {
+      if (isValid) {
         const response = await FormdataPatch(
           CRUD_SHOE,
           id,
-          beautifiedPayload,
+          { ...beautifiedPayload, deleteColorVariation, deleteSizeVariation },
           token
         );
         const { status }: any = response;
         if (status) {
-          toast.success("Successfully Updated Vehicle Details");
+          toast.success("Successfully Updated Shoes");
           setFormError(defaultError);
           clearCachesByServerAction("/admin/inventory");
           router.push("/admin/inventory");
         } else {
-          toast.error("Error While Updating Vehicle Details");
+          toast.error("Error While Updating Shoes");
           setLoading(false);
         }
       } else {
@@ -189,7 +216,6 @@ const General = ({
       setLoading(false);
     }
   };
-
 
   return (
     <div className="body-container flex gap-5 p-4">
@@ -252,7 +278,7 @@ const General = ({
             }
             data={formData.details}
             required
-            style={{width: '30rem'}}
+            style={{ width: "30rem" }}
             error={formError.details}
           />
           <CustomInput
@@ -278,7 +304,13 @@ const General = ({
             width="30rem"
           />
           <AddShoeVariation
-            {...{ isEdit, setFormData }}
+            {...{
+              isEdit,
+              setFormData,
+              beautifiedColor,
+              setDeleteColorVariation,
+              setDeleteSizeVariation,
+            }}
             color_variation={formData?.color_variation}
             formError={formError.color_variation}
           />

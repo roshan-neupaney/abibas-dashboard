@@ -8,6 +8,7 @@ import {
 import {
   CRUD_BRAND,
   CRUD_CATEGORY,
+  CRUD_COLOR,
   CRUD_SHOE,
 } from "../../../../../config/endPoints";
 import { cookies } from "next/headers";
@@ -22,25 +23,29 @@ async function getData(token: string, id: string) {
         await ServerSideGetWithId(token, CRUD_SHOE, id),
         await ServerSideGet(token, CRUD_CATEGORY+'/active'),
         await ServerSideGet(token, CRUD_BRAND+'/active'),
+        await ServerSideGet(token, CRUD_COLOR+'/active'),
       ];
       const [
         shoe,
         shoe_category,
         shoe_brand,
+        color
       ] = res;
       return {
         shoe,
         shoe_category,
-        shoe_brand
+        shoe_brand,
+        color
       };
     } else {
       const res = [
         await ServerSideGet(token, CRUD_CATEGORY+'/active'),
         await ServerSideGet(token, CRUD_BRAND+'/active'),
+        await ServerSideGet(token, CRUD_COLOR+'/active'),
 
       ];
-      const [shoe_category, shoe_brand] = res;
-      return { shoe_category, shoe_brand };
+      const [shoe_category, shoe_brand, color] = res;
+      return { shoe_category, shoe_brand, color };
     }
   } catch (error) {}
 }
@@ -52,7 +57,8 @@ const AddInventory = async ({ params }: any) => {
   const {
     shoe,
     shoe_category,
-    shoe_brand
+    shoe_brand,
+    color
   }: any = await getData(token, _id);
   const ids = _id?.split("_") || [];
   const id = ids[0] || '';
@@ -67,7 +73,8 @@ const AddInventory = async ({ params }: any) => {
             id,
             shoe,
             shoe_category,
-            shoe_brand
+            shoe_brand,
+            color
           }}
         />
       </FormContainer>
