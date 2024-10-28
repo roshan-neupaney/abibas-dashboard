@@ -26,7 +26,6 @@ export const metadata: Metadata = {
 };
 
 const InventoryPage = async ({searchParams}: {searchParams: searchParamsType}) => {
-  console.log(searchParams)
 
   const token = cookies().get("access_token")?.value || "";
   const { shoeList }: any = await getData(token, searchParams);

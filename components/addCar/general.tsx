@@ -152,7 +152,6 @@ const General = ({
     payload.status = _form.status ? "ACTIVE" : "PENDING";
     return payload;
   };
-console.log('deleteColorVariation', deleteColorVariation)
   const handleAdd = async () => {
     // setLoading(true);
     try {

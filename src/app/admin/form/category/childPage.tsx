@@ -37,7 +37,6 @@ interface CategoryProps {
 
 const Category = ({ category, token }: CategoryProps) => {
   const beautifiedCategory = beautifyCategory(category);
-  console.log(category)
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);

@@ -31,7 +31,6 @@ interface dataType {
 }
 
 const Users = ({ _data, token }: any) => {
-  console.log(_data)
   const beautifiedCategory = beautifyUsers(_data);
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
