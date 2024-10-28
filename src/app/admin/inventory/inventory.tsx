@@ -31,7 +31,7 @@ interface InventoryProps {
 
 const Inventory = ({ shoeList, token }: InventoryProps) => {
   const beautifiedshoeList = beautifyShoeList(shoeList);
-  // console.log('shoeList', shoeList?.data)
+  console.log('shoeList', shoeList?.data)
   const [search, setSearch] = useState("");
   const router = useRouter();
   const [data, setData] = useState(beautifiedshoeList);
@@ -136,7 +136,7 @@ const Inventory = ({ shoeList, token }: InventoryProps) => {
               <CustomTableHead {...{ table }} />
               <CustomTableBody
                 internalTitleRoute="/admin/inventory/detail"
-                internalTitleRouteId="slugId"
+                internalTitleRouteId="id"
                 titleImage="image"
                 entireRoute="/admin/inventory/edit"
                 {...{ table, toggleModal }}

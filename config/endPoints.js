@@ -58,3 +58,4 @@ export const CRUD_SHOE = '/shoes';
 export const CRUD_CATEGORY = "/category"
 export const CRUD_BRAND = "/brand";
 export const CRUD_COLOR = "/color";
+export const INTERACTION = "/interaction";

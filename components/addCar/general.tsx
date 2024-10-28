@@ -169,7 +169,7 @@ console.log('deleteColorVariation', deleteColorVariation)
           toast.success("Successfully Added Shoes");
           setFormError(defaultError);
           clearCachesByServerAction("/admin/inventory");
-          router.push("/admin/inventory");
+          // router.push("/admin/inventory");
         } else {
           toast.error("Error While Adding Shoes");
           setLoading(false);

@@ -15,7 +15,7 @@ async function getData(token: string, searchParams: searchParamsType) {
   authorization(token);
   const {color} = searchParams;
   try {
-    const res = [await ServerSideGetWithParams(token, CRUD_SHOE, `color=${color}`)];
+    const res = [await ServerSideGetWithParams(token, CRUD_SHOE, ``)];
     const [shoeList] = res;
     return { shoeList };
   } catch (e) {}

@@ -214,6 +214,7 @@ export const CustomMultiSelect = ({
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, [handleClickOutside]);
+  
   const handleValue = (val: string) => {
     if (Array.isArray(value)) {
       const updatedValue = value.includes(val)

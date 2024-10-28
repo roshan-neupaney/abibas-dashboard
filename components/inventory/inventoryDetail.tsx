@@ -82,7 +82,7 @@ const InventoryDetail = ({
           </div>
         </div>
       </div>
-      {active === 0 ? (
+      {/* {active === 0 ? (
         <Overview {...{vehicle_detail, vehicleDamage}} />
       ) : active === 1 ? (
         <Insights />
@@ -94,7 +94,7 @@ const InventoryDetail = ({
         <Offers {...{ offerList, token }} />
       ) : (
         <TestDrives {...{ testDriveList, token }} />
-      )}
+      )} */}
     </div>
   );
 };
