@@ -12,7 +12,7 @@ const Color = ({ beautifiedColor, setFormData, formData }: any) => {
   }, [formData]);
 
   const addForm = (val: string) => {
-    const filteredValue = beautifiedColor.filter((items: any) => {
+    const filteredValue = beautifiedColor?.filter((items: any) => {
       if (items.id === val) {
         return items;
       }
@@ -42,7 +42,7 @@ const Color = ({ beautifiedColor, setFormData, formData }: any) => {
   }, [form, setFormData]);
 
   const removeForm = (id: string) => {
-    const result = form.filter((items: any) => {
+    const result = form?.filter((items: any) => {
       if (items.id !== id) {
         return items;
       }
@@ -58,7 +58,7 @@ const Color = ({ beautifiedColor, setFormData, formData }: any) => {
     >
       <div className="flex gap-2">
         {form?.length > 0 &&
-          form.map((item: any, i: number) => {
+          form?.map((item: any, i: number) => {
             return (
               <div
                 className="flex w-10 h-10 relative border"

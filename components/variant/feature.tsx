@@ -30,7 +30,7 @@ const Feature = ({
   };
 
   const updateForm = (key: string, val: string, id: string) => {
-    const result = form.filter((items: any) => {
+    const result = form?.filter((items: any) => {
       if (items.id === id) {
         items[key] = val;
       }
@@ -49,7 +49,7 @@ const Feature = ({
   };
 
   const removeForm = (id: string) => {
-    const result = form.filter((items: any) => {
+    const result = form?.filter((items: any) => {
       if (items.id !== id) {
         return items;
       }

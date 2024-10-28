@@ -133,7 +133,7 @@ const AddFeatures = ({
                   const specArray =
                     elements?.specification?.comma_value_if_dropdown
                       ?.split(",")
-                      .map((items: any) => {
+                      ?.map((items: any) => {
                         return { id: items.toLowerCase(), label: items };
                       });
 

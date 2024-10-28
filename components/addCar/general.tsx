@@ -122,8 +122,8 @@ const General = ({
       color_variation: [],
       status: "",
     };
-    const finalColorVariation = _form.color_variation.map((cv: any) => {
-      const fileteredSV = cv.sizes.map((sv: any) => {
+    const finalColorVariation = _form.color_variation?.map((cv: any) => {
+      const fileteredSV = cv.sizes?.map((sv: any) => {
         if (sv.id.includes("uuid")) return { size: sv.size, stock: sv.stock };
         return { id: sv.id, size: sv.size, stock: sv.stock };
       });

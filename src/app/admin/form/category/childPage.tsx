@@ -90,7 +90,7 @@ const Category = ({ category, token }: CategoryProps) => {
   const handleSearch = (val: string) => {
     try {
       setSearch(val);
-      const filteredData = beautifiedCategory.filter((items: any) => {
+      const filteredData = beautifiedCategory?.filter((items: any) => {
         if (items.title.toLowerCase().includes(val.toLowerCase())) {
           return items;
         }

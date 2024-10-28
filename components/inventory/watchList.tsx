@@ -79,7 +79,7 @@ const InventoryWatchList = ({ watchList, token }: WatchListProps) => {
   const handleSearch = (val: string) => {
     try {
       setSearch(val);
-      const filteredData = data.filter((items: any) => {
+      const filteredData = data?.filter((items: any) => {
         if (items.title.toLowerCase().includes(val.toLowerCase())) {
           return items;
         }

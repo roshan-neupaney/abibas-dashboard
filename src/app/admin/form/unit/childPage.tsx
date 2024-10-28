@@ -77,7 +77,7 @@ const Unit = ({ _data, token }: any) => {
   const handleSearch = (val: string) => {
     try {
       setSearch(val);
-      const filteredData = beautifiedUnit.filter((items: any) => {
+      const filteredData = beautifiedUnit?.filter((items: any) => {
         if (items.title.toLowerCase().includes(val.toLowerCase())) {
           return items;
         }

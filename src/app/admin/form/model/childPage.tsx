@@ -99,7 +99,7 @@ const Model = ({ _data, token }: any) => {
   const handleSearch = (val: string) => {
     try {
       setSearch(val);
-      const filteredData = _data.filter((items: any) => {
+      const filteredData = _data?.filter((items: any) => {
         if (items.title.toLowerCase().includes(val.toLowerCase())) {
           return items;
         }

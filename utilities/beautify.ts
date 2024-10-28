@@ -3,7 +3,7 @@ import { FormatDate, FormatPrice } from "./helper";
 export const beautifyShoeList = (_data: any) => {
   try {
     const { data } = _data;
-    const filteredData = data.map((shoe: any) => {
+    const filteredData = data?.map((shoe: any) => {
       const details = {
         id: "",
         image: "",
@@ -50,7 +50,7 @@ export const beautifyCategory = (data: any) => {
 
 export const beautifyBodyType = (data: any) => {
   try {
-    const filteredData = data.map((body: any) => {
+    const filteredData = data?.map((body: any) => {
       const details = {
         id: "",
         image: "",
@@ -71,7 +71,7 @@ export const beautifyBodyType = (data: any) => {
 
 export const beautifyModel = (data: any) => {
   try {
-    const filteredData = data.map((body: any) => {
+    const filteredData = data?.map((body: any) => {
       const details = {
         id: "",
         image: "",
@@ -98,7 +98,7 @@ export const beautifyModel = (data: any) => {
 
 export const beautifyColor = (data: any) => {
   try {
-    const filteredData = data.map((col: any) => {
+    const filteredData = data?.map((col: any) => {
       const details = {
         id: "",
         title: "",
@@ -153,7 +153,7 @@ export const beautifyVariant = (data: any) => {
 
 export const beautifyUnit = (data: any) => {
   try {
-    const filteredData = data.map((cat: any) => {
+    const filteredData = data?.map((cat: any) => {
       const details = {
         id: "",
         title: "",
@@ -170,7 +170,7 @@ export const beautifyUnit = (data: any) => {
 
 export const beautifySpecificationCategory = (data: any) => {
   try {
-    const filteredData = data.map((cat: any) => {
+    const filteredData = data?.map((cat: any) => {
       const details = {
         id: "",
         image: "",
@@ -191,7 +191,7 @@ export const beautifySpecificationCategory = (data: any) => {
 
 export const beautifyFeature = (data: any) => {
   try {
-    const filteredData = data.map((cat: any) => {
+    const filteredData = data?.map((cat: any) => {
       const details = {
         id: "",
         image: "",
@@ -219,7 +219,7 @@ export const beautifyFeature = (data: any) => {
 };
 export const beautifySpecification = (data: any) => {
   try {
-    const filteredData = data.map((cat: any) => {
+    const filteredData = data?.map((cat: any) => {
       const details = {
         id: "",
         image: "",
@@ -245,7 +245,7 @@ export const beautifySpecification = (data: any) => {
 };
 export const beautifyAssetsPart = (data: any) => {
   try {
-    const filteredData = data.map((cat: any) => {
+    const filteredData = data?.map((cat: any) => {
       const details = {
         id: "",
         image: "",
@@ -267,7 +267,7 @@ export const beautifyAssetsPart = (data: any) => {
 };
 export const beautifyInspection = (data: any) => {
   try {
-    const filteredData = data.map((cat: any) => {
+    const filteredData = data?.map((cat: any) => {
       const details = {
         id: "",
         title: "",
@@ -298,7 +298,7 @@ export const beautifyInspection = (data: any) => {
 
 export const beautifyBlog = (data: any) => {
   try {
-    const filteredData = data.map((cat: any) => {
+    const filteredData = data?.map((cat: any) => {
       const details = {
         id: "",
         image: "",
@@ -320,7 +320,7 @@ export const beautifyBlog = (data: any) => {
 };
 export const beautifyEnums = (data: any) => {
   try {
-    const filteredData = data.map((cat: any) => {
+    const filteredData = data?.map((cat: any) => {
       const details = {
         id: "",
         title: "",
@@ -358,44 +358,44 @@ export const beautifyVehicleList = (_data: any, vehicleEnums: any) => {
         km_run: "",
         price: "",
       };
-      const brandArray = vehicleEnums?.data?.brand.filter((items: any) => {
+      const brandArray = vehicleEnums?.data?.brand?.filter((items: any) => {
         if (vehicle.brand_id === items.id) {
           return items;
         }
       });
-      const modelArray = vehicleEnums?.data?.model.filter((items: any) => {
+      const modelArray = vehicleEnums?.data?.model?.filter((items: any) => {
         if (vehicle.model_id === items.id) {
           return items;
         }
       });
-      const variantArray = vehicleEnums?.data?.varient.filter((items: any) => {
+      const variantArray = vehicleEnums?.data?.varient?.filter((items: any) => {
         if (vehicle.varient_id === items.id) {
           return items;
         }
       });
-      const cityArray = vehicleEnums?.data?.enum_city.filter((items: any) => {
+      const cityArray = vehicleEnums?.data?.enum_city?.filter((items: any) => {
         if (vehicle.city === items.id) {
           return items;
         }
       });
-      const driveArray = vehicleEnums?.data?.enum_drive.filter((items: any) => {
+      const driveArray = vehicleEnums?.data?.enum_drive?.filter((items: any) => {
         if (vehicle.km_drive === items.id) {
           return items;
         }
       });
-      const manufactureArray = vehicleEnums?.data?.enum_made_year.filter(
+      const manufactureArray = vehicleEnums?.data?.enum_made_year?.filter(
         (items: any) => {
           if (vehicle.made_year === items.id) {
             return items;
           }
         }
       );
-      const ownerArray = vehicleEnums?.data?.enum_owner.filter((items: any) => {
+      const ownerArray = vehicleEnums?.data?.enum_owner?.filter((items: any) => {
         if (vehicle.owner === items.id) {
           return items;
         }
       });
-      const preferSellingArray = vehicleEnums?.data?.enum_prefer_selling.filter(
+      const preferSellingArray = vehicleEnums?.data?.enum_prefer_selling?.filter(
         (items: any) => {
           if (vehicle.prefer_selling === items.id) {
             return items;
@@ -423,7 +423,7 @@ export const beautifyVehicleList = (_data: any, vehicleEnums: any) => {
 
 export const beautifyVariants = (data: any) => {
   try {
-    const filteredData = data.map((cat: any) => {
+    const filteredData = data?.map((cat: any) => {
       const details = {
         id: "",
         title: "",
@@ -443,7 +443,7 @@ export const beautifyVariants = (data: any) => {
 
 export const beautifyStaticPage = (data: any) => {
   try {
-    const filteredData = data.map((cat: any) => {
+    const filteredData = data?.map((cat: any) => {
       const details = {
         id: "",
         title: "",
@@ -464,7 +464,7 @@ export const beautifyStaticPage = (data: any) => {
 
 export const beautifyUsers = (data: any) => {
   try {
-    const filteredData = data.map((user: any) => {
+    const filteredData = data?.map((user: any) => {
       const details = {
         id: "",
         firstName: "",
@@ -490,7 +490,7 @@ export const beautifyUsers = (data: any) => {
 export const beautifyWatchList = (_data: any) => {
   const { data } = _data;
   try {
-    const filteredData = data.map((user: any) => {
+    const filteredData = data?.map((user: any) => {
       const details = {
         id: "",
         title: "",
@@ -512,7 +512,7 @@ export const beautifyWatchList = (_data: any) => {
 export const beautifyOfferList = (_data: any) => {
   const { data } = _data;
   try {
-    const filteredData = data.map((user: any) => {
+    const filteredData = data?.map((user: any) => {
       const details = {
         id: "",
         title: "",
@@ -536,7 +536,7 @@ export const beautifyOfferList = (_data: any) => {
 export const beautifyTestDriveList = (_data: any) => {
   const { data } = _data;
   try {
-    const filteredData = data.map((user: any) => {
+    const filteredData = data?.map((user: any) => {
       const details = {
         id: "",
         title: "",
@@ -564,7 +564,7 @@ export const beautifyTestDriveList = (_data: any) => {
 export const beautifyAllBookingList = (_data: any) => {
   const { vehicles } = _data;
   try {
-    const filteredData = vehicles.map((element: any) => {
+    const filteredData = vehicles?.map((element: any) => {
       const details = {
         id: "",
         title: "",
@@ -590,7 +590,7 @@ export const beautifyAllBookingList = (_data: any) => {
 export const beautifyAllWatchList = (_data: any) => {
   const { vehicles } = _data;
   try {
-    const filteredData = vehicles.map((element: any) => {
+    const filteredData = vehicles?.map((element: any) => {
       const details = {
         id: "",
         title: "",
@@ -616,7 +616,7 @@ export const beautifyAllWatchList = (_data: any) => {
 export const beautifyAllTestDriveList = (_data: any) => {
   const { vehicles } = _data;
   try {
-    const filteredData = vehicles.map((element: any) => {
+    const filteredData = vehicles?.map((element: any) => {
       const details = {
         id: "",
         title: "",
@@ -646,7 +646,7 @@ export const beautifyAllTestDriveList = (_data: any) => {
 export const beautifyAllOffersList = (_data: any) => {
   const { vehicles } = _data;
   try {
-    const filteredData = vehicles.map((element: any) => {
+    const filteredData = vehicles?.map((element: any) => {
       const details = {
         id: "",
         title: "",

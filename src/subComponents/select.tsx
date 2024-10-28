@@ -193,8 +193,8 @@ export const CustomMultiSelect = ({
   const selectedLabels = useMemo(
     () =>
       data
-        .filter((element) => value.includes(element.id))
-        .map((element) => element.label),
+        ?.filter((element) => value.includes(element.id))
+        ?.map((element) => element.label),
     [data, value]
   );
 
@@ -218,7 +218,7 @@ export const CustomMultiSelect = ({
   const handleValue = (val: string) => {
     if (Array.isArray(value)) {
       const updatedValue = value.includes(val)
-        ? value.filter((item) => item !== val)
+        ? value?.filter((item) => item !== val)
         : [...value, val];
       (onChange as (value: string[]) => void)?.(updatedValue);
     }
@@ -263,7 +263,7 @@ export const CustomMultiSelect = ({
           } option-box`}
           ref={dropdownOptionRef}
         >
-          {data.map((element) => (
+          {data?.map((element) => (
             <div
               key={element.id}
               onClick={() => handleValue(element.id)}

@@ -6,10 +6,10 @@ import CaretDown from "../../../public/icons/caret-down.svg";
 const CustomTableHead = ({ table }: any) => {
   return (
     <thead>
-      {table.getHeaderGroups().map((headerGroup: any, i: number) => {
+      {table.getHeaderGroups()?.map((headerGroup: any, i: number) => {
         return (
           <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header: any, index: number) => {
+            {headerGroup.headers?.map((header: any, index: number) => {
               return (
                 <th
                   className="label-large text-left table-head"

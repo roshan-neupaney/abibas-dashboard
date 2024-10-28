@@ -185,7 +185,7 @@ const TablePagination = ({
             value={pageSize}
             onChange={(e) => table.setPageSize(Number(e.target.value))}
           >
-            {tablePaginationSizes.map((items: any, index: any) => {
+            {tablePaginationSizes?.map((items: any, index: any) => {
               return (
                 <option
                   key={index}

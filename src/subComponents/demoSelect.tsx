@@ -78,8 +78,8 @@ export const DemoSelect = ({
   const selectedLabels = useMemo(
     () =>
       data
-        .filter((element) => value.includes(element.id))
-        .map((element) => element.label),
+        ?.filter((element) => value.includes(element.id))
+        ?.map((element) => element.label),
     [data, value]
   );
 

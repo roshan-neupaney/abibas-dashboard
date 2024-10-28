@@ -30,7 +30,7 @@ const VehicleImages = ({
 }: VehicleImagesProps) => {
   const [imageCards, setImageCards] = useState([{ id: "", image: "" }]);
   const isEditable = vechile_images?.data.length > 0;
-  const beautifiedImageList = vechile_images.data.map((items: any) => {
+  const beautifiedImageList = vechile_images.data?.map((items: any) => {
     return { id: items.id, image: items.image_name };
   });
   const [deletedImages, setDeletedImages] = useState<any>([]);
@@ -54,7 +54,7 @@ const VehicleImages = ({
         return [...prev, { image_id: id }];
       });
     }
-    const filteredCard = imageCards.filter((item: any) => {
+    const filteredCard = imageCards?.filter((item: any) => {
       if (item.id !== id) {
         return item;
       }
@@ -63,7 +63,7 @@ const VehicleImages = ({
   };
 
   const updateImageCard = (id: string, val: any, key: string) => {
-    const filteredData = imageCards.filter((items: any) => {
+    const filteredData = imageCards?.filter((items: any) => {
       if (items.id === id) {
         items[key] = val;
       }

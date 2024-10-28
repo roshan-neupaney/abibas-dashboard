@@ -38,7 +38,7 @@ const mainMenu = [
 const BottomMenu = () => {
   return (
     <div className="flex w-full">
-      {mainMenu.map((items: any, index: number) => {
+      {mainMenu?.map((items: any, index: number) => {
         return (
           <Link href={items.link} key={index}
           className="flex flex-1 justify-center" >

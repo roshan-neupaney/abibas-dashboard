@@ -43,7 +43,7 @@ const CustomChips = ({
     onChange(tags);
   };
   const removeTag = (id: string) => {
-    const filteredTags = tags.filter((items: any) => {
+    const filteredTags = tags?.filter((items: any) => {
       if(items.id !== id) return items;
     })
     setTags(filteredTags);

@@ -45,7 +45,7 @@ const CustomTableBody = ({
             key={i}
             style={{ backgroundColor: i % 2 !== 0 ? "#F0F0F4" : "#FCFCFC" }}
           >
-            {row?._getAllVisibleCells().map((cell: any, _index: any) => {
+            {row?._getAllVisibleCells()?.map((cell: any, _index: any) => {
               const id = cell.row.original["id"];
               return (
                 <td className="body-medium-NH min-w-28 p-3" key={_index}>

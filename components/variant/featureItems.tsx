@@ -28,7 +28,7 @@ const FeatureItems = ({
   }, [varFeature?.specification?.feature_option_type,varFeature?.specification?.comma_value_if_dropdown ])
 
   const beautifyArrayValue = (id: any) => {
-    feature.data.filter((items: any) => {
+    feature.data?.filter((items: any) => {
       if (items.id === id) {
         if (items.feature_option_type === "DROPDOWN") {
           const array = items?.comma_value_if_dropdown
