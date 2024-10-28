@@ -456,7 +456,6 @@ export const shoeValidation = (payload) => {
           size: "",
           stock: "",
         };
-        console.log(i, errorMessage.color_variation);
         if (!color_variation[i]?.sizes[j]?.size?.length > 0) {
           sizeError.size = "Size is required";
         }
@@ -513,11 +512,11 @@ export const usersValidation = (payload) => {
       role: "",
       mobile: "",
     };
-    if (!firstName.length > 0) {
+    if (!firstName?.length > 0) {
       errorMessage.firstName = "FirstName is required.";
       count++;
     }
-    if (!lastName.length > 0) {
+    if (!lastName?.length > 0) {
       errorMessage.lastName = "LastName is required.";
       count++;
     }

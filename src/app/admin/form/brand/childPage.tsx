@@ -35,7 +35,6 @@ interface dataType {
 
 const Brand = ({ _data, token }: any) => {
   const beautifiedCategory = beautifyBodyType(_data);
-  console.log(_data)
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);

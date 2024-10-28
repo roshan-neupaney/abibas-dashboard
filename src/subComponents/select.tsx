@@ -241,7 +241,7 @@ export const CustomMultiSelect = ({
           onClick={() => toggleBox(!openBox)}
         >
           <span className="body-medium">
-            {selectedLabels.length > 0
+            {selectedLabels?.length > 0
               ? selectedLabels.join(", ")
               : placeholder}
           </span>

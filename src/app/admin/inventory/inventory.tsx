@@ -31,7 +31,6 @@ interface InventoryProps {
 
 const Inventory = ({ shoeList, token }: InventoryProps) => {
   const beautifiedshoeList = beautifyShoeList(shoeList);
-  console.log('shoeList', shoeList?.data)
   const [search, setSearch] = useState("");
   const router = useRouter();
   const [data, setData] = useState(beautifiedshoeList);

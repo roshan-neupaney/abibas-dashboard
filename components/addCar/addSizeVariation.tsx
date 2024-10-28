@@ -22,7 +22,6 @@ const AddSizeVariation = ({
   };
 
   const [sizeVariation, setSizeVariation] = useState(size_variation);
-  // console.log('size_variation', size_variation)
   useEffect(() => {
     setSizeVariation(size_variation);
   }, [size_variation]);
