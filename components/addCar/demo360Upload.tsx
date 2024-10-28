@@ -56,7 +56,7 @@ const Demo360Images = ({
         return [...prev, { image_id: id }];
       });
     }
-    const filteredCard = imageCards.filter((item: any) => {
+    const filteredCard = imageCards?.filter((item: any) => {
       if (item.id !== id) {
         return item;
       }
@@ -65,7 +65,7 @@ const Demo360Images = ({
   };
 
   const updateImageCard = (id: string, val: any, key: string) => {
-    const filteredData = imageCards.filter((items: any) => {
+    const filteredData = imageCards?.filter((items: any) => {
       if (items.id === id) {
         items[key] = val;
       }

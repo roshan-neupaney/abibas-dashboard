@@ -91,7 +91,7 @@ const Inventory = ({ shoeList, token }: InventoryProps) => {
 
   const handleSearch = (val: string) => {
       setSearch(val);
-      const filteredData = itemslist.filter((items: any) => {
+      const filteredData = itemslist?.filter((items: any) => {
         if (items.title.toLowerCase().includes(val.toLowerCase())) {
           return items;
         }

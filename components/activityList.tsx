@@ -15,7 +15,7 @@ const ActivityList = () => {
   return (
     <>
       <div className="flex flex-1 self-stretch flex-col p-5 border border-[#DFE2E7] rounded cursor-pointer">
-        {data.map((items, index) => {
+        {data?.map((items, index) => {
           return (
             <>
               <div

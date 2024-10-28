@@ -46,7 +46,7 @@ const AddSpecifications = ({
     (item: any) => item.specification?.specificationCategory?.title
   );
 
-  const specificationArray = Object.entries(result).map(([key, value]) => {
+  const specificationArray = Object.entries(result)?.map(([key, value]) => {
     return { category: key, value: value };
   });
 
@@ -142,7 +142,7 @@ const AddSpecifications = ({
                   const specArray =
                     elements?.specification?.comma_value_if_dropdown
                       ?.split(",")
-                      .map((items: any) => {
+                      ?.map((items: any) => {
                         return { id: items, label: items };
                       });
                   const title = elements?.specification?.title;

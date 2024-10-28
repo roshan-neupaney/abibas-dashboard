@@ -96,7 +96,7 @@ const ServerPagination = ({
             value={pageSize}
             onChange={(e) => router.push(`?page=1&pageSize=${e.target.value}`)}
           >
-            {tablePaginationSizes.map((items: any, index: any) => {
+            {tablePaginationSizes?.map((items: any, index: any) => {
               return (
                 <option
                   key={index}

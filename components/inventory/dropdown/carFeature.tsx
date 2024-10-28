@@ -12,7 +12,7 @@ const CarFeature = ({ vehicleFeature }: any) => {
     vehicleFeature,
     (items: any) => items?.feature?.featureCategory?.title
   );
-  const mappedFeature = Object.entries(groupedFeatures).map(([key, value]) => {
+  const mappedFeature = Object.entries(groupedFeatures)?.map(([key, value]) => {
     return { category: key, value: value };
   });
   return (

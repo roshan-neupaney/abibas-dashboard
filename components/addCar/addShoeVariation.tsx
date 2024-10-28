@@ -49,7 +49,7 @@ const AddShoeVariation = ({
   };
 
   const updateForm = (id: string, key: string, value: any) => {
-    const result = colorVariation.map((items: any) => {
+    const result = colorVariation?.map((items: any) => {
       if (items.id === id) {
         items[key] = value;
       }
