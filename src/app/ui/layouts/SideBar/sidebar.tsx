@@ -1,21 +1,15 @@
 import React from "react";
-// import SidebarMenu from "./SidebarMenu/sidebarMenu";
-import styles from "./sidebar.module.css";
 import Image from "next/image";
 import SawariIcon from "../../../../../public/icons/Group.svg";
-import Link from "next/link";
 import MenuLink from "./menuLink/menuLink";
 
 const Sidebar = () => {
   return (
-    <div className={styles.container}>
-      <div className={styles.logoName}>
+    <div className='flex flex-col flex-1 h-full bg-[#202529] '>
+      <div className='flex w-full h-14 py-4 px-5 border-b border-[#2e3132] '>
         <Image src={SawariIcon} width={98} height={24} alt="" />
       </div>
-      {/* <div className={styles.sidebarMenu}> */}
         <MenuLink />
-      {/* </div> */}
-      
     </div>
   );
 };

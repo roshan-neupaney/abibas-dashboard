@@ -1,10 +1,10 @@
 import styles from "./header.module.css";
-import Plus from "../../../../../public/icons/icon-left.svg";
+import Plus from "../../../../../public/icons/add.svg";
 import Arrow from "../../../../../public/icons/icon-right.svg";
 import Notification from "../../../../../public/icons/nav-icon.svg";
 import Image from "next/image";
 
-const Header = () => {
+const TopHeader = () => {
   return (
     <div className={styles.container}>
       <div className={styles.addContainer}>
@@ -28,4 +28,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default TopHeader;

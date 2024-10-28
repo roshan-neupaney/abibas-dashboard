@@ -28,31 +28,36 @@
   background-color: #5c5f5f !important;
 }
 
-.openContainer {
-  background-color: #2e3132;
+.menuContainer {
+  display: flex;
+  flex-direction: column;
 }
 
-.showSubContainer {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
+.hideDropdown {
+  background-color: #2e3132;
+  max-height: 0rem;
+  overflow: hidden;
+  transition: all 0.3s;
+  opacity: 0;
 }
-.hideSubContainer {
-  display: flex;
-  flex: 0;
-  flex-direction: column;
+.showDropdown {
+  background-color: #2e3132;
+  max-height: 60rem;
+  opacity: 1;
+  transition: all 0.5s;
 }
 
 .title {
-  font-size: 14px;
+  color: #ffffff;
+  font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0.25px;
+  line-height: 1.25rem;
+  letter-spacing: 0.01563rem;
 }
 
 .arrowUp {
-  transform: rotate(180deg);
+  transform: rotate(-180deg);
   transition: transform 0.3s ease;
 }
 
@@ -62,6 +67,7 @@
 }
 
 .feedbackContainer {
+  color: #ffffff;
   display: flex;
   position: relative;
   bottom: 0;
@@ -70,4 +76,5 @@
   align-items: center;
   padding: 14px 4px 14px 20px;
   gap: 12px;
+  background-color: var(--bg);
 }

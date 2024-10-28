@@ -1,4 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  images: {
+    // domains: ["localhost", "apidev.nepalhomes.com"],
+    remotePatterns: [
+      {
+        hostname: "apidev.nepalhomes.com",
+      },
+      {
+        hostname: "localhost",
+      },
+    ],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
