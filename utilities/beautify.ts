@@ -6,6 +6,7 @@ export const beautifyShoeList = (_data: any) => {
     const filteredData = data?.map((shoe: any) => {
       const details = {
         id: "",
+        slug_url: '',
         image: "",
         title: "",
         price: "",
@@ -15,6 +16,7 @@ export const beautifyShoeList = (_data: any) => {
         status: "",
       };
       details.id = shoe?.id;
+      details.slug_url = shoe?.slug_url;
       details.image = shoe?.colorVariation[0]?.image_url;
       details.title = shoe?.title;
       details.price = shoe?.price;

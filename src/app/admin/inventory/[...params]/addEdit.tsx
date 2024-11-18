@@ -13,7 +13,7 @@ import VehicleDamagedImages from "../../../../../components/addCar/addDamagePart
 interface VehicleProps {
   isEdit: boolean;
   token: string;
-  id: string;
+  _id: string;
   shoe: any;
   shoe_category: any;
   shoe_brand: any;
@@ -23,7 +23,7 @@ interface VehicleProps {
 const AddEditVehicle = ({
   isEdit,
   token,
-  id,
+  _id,
   shoe,
   shoe_category,
   shoe_brand,
@@ -105,7 +105,7 @@ const AddEditVehicle = ({
           )}
         </div>
       </div>
-      <General {...{ shoe, shoe_category, shoe_brand, isEdit, token, id, color }} />
+      <General {...{ shoe, shoe_category, shoe_brand, isEdit, token, _id, color }} />
       {/* {active === 0 ? (
       ) : active === 1 ? (
         <VehicleImages {...{ isEdit, token, id, vechile_images }} />

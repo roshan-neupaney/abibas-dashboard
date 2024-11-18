@@ -20,6 +20,7 @@ interface CustomTableBodyProps {
   hideDelete?: boolean;
   hideEdit?: boolean;
   entireRoute?: string;
+  entireRouteId?: string;
 }
 
 const CustomTableBody = ({
@@ -34,6 +35,7 @@ const CustomTableBody = ({
   hideDelete = false,
   hideEdit = false,
   entireRoute = "",
+  entireRouteId = "",
 }: CustomTableBodyProps) => {
   const router = useRouter();
   return (
@@ -158,7 +160,7 @@ const CustomTableBody = ({
                   ) : cell.column.id == "action" ? (
                     <div className="flex gap-4">
                       {!hideEdit && (
-                        <Link href={entireRoute + "/" + id}>
+                        <Link href={entireRoute + "/" + cell?.row?.original[entireRouteId]}>
                           <div className="cursor-pointer">
                             <Image
                               src={EditIcon}

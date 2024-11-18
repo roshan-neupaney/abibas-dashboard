@@ -137,6 +137,7 @@ const Inventory = ({ shoeList, token }: InventoryProps) => {
                 internalTitleRoute="/admin/inventory/detail"
                 internalTitleRouteId="id"
                 titleImage="image"
+                entireRouteId="slug_url"
                 entireRoute="/admin/inventory/edit"
                 {...{ table, toggleModal }}
               />
