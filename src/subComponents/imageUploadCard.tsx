@@ -13,7 +13,7 @@ const ImageUploadCard = ({
 }: ImageUploadCardProps) => {
   const imgUrl = IMAGE_URL + '/' + value;
   const [tempImage, setTempImage] = useState<any>(imgUrl);
-
+console.log(imgUrl)
   useEffect(() => {
     if (typeof value === "object") {
       const file = value;

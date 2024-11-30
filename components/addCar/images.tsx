@@ -29,21 +29,12 @@ const ColorVariationImages = ({
   _id,
   color_variation,
 }: ColorVariationImagesProps) => {
-  const [imageCards, setImageCards] = useState<Array<Record<string, string>>>([{ id: "", image: "" }]);
-  const [selectedColorVariation, setSelectedColorVariation] = useState('')
-  const [isEditable, toggleIsEditable] = useState(false)
-  // const color_variation_images = color_variation.map((items:any) => {
-  //   return items.colorVariation
-  //   color_variation_images;
+  const [imageCards, setImageCards] = useState<Array<Record<string, string>>>([
+    { id: "", image: "" },
+  ]);
+  const [selectedColorVariation, setSelectedColorVariation] = useState("");
+  const [isEditable, toggleIsEditable] = useState(false);
 
-  // })
-  // const beautifiedImageList = color_variation_images?.data?.map(
-  //   (items: any) => {
-  //     return { id: items.id, image: items.image_name };
-  //   }
-  // );
-
-  
   const [deletedImages, setDeletedImages] = useState<any>([]);
 
   const beautifiedColorVariation = color_variation.map((items: any) => {
@@ -51,22 +42,18 @@ const ColorVariationImages = ({
   });
 
   useEffect(() => {
-    color_variation?.filter((items:any) => {
-      if(selectedColorVariation === items?.id) {
-      toggleIsEditable(items.color_variation_images.length > 0);
+    color_variation?.filter((items: any) => {
+      if (selectedColorVariation === items?.id) {
+        toggleIsEditable(items?.images?.length > 0);
         let tempImages: Array<Record<string, string>> = [];
-        items?.color_variation_images?.map((img: string) => {
-          tempImages.push({id: img, image: img});
-        })
-        setImageCards(tempImages)
+        items?.images?.map((img: string) => {
+          tempImages.push({ id: img, image: img });
+        });
+        setImageCards(tempImages);
       }
-    })
-  }, [selectedColorVariation])
+    });
+  }, [selectedColorVariation]);
 
-  // console.log(imageCards, isEditable)
-  // useEffect(() => {
-  //   setImageCards(beautifiedImageList);
-  // }, []);
   const [loading, setLoading] = useState(false);
   const uuid = UUidGenerator();
   const router = useRouter();
@@ -90,7 +77,7 @@ const ColorVariationImages = ({
     });
     setImageCards(filteredCard);
   };
-
+  console.log("imageCards", imageCards);
   const updateImageCard = (id: string, val: any, key: string) => {
     const filteredData = imageCards?.filter((items: any) => {
       if (items.id === id) {
@@ -102,12 +89,8 @@ const ColorVariationImages = ({
   };
 
   const handleAdd = async () => {
-    // setLoading(true);
+    setLoading(true);
     try {
-      // const formData = new FormData();
-      // imageCards?.map((items: any) => {
-      //   formData.append("file", items.image);
-      // });
       const formData = { file: imageCards.map((items) => items.image) };
       console.log(formData);
       const response = await FormdataPost(
@@ -119,7 +102,8 @@ const ColorVariationImages = ({
       if (status) {
         toast.success("Successfully Updated Vehicle Details");
         clearCachesByServerAction("/admin/inventory");
-        // router.push("/admin/inventory");
+        router.refresh();
+        setLoading(false);
       } else {
         toast.error("Error While Updating Vehicle Details");
         setLoading(false);
@@ -199,7 +183,7 @@ const ColorVariationImages = ({
       <SubmitButton
         title={isEditable ? "Edit" : "Add"}
         disabled={loading}
-        onClick={isEditable ? handleUpdate : handleAdd}
+        onClick={handleAdd}
       />
     </div>
   );
