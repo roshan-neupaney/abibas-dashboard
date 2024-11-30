@@ -92,7 +92,7 @@ const General = ({
       label: items?.title,
     };
   });
-  console.log('shoe' , shoe.data)
+  console.log('shoe' , shoe?.data)
   const editForm = isEdit
     ? {
         title: shoe?.data?.title,
@@ -164,12 +164,12 @@ const General = ({
           beautifiedPayload,
           token
         );
-        const { status }: any = response;
+        const { status, data }: any = response;
         if (status) {
           toast.success("Successfully Added Shoes");
           setFormError(defaultError);
           clearCachesByServerAction("/admin/inventory");
-          // router.push("/admin/inventory");
+          router.replace(`/admin/inventory/edit/${data?.slug_url}`);
         } else {
           toast.error("Error While Adding Shoes");
           setLoading(false);
@@ -264,7 +264,7 @@ const General = ({
             }
             data={formData.description}
             required
-            style={{ width: "30rem" }}
+            // style={{ width: "30rem" }}
             error={formError.description}
           />
 
@@ -276,7 +276,7 @@ const General = ({
             }
             data={formData.details}
             required
-            style={{ width: "30rem" }}
+            // style={{ width: "30rem" }}
             error={formError.details}
           />
           <CustomInput

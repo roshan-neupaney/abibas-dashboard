@@ -11,33 +11,62 @@ import {
   FormdataPost,
   VechicleImagesPatch,
 } from "../../utilities/apiCall";
-import { CRUD_VEHICLE } from "../../config/endPoints";
+import { COLOR_VARIATION_IMAGES, CRUD_VEHICLE } from "../../config/endPoints";
 import { useRouter } from "next/navigation";
 import clearCachesByServerAction from "../../hooks/revalidate";
+import CustomSelect from "@/subComponents/select";
 
-interface VehicleImagesProps {
+interface ColorVariationImagesProps {
   isEdit: boolean;
   token: string;
-  id: string;
-  vechile_images: any;
+  _id: string;
+  color_variation: any;
 }
 
-const VehicleImages = ({
+const ColorVariationImages = ({
   isEdit,
   token,
-  id,
-  vechile_images,
-}: VehicleImagesProps) => {
-  const [imageCards, setImageCards] = useState([{ id: "", image: "" }]);
-  const isEditable = vechile_images?.data.length > 0;
-  const beautifiedImageList = vechile_images.data?.map((items: any) => {
-    return { id: items.id, image: items.image_name };
-  });
+  _id,
+  color_variation,
+}: ColorVariationImagesProps) => {
+  const [imageCards, setImageCards] = useState<Array<Record<string, string>>>([{ id: "", image: "" }]);
+  const [selectedColorVariation, setSelectedColorVariation] = useState('')
+  const [isEditable, toggleIsEditable] = useState(false)
+  // const color_variation_images = color_variation.map((items:any) => {
+  //   return items.colorVariation
+  //   color_variation_images;
+
+  // })
+  // const beautifiedImageList = color_variation_images?.data?.map(
+  //   (items: any) => {
+  //     return { id: items.id, image: items.image_name };
+  //   }
+  // );
+
+  
   const [deletedImages, setDeletedImages] = useState<any>([]);
 
+  const beautifiedColorVariation = color_variation.map((items: any) => {
+    return { id: items.id, label: items.color.join(" / ") };
+  });
+
   useEffect(() => {
-    setImageCards(beautifiedImageList);
-  }, []);
+    color_variation?.filter((items:any) => {
+      if(selectedColorVariation === items?.id) {
+      toggleIsEditable(items.color_variation_images.length > 0);
+        let tempImages: Array<Record<string, string>> = [];
+        items?.color_variation_images?.map((img: string) => {
+          tempImages.push({id: img, image: img});
+        })
+        setImageCards(tempImages)
+      }
+    })
+  }, [selectedColorVariation])
+
+  // console.log(imageCards, isEditable)
+  // useEffect(() => {
+  //   setImageCards(beautifiedImageList);
+  // }, []);
   const [loading, setLoading] = useState(false);
   const uuid = UUidGenerator();
   const router = useRouter();
@@ -73,15 +102,16 @@ const VehicleImages = ({
   };
 
   const handleAdd = async () => {
-    setLoading(true);
+    // setLoading(true);
     try {
-      const formData = new FormData();
-      imageCards?.map((items: any) => {
-        formData.append("file", items.image);
-      });
-
+      // const formData = new FormData();
+      // imageCards?.map((items: any) => {
+      //   formData.append("file", items.image);
+      // });
+      const formData = { file: imageCards.map((items) => items.image) };
+      console.log(formData);
       const response = await FormdataPost(
-        CRUD_VEHICLE + "/" + id + "/images",
+        COLOR_VARIATION_IMAGES + "/" + selectedColorVariation,
         formData,
         token
       );
@@ -89,7 +119,7 @@ const VehicleImages = ({
       if (status) {
         toast.success("Successfully Updated Vehicle Details");
         clearCachesByServerAction("/admin/inventory");
-        router.push("/admin/inventory");
+        // router.push("/admin/inventory");
       } else {
         toast.error("Error While Updating Vehicle Details");
         setLoading(false);
@@ -110,7 +140,7 @@ const VehicleImages = ({
       });
       formData.append("deleteImages", JSON.stringify(deletedImages));
       const response = await VechicleImagesPatch(
-        CRUD_VEHICLE + "/" + id + "/images",
+        CRUD_VEHICLE + "/" + _id + "/images",
         formData,
         token
       );
@@ -131,6 +161,15 @@ const VehicleImages = ({
 
   return (
     <div className="flex p-4 flex-col gap-4">
+      <div className="w-[30rem]">
+        <CustomSelect
+          title="Color Variations"
+          value={selectedColorVariation}
+          data={beautifiedColorVariation}
+          onChange={(val: string) => setSelectedColorVariation(val)}
+          placeholder="Select a color variation"
+        />
+      </div>
       <div className="grid grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-10">
         {imageCards?.map((cards: any, index: number) => {
           return (
@@ -158,7 +197,7 @@ const VehicleImages = ({
         </div>
       </div>
       <SubmitButton
-        title={isEdit ? "Edit" : "Add"}
+        title={isEditable ? "Edit" : "Add"}
         disabled={loading}
         onClick={isEditable ? handleUpdate : handleAdd}
       />
@@ -166,4 +205,4 @@ const VehicleImages = ({
   );
 };
 
-export default VehicleImages;
+export default ColorVariationImages;

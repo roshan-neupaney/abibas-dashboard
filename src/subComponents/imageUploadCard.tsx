@@ -50,7 +50,7 @@ const ImageUploadCard = ({
   };
 
   return (
-    <label className="cursor-pointer">
+    <label className="cursor-pointer border-2 w-full">
       <div className="flex h-60 items-center justify-center">
         <input
           className="opacity-0 w-0 h-0"
