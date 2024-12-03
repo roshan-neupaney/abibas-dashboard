@@ -67,7 +67,7 @@ import { Undo } from '@ckeditor/ckeditor5-undo';
 // See https://ckeditor.com/docs/ckeditor5/latest/installation/plugins/installing-plugins.html for details.
 
 class Editor extends ClassicEditor {
-	public static  builtinPlugins = [
+	public static override builtinPlugins = [
 		Alignment,
 		Autoformat,
 		BlockQuote,
@@ -121,7 +121,7 @@ class Editor extends ClassicEditor {
 		Undo
 	];
 
-	public static defaultConfig: EditorConfig = {
+	public static override defaultConfig: EditorConfig = {
 		toolbar: {
 			items: [
 				'heading',
@@ -159,24 +159,24 @@ class Editor extends ClassicEditor {
 			]
 		},
 		language: 'en',
-		// image: {
-		// 	toolbar: [
-		// 		'imageTextAlternative',
-		// 		'toggleImageCaption',
-		// 		'imageStyle:inline',
-		// 		'imageStyle:block',
-		// 		'imageStyle:side'
-		// 	]
-		// },
-		// table: {
-		// 	contentToolbar: [
-		// 		'tableColumn',
-		// 		'tableRow',
-		// 		'mergeTableCells',
-		// 		'tableCellProperties',
-		// 		'tableProperties'
-		// 	]
-		// }
+		image: {
+			toolbar: [
+				'imageTextAlternative',
+				'toggleImageCaption',
+				'imageStyle:inline',
+				'imageStyle:block',
+				'imageStyle:side'
+			]
+		},
+		table: {
+			contentToolbar: [
+				'tableColumn',
+				'tableRow',
+				'mergeTableCells',
+				'tableCellProperties',
+				'tableProperties'
+			]
+		}
 	};
 }
 
