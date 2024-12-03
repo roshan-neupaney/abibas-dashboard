@@ -66,6 +66,7 @@ const Login = ({ setCookies }: any) => {
           updateState("email", val, setFormData, setFormError)
         }
         error={formError.email}
+        placeholder="example123@gmail.com"
         required
       />
       <CustomInput
@@ -78,6 +79,7 @@ const Login = ({ setCookies }: any) => {
         rightIcon={inputType === "text" ? noVisibleIcon : visibleIcon}
         iconClick={handleInputType}
         error={formError.password}
+        placeholder="Enter a password"
         required
       />
       <SubmitButton title="Sign In" onClick={handleClick} />

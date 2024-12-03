@@ -31,7 +31,7 @@ const ColorVariationImages = ({
   color_variation,
 }: ColorVariationImagesProps) => {
   const [imageCards, setImageCards] = useState<Array<Record<string, string>>>([
-    { id: "", image: "" },
+    { id: "uuid_", image: "" },
   ]);
   const [selectedColorVariation, setSelectedColorVariation] = useState("");
   const [isEditable, toggleIsEditable] = useState(false);
@@ -67,10 +67,11 @@ const ColorVariationImages = ({
 
   const removeCard = async(id: string) => {
     try {
-      if(id.includes('uuid')){
-        imageCards.filter((items: any) => {
+      if(id.includes('uuid_')){
+        const filteredData = imageCards.filter((items: any) => {
           if(id !== items.id) return items
         })
+        setImageCards(filteredData)
       } else {
         const res = await DeleteWithId(COLOR_VARIATION_IMAGES, id, token);
         const { status }: any = res;
