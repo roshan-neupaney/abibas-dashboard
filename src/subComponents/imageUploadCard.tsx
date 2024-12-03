@@ -13,7 +13,7 @@ const ImageUploadCard = ({
 }: ImageUploadCardProps) => {
   const imgUrl = IMAGE_URL + '/' + value;
   const [tempImage, setTempImage] = useState<any>(imgUrl);
-
+console.log(imgUrl)
   useEffect(() => {
     if (typeof value === "object") {
       const file = value;
@@ -50,7 +50,7 @@ const ImageUploadCard = ({
   };
 
   return (
-    <label className="cursor-pointer">
+    <label className="cursor-pointer border-2 w-full">
       <div className="flex h-60 items-center justify-center">
         <input
           className="opacity-0 w-0 h-0"

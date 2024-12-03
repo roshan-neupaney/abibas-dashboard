@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 import { beautifyShoeList } from "../../../../utilities/beautify";
 import DeleteModal from "../../../../components/modals/deleteModal";
 import { defaultStateModal } from "../../../../config/constants";
-import { CRUD_VEHICLE } from "../../../../config/endPoints";
+import { CRUD_SHOE, CRUD_VEHICLE } from "../../../../config/endPoints";
 import { DeleteWithId } from "../../../../utilities/apiCall";
 import toast from "react-hot-toast";
 
@@ -101,7 +101,7 @@ const Inventory = ({ shoeList, token }: InventoryProps) => {
   const handleDelete = async () => {
     try {
       const ids = openModal.id.split("_")[0];
-      const res = await DeleteWithId(CRUD_VEHICLE, ids, token);
+      const res = await DeleteWithId(CRUD_SHOE, ids, token);
       const { status }: any = res;
       if (status) {
         toast.success("Vehicle successfully deleted");
@@ -137,6 +137,7 @@ const Inventory = ({ shoeList, token }: InventoryProps) => {
                 internalTitleRoute="/admin/inventory/detail"
                 internalTitleRouteId="id"
                 titleImage="image"
+                entireRouteId="slug_url"
                 entireRoute="/admin/inventory/edit"
                 {...{ table, toggleModal }}
               />

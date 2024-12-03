@@ -53,6 +53,7 @@ async function getData(token: string, id: string) {
 const AddInventory = async ({ params }: any) => {
   const token = cookies().get("access_token")?.value || "";
   const _id = params.params[1];
+  console.log('_id', _id)
   const isEdit = params.params[0] === "edit";
   const {
     shoe,
@@ -60,8 +61,6 @@ const AddInventory = async ({ params }: any) => {
     shoe_brand,
     color
   }: any = await getData(token, _id);
-  const ids = _id?.split("_") || [];
-  const id = ids[0] || '';
   return (
     <>
       <PageHeader title={isEdit ? 'Edit Car': 'Add Car'} showBack />
@@ -70,7 +69,7 @@ const AddInventory = async ({ params }: any) => {
           {...{
             isEdit,
             token,
-            id,
+            _id,
             shoe,
             shoe_category,
             shoe_brand,

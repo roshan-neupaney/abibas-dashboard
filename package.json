@@ -18,6 +18,7 @@
     "@types/react-table": "^7.7.19",
     "axios": "^1.6.7",
     "chart.js": "^4.4.1",
+    "ckeditor5": "^43.3.1",
     "ckeditor5-custom-build": "file:./ckeditor5",
     "next": "^14.1.0",
     "nextjs-toploader": "^1.6.11",

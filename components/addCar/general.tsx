@@ -14,7 +14,7 @@ import { CustomLogoRadio } from "@/subComponents/logoRadio";
 import AddShoeVariation from "./addShoeVariation";
 import CustomEditor from "@/subComponents/editor";
 
-const uuid = UUidGenerator();
+const uuid: string = UUidGenerator();
 
 const defaultForm = {
   title: "",
@@ -66,7 +66,7 @@ const General = ({
   shoe_category,
   shoe_brand,
   token,
-  id,
+  _id,
   isEdit,
   color,
 }: any) => {
@@ -92,6 +92,7 @@ const General = ({
       label: items?.title,
     };
   });
+  console.log('shoe' , shoe?.data)
   const editForm = isEdit
     ? {
         title: shoe?.data?.title,
@@ -136,7 +137,7 @@ const General = ({
       }
       return {
         id: cv.id,
-        color: cv.color,
+        color: JSON.stringify(cv.color),
         file: cv.file || cv.image_url,
         sizes: fileteredSV,
       };
@@ -163,12 +164,12 @@ const General = ({
           beautifiedPayload,
           token
         );
-        const { status }: any = response;
+        const { status, data }: any = response;
         if (status) {
           toast.success("Successfully Added Shoes");
           setFormError(defaultError);
           clearCachesByServerAction("/admin/inventory");
-          // router.push("/admin/inventory");
+          router.replace(`/admin/inventory/edit/${data?.slug_url}`);
         } else {
           toast.error("Error While Adding Shoes");
           setLoading(false);
@@ -191,7 +192,7 @@ const General = ({
       if (isValid) {
         const response = await FormdataPatch(
           CRUD_SHOE,
-          id,
+          _id,
           { ...beautifiedPayload, deleteColorVariation, deleteSizeVariation },
           token
         );
@@ -255,17 +256,15 @@ const General = ({
             sx={{ width: "30rem" }}
           />
 
-          <CustomInput
+          <CustomEditor
             title="Description"
+            name='description'
             onChange={(val: string) =>
               updateState("description", val, setFormData, setFormError)
             }
-            multiline
-            rows={8}
-            value={formData.description}
-            placeholder="Write here..."
+            data={formData.description}
             required
-            width="30rem"
+            // style={{ width: "30rem" }}
             error={formError.description}
           />
 
@@ -277,7 +276,7 @@ const General = ({
             }
             data={formData.details}
             required
-            style={{ width: "30rem" }}
+            // style={{ width: "30rem" }}
             error={formError.details}
           />
           <CustomInput

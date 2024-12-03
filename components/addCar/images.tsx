@@ -7,37 +7,54 @@ import { UUidGenerator } from "../../utilities/helper";
 import { SubmitButton } from "@/subComponents/buttons";
 import toast from "react-hot-toast";
 import {
+  DeleteWithId,
   FormdataPatch,
   FormdataPost,
   VechicleImagesPatch,
 } from "../../utilities/apiCall";
-import { CRUD_VEHICLE } from "../../config/endPoints";
+import { COLOR_VARIATION_IMAGES, CRUD_VEHICLE } from "../../config/endPoints";
 import { useRouter } from "next/navigation";
 import clearCachesByServerAction from "../../hooks/revalidate";
+import CustomSelect from "@/subComponents/select";
 
-interface VehicleImagesProps {
+interface ColorVariationImagesProps {
   isEdit: boolean;
   token: string;
-  id: string;
-  vechile_images: any;
+  _id: string;
+  color_variation: any;
 }
 
-const VehicleImages = ({
+const ColorVariationImages = ({
   isEdit,
   token,
-  id,
-  vechile_images,
-}: VehicleImagesProps) => {
-  const [imageCards, setImageCards] = useState([{ id: "", image: "" }]);
-  const isEditable = vechile_images?.data.length > 0;
-  const beautifiedImageList = vechile_images.data?.map((items: any) => {
-    return { id: items.id, image: items.image_name };
-  });
+  _id,
+  color_variation,
+}: ColorVariationImagesProps) => {
+  const [imageCards, setImageCards] = useState<Array<Record<string, string>>>([
+    { id: "uuid_", image: "" },
+  ]);
+  const [selectedColorVariation, setSelectedColorVariation] = useState("");
+  const [isEditable, toggleIsEditable] = useState(false);
+
   const [deletedImages, setDeletedImages] = useState<any>([]);
 
+  const beautifiedColorVariation = color_variation.map((items: any) => {
+    return { id: items.id, label: items.color.join(" / ") };
+  });
+  console.log("color_variation", color_variation);
   useEffect(() => {
-    setImageCards(beautifiedImageList);
-  }, []);
+    color_variation?.filter((items: any) => {
+      if (selectedColorVariation === items?.id) {
+        toggleIsEditable(items?.colorVariationImages?.length > 0);
+        let tempImages: Array<Record<string, any>> = [];
+        items?.colorVariationImages?.map((img: any) => {
+          tempImages.push({ id: img.id, image: img.image_url });
+        });
+        setImageCards(tempImages);
+      }
+    });
+  }, [selectedColorVariation, color_variation]);
+
   const [loading, setLoading] = useState(false);
   const uuid = UUidGenerator();
   const router = useRouter();
@@ -48,20 +65,28 @@ const VehicleImages = ({
     });
   };
 
-  const removeCard = (id: string) => {
-    if (!id.includes("uuid")) {
-      setDeletedImages((prev: any) => {
-        return [...prev, { image_id: id }];
-      });
-    }
-    const filteredCard = imageCards?.filter((item: any) => {
-      if (item.id !== id) {
-        return item;
-      }
-    });
-    setImageCards(filteredCard);
-  };
+  const removeCard = async(id: string) => {
+    try {
+      if(id.includes('uuid_')){
+        const filteredData = imageCards.filter((items: any) => {
+          if(id !== items.id) return items
+        })
+        setImageCards(filteredData)
+      } else {
+        const res = await DeleteWithId(COLOR_VARIATION_IMAGES, id, token);
+        const { status }: any = res;
+        if (status) {
+          router.refresh();
+          toast.success("Image successfully deleted");
+        } else {
+          toast.error("Error while deleting Image");
+        }
 
+      }
+    } catch (e) {
+      toast.error("Error while deleting Image");
+    }
+  };
   const updateImageCard = (id: string, val: any, key: string) => {
     const filteredData = imageCards?.filter((items: any) => {
       if (items.id === id) {
@@ -75,21 +100,23 @@ const VehicleImages = ({
   const handleAdd = async () => {
     setLoading(true);
     try {
-      const formData = new FormData();
-      imageCards?.map((items: any) => {
-        formData.append("file", items.image);
+      const formData = imageCards.map((items) => {
+        return {
+          file: items?.image,
+          color_variation_id: selectedColorVariation,
+        };
       });
-
       const response = await FormdataPost(
-        CRUD_VEHICLE + "/" + id + "/images",
-        formData,
+        COLOR_VARIATION_IMAGES,
+        { variation: formData },
         token
       );
       const { status }: any = response;
       if (status) {
         toast.success("Successfully Updated Vehicle Details");
         clearCachesByServerAction("/admin/inventory");
-        router.push("/admin/inventory");
+        router.refresh();
+        setLoading(false);
       } else {
         toast.error("Error While Updating Vehicle Details");
         setLoading(false);
@@ -103,22 +130,25 @@ const VehicleImages = ({
   const handleUpdate = async () => {
     setLoading(true);
     try {
-      const formData = new FormData();
-      imageCards?.map((items: any) => {
-        if (!(typeof items.image === "string"))
-          formData.append("file", items.image);
+      const formData = imageCards.map((items) => {
+        return {
+          id: items.id.includes("uuid") ? undefined : items?.id,
+          file: items?.image,
+          color_variation_id: selectedColorVariation,
+        };
       });
-      formData.append("deleteImages", JSON.stringify(deletedImages));
-      const response = await VechicleImagesPatch(
-        CRUD_VEHICLE + "/" + id + "/images",
-        formData,
+      const response = await FormdataPatch(
+        COLOR_VARIATION_IMAGES,
+        "",
+        { variation: formData },
         token
       );
       const { status }: any = response;
       if (status) {
         toast.success("Successfully Updated Vehicle Details");
         clearCachesByServerAction("/admin/inventory");
-        router.push("/admin/inventory");
+        router.refresh();
+        setLoading(false);
       } else {
         toast.error("Error While Updating Vehicle Details");
         setLoading(false);
@@ -131,6 +161,15 @@ const VehicleImages = ({
 
   return (
     <div className="flex p-4 flex-col gap-4">
+      <div className="w-[30rem]">
+        <CustomSelect
+          title="Color Variations"
+          value={selectedColorVariation}
+          data={beautifiedColorVariation}
+          onChange={(val: string) => setSelectedColorVariation(val)}
+          placeholder="Select a color variation"
+        />
+      </div>
       <div className="grid grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-10">
         {imageCards?.map((cards: any, index: number) => {
           return (
@@ -158,7 +197,7 @@ const VehicleImages = ({
         </div>
       </div>
       <SubmitButton
-        title={isEdit ? "Edit" : "Add"}
+        title={isEditable ? "Edit" : "Add"}
         disabled={loading}
         onClick={isEditable ? handleUpdate : handleAdd}
       />
@@ -166,4 +205,4 @@ const VehicleImages = ({
   );
 };
 
-export default VehicleImages;
+export default ColorVariationImages;
