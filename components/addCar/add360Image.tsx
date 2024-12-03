@@ -39,7 +39,7 @@ const Vehicle360Images = ({
 
   useEffect(() => {
     setImageCards(beautifiedImageList);
-  }, []);
+  }, [beautifiedImageList]);
 
   const [loading, setLoading] = useState(false);
   const uuid = UUidGenerator();
