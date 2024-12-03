@@ -53,7 +53,7 @@ const ColorVariationImages = ({
         setImageCards(tempImages);
       }
     });
-  }, [selectedColorVariation]);
+  }, [selectedColorVariation, color_variation]);
 
   const [loading, setLoading] = useState(false);
   const uuid = UUidGenerator();
@@ -67,19 +67,25 @@ const ColorVariationImages = ({
 
   const removeCard = async(id: string) => {
     try {
-      const res = await DeleteWithId(COLOR_VARIATION_IMAGES, id, token);
-      const { status }: any = res;
-      if (status) {
-        toast.success("Image successfully deleted");
-        router.refresh();
+      if(id.includes('uuid')){
+        imageCards.filter((items: any) => {
+          if(id !== items.id) return items
+        })
       } else {
-        toast.error("Error while deleting Image");
+        const res = await DeleteWithId(COLOR_VARIATION_IMAGES, id, token);
+        const { status }: any = res;
+        if (status) {
+          router.refresh();
+          toast.success("Image successfully deleted");
+        } else {
+          toast.error("Error while deleting Image");
+        }
+
       }
     } catch (e) {
       toast.error("Error while deleting Image");
     }
   };
-  console.log("imageCards", imageCards);
   const updateImageCard = (id: string, val: any, key: string) => {
     const filteredData = imageCards?.filter((items: any) => {
       if (items.id === id) {
@@ -99,7 +105,6 @@ const ColorVariationImages = ({
           color_variation_id: selectedColorVariation,
         };
       });
-      console.log("formData", formData);
       const response = await FormdataPost(
         COLOR_VARIATION_IMAGES,
         { variation: formData },
@@ -141,7 +146,8 @@ const ColorVariationImages = ({
       if (status) {
         toast.success("Successfully Updated Vehicle Details");
         clearCachesByServerAction("/admin/inventory");
-        router.push("/admin/inventory");
+        router.refresh();
+        setLoading(false);
       } else {
         toast.error("Error While Updating Vehicle Details");
         setLoading(false);
