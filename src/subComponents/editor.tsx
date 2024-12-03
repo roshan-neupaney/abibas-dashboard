@@ -1,5 +1,3 @@
-// import { CKEditor } from "@ckeditor/ckeditor5-react";
-import Editor from "ckeditor5-custom-build";
 import { useEffect, useRef, useState } from "react";
 
 interface CustomEditorProps {
@@ -21,54 +19,13 @@ const CustomEditor = ({
   error = '',
   style= {}
 }: CustomEditorProps) => {
-  	
-
   const editorRef = useRef<any>();
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, Editor } = editorRef.current || {};
   const defaultConfig = {
-    items: [
-      'undo',
-      'redo',
-      '|',
-      'findAndReplace',
-      '|',
-      'heading',
-      'style',
-      '|',
-      'fontSize',
-      'fontFamily',
-      'fontColor',
-      'fontBackgroundColor',
-      '|',
-      'bold',
-      'italic',
-      'underline',
-      'strikethrough',
-      'subscript',
-      'superscript',
-      'code',
-      'removeFormat',
-      '|',
-      'specialCharacters',
-      'horizontalLine',
-      'pageBreak',
-      'link',
-      'insertImage',
-      'mediaEmbed',
-      'insertTable',
-      'highlight',
-      'blockQuote',
-      '|',
-      'alignment',
-      '|',
-      'bulletedList',
-      'numberedList',
-      'todoList',
-      'outdent',
-      'indent'
-    ],
-    shouldNotGroupWhenFull: false
+    toolbar: {
+      shouldNotGroupWhenFull: true,
+    },
   };
   useEffect(() => {
     editorRef.current = {
