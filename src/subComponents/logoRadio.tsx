@@ -34,7 +34,6 @@ export const CustomLogoRadio = ({
             return (
               <div key={index} className="flex gap-2 cursor-pointer">
                 <label className="cursor-pointer">
-                  
                   <div
                     className={`flex justify-center items-center w-32 h-20 py-2 border-2 ${
                       value === items.id
