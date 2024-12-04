@@ -12,7 +12,11 @@ import toast from "react-hot-toast";
 import { shoeValidation } from "../../utilities/validation";
 import { CustomLogoRadio } from "@/subComponents/logoRadio";
 import AddShoeVariation from "./addShoeVariation";
-import CustomEditor from "@/subComponents/editor";
+// import CustomEditor from "@/subComponents/editor";
+import dynamic from "next/dynamic";
+
+const CustomEditor = dynamic( () => import( '@/subComponents/custom-editor' ), { ssr: false } );
+
 
 const uuid: string = UUidGenerator();
 
@@ -216,7 +220,7 @@ const General = ({
       setLoading(false);
     }
   };
-
+console.log('formData', formData)
   return (
     <div className="body-container flex gap-5 p-4">
       <div className="flex flex-col gap-4 flex-1">
