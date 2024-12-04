@@ -44,7 +44,7 @@ export const CustomLogoRadio = ({
                   >
                     <span className="relative h-full w-full">
                       <LazyImage
-                        src={IMAGE_URL + "/small-" + items.image}
+                        src={IMAGE_URL  + items.image}
                         fill
                         alt="image"
                         quality={100}
