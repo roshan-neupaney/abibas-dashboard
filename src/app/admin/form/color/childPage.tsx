@@ -17,7 +17,7 @@ import {
 import CustomInput from "../../../../subComponents/input";
 import { defaultStateModal } from "../../../../../config/constants";
 import { DeleteWithId } from "../../../../../utilities/apiCall";
-import { CRUD_COLOR_CHOICE } from "../../../../../config/endPoints";
+import { CRUD_COLOR } from "../../../../../config/endPoints";
 import toast from "react-hot-toast";
 import { beautifyColor } from "../../../../../utilities/beautify";
 import DeleteModal from "../../../../../components/modals/deleteModal";
@@ -92,7 +92,7 @@ const Color = ({ _data, token }: any) => {
 
   const handleDelete = async () => {
     try {
-      const res = await DeleteWithId(CRUD_COLOR_CHOICE, openModal.id, token);
+      const res = await DeleteWithId(CRUD_COLOR, openModal.id, token);
       const { status }: any = res;
       if (status) {
         toast.success("Color Successfully Deleted");
