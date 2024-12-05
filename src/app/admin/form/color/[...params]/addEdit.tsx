@@ -69,6 +69,7 @@ const AddEditColor = ({ token, data, isEdit, id }: any) => {
           clearCachesByServerAction("/admin/form/color");
           router.push("/admin/form/color");
           setFormError(defaultError);
+          setLoading(false);
         } else {
           toast.error("Error While Adding Color");
           setLoading(false);
@@ -101,6 +102,7 @@ const AddEditColor = ({ token, data, isEdit, id }: any) => {
           clearCachesByServerAction("/admin/form/color");
           router.push("/admin/form/color");
           setFormError(defaultError);
+          setLoading(false);
         } else {
           toast.error("Error While Updating Color");
           setLoading(false);
