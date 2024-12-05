@@ -26,6 +26,7 @@ const Login = ({ setCookies }: any) => {
   const [inputType, setInputType] = useState("password");
   const [formData, setFormData] = useState(defaultForm);
   const [formError, setFormError] = useState(defaultError);
+  const [loading, setLoading] = useState(false);
   const handleInputType = () => {
     if (inputType === "password") {
       setInputType("text");
@@ -35,6 +36,7 @@ const Login = ({ setCookies }: any) => {
   };
 
   const handleClick = async () => {
+    setLoading(true);
     try {
       const { isValid, error }: any = loginValidation(formData);
       if (isValid) {
@@ -44,16 +46,19 @@ const Login = ({ setCookies }: any) => {
           setCookies(data);
           toast.success("Login Successful");
           router.push("/admin/dashboard");
-          router.refresh();
+          setLoading(false);
         } else {
           toast.error(data.message);
+          setLoading(false);
         }
       } else {
         toast.error("Validation Error");
         setFormError(error);
+        setLoading(false);
       }
     } catch (e) {
       toast.error("Login Unsuccessful");
+      setLoading(false);
     }
   };
 
@@ -82,7 +87,7 @@ const Login = ({ setCookies }: any) => {
         placeholder="Enter a password"
         required
       />
-      <SubmitButton title="Sign In" onClick={handleClick} />
+      <SubmitButton title="Sign In" onClick={handleClick} disabled={loading} />
     </div>
   );
 };
