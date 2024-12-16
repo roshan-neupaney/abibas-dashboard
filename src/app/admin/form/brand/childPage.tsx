@@ -35,11 +35,11 @@ interface dataType {
 
 const Brand = ({ _data, token }: any) => {
   const beautifiedCategory = beautifyBodyType(_data);
-  console.log(_data)
+  console.log(_data);
   const [data, setData] = useState(beautifiedCategory);
   const [search, setSearch] = useState("");
   const [openModal, toggleModal] = useState(defaultStateModal);
-  const [sorting, setSorting] = useState<SortingState>([])
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const router = useRouter();
 
@@ -134,6 +134,7 @@ const Brand = ({ _data, token }: any) => {
             <>
               <CustomTableHead {...{ table }} />
               <CustomTableBody
+                entireRouteId="id"
                 entireRoute="/admin/form/brand/edit/"
                 {...{ table, toggleModal }}
               />
