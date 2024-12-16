@@ -396,6 +396,7 @@ export const shoeValidation = (payload) => {
     const {
       title,
       brand_id,
+      type,
       category_id,
       price,
       description,
@@ -408,6 +409,7 @@ export const shoeValidation = (payload) => {
       title: "",
       brand_id: "",
       category_id: "",
+      type: "",
       price: "",
       previous_price: "",
       description: "",
@@ -420,6 +422,10 @@ export const shoeValidation = (payload) => {
     }
     if (!brand_id?.length > 0) {
       errorMessage.brand_id = "Brand is required.";
+      count++;
+    }
+    if (!type?.length > 0) {
+      errorMessage.type = "Type is required.";
       count++;
     }
     if (!category_id?.length > 0) {
