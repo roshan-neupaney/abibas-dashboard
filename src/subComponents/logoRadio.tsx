@@ -31,6 +31,7 @@ export const CustomLogoRadio = ({
         </label>
         <div className="gap-3 flex flex-wrap">
           {data?.map((items: any, index: number) => {
+            console.log(items)
             return (
               <div key={index} className="flex gap-2 cursor-pointer">
                 <label className="cursor-pointer">

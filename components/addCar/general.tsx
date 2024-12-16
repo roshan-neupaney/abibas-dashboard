@@ -24,6 +24,7 @@ const defaultForm = {
   title: "",
   brand_id: "",
   category_id: "",
+  type: '',
   price: "",
   previous_price: "",
   description: "",
@@ -49,6 +50,7 @@ const defaultError = {
   brand_id: "",
   category_id: "",
   price: "",
+  type: '',
   previous_price: "",
   description: "",
   details: "",
@@ -84,8 +86,9 @@ const General = ({
   const router = useRouter();
 
   const beautifiedBrand = shoe_brand?.data?.map((items: any) => {
-    return { id: items?.id, label: items?.title, image: items.image_name };
+    return { id: items?.id, label: items?.title, image: "medium-"+items.image_name };
   });
+  console.log(shoe_brand)
   const beautifiedCategory = shoe_category?.data?.map((items: any) => {
     return { id: items?.id, label: items?.title };
   });
@@ -102,6 +105,7 @@ const General = ({
         title: shoe?.data?.title,
         brand_id: shoe?.data?.brand_id,
         category_id: shoe?.data?.category_id,
+        type: shoe?.data?.type,
         price: shoe?.data?.price,
         previous_price: shoe?.data?.previous_price,
         description: shoe?.data?.description,
@@ -121,6 +125,7 @@ const General = ({
       brand_id: "",
       category_id: "",
       price: "",
+      type: '',
       previous_price: "",
       description: "",
       details: "",
@@ -150,6 +155,7 @@ const General = ({
     payload.brand_id = _form.brand_id;
     payload.category_id = _form.category_id;
     payload.price = _form.price;
+    payload.type = _form.type;
     payload.previous_price = _form.previous_price;
     payload.description = _form.description;
     payload.details = _form.details;
@@ -246,6 +252,17 @@ console.log('formData', formData)
             required
             error={formError.brand_id}
           />
+            <CustomInput
+              title="Type"
+              onChange={(val: string) =>
+                updateState("type", val, setFormData, setFormError)
+              }
+              value={formData.type}
+              placeholder="Enter type"
+              required
+              error={formError.type}
+              width="30rem"
+            />
 
           <CustomSelect
             value={formData.category_id}
