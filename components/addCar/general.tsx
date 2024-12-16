@@ -86,7 +86,7 @@ const General = ({
   const router = useRouter();
 
   const beautifiedBrand = shoe_brand?.data?.map((items: any) => {
-    return { id: items?.id, label: items?.title, image: "medium-"+items.image_name };
+    return { id: items?.id, label: items?.title, image: items.image_name };
   });
   console.log(shoe_brand)
   const beautifiedCategory = shoe_category?.data?.map((items: any) => {
