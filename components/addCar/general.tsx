@@ -88,7 +88,6 @@ const General = ({
   const beautifiedBrand = shoe_brand?.data?.map((items: any) => {
     return { id: items?.id, label: items?.title, image: items.image_name };
   });
-  console.log(shoe_brand)
   const beautifiedCategory = shoe_category?.data?.map((items: any) => {
     return { id: items?.id, label: items?.title };
   });
@@ -99,7 +98,6 @@ const General = ({
       label: items?.title,
     };
   });
-  console.log('shoe' , shoe?.data)
   const editForm = isEdit
     ? {
         title: shoe?.data?.title,
@@ -164,7 +162,7 @@ const General = ({
     return payload;
   };
   const handleAdd = async () => {
-    // setLoading(true);
+    setLoading(true);
     try {
       const beautifiedPayload = beautifyPayload(formData);
       const { isValid, error }: any = shoeValidation(beautifiedPayload);
@@ -179,6 +177,7 @@ const General = ({
           toast.success("Successfully Added Shoes");
           setFormError(defaultError);
           clearCachesByServerAction("/admin/inventory");
+          // setLoading(false);
           router.replace(`/admin/inventory/edit/${data?.slug_url}`);
         } else {
           toast.error("Error While Adding Shoes");

@@ -18,7 +18,7 @@ const AddSizeVariation = ({
   const defaultSizeForm = {
     id: "uuid_" + uuid,
     size: "",
-    stock: "",
+    stock: "22",
   };
 
   const [sizeVariation, setSizeVariation] = useState(size_variation);
@@ -93,6 +93,7 @@ const AddSizeVariation = ({
                 placeholder="Size"
                 type="number"
                 width="4rem"
+                autofocus={true}
                 // error={sizeError[index]?.size}
               />
               <CustomInput
