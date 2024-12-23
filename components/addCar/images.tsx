@@ -36,7 +36,7 @@ const ColorVariationImages = ({
   const [selectedColorVariation, setSelectedColorVariation] = useState("");
   const [isEditable, toggleIsEditable] = useState(false);
   
-  const beautifiedColorVariation = color_variation.map((items: any) => {
+  const beautifiedColorVariation = color_variation?.map((items: any) => {
     return { id: items.id, label: items.color.join(" / ") };
   });
   console.log("color_variation", color_variation);

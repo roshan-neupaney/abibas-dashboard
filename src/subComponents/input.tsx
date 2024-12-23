@@ -19,6 +19,7 @@ interface CustomInputProps {
   required?: boolean;
   autoComplete?: string;
   width?: string;
+  autofocus?: boolean;
 }
 const CustomInput = ({
   title,
@@ -36,6 +37,7 @@ const CustomInput = ({
   required = false,
   autoComplete = "on",
   width = "",
+  autofocus = false,
 }: CustomInputProps) => {
   return (
     <div
@@ -71,6 +73,7 @@ const CustomInput = ({
             }}
             required={required}
             autoComplete={autoComplete}
+            autoFocus={autofocus}
           />
         ) : (
           <textarea
