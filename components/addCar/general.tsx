@@ -37,8 +37,8 @@ const defaultForm = {
       sizes: [
         {
           id: "uuid_" + uuid,
-          size: "",
-          stock: "",
+          size: "5",
+          stock: "22",
         },
       ],
     },
