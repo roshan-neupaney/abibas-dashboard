@@ -17,7 +17,7 @@ const AddSizeVariation = ({
   const uuid = UUidGenerator();
   const defaultSizeForm = {
     id: "uuid_" + uuid,
-    size: "",
+    size: "5",
     stock: "22",
   };
 
@@ -28,7 +28,12 @@ const AddSizeVariation = ({
 
   const handleAdd = () => {
     setSizeVariation((prev: any) => {
-      const result = [...prev, defaultSizeForm];
+      const result = [...prev, {
+        id: "uuid_" + uuid,
+        size: (Number(prev[prev.length-1]?.size) + 0.5).toString(),
+        stock: "22",
+      }];
+      console.log(prev)
       colorVariation?.map((cv: any) => {
         if (cv.id === colorVariationId) {
           cv["sizes"] = result;
