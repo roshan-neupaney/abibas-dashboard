@@ -94,17 +94,17 @@ export const ServerSideGetWithId = async (token, url, id) => {
 export const ServerSideGetWithParams = async (token, url, params) => {
   try {
     const response = {
-      data: "",
+      data: [],
       status: false,
     };
     const URL = url + "?" + params;
     const res = await SERVER_SIDE_GET(token, URL);
     const { status, data } = res;
     if (status === 200) {
-      response.data = data;
+      response.data = data?.length > 0 ? data : [];
       response.status = true;
     } else {
-      response.data = data.message;
+      response.data = data;
       response.status = false;
     }
     return response;
