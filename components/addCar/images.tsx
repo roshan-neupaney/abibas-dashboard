@@ -35,7 +35,7 @@ const ColorVariationImages = ({
   ]);
   const [selectedColorVariation, setSelectedColorVariation] = useState("");
   const [isEditable, toggleIsEditable] = useState(false);
-  
+
   const beautifiedColorVariation = color_variation?.map((items: any) => {
     return { id: items.id, label: items.color.join(" / ") };
   });
@@ -46,7 +46,7 @@ const ColorVariationImages = ({
         toggleIsEditable(items?.colorVariationImages?.length > 0);
         let tempImages: Array<Record<string, any>> = [];
         items?.colorVariationImages?.map((img: any) => {
-          tempImages.push({ id: img.id, image: img.image_url });
+          tempImages.push({ id: img.id, image: img.image_url, order: img.order });
         });
         setImageCards(tempImages);
       }
@@ -57,19 +57,19 @@ const ColorVariationImages = ({
   const uuid = UUidGenerator();
   const router = useRouter();
 
-  const addCard = () => {
+  const addCard = (index:number) => {
     setImageCards((prev: any) => {
-      return [...prev, { id: "uuid_" + uuid, image: "" }];
+      return [...prev, { id: "uuid_" + uuid, image: "", order: index }];
     });
   };
 
-  const removeCard = async(id: string) => {
+  const removeCard = async (id: string) => {
     try {
-      if(id.includes('uuid_')){
+      if (id.includes("uuid_")) {
         const filteredData = imageCards.filter((items: any) => {
-          if(id !== items.id) return items
-        })
-        setImageCards(filteredData)
+          if (id !== items.id) return items;
+        });
+        setImageCards(filteredData);
       } else {
         const res = await DeleteWithId(COLOR_VARIATION_IMAGES, id, token);
         const { status }: any = res;
@@ -79,7 +79,6 @@ const ColorVariationImages = ({
         } else {
           toast.error("Error while deleting Image");
         }
-
       }
     } catch (e) {
       toast.error("Error while deleting Image");
@@ -101,12 +100,12 @@ const ColorVariationImages = ({
       const formData = imageCards.map((items) => {
         return {
           file: items?.image,
-          color_variation_id: selectedColorVariation,
+          order: items?.order
         };
       });
       const response = await FormdataPost(
         COLOR_VARIATION_IMAGES,
-        { variation: formData },
+        { images: formData, color_variation_id: selectedColorVariation },
         token
       );
       const { status }: any = response;
@@ -132,13 +131,14 @@ const ColorVariationImages = ({
         return {
           id: items.id.includes("uuid") ? undefined : items?.id,
           file: items?.image,
-          color_variation_id: selectedColorVariation,
+          order: items.order,
         };
       });
       const response = await FormdataPatch(
         COLOR_VARIATION_IMAGES,
         "",
-        { variation: formData },
+
+        { images: formData, color_variation_id: selectedColorVariation },
         token
       );
       const { status }: any = response;
@@ -186,7 +186,7 @@ const ColorVariationImages = ({
           );
         })}
         <div
-          onClick={addCard}
+          onClick={() => addCard(imageCards.length)}
           className="cursor-pointer flex items-center justify-center h-[15rem] border-2 border-dashed rounded-lg"
         >
           <span>
