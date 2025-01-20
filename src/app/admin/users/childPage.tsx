@@ -137,7 +137,7 @@ const router = useRouter();
           {data?.length > 0 ? (
             <>
               <CustomTableHead {...{ table }} />
-              <CustomTableBody entireRoute="/admin/users/edit"
+              <CustomTableBody entireRoute="/admin/users/edit" entireRouteId="id"
               {...{ table, toggleModal }} />
             </>
           ) : (
