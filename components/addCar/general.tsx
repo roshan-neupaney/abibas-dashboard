@@ -81,6 +81,7 @@ const General = ({
   const [deleteColorVariation, setDeleteColorVariation] = useState<string[]>(
     []
   );
+  console.log(shoe.data)
   const [deleteSizeVariation, setDeleteSizeVariation] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
