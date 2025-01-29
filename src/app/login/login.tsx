@@ -43,7 +43,7 @@ const Login = ({ setCookies }: any) => {
         const response = await Login_Post(LOGIN, formData);
         const { status, data }: any = response;
         if (status) {
-          setCookies(data);
+          await setCookies(data);
           toast.success("Login Successful");
           router.push("/admin/dashboard");
           setLoading(false);
